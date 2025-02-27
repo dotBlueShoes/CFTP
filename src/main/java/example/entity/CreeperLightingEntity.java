@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 
 public class CreeperLightingEntity extends CreeperElementalEntity {
 
+    protected int explosionRadius = 2;
+
     // TODO
     // 1. Make the lighting always hit up world
     // 2. Mimic serverWorld.createExplosion function as the lighting should:
@@ -59,14 +61,16 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
+            final float chargedRadius = this.isCharged() ? 2.0F : 1.0F;
+
             // TODO
-            // For better control over explosion of the lighting, fire it generates, damage it deals implement own "ExplosionImpl" class.
+            // 1. For better control over explosion of the lighting, fire it generates, damage it deals implement own "ExplosionImpl" class.
+            // 2. more then 1 lightning ?
 
             { // Lighting Bolt
 
                 LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(serverWorld, SpawnReason.EVENT);
                 if (lightningEntity != null) {
-                    //lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
                     lightningEntity.refreshPositionAfterTeleport(this.getX(), this.getY(), this.getZ());
                     lightningEntity.setCosmetic(true);
                     serverWorld.spawnEntity(lightningEntity);
@@ -76,7 +80,7 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
 
             serverWorld.createExplosion(
                     this, this.getX(), this.getY(), this.getZ(),
-                    1, World.ExplosionSourceType.MOB
+                    explosionRadius * chargedRadius, World.ExplosionSourceType.MOB
             );
 
             this.spawnEffectsCloud();

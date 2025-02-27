@@ -5,6 +5,7 @@ import example.entity.base.CreeperElementalEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.mob.BlazeEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -41,6 +42,7 @@ public class Entities {
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(ExampleMod.MOD_ID, "creeper_fire")),
             EntityType.Builder.create(CreeperFireEntity::new, SpawnGroup.MONSTER)
+                    .makeFireImmune()
                     .dimensions(0.6F, 1.7F)
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(ExampleMod.MOD_ID, "creeper_fire")))
     );

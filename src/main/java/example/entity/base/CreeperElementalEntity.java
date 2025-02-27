@@ -21,6 +21,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
@@ -270,6 +271,14 @@ public class CreeperElementalEntity extends HostileEntity {
         );
 
         return areaEffectCloudEntity;
+    }
+
+    protected void playExplosionSound(World world) {
+        world.playSound(
+            null, this.getX(), this.getY(), this.getZ(),
+            SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 1.0F,
+            world.getRandom().nextFloat() * 0.4F + 0.8F
+        );
     }
 
     public boolean isIgnited() {

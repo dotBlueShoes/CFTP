@@ -3,6 +3,7 @@ package example;
 import example.entity.CreeperLightingEntity;
 import example.entity.Entities;
 import example.entity.CreeperCookieEntity;
+import example.world.gen.EntitySpawns;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -29,5 +30,7 @@ public class ExampleMod implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(Entities.CREEPER_COOKIE, CreeperCookieEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(Entities.CREEPER_WATER, CreeperCookieEntity.createAttributes());
 		FabricDefaultAttributeRegistry.register(Entities.CREEPER_FIRE, CreeperCookieEntity.createAttributes());
+
+		EntitySpawns.addSpawns();
 	}
 }

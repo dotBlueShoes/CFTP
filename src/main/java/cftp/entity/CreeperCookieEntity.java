@@ -33,11 +33,9 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
     }
 
+    /// Called whenever an entity spawns.
     @Override
     protected void initGoals() {
-        // Check when does it happen.
-        CFTP.LOGGER.info("initGoals call!");
-
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new CreeperElementalIgniteGoal(this, 1.0F));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, OcelotEntity.class, 6.0F, 1.0, 1.2));

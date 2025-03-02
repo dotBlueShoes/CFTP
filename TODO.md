@@ -9,15 +9,12 @@
 18. Ender Creeper
 19. Ghost Creeper (requires custom renderer)
 20. Fish Creeper (requires custom everything)
-21. Make all spawn for now.
 22. Make proper spawns for all the creepers.
 
 Missing Creepers
 - Ghost Creeper (only visible in close range)
 - Flipping Creeper (flips terrain)
 - Jumping Creeper (jumps when moving)
-- Lava Creeper (fill)
-- Dirt Creeper (fill)
 - Snow Creeper (fill)
 - Ender Creeper (teleports u randomly to a valid position)
 - Mama Creeper (summons child creepers at death)

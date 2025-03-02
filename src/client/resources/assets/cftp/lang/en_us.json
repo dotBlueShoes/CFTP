@@ -1,0 +1,13 @@
+{
+  "itemgroup.cftp.cftp_items":  "CreaturesFromThePast Items",
+
+  "entity.cftp.creeper_cookie": "Cookie Creeper",
+  "entity.cftp.creeper_lighting": "Lighting Creeper",
+  "entity.cftp.creeper_fire": "Fire Creeper",
+  "entity.cftp.creeper_water": "Water Creeper",
+
+  "item.cftp.coin_copper": "Copper Coin",
+  "item.cftp.coin_iron": "Iron Coin",
+  "item.cftp.coin_gold": "Gold Coin",
+  "item.cftp.elemental_powder": "Elemental Powder"
+}

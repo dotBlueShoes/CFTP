@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "cftp.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"CFTPClientMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

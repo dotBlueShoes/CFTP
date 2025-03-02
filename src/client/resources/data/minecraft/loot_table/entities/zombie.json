@@ -26,7 +26,7 @@
               "function": "minecraft:enchanted_count_increase"
             }
           ],
-          "name": "minecraft:coal"
+          "name": "cftp:copper_coin"
         }
       ],
       "rolls": 1.0

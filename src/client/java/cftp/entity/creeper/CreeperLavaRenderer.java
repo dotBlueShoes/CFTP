@@ -1,4 +1,4 @@
-package cftp.entity;
+package cftp.entity.creeper;
 
 import cftp.CFTP;
 import cftp.entity.base.CreeperElementalRenderer;
@@ -6,11 +6,11 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.util.Identifier;
 
-public class CreeperCookieRenderer extends CreeperElementalRenderer<CreeperCookieEntity> {
+public class CreeperLavaRenderer extends CreeperElementalRenderer<CreeperLavaEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_cookie.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper_lava.png";
 
-    public CreeperCookieRenderer(EntityRendererFactory.Context context) {
+    public CreeperLavaRenderer(EntityRendererFactory.Context context) {
         super(context);
     }
 

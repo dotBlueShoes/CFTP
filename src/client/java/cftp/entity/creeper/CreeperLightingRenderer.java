@@ -1,4 +1,4 @@
-package cftp.entity;
+package cftp.entity.creeper;
 
 import cftp.CFTP;
 import cftp.entity.base.CreeperElementalRenderer;

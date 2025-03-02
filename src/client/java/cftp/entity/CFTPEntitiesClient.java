@@ -1,5 +1,6 @@
 package cftp.entity;
 
+import cftp.entity.creeper.*;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public class CFTPEntitiesClient {

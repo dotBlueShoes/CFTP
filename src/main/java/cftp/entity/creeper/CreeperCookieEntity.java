@@ -1,11 +1,8 @@
-package cftp.entity;
+package cftp.entity.creeper;
 
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -13,23 +10,15 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 
-public class CreeperLightingEntity extends CreeperElementalEntity {
+public class CreeperCookieEntity extends CreeperElementalEntity {
 
-    protected int explosionRadius = 2;
-
-    // TODO
-    // 1. For lighting creeper implement own "ExplosionImpl" class.
-    // 2. Make the lighting always hit up world
-    // 3. Mimic serverWorld.createExplosion function as the lighting should:
-    //  a) deal dmg
-    //  b) create a fire
-    //  c) make a little hole
-
-    public CreeperLightingEntity(
-            EntityType<? extends CreeperElementalEntity> entityType,
+    public CreeperCookieEntity(
+            EntityType<? extends CreeperCookieEntity> entityType,
             World world
     ) {
         super(entityType, world);
@@ -38,18 +27,20 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
                 .add(EntityAttributes.MAX_HEALTH, 18)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.45f)
-                .add(EntityAttributes.ATTACK_DAMAGE, 10)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.ATTACK_DAMAGE, 0)
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
     }
 
+    /// Called whenever an entity spawns.
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new CreeperElementalIgniteGoal(this, 1.0F));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, OcelotEntity.class, 6.0F, 1.0, 1.2));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, CatEntity.class, 6.0F, 1.0, 1.2));
-        this.goalSelector.add(4, new MeleeAttackGoal(this, 1.0, false));
+        this.goalSelector.add(3, new FleeEntityGoal<>(this, PlayerEntity.class, 6.0F, 1.0, 1.2));
+        //this.goalSelector.add(4, new MeleeAttackGoal(this, 1.0)); // Maybe make it attack other creepers?
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.8));
         this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(6, new LookAroundGoal(this));
@@ -60,29 +51,23 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
     @Override
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
+            int chargedAmount = this.isCharged() ? 2 : 1;
             this.dead = true;
 
-            final float chargedRadius = this.isCharged() ? 2.0F : 1.0F;
-
-            { // Lighting Bolt
-
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(serverWorld, SpawnReason.EVENT);
-                if (lightningEntity != null) {
-                    lightningEntity.refreshPositionAfterTeleport(this.getX(), this.getY(), this.getZ());
-                    lightningEntity.setCosmetic(true);
-                    serverWorld.spawnEntity(lightningEntity);
-                }
-
+            { // Generate cookies as the explosion.
+                ItemEntity itemEntity = new ItemEntity(
+                        serverWorld, this.getX(), this.getY(), this.getZ(),
+                        new ItemStack(Items.COOKIE, 5 * chargedAmount)
+                );
+                itemEntity.setToDefaultPickupDelay();
+                serverWorld.spawnEntity(itemEntity);
             }
 
-            serverWorld.createExplosion(
-                    this, this.getX(), this.getY(), this.getZ(),
-                    explosionRadius * chargedRadius, World.ExplosionSourceType.MOB
-            );
-
+            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
             this.discard();
+
         }
     }
 

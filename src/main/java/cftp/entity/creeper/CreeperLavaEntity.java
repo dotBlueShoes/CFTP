@@ -1,4 +1,4 @@
-package cftp.entity;
+package cftp.entity.creeper;
 
 import cftp.entity.base.CreeperElementalEntity;
 import net.minecraft.block.Block;
@@ -15,11 +15,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
 
-public class CreeperWaterEntity extends CreeperElementalEntity {
+public class CreeperLavaEntity extends CreeperElementalEntity {
 
     protected int explosionRadius = 5;
 
-    public CreeperWaterEntity(
+    public CreeperLavaEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
             World world
     ) {
@@ -43,14 +43,6 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
             final int radius = (int)(this.explosionRadius * chargedRadius);
             final int half = radius / 2;
 
-            // TODO
-            // 1. Instead of dropping the blocks at their destroyed block position
-            //  I could make it so that the drop appears always at mob explosion position.
-            //  - Such behaviour should be easier to render and calculate as less ItemStacks would be created.
-            //  however i wound need to to count all the different items that exploded.
-            // 2. Randomize a little the sphere shape.
-            // 3. ??? Make it so long short grass drops seeds instead.
-
             // We're creating a pseudo explosion just to verify if the behaviour of blocks when destroyed.
             final ExplosionImpl explosion = new ExplosionImpl(
                     serverWorld, null, null,
@@ -58,7 +50,6 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                     Explosion.DestructionType.DESTROY
             );
 
-            // unoptimized
             for (int y = 0; y < radius; ++y) {
                 for (int x = 0; x < radius; ++x) {
                     for (int z = 0; z < radius; ++z) {
@@ -73,7 +64,7 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                             BlockState state = serverWorld.getBlockState(blockPos);
                             Block block = state.getBlock();
 
-                            serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                            serverWorld.setBlockState(blockPos, Blocks.LAVA.getDefaultState(), Block.NOTIFY_ALL);
 
                             // So that specific blocks won't drop.
                             if (block.shouldDropItemsOnExplosion(explosion)) {
@@ -94,36 +85,21 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                 }
             }
 
-            //1 // This can be optimized simply calculate 1/8 of the sphere then generate blocks on all sides of the sphere.
-            //1 {
-            //1     // 1st. calculate the points
-            //1     for (int y = 0; y < half; ++y) {
-            //1         for (int x = 0; x < half; ++x) {
-            //1             for (int z = 0; z < half; ++z)  {
-            //1
-            //1                 if (Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2) <= Math.pow(3,  2)) {
-            //1
-            //1                     BlockPos blockPos = BlockPos.ofFloored(
-            //1                             this.getX() + x,
-            //1                             this.getY() + y,
-            //1                             this.getZ() + z
-            //1                     );
-            //1
-            //1                     serverWorld.setBlockState(blockPos, Blocks.ACACIA_PLANKS.getDefaultState(), Block.NOTIFY_ALL);
-            //1                 }
-            //1
-            //1             }
-            //1         }
-            //1     }
-            //1
-            //1     // 2nd. Generate them on all sides.
-            //1 }
-
             this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
         }
+    }
+
+    @Override
+    public boolean hurtByWater() {
+        return true;
+    }
+
+    @Override
+    public boolean isOnFire() {
+        return true;
     }
 
 }

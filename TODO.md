@@ -1,5 +1,3 @@
-1. Collect previous notes
-7. Make a dummy item
 8. Make spawn eggs for creepers
 10. Make Cookie creeper drop random.
 11. Make Cookie creeper on hard to run away only
@@ -10,6 +8,8 @@
 19. Ghost Creeper (requires custom renderer)
 20. Fish Creeper (requires custom everything)
 22. Make proper spawns for all the creepers.
+23. Add Sawdust
+24. Think about trap-making
 
 Missing Creepers
 - Ghost Creeper (only visible in close range)

@@ -1,4 +1,4 @@
-package cftp.entity;
+package cftp.entity.creeper;
 
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;

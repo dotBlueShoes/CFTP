@@ -1,6 +1,7 @@
 package cftp.entity;
 
 import cftp.CFTP;
+import cftp.entity.creeper.*;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;

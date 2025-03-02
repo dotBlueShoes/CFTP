@@ -1,5 +1,6 @@
 package example.entity;
 
+import example.ExampleMod;
 import example.entity.base.CreeperElementalEntity;
 import example.goals.CreeperElementalIgniteGoal;
 import example.goals.CreeperFireAttackGoal;
@@ -18,9 +19,6 @@ import net.minecraft.world.World;
 
 public class CreeperCookieEntity extends CreeperElementalEntity {
 
-    // TODO
-    // 4. Make Cookie drop random.
-
     public CreeperCookieEntity(
             EntityType<? extends CreeperCookieEntity> entityType,
             World world
@@ -38,6 +36,9 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
 
     @Override
     protected void initGoals() {
+        // Check when does it happen.
+        ExampleMod.LOGGER.info("initGoals call!");
+
         this.goalSelector.add(1, new SwimGoal(this));
         this.goalSelector.add(2, new CreeperElementalIgniteGoal(this, 1.0F));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, OcelotEntity.class, 6.0F, 1.0, 1.2));

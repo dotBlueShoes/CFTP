@@ -1,11 +1,11 @@
 1. Collect previous notes
-2. Place fire in world
-3. Place water in world
-4. Remove a block
-5. Replace a block
-6. Make creepers spawn in worlds
 7. Make a dummy item
 8. Make spawn eggs for creepers
+9. Rename project from ExampleMod, MS_Creepers to CreaturesFromThePast
+10. Make Cookie creeper drop random.
+11. Make Cookie creeper on hard to run away only
+12. Make it so that fire creeper leaves trails only at hard mode
+13. Loot tables
 
 Missing Creepers
 - Ghost Creeper (only visible in close range)

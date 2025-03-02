@@ -21,8 +21,9 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
     protected int explosionRadius = 2;
 
     // TODO
-    // 1. Make the lighting always hit up world
-    // 2. Mimic serverWorld.createExplosion function as the lighting should:
+    // 1. For lighting creeper implement own "ExplosionImpl" class.
+    // 2. Make the lighting always hit up world
+    // 3. Mimic serverWorld.createExplosion function as the lighting should:
     //  a) deal dmg
     //  b) create a fire
     //  c) make a little hole
@@ -62,10 +63,6 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
             this.dead = true;
 
             final float chargedRadius = this.isCharged() ? 2.0F : 1.0F;
-
-            // TODO
-            // 1. For better control over explosion of the lighting, fire it generates, damage it deals implement own "ExplosionImpl" class.
-            // 2. more then 1 lightning ?
 
             { // Lighting Bolt
 

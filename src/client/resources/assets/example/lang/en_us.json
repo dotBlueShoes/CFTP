@@ -1,4 +1,13 @@
 {
+  "itemgroup.example.example_items":  "CreaturesFromThePast Items",
+
   "entity.example.creeper_cookie": "Cookie Creeper",
-  "entity.example.creeper_lighting": "Lighting Creeper"
+  "entity.example.creeper_lighting": "Lighting Creeper",
+  "entity.example.creeper_fire": "Fire Creeper",
+  "entity.example.creeper_water": "Water Creeper",
+
+  "item.example.coin_copper": "Copper Coin",
+  "item.example.coin_iron": "Iron Coin",
+  "item.example.coin_gold": "Gold Coin",
+  "item.example.elemental_powder": "Elemental Powder"
 }

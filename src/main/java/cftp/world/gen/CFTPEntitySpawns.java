@@ -1,6 +1,6 @@
 package cftp.world.gen;
 
-import cftp.entity.Entities;
+import cftp.entity.CFTPEntities;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.entity.SpawnGroup;
@@ -10,9 +10,9 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
 
-public class EntitySpawns {
+public class CFTPEntitySpawns {
 
-    public static void addSpawns() {
+    public static void register() {
 
         // BIOMES
         // PLAINS, SUNFLOWER_PLAINS, SNOWY_PLAINS, ICE_SPIKES, DESERT, SWAMP, MANGROVE_SWAMP, FOREST,
@@ -29,7 +29,7 @@ public class EntitySpawns {
             BiomeSelectors.includeByKey(
                 BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.DESERT, BiomeKeys.SWAMP,
                 BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.FOREST, BiomeKeys.MEADOW
-            ), SpawnGroup.MONSTER, Entities.CREEPER_COOKIE,
+            ), SpawnGroup.MONSTER, CFTPEntities.CREEPER_COOKIE,
             30, 1, 1
         );
 
@@ -38,7 +38,7 @@ public class EntitySpawns {
                     BiomeKeys.PLAINS, BiomeKeys.DESERT, BiomeKeys.SWAMP,
                     BiomeKeys.MANGROVE_SWAMP, BiomeKeys.MEADOW,
                     BiomeKeys.BEACH
-                ), SpawnGroup.MONSTER, Entities.CREEPER_FIRE,
+                ), SpawnGroup.MONSTER, CFTPEntities.CREEPER_FIRE,
                 30, 1, 1
         );
 
@@ -46,7 +46,7 @@ public class EntitySpawns {
                 BiomeSelectors.includeByKey(
                     BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.DESERT, BiomeKeys.SWAMP,
                     BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.FOREST, BiomeKeys.MEADOW
-                ), SpawnGroup.MONSTER, Entities.CREEPER_LIGHTING,
+                ), SpawnGroup.MONSTER, CFTPEntities.CREEPER_LIGHTING,
                 30, 1, 1
         );
 
@@ -54,12 +54,37 @@ public class EntitySpawns {
                 BiomeSelectors.includeByKey(
                     BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.DESERT, BiomeKeys.SWAMP,
                     BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.FOREST, BiomeKeys.MEADOW
-                ), SpawnGroup.MONSTER, Entities.CREEPER_WATER,
+                ), SpawnGroup.MONSTER, CFTPEntities.CREEPER_WATER,
                 30, 1, 1
+        );
+
+        BiomeModifications.addSpawn(
+                BiomeSelectors.includeByKey(
+                        BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.DESERT, BiomeKeys.SWAMP,
+                        BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.FOREST, BiomeKeys.MEADOW
+                ), SpawnGroup.MONSTER, CFTPEntities.CREEPER_DIRT,
+                30, 1, 1
+        );
+
+        BiomeModifications.addSpawn(
+                BiomeSelectors.includeByKey(
+                        BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.DESERT, BiomeKeys.SWAMP,
+                        BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.FOREST, BiomeKeys.MEADOW
+                ), SpawnGroup.MONSTER, CFTPEntities.CREEPER_LAVA,
+                30, 1, 1
+        );
+
+        // ---
+
+        SpawnRestriction.register(
+                CFTPEntities.CREEPER_FIRE,
+                SpawnLocationTypes.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                HostileEntity::canSpawnInDark
         );
 
         SpawnRestriction.register(
-                Entities.CREEPER_FIRE,
+                CFTPEntities.CREEPER_LAVA,
                 SpawnLocationTypes.ON_GROUND,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                 HostileEntity::canSpawnInDark

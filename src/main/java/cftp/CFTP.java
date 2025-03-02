@@ -1,14 +1,11 @@
 package cftp;
 
-import cftp.entity.CreeperLightingEntity;
-import cftp.entity.Entities;
-import cftp.entity.CreeperCookieEntity;
+import cftp.entity.CFTPEntities;
 import cftp.item.CFTPItemGroups;
 import cftp.item.CFTPItems;
-import cftp.world.gen.EntitySpawns;
+import cftp.world.gen.CFTPEntitySpawns;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,12 +27,7 @@ public class CFTP implements ModInitializer {
 
 		CFTPItems.register();
 		CFTPItemGroups.register();
-
-		FabricDefaultAttributeRegistry.register(Entities.CREEPER_LIGHTING, CreeperLightingEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(Entities.CREEPER_COOKIE, CreeperCookieEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(Entities.CREEPER_WATER, CreeperCookieEntity.createAttributes());
-		FabricDefaultAttributeRegistry.register(Entities.CREEPER_FIRE, CreeperCookieEntity.createAttributes());
-
-		EntitySpawns.addSpawns();
+		CFTPEntities.register();
+		CFTPEntitySpawns.register();
 	}
 }

@@ -1,6 +1,7 @@
 package cftp.entity;
 
 import cftp.CFTP;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
@@ -9,7 +10,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
-public class Entities {
+public class CFTPEntities {
 
     public static final EntityType<CreeperCookieEntity> CREEPER_COOKIE = Registry.register(
             Registries.ENTITY_TYPE,
@@ -44,17 +45,30 @@ public class Entities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_fire")))
     );
 
-    //public static final EntityType<CreeperCookieEntity> CREEPER_COOKIE = registerCreeper("creeper_cookie");
-    //public static <T extends Entity> EntityType<T> registerCreeper(String path) {
-    //
-    //    var key = RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(ExampleMod.MOD_ID, path));
-    //
-    //    return Registry.register(
-    //            Registries.ENTITY_TYPE, key,
-    //            EntityType.Builder.create(T::new, SpawnGroup.MONSTER)
-    //                    .dimensions(0.6F, 1.7F)
-    //                    .build(key)
-    //    );
-    //}
+    public static final EntityType<CreeperDirtEntity> CREEPER_DIRT = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_dirt")),
+            EntityType.Builder.create(CreeperDirtEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_dirt")))
+    );
+
+    public static final EntityType<CreeperLavaEntity> CREEPER_LAVA = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_lava")),
+            EntityType.Builder.create(CreeperLavaEntity::new, SpawnGroup.MONSTER)
+                    .makeFireImmune()
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_lava")))
+    );
+
+    public static void register(){
+        FabricDefaultAttributeRegistry.register(CREEPER_LIGHTING, CreeperLightingEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_COOKIE, CreeperCookieEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_WATER, CreeperCookieEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_FIRE, CreeperCookieEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_DIRT, CreeperCookieEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_LAVA, CreeperCookieEntity.createAttributes());
+    }
 
 }

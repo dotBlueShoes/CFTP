@@ -1,6 +1,7 @@
 package cftp;
 
 import cftp.entity.CFTPEntities;
+import cftp.item.CFTPBlocks;
 import cftp.item.CFTPItemGroups;
 import cftp.item.CFTPItems;
 import cftp.world.gen.CFTPEntitySpawns;
@@ -27,6 +28,7 @@ public class CFTP implements ModInitializer {
 		LOGGER.info("Hello Fabric Server!");
 
 		CFTPItems.register();
+		CFTPBlocks.register();
 		CFTPItemGroups.register();
 		CFTPEntities.register();
 		CFTPEntitySpawns.register();

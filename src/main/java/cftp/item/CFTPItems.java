@@ -1,6 +1,7 @@
 package cftp.item;
 
 import cftp.CFTP;
+import net.minecraft.item.WindChargeItem;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKey;
@@ -19,6 +20,14 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item EARTH_CHARGE = register("earth_charge", WindChargeItem::new,
+            new Item.Settings().useCooldown(0.5F)
+    );
+
+    public static final Item WATER_CHARGE = register("water_charge", WindChargeItem::new,
+            new Item.Settings().useCooldown(0.5F)
+    );
+
     public static final Item COIN_COPPER = register("coin_copper", Item::new,
             new Item.Settings()
     );
@@ -30,6 +39,9 @@ public class CFTPItems {
     public static final Item COIN_GOLD = register("coin_gold", Item::new,
             new Item.Settings()
     );
+
+    //public static final Item FIRE_CHARGE = register("fire_charge", FireChargeItem::new);
+    //public static final Item WIND_CHARGE = register("wind_charge", WindChargeItem::new, new Item.Settings().useCooldown(0.5F));
 
     public static Item register(String path, Function<Item.Settings, Item> factory, Item.Settings settings) {
         final RegistryKey<Item> registryKey = RegistryKey.of(

@@ -8,9 +8,16 @@
   "entity.cftp.creeper_dirt": "Dirt Creeper",
   "entity.cftp.creeper_lava": "Lava Creeper",
 
+  "block.cftp.saw_dust_block": "Saw Dust Block",
+  "item.cftp.saw_dust_block": "Saw Dust Block",
+
   "item.cftp.elemental_powder": "Elemental Powder",
+  "item.cftp.earth_charge": "Earth Charge",
+  "item.cftp.water_charge": "Water Charge",
+  "item.cftp.saw_dust": "Saw Dust",
+
   "item.cftp.coin_copper": "Copper Coin",
   "item.cftp.coin_iron": "Iron Coin",
-  "item.cftp.coin_gold": "Gold Coin",
-  "item.cftp.saw_dust": "Saw Dust"
+  "item.cftp.coin_gold": "Gold Coin"
+
 }

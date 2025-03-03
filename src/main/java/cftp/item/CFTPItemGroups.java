@@ -22,6 +22,7 @@ public class CFTPItemGroups {
                     .entries(
                             (displayContext, entries) -> {
                                 entries.add(CFTPItems.ELEMENTAL_POWDER);
+                                entries.add(CFTPItems.SAW_DUST);
                                 entries.add(CFTPItems.COIN_COPPER);
                                 entries.add(CFTPItems.COIN_IRON);
                                 entries.add(CFTPItems.COIN_GOLD);

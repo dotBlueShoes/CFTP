@@ -6,6 +6,7 @@ import cftp.item.CFTPItems;
 import cftp.world.gen.CFTPEntitySpawns;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

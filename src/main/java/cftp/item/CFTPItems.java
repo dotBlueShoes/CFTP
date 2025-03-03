@@ -1,6 +1,7 @@
 package cftp.item;
 
 import cftp.CFTP;
+import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -11,6 +12,10 @@ import java.util.function.Function;
 public class CFTPItems {
 
     public static final Item ELEMENTAL_POWDER = register("elemental_powder", Item::new,
+            new Item.Settings()
+    );
+
+    public static final Item SAW_DUST = register("saw_dust", Item::new,
             new Item.Settings()
     );
 
@@ -38,7 +43,10 @@ public class CFTPItems {
     // HACK. Java is weird. We need to call a method even if empty. To make the unreferenced variables
     //  we made compile from this file-class.
     public static void register() {
-
+        FuelRegistryEvents.BUILD.register((builder, context) -> {
+            // We can add multiple items at once in this lambda.
+            builder.add(SAW_DUST, 100); // 0.5 item
+        });
     }
 
 }

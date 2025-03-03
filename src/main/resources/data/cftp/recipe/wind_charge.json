@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "charge",
+  "ingredients": [
+    "cftp:elemental_powder",
+    "minecraft:redstone"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:wind_charge"
+  }
+}

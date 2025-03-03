@@ -27,6 +27,14 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_cookie")))
     );
 
+    public static final EntityType<CreeperWindEntity> CREEPER_WIND = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_wind")),
+            EntityType.Builder.create(CreeperWindEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_wind")))
+    );
+
     public static final EntityType<CreeperLightingEntity> CREEPER_LIGHTING = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_lighting")),
@@ -94,12 +102,11 @@ public class CFTPEntities {
     public static void register(){
         FabricDefaultAttributeRegistry.register(CREEPER_LIGHTING, CreeperLightingEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_COOKIE, CreeperCookieEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(CREEPER_WATER, CreeperCookieEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(CREEPER_FIRE, CreeperCookieEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(CREEPER_DIRT, CreeperCookieEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(CREEPER_LAVA, CreeperCookieEntity.createAttributes());
-
-        //FabricDefaultAttributeRegistry.register(WATER_CHARGE, MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, 18));
+        FabricDefaultAttributeRegistry.register(CREEPER_WATER, CreeperWaterEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_FIRE, CreeperFireEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_DIRT, CreeperDirtEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_LAVA, CreeperLavaEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_WIND, CreeperWindEntity.createAttributes());
     }
 
 }

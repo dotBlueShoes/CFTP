@@ -7,6 +7,7 @@
   "entity.cftp.creeper_fire": "Fire Creeper",
   "entity.cftp.creeper_dirt": "Dirt Creeper",
   "entity.cftp.creeper_lava": "Lava Creeper",
+  "entity.cftp.creeper_wind": "Wind Creeper",
 
   "entity.cftp.water_charge": "Water Charge",
   "entity.cftp.earth_charge": "Earth Charge",

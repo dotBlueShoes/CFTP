@@ -70,6 +70,12 @@ public class CFTPEntitySpawns {
         );
 
         BiomeModifications.addSpawn(
+                BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
+                SpawnGroup.MONSTER, CFTPEntities.CREEPER_WIND,
+                30, 1, 1
+        );
+
+        BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
             SpawnGroup.MONSTER, CFTPEntities.CREEPER_LIGHTING,
             30, 1, 1

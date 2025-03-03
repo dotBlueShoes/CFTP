@@ -3,8 +3,14 @@ package cftp.entity;
 import cftp.CFTP;
 import cftp.entity.creeper.*;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.projectile.WindChargeEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -63,6 +69,28 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_lava")))
     );
 
+    // 1. Should it be 'RegistryKeys.ENTITY_TYPE' ?
+    public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")),
+            EntityType.Builder.<WaterChargeEntity>create(WaterChargeEntity::new, SpawnGroup.MISC)
+                    .dropsNothing()
+                    .dimensions(0.3125F, 0.3125F)
+                    .eyeHeight(0.0F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(10)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")))
+    );
+
+    //public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
+    //        Registries.ENTITY_TYPE,
+    //        Identifier.of(CFTP.MOD_ID, "packed_snowball"),
+    //        FabricEntityTypeBuilder.<WaterChargeEntity>create(SpawnGroup.MISC, WaterChargeEntity::new)
+    //                .dimensions(EntityDimensions.fixed(0.25F, 0.25F)) // dimensions in Minecraft units of the projectile
+    //                .trackRangeBlocks(4).trackedUpdateRate(10) // necessary for all thrown projectiles (as it prevents it from breaking, lol)
+    //                .build() // VERY IMPORTANT DONT DELETE FOR THE LOVE OF GOD PSLSSSSSS
+    //);
+
     public static void register(){
         FabricDefaultAttributeRegistry.register(CREEPER_LIGHTING, CreeperLightingEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_COOKIE, CreeperCookieEntity.createAttributes());
@@ -70,6 +98,8 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_FIRE, CreeperCookieEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_DIRT, CreeperCookieEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_LAVA, CreeperCookieEntity.createAttributes());
+
+        //FabricDefaultAttributeRegistry.register(WATER_CHARGE, MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, 18));
     }
 
 }

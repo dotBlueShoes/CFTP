@@ -8,6 +8,9 @@
   "entity.cftp.creeper_dirt": "Dirt Creeper",
   "entity.cftp.creeper_lava": "Lava Creeper",
 
+  "entity.cftp.water_charge": "Water Charge",
+  "entity.cftp.earth_charge": "Earth Charge",
+
   "block.cftp.saw_dust_block": "Saw Dust Block",
   "item.cftp.saw_dust_block": "Saw Dust Block",
 

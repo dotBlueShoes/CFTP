@@ -24,7 +24,7 @@ public class CFTPItems {
             new Item.Settings().useCooldown(0.5F)
     );
 
-    public static final Item WATER_CHARGE = register("water_charge", WindChargeItem::new,
+    public static final Item WATER_CHARGE = register("water_charge", WaterChargeItem::new,
             new Item.Settings().useCooldown(0.5F)
     );
 

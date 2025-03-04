@@ -84,8 +84,8 @@ public class CreeperWindEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Vec3d entityPosition = new Vec3d(this.getX(), this.getY(), this.getZ());
             final float chargedPower = this.isCharged() ? 3.27F * 2.0f : 3.27F;
+            final Vec3d entityPosition = this.getPos();
 
             final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
                     false, false, Optional.of(chargedPower),

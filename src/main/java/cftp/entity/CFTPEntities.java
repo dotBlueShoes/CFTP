@@ -27,6 +27,14 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_cookie")))
     );
 
+    public static final EntityType<CreeperEnderEntity> CREEPER_ENDER = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_ender")),
+            EntityType.Builder.create(CreeperEnderEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_ender")))
+    );
+
     public static final EntityType<CreeperWindEntity> CREEPER_WIND = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_wind")),
@@ -101,6 +109,7 @@ public class CFTPEntities {
 
     public static void register(){
         FabricDefaultAttributeRegistry.register(CREEPER_LIGHTING, CreeperLightingEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_ENDER, CreeperLightingEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_COOKIE, CreeperCookieEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_WATER, CreeperWaterEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_FIRE, CreeperFireEntity.createAttributes());

@@ -11,6 +11,8 @@
 25. Implement Earth Charge ability
 26. earth charge hit particle burst. 
 27. water charge hit particle burst.
+28. Carpenter's Table - Stone cutter alternative for wood
+29. Another Wooden block like sticks crafted 
 
 Missing Creepers
 - Ghost Creeper (only visible in close range)

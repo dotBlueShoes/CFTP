@@ -3,6 +3,7 @@ package cftp.world.gen;
 import cftp.entity.CFTPEntities;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.SpawnRestriction;
@@ -57,52 +58,77 @@ public class CFTPEntitySpawns {
         /// };
 
 
+        final int CREEPER_GROUP_WEIGHT = 20;
+        final int CREEPER_GROUP_MIN = 1;
+        final int CREEPER_GROUP_MAX = 4;
+
+        final int ZOMBIE_GROUP_WEIGHT = 900;
+        final int ZOMBIE_GROUP_MIN = 5;
+        final int ZOMBIE_GROUP_MAX = 12;
+
+
+        // Solving the issue
+        // mod -> https://www.curseforge.com/minecraft/mc-mods/custom-spawns/files/all?page=1&pageSize=20
+        // mod's git -> https://github.com/b3spectacled/custom-spawns/blob/1.19.x/src/main/java/mod/bespectacled/customspawn/mixin/MixinServerChunkManager.java
+        // other know settings -> https://www.reddit.com/r/admincraft/comments/o1cvi1/too_many_mob_spawns_paper_1165/
+        // how it works 1 -> https://www.reddit.com/r/technicalminecraft/comments/kgkbkx/can_anyone_explain_the_mob_cap_to_me/
+        // how it works 2 -> https://minecraft.wiki/w/Mob_spawning
+
+        // ISSUE
+        // 4 is max for some reason
+        // also it might be impossible to have ZOMBIE again.
+        //BiomeModifications.addSpawn(
+        //        BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
+        //        SpawnGroup.MONSTER, EntityType.ZOMBIE,
+        //        ZOMBIE_GROUP_WEIGHT, ZOMBIE_GROUP_MIN, ZOMBIE_GROUP_MAX
+        //);
+
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
             SpawnGroup.MONSTER, CFTPEntities.CREEPER_COOKIE,
-            30, 1, 1
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 
         BiomeModifications.addSpawn(
                 BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
                 SpawnGroup.MONSTER, CFTPEntities.CREEPER_ENDER,
-                30, 1, 1
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
             SpawnGroup.MONSTER, CFTPEntities.CREEPER_FIRE,
-            30, 1, 1
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 
         BiomeModifications.addSpawn(
                 BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
                 SpawnGroup.MONSTER, CFTPEntities.CREEPER_WIND,
-                30, 1, 1
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
             SpawnGroup.MONSTER, CFTPEntities.CREEPER_LIGHTING,
-            30, 1, 1
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
             SpawnGroup.MONSTER, CFTPEntities.CREEPER_WATER,
-            30, 1, 1
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
             SpawnGroup.MONSTER, CFTPEntities.CREEPER_DIRT,
-            30, 1, 1
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
             SpawnGroup.MONSTER, CFTPEntities.CREEPER_LAVA,
-            30, 1, 1
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 
         // ---

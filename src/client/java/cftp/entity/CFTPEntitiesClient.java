@@ -1,5 +1,6 @@
 package cftp.entity;
 
+import cftp.entity.charge.*;
 import cftp.entity.creeper.*;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
@@ -22,6 +23,7 @@ public class CFTPEntitiesClient {
         // WindChargeEntityModel
 
         EntityRendererRegistry.register(CFTPEntities.WATER_CHARGE, WaterChargeEntityRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.EARTH_CHARGE, EarthChargeEntityRenderer::new);
     }
 
 }

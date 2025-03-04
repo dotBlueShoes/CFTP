@@ -1,16 +1,12 @@
 package cftp.entity;
 
 import cftp.CFTP;
+import cftp.entity.charge.EarthChargeEntity;
+import cftp.entity.charge.WaterChargeEntity;
 import cftp.entity.creeper.*;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.projectile.WindChargeEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -85,7 +81,6 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_lava")))
     );
 
-    // 1. Should it be 'RegistryKeys.ENTITY_TYPE' ?
     public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")),
@@ -96,6 +91,18 @@ public class CFTPEntities {
                     .maxTrackingRange(4)
                     .trackingTickInterval(10)
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")))
+    );
+
+    public static final EntityType<EarthChargeEntity> EARTH_CHARGE = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "earth_charge")),
+            EntityType.Builder.<EarthChargeEntity>create(EarthChargeEntity::new, SpawnGroup.MISC)
+                    .dropsNothing()
+                    .dimensions(0.3125F, 0.3125F)
+                    .eyeHeight(0.0F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(10)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "earth_charge")))
     );
 
     //public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(

@@ -1,4 +1,4 @@
-package cftp.entity;
+package cftp.entity.charge;
 
 import cftp.CFTP;
 import net.fabricmc.api.EnvType;
@@ -16,7 +16,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class WaterChargeEntityRenderer extends EntityRenderer<AbstractChargeEntity, EntityRenderState> {
+public class WaterChargeEntityRenderer extends EntityRenderer<AbstractWaterChargeEntity, EntityRenderState> {
 
     //private static final Identifier TEXTURE = Identifier.ofVanilla("textures/entity/projectiles/wind_charge.png");
     private static final Identifier TEXTURE = Identifier.of(CFTP.MOD_ID, "textures/entity/projectiles/water_charge.png");

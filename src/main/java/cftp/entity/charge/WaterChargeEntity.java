@@ -1,21 +1,18 @@
-package cftp.entity;
+package cftp.entity.charge;
 
 import cftp.CFTP;
+import cftp.entity.CFTPEntities;
 import cftp.item.CFTPItems;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ProjectileDeflection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -27,17 +24,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class WaterChargeEntity extends AbstractChargeEntity {
+public class WaterChargeEntity extends AbstractWaterChargeEntity {
 
-    private static final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
-            true, false, Optional.of(1.22F), Registries.BLOCK.getOptional(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
-    );
-
-    private static final float EXPLOSION_POWER = 1.2F;
     private static final float MAX_RENDER_DISTANCE_WHEN_NEWLY_SPAWNED = MathHelper.square(3.5F);
     private int deflectCooldown = 5;
 
-    public WaterChargeEntity(EntityType<? extends AbstractChargeEntity> entityType, World world) {
+    public WaterChargeEntity(EntityType<? extends AbstractWaterChargeEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -69,7 +61,7 @@ public class WaterChargeEntity extends AbstractChargeEntity {
 
     @Override
     protected void createExplosion(Vec3d pos) {
-        CFTP.LOGGER.info("call");
+
         if (this.getWorld() instanceof ServerWorld serverWorld) {
 
             BlockPos blockPos = BlockPos.ofFloored(
@@ -78,32 +70,9 @@ public class WaterChargeEntity extends AbstractChargeEntity {
                     pos.z
             );
 
-            //BlockState state = serverWorld.getBlockState(blockPos);
-            //Block block = state.getBlock();
-
             serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
 
-            //if (block.shouldDrop(explosion)) {
-            //    ItemStack itemStack = new ItemStack(block.asItem(), 1);
-            //    Block.dropStack(serverWorld, blockPos, itemStack);
-            //}
         }
-
-        //this.getWorld()
-        //        .createExplosion(
-        //                this,
-        //                null,
-        //                EXPLOSION_BEHAVIOR,
-        //                pos.getX(),
-        //                pos.getY(),
-        //                pos.getZ(),
-        //                1.2F,
-        //                false,
-        //                World.ExplosionSourceType.TRIGGER,
-        //                ParticleTypes.GUST_EMITTER_SMALL,
-        //                ParticleTypes.GUST_EMITTER_LARGE,
-        //                SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST
-        //        );
     }
 
     @Override

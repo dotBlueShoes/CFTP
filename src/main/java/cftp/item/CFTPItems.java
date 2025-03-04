@@ -1,7 +1,7 @@
 package cftp.item;
 
 import cftp.CFTP;
-import net.minecraft.item.WindChargeItem;
+import cftp.item.items.*;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKey;
@@ -20,7 +20,7 @@ public class CFTPItems {
             new Item.Settings()
     );
 
-    public static final Item EARTH_CHARGE = register("earth_charge", WindChargeItem::new,
+    public static final Item EARTH_CHARGE = register("earth_charge", EarthChargeItem::new,
             new Item.Settings().useCooldown(0.5F)
     );
 

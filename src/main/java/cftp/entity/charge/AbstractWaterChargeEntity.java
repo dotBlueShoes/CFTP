@@ -1,5 +1,6 @@
 package cftp.entity.charge;
 
+import cftp.CFTP;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -74,7 +75,11 @@ public abstract class AbstractWaterChargeEntity extends ExplosiveProjectileEntit
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
+
         if (this.getWorld() instanceof ServerWorld serverWorld) {
+
+            CFTP.LOGGER.info("Earth Charge Hit Entity!");
+
             LivingEntity livingEntity2 = this.getOwner() instanceof LivingEntity livingEntity ? livingEntity : null;
             Entity entity = entityHitResult.getEntity();
             if (livingEntity2 != null) {
@@ -88,6 +93,7 @@ public abstract class AbstractWaterChargeEntity extends ExplosiveProjectileEntit
 
             this.createExplosion(this.getPos());
         }
+
     }
 
     @Override

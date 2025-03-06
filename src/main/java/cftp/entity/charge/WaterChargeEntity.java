@@ -4,11 +4,15 @@ import cftp.CFTP;
 import cftp.entity.CFTPEntities;
 import cftp.item.CFTPItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Waterloggable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ProjectileDeflection;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
@@ -64,13 +68,26 @@ public class WaterChargeEntity extends AbstractWaterChargeEntity {
 
         if (this.getWorld() instanceof ServerWorld serverWorld) {
 
-            BlockPos blockPos = BlockPos.ofFloored(
+            BlockPos position = BlockPos.ofFloored(
                     pos.x,
                     pos.y,
                     pos.z
             );
 
-            serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+            BlockState state = serverWorld.getBlockState(position);
+            Block block = state.getBlock();
+
+            // ISSUE
+            //  If we hit a block that is underneath cauldron (for example)
+            //  we will be then at cauldron position. Which is invalid
+            //  In such a case we should instead get previous x,y,z position
+            //  from its flight path.
+
+            if (block instanceof Waterloggable waterloggable) {
+                waterloggable.tryFillWithFluid(serverWorld, position, state, Fluids.WATER.getDefaultState());
+            } else if (state == Blocks.AIR.getDefaultState()) {
+                serverWorld.setBlockState(position, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+            }
 
         }
     }

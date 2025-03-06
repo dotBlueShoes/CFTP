@@ -6,6 +6,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -74,16 +76,48 @@ public abstract class AbstractEarthChargeEntity extends ExplosiveProjectileEntit
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
-        if (this.getWorld() instanceof ServerWorld serverWorld) {
-            LivingEntity livingEntity2 = this.getOwner() instanceof LivingEntity livingEntity ? livingEntity : null;
-            Entity entity = entityHitResult.getEntity();
-            if (livingEntity2 != null) {
-                livingEntity2.onAttacking(entity);
-            }
 
-            DamageSource damageSource = this.getDamageSources().windCharge(this, livingEntity2);
-            if (entity.damage(serverWorld, damageSource, 1.0F) && entity instanceof LivingEntity livingEntity3) {
-                EnchantmentHelper.onTargetDamaged(serverWorld, livingEntity3, damageSource);
+        if (this.getWorld() instanceof ServerWorld) {
+
+            LivingEntity sourceEntity = (LivingEntity)this.getOwner();
+            Entity targetEntity = entityHitResult.getEntity();
+
+            // What a world we're living.
+            assert sourceEntity != null;
+            sourceEntity.onAttacking(targetEntity);
+
+
+            if (targetEntity instanceof LivingEntity livingTargetEntity) {
+
+                // Minecraft by default has 20 ticks per second. And so here a second is equal to 20.
+                // command: effect give @p minecraft:slowness 5 255
+
+                final int DURATION = 35;
+                final int SECOND = 20;
+
+                // PETRIFICATION
+                // - entity becomes unable to move or jump for a specified duration of time.
+
+                { // Slowness
+                    StatusEffectInstance instance = new StatusEffectInstance(StatusEffects.SLOWNESS, SECOND * DURATION, 255);
+                    livingTargetEntity.addStatusEffect(instance, sourceEntity);
+                }
+
+                // { // Weakness
+                //     StatusEffectInstance instance = new StatusEffectInstance(StatusEffects.WEAKNESS, SECOND * DURATION, 255);
+                //     livingTargetEntity.addStatusEffect(instance, sourceEntity);
+                // }
+
+                { // Negative Jump Boost
+                    StatusEffectInstance instance = new StatusEffectInstance(StatusEffects.JUMP_BOOST, SECOND * DURATION, 255);
+                    livingTargetEntity.addStatusEffect(instance, sourceEntity);
+                }
+
+                // { // Negative HUNGER
+                //     StatusEffectInstance instance = new StatusEffectInstance(StatusEffects.HUNGER, SECOND * DURATION, 255);
+                //     livingTargetEntity.addStatusEffect(instance, sourceEntity);
+                // }
+
             }
 
             this.createExplosion(this.getPos());

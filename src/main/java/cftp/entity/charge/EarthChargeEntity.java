@@ -67,7 +67,7 @@ public class EarthChargeEntity extends AbstractEarthChargeEntity {
     @Override
     protected void createExplosion(Vec3d pos) {
 
-        CFTP.LOGGER.info("Earth Charge Hit Call!");
+        //CFTP.LOGGER.info("Earth Charge Hit Call!");
 
         // Stunning Players
         // https://www.reddit.com/r/MinecraftCommands/comments/om6iay/how_do_i_make_a_stick_stun_a_player/

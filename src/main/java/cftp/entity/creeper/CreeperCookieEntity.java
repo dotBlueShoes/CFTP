@@ -59,6 +59,11 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
                         serverWorld, this.getX(), this.getY(), this.getZ(),
                         new ItemStack(Items.COOKIE, 5 * chargedAmount)
                 );
+
+                itemEntity.setVelocity(
+                        itemEntity.getVelocity().multiply(2.0, 2.0, 2.0)
+                );
+
                 itemEntity.setToDefaultPickupDelay();
                 serverWorld.spawnEntity(itemEntity);
             }

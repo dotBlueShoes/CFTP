@@ -12,8 +12,8 @@ import java.util.function.Function;
 
 public class CFTPItems {
 
-    public static final Item ELEMENTAL_POWDER = register("elemental_powder", Item::new,
-            new Item.Settings()
+    public static final Item ELEMENTAL_POWDER = register("elemental_powder", ElementalPowderItem::new,
+            new ElementalPowderItem.Settings()
     );
 
     public static final Item SAW_DUST = register("saw_dust", Item::new,

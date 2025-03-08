@@ -72,6 +72,14 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_dirt")))
     );
 
+    public static final EntityType<CreeperEarthEntity> CREEPER_EARTH = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_earth")),
+            EntityType.Builder.create(CreeperEarthEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_earth")))
+    );
+
     public static final EntityType<CreeperLavaEntity> CREEPER_LAVA = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_lava")),
@@ -119,6 +127,7 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_ENDER, CreeperLightingEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_COOKIE, CreeperCookieEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_WATER, CreeperWaterEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_EARTH, CreeperEarthEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_FIRE, CreeperFireEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_DIRT, CreeperDirtEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_LAVA, CreeperLavaEntity.createAttributes());

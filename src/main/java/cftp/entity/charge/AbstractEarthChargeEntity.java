@@ -120,7 +120,8 @@ public abstract class AbstractEarthChargeEntity extends ExplosiveProjectileEntit
 
             }
 
-            this.createExplosion(this.getPos());
+            // TODO - I might make it a AOE ability in the future.
+            //this.createExplosion(this.getPos());
         }
     }
 

@@ -120,10 +120,16 @@ public class CFTPEntitySpawns {
         );
 
         BiomeModifications.addSpawn(
-            BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
-            SpawnGroup.MONSTER, CFTPEntities.CREEPER_DIRT,
+                BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
+                SpawnGroup.MONSTER, CFTPEntities.CREEPER_EARTH,
                 CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
+
+        //BiomeModifications.addSpawn(
+        //    BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
+        //    SpawnGroup.MONSTER, CFTPEntities.CREEPER_DIRT,
+        //        CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+        //);
 
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),

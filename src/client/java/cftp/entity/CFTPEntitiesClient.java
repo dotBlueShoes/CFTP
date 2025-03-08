@@ -11,6 +11,7 @@ public class CFTPEntitiesClient {
         EntityRendererRegistry.register(CFTPEntities.CREEPER_COOKIE, CreeperCookieRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_ENDER, CreeperEnderRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_WATER, CreeperWaterRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_EARTH, CreeperEarthRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_FIRE, CreeperFireRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_LAVA, CreeperLavaRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_DIRT, CreeperDirtRenderer::new);

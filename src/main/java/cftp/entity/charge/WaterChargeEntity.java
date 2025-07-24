@@ -102,12 +102,13 @@ public class WaterChargeEntity extends AbstractWaterChargeEntity {
             //int condition = (block instanceof Waterloggable) << 1
 
             int condition = 0;
-            condition = (block instanceof Waterloggable    ? 1 : condition);
-            condition = (block == Blocks.AIR               ? 2 : condition);
-            condition = (block == Blocks.CAULDRON          ? 3 : condition);
-            condition = (block == Blocks.WATER_CAULDRON    ? 4 : condition);
-            condition = (block == Blocks.LAVA_CAULDRON     ? 5 : condition);
-            condition = (block == Blocks.LAVA              ? 6 : condition);
+            condition = (block instanceof Waterloggable                                 ? 1 : condition);
+            condition = (block == Blocks.AIR                                            ? 2 : condition);
+            condition = (block == Blocks.CAULDRON                                       ? 3 : condition);
+            condition = (block == Blocks.WATER_CAULDRON                                 ? 4 : condition);
+            condition = (block == Blocks.LAVA_CAULDRON                                  ? 5 : condition);
+            condition = (block == Blocks.LAVA && state.getFluidState().isStill()  ? 6 : condition);
+            condition = (block == Blocks.LAVA && !state.getFluidState().isStill() ? 7 : condition);
 
             switch (condition) {
                 case 1: {
@@ -125,15 +126,16 @@ public class WaterChargeEntity extends AbstractWaterChargeEntity {
                     serverWorld.setBlockState(position, blockState);
                 } break;
 
-                case 6: {
-                    BlockState blockState = Blocks.COBBLESTONE.getDefaultState();
+                case 5:
+                case 6:{
+                    BlockState blockState = Blocks.OBSIDIAN.getDefaultState();
                     serverWorld.setBlockState(position, blockState);
                 } break;
 
-                case 5: {
-                    BlockState blockState = Blocks.OBSIDIAN.getDefaultState();
+                case 7: {
+                    BlockState blockState = Blocks.COBBLESTONE.getDefaultState();
                     serverWorld.setBlockState(position, blockState);
-                }
+                } break;
 
                 default: {
                     serverWorld.breakBlock(position, true, this.getOwner());

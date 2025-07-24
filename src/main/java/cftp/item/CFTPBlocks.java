@@ -78,6 +78,18 @@ public class CFTPBlocks {
         return Registry.register(Registries.BLOCK, key, block);
     }
 
+    //private static Block registerCauldron(String name, AbstractBlock.Settings blockSettings) {
+    //    RegistryKey<Block> key = RegistryKey.of(
+    //            RegistryKeys.BLOCK,
+    //            Identifier.of(CFTP.MOD_ID, name)
+    //    );
+    //
+    //    LeveledCauldronBlock block = new LeveledCauldronBlock(blockSettings.registryKey(key));
+    //    registerBlockItem(name, block);
+    //
+    //    return Registry.register(Registries.BLOCK, key, block);
+    //}
+
     private static Block registerDefaultBlock(String name, AbstractBlock.Settings blockSettings) {
         RegistryKey<Block> key = RegistryKey.of(
                 RegistryKeys.BLOCK,

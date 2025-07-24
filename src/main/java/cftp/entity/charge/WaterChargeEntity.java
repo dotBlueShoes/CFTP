@@ -3,10 +3,7 @@ package cftp.entity.charge;
 import cftp.CFTP;
 import cftp.entity.CFTPEntities;
 import cftp.item.CFTPItems;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Waterloggable;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ProjectileDeflection;
@@ -14,13 +11,17 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.WaterFluid;
 import net.minecraft.item.Item;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldEvents;
+import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
 import net.minecraft.world.explosion.ExplosionBehavior;
 import org.jetbrains.annotations.Nullable;
@@ -63,6 +64,15 @@ public class WaterChargeEntity extends AbstractWaterChargeEntity {
         return this.deflectCooldown > 0 ? false : super.deflect(deflection, deflector, owner, fromAttack);
     }
 
+    private void createSplash(ServerWorld world, BlockPos position) {
+        world.spawnParticles(ParticleTypes.SPLASH,
+            position.getX() + 0.5, position.getY() + 0.9, position.getZ() + 0.5,
+            7,
+            0.5f, 0.5f, 0.5f,
+            1.0f
+        );
+    }
+
     @Override
     protected void createExplosion(Vec3d pos) {
 
@@ -83,11 +93,82 @@ public class WaterChargeEntity extends AbstractWaterChargeEntity {
             //  In such a case we should instead get previous x,y,z position
             //  from its flight path.
 
-            if (block instanceof Waterloggable waterloggable) {
-                waterloggable.tryFillWithFluid(serverWorld, position, state, Fluids.WATER.getDefaultState());
-            } else if (state == Blocks.AIR.getDefaultState()) {
-                serverWorld.setBlockState(position, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+            //CauldronBlock cauldron;
+            //BlockState blockState = Blocks.WATER_CAULDRON.getDefaultState();
+            //world.setBlockState(pos, blockState);
+            //world.emitGameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Emitter.of(blockState));
+            //world.syncWorldEvent(WorldEvents.POINTED_DRIPSTONE_DRIPS_WATER_INTO_CAULDRON, pos, 0);
+
+            //int condition = (block instanceof Waterloggable) << 1
+
+            int condition = 0;
+            condition = (block instanceof Waterloggable    ? 1 : condition);
+            condition = (block == Blocks.AIR               ? 2 : condition);
+            condition = (block == Blocks.CAULDRON          ? 3 : condition);
+            condition = (block == Blocks.WATER_CAULDRON    ? 4 : condition);
+            condition = (block == Blocks.LAVA_CAULDRON     ? 5 : condition);
+            condition = (block == Blocks.LAVA              ? 6 : condition);
+
+            switch (condition) {
+                case 1: {
+                    Waterloggable waterloggable = (Waterloggable) block;
+                    waterloggable.tryFillWithFluid(serverWorld, position, state, Fluids.WATER.getDefaultState());
+                } break;
+
+                case 2: {
+                    serverWorld.setBlockState(position, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                } break;
+
+                case 3:
+                case 4: {
+                    BlockState blockState = Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 3);
+                    serverWorld.setBlockState(position, blockState);
+                } break;
+
+                case 6: {
+                    BlockState blockState = Blocks.COBBLESTONE.getDefaultState();
+                    serverWorld.setBlockState(position, blockState);
+                } break;
+
+                case 5: {
+                    BlockState blockState = Blocks.OBSIDIAN.getDefaultState();
+                    serverWorld.setBlockState(position, blockState);
+                }
+
+                default: {
+                    serverWorld.breakBlock(position, true, this.getOwner());
+                    serverWorld.setBlockState(position, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                }
             }
+
+            createSplash(serverWorld, position);
+
+
+
+
+            //if (block instanceof Waterloggable waterloggable) {
+            //    waterloggable.tryFillWithFluid(serverWorld, position, state, Fluids.WATER.getDefaultState());
+            //} else if (state == Blocks.AIR.getDefaultState()) {
+            //    serverWorld.setBlockState(position, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+            //} else if (state == Blocks.CAULDRON.getDefaultState()) {
+            //    BlockState blockState = Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 3);
+            //    serverWorld.setBlockState(position, blockState);
+            //} else if (state == Blocks.LAVA.getDefaultState()) {
+            //    BlockState blockState = Blocks.COBBLESTONE.getDefaultState();
+            //    serverWorld.setBlockState(position, blockState);
+            //} else if (block == Blocks.WATER_CAULDRON){
+            //    serverWorld.spawnParticles(
+            //            ParticleTypes.SPLASH,
+            //            position.getX() + 0.5, position.getY() + 0.9, position.getZ() + 0.5,
+            //            7, // number of particles
+            //            0.5f, 0.5f, 0.5f, // spread
+            //            1.0f // particle speed
+            //    );
+            //} else {
+            //    // LOG CFTP.LOGGER.info("Weird explosion!");
+            //    serverWorld.breakBlock(position, true, this.getOwner());
+            //    serverWorld.setBlockState(position, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+            //}
 
         }
     }

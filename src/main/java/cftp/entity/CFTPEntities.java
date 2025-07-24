@@ -124,7 +124,7 @@ public class CFTPEntities {
 
     public static void register(){
         FabricDefaultAttributeRegistry.register(CREEPER_LIGHTING, CreeperLightingEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(CREEPER_ENDER, CreeperLightingEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_ENDER, CreeperEnderEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_COOKIE, CreeperCookieEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_WATER, CreeperWaterEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_EARTH, CreeperEarthEntity.createAttributes());

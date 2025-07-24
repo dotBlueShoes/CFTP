@@ -37,7 +37,7 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 18)
+                .add(EntityAttributes.MAX_HEALTH, 20)
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.45f)
                 .add(EntityAttributes.ATTACK_DAMAGE, 10)
                 .add(EntityAttributes.FOLLOW_RANGE, 20);

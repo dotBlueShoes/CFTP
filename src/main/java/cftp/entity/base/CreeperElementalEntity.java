@@ -1,5 +1,7 @@
 package cftp.entity.base;
 
+import cftp.CFTP;
+import cftp.entity.creeper.CreeperCookieEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -11,6 +13,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.GoatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
@@ -19,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -27,22 +31,48 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.SpawnHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 
+import static cftp.entity.CFTPEntities.CREEPER_COOKIE;
+
 public class CreeperElementalEntity extends HostileEntity {
 
     protected static final TrackedData<Integer> FUSE_SPEED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.INTEGER);
     protected static final TrackedData<Boolean> CHARGED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> IGNITED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
     protected int lastFuseTime;
     protected int currentFuseTime;
-    protected int fuseTime = 30;
-    protected int explosionRadius = 3;
     protected int headsDropped;
+
+    protected int fuseTime = 10;
+    protected int explosionRadius = 3;
+
+    // world.getDifficulty() != Difficulty.PEACEFUL
+
+    public void difficulty (Difficulty difficulty) {
+        switch (difficulty) {
+            case EASY -> {
+                explosionRadius = 3;
+                fuseTime = 30;
+            }
+            case NORMAL -> {
+                explosionRadius = 3;
+                fuseTime = 20;
+            }
+            case HARD -> {
+                explosionRadius = 4;
+                fuseTime = 10;
+            }
+        }
+    }
 
     public CreeperElementalEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -295,5 +325,69 @@ public class CreeperElementalEntity extends HostileEntity {
 
     public void onHeadDropped() {
         this.headsDropped++;
+    }
+
+    @Override
+    public int getLimitPerChunk() {
+        return 15;
+    }
+
+    @Override
+    public void onDeath(DamageSource damageSource) {
+        super.onDeath(damageSource);
+
+        int weight = random.nextInt(100);
+
+        if (weight > 75) {
+            World world = getWorld();
+
+            if (world instanceof ServerWorld serverWorld) {
+                CFTP.LOGGER.info("Server Spawn");
+
+                EntityData entityData = null;
+                var entity = CREEPER_COOKIE.create(world, SpawnReason.NATURAL);
+                if (entity == null) {
+                    CFTP.LOGGER.warn("Error");
+                    return;
+                }
+
+                entity.refreshPositionAndAngles(getX(), getY(), getZ(), world.random.nextFloat() * 360.0F, 0.0F);
+                entityData = entity.initialize(serverWorld, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.NATURAL, entityData);
+                serverWorld.spawnEntityAndPassengers(entity);
+            }
+        }
+
+
+
+        //SpawnHelper.createMob
+
+
+
+        //if (isValidSpawn(world, mobEntity, f)) {
+
+        //entityData = entity.initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.NATURAL, entityData);
+
+        //    j++;
+        //    p++;
+        //    world.spawnEntityAndPassengers(mobEntity);
+        //    runner.run(mobEntity, chunk);
+        //    if (j >= mobEntity.getLimitPerChunk()) {
+        //        return;
+        //    }
+
+        //    if (mobEntity.spawnsTooManyForEachTry(p)) {
+        //        break;
+        //    }
+
+        //try {
+        //    if (CREEPER_COOKIE.create(getWorld(), SpawnReason.NATURAL) instanceof MobEntity mobEntity) {
+        //        //return mobEntity;
+        //    }
+        //
+        //    //LOGGER.warn("Can't spawn entity of type: {}", Registries.ENTITY_TYPE.getId(type));
+        //} catch (Exception exception) {
+        //    //LOGGER.warn("Failed to create mob", (Throwable)var4);
+        //}
+
     }
 }

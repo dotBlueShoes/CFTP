@@ -13,6 +13,10 @@
 27. water charge hit particle burst.
 28. Carpenter's Table - Stone cutter alternative for wood
 29. Another Wooden block like sticks crafted 
+30. change getLimitPerChunk for zombies and skeletons.
+31. fall through leaves and packed wool?
+32. elemental powder does not burn in lava instead it can be combined inside of it.
+33. emit burn particles when creating a combustion in a cauldron
 
 Missing Creepers
 - Ghost Creeper (only visible in close range)
@@ -22,3 +26,7 @@ Missing Creepers
 - Ender Creeper (teleports u randomly to a valid position)
 - Mama Creeper (summons child creepers at death)
 - Child Creeper (faster than normal creeper)
+
+
+// Actual entity spawning is handled inside:
+// SpawnHelper.spawnEntitiesInChunk

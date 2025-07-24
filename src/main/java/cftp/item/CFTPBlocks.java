@@ -1,14 +1,12 @@
 package cftp.item;
 
 import cftp.CFTP;
+import cftp.blocks.SparkBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.fabricmc.fabric.impl.content.registry.FlammableBlockRegistryImpl;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.ColoredFallingBlock;
-import net.minecraft.block.MapColor;
+import net.minecraft.block.*;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -32,6 +30,8 @@ public class CFTPBlocks {
     //                .burnable()
     //);
 
+    //  world.addParticle(ParticleTypes.HEART, playerEntity.getX(), playerEntity.getY() + 2.0, playerEntity.getZ(), 0.0, 0.0, 0.0);
+
     public static final Block SAW_DUST_BLOCK = registerFallingBlock(
             "saw_dust_block",
             AbstractBlock.Settings.create()
@@ -39,7 +39,26 @@ public class CFTPBlocks {
                     .strength(0.5F)
                     .sounds(BlockSoundGroup.GRAVEL)
                     .burnable()
+                    //.nonOpaque()
+                    .noCollision()
+                    //.allowsSpawning(Blocks::never)
+                    //.solidBlock(Blocks::never)
+                    //.suffocates(Blocks::always)
+                    //.blockVision(Blocks::always)
     );
+
+    //Block GLASS = register(
+    //        "glass",
+    //        TransparentBlock::new,
+    //        AbstractBlock.Settings.create()
+    //                .instrument(NoteBlockInstrument.HAT)
+    //                .strength(0.3F)
+    //                .sounds(BlockSoundGroup.GLASS)
+    //                .nonOpaque()
+    //                .allowsSpawning(Blocks::never)
+    //                .solidBlock(Blocks::never)
+    //                .suffocates(Blocks::never)
+    //                .blockVision(Blocks::never)
 
     //public static final Block SAW_DUST_BLOCK = register(
     //        "saw_dust_block",
@@ -53,7 +72,7 @@ public class CFTPBlocks {
                 Identifier.of(CFTP.MOD_ID, name)
         );
 
-        Block block = new ColoredFallingBlock(new ColorCode(-8356741), blockSettings.registryKey(key));
+        Block block = new SparkBlock(new ColorCode(-8356741), blockSettings.registryKey(key));
         registerBlockItem(name, block);
 
         return Registry.register(Registries.BLOCK, key, block);

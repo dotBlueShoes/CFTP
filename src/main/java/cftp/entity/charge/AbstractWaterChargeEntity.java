@@ -78,18 +78,31 @@ public abstract class AbstractWaterChargeEntity extends ExplosiveProjectileEntit
 
         if (this.getWorld() instanceof ServerWorld serverWorld) {
 
-            CFTP.LOGGER.info("Earth Charge Hit Entity!");
+            // LOG CFTP.LOGGER.info("Water Charge Hit Entity!");
 
-            LivingEntity livingEntity2 = this.getOwner() instanceof LivingEntity livingEntity ? livingEntity : null;
-            Entity entity = entityHitResult.getEntity();
-            if (livingEntity2 != null) {
-                livingEntity2.onAttacking(entity);
+            if (this.getOwner() instanceof LivingEntity owner) {
+                Entity target = entityHitResult.getEntity();
+                owner.onAttacking(target);
+
+                DamageSource damageSource = this.getDamageSources().windCharge(this, owner);
+
+                if (target.damage(serverWorld, damageSource, 1.0F)) {
+                    EnchantmentHelper.onTargetDamaged(serverWorld, owner, damageSource);
+                }
             }
 
-            DamageSource damageSource = this.getDamageSources().windCharge(this, livingEntity2);
-            if (entity.damage(serverWorld, damageSource, 1.0F) && entity instanceof LivingEntity livingEntity3) {
-                EnchantmentHelper.onTargetDamaged(serverWorld, livingEntity3, damageSource);
-            }
+            //LivingEntity livingEntity2 = this.getOwner() instanceof LivingEntity livingEntity ? livingEntity : null;
+            //
+            //Entity entity = entityHitResult.getEntity();
+            //if (livingEntity2 != null) {
+            //    livingEntity2.onAttacking(entity);
+            //}
+            //
+            //DamageSource damageSource = this.getDamageSources().windCharge(this, livingEntity2);
+
+            //if (entity.damage(serverWorld, damageSource, 1.0F) && entity instanceof LivingEntity livingEntity3) {
+            //    EnchantmentHelper.onTargetDamaged(serverWorld, livingEntity3, damageSource);
+            //}
 
             this.createExplosion(this.getPos());
         }
@@ -118,6 +131,7 @@ public abstract class AbstractWaterChargeEntity extends ExplosiveProjectileEntit
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
         if (!this.getWorld().isClient) {
+            //CFTP.LOGGER.info("collider!");
             this.discard();
         }
     }

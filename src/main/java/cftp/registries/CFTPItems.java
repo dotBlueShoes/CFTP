@@ -1,4 +1,4 @@
-package cftp.item;
+package cftp.registries;
 
 import cftp.CFTP;
 import cftp.item.items.*;
@@ -6,11 +6,16 @@ import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
 
 public class CFTPItems {
+
+    //public static final TagKey<Item> GUNS_TAG = TagKey.of(RegistryKeys.ITEM,  Identifier.of("my_mod", "guns"));
+    //public static final TagKey<Item> CHARGES = TagKey.of(RegistryKeys.ITEM,  Identifier.of("cftp", "charges"));
+    public static final TagKey<Item> CHARGES = TagKey.of(RegistryKeys.ITEM, Identifier.of(CFTP.MOD_ID, "charges"));
 
     public static final Item ELEMENTAL_POWDER = register("elemental_powder", ElementalPowderItem::new,
             new ElementalPowderItem.Settings()
@@ -40,6 +45,14 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    //public static final Item COPPER_ROD = register("copper_rod", Item::new,
+    //        new Item.Settings()
+    //);
+
+    public static final Item COPPER_ROD = register("copper_rod", Wand::new,
+            new Wand.Settings()
+    );
+
     //public static final Item FIRE_CHARGE = register("fire_charge", FireChargeItem::new);
     //public static final Item WIND_CHARGE = register("wind_charge", WindChargeItem::new, new Item.Settings().useCooldown(0.5F));
 
@@ -60,5 +73,8 @@ public class CFTPItems {
             builder.add(SAW_DUST, 100); // 0.5 item
         });
     }
+
+    //public static final Item BOW = register("bow", BowItem::new, new Item.Settings().maxDamage(384).enchantable(1));
+    //public static final Item ARROW = register("arrow", ArrowItem::new);
 
 }

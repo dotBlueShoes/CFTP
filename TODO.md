@@ -30,6 +30,9 @@ I could make it so that the drop appears always at mob explosion position.
 43. Make it so long short grass drops seeds instead when explosion encountered.
 44. Water creeper can waterlog instead of replacing a block with water.
 45. Right clicking a normal creeper with a special item makes it a special kind of creeper like cookie creeper
+46. Creeper in the bottle throw an elemental or normal creeper.
+47. An enchantment that increases the amount of experience gain when killing an enemy does not work with mending
+48. An enchantment to possess elemental creeper power.
 
 Missing Creepers
 - Ghost Creeper (only visible in close range)

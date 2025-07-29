@@ -1,13 +1,18 @@
 package cftp;
 
 import cftp.entity.CFTPEntities;
-import cftp.item.CFTPBlocks;
-import cftp.item.CFTPItemGroups;
-import cftp.item.CFTPItems;
+import cftp.registries.CFTPBlocks;
+import cftp.registries.CFTPItemGroups;
+import cftp.registries.CFTPItems;
+import cftp.registries.CFTPTags;
 import cftp.world.gen.CFTPEntitySpawns;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,5 +37,12 @@ public class CFTP implements ModInitializer {
 		CFTPItemGroups.register();
 		CFTPEntities.register();
 		CFTPEntitySpawns.register();
+
+		//ItemStack itemStack = new ItemStack(CFTPItems.EARTH_CHARGE, 1);
+		//if (itemStack.isIn(CFTPTags.CHARGES)) {
+		//	LOGGER.error("Matched charge tag!");
+		//} else {
+		//	LOGGER.error("NOPE! Matched charge tag!");
+		//}
 	}
 }

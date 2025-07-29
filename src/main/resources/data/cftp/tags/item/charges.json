@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:fire_charge",
+    "minecraft:wind_charge",
+    "cftp:water_charge",
+    "cftp:earth_charge"
+  ]
+}

@@ -1,4 +1,4 @@
-package cftp.item;
+package cftp.registries;
 
 import cftp.CFTP;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -28,6 +28,7 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.COIN_COPPER);
                                 entries.add(CFTPItems.COIN_IRON);
                                 entries.add(CFTPItems.COIN_GOLD);
+                                entries.add(CFTPItems.COPPER_ROD);
                                 entries.add(CFTPBlocks.SAW_DUST_BLOCK);
                             }
                     )

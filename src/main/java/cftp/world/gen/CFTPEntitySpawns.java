@@ -59,8 +59,8 @@ public class CFTPEntitySpawns {
 
 
         final int CREEPER_GROUP_WEIGHT = 20;
-        final int CREEPER_GROUP_MIN = 2;
-        final int CREEPER_GROUP_MAX = 6;
+        final int CREEPER_GROUP_MIN = 1;
+        final int CREEPER_GROUP_MAX = 7;
 
         final int ZOMBIE_GROUP_WEIGHT = 30;
         final int ZOMBIE_GROUP_MIN = 5;
@@ -134,6 +134,12 @@ public class CFTPEntitySpawns {
         BiomeModifications.addSpawn(
             BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
             SpawnGroup.MONSTER, CFTPEntities.CREEPER_LAVA,
+                CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+        );
+
+        BiomeModifications.addSpawn(
+                BiomeSelectors.includeByKey( (RegistryKey<Biome>[]) ALL_BIOMES),
+                SpawnGroup.MONSTER, CFTPEntities.CREEPER_GHOST,
                 CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
         );
 

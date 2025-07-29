@@ -267,6 +267,10 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
         }
 
         this.teleportEntity(serverWorld, serverPlayerEntity, x, y, z);
+
+        // Create particles and sound at the position player teleported to.
+        createTeleportParticles(serverWorld, x, y, z);
+        createTeleportSound(serverWorld, x, y, z);
     }
 
     public void getNonHardDifficultyTeleport(
@@ -319,54 +323,41 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
             }
         }
 
-        // for (int i = 0; i < 32; i++) {
-        //    //			this.getWorld()
-        //    //				.addParticle(
-        //    //					ParticleTypes.PORTAL, this.getX(), this.getY() + this.random.nextDouble() * 2.0, this.getZ(), this.random.nextGaussian(), 0.0, this.random.nextGaussian()
-        //    //				);
-        //    //		}
-
         this.teleportEntity(serverWorld, serverPlayerEntity, x, y, z);
 
-        serverWorld.playSound(
+        // Create particles and sound at the position player teleported to.
+        createTeleportParticles(serverWorld, x, y, z);
+        createTeleportSound(serverWorld, x, y, z);
+    }
+
+    private void createTeleportSound (ServerWorld world, double x, double y, double z) {
+        world.playSound(
                 null, x, y, z,
                 SoundEvents.ENTITY_PLAYER_TELEPORT,
                 SoundCategory.PLAYERS
         );
+    }
 
-        //for (int i = 0; i < 32; i++) {
-        //    serverWorld.addParticle(
-        //        ParticleTypes.PORTAL,
-        //            x, y + this.random.nextDouble() * 2.0, z,
-        //            this.random.nextGaussian(), 0.0, this.random.nextGaussian()
-        //    );
-        //}
+    private void createTeleportParticles(ServerWorld world, double x, double y, double z) {
+        world.spawnParticles(ParticleTypes.PORTAL,
+                x + 0.5, y + 0.5, z + 0.5,
+                24,
+                0.5f, 0.5f, 0.5f,
+                0.25f
+        );
     }
 
     @Override
     protected void explode() {
-
         final World world = this.getWorld();
-
-        //if (world.isClient()) {
-        //    CFTP.LOGGER.info("1. Client!");
-        //}
 
         if (world instanceof ServerWorld serverWorld) {
 
             int chargedAmount = this.isCharged() ? 3 : 1;
             this.dead = true;
 
-            // this.getWorld().isClient() && this.isAlive()
-
-            { // Teleport Randomly
-
-                //this.teleportTo(this, d, e, f);
-            }
-
-            //if (this.getWorld().isClient()) {
-            //    CFTP.LOGGER.info("2. Client!");
-            //}
+            // Create teleport particles at creeper position.
+            createTeleportParticles(serverWorld, this.getX(), this.getY(), this.getZ());
 
             if (serverWorld.getDifficulty() == Difficulty.HARD) {
 
@@ -382,44 +373,11 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
 
             }
 
-            //BlockPos.Mutable mutable = new BlockPos.Mutable(newPosition.x, newPosition.y, newPosition.z);
-            //while (mutable.getY() > serverPlayerEntity.getWorld().getBottomY() && !serverPlayerEntity.getWorld().getBlockState(mutable).blocksMovement()) {
-            //    mutable.move(Direction.DOWN);
-            //}
-
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
 
         }
-
-        // particles don't work for some reason.
-        //else {
-        //    for (int i = 0; i < 32; i++) {
-        //        world.addParticle(
-        //                ParticleTypes.PORTAL,
-        //                this.getX(), this.getY() + this.random.nextDouble() * 2.0, this.getZ(),
-        //                this.random.nextGaussian(), 0.0, this.random.nextGaussian()
-        //        );
-        //    }
-        //}
-
-        //else {
-            //CFTP.LOGGER.info("2. Client!");
-
-            //for (PlayerEntity playerEntity : world.getPlayers()) {
-            //    if (playerEntity.squaredDistanceTo(this.getPos()) < 4096.0) {
-            //        //CFTP.LOGGER.info("call");
-            //
-            //        double x = this.getX() + (this.random.nextDouble() - 0.5) * 64.0;
-            //        double y = this.getY() + (this.random.nextInt(64) - 32);
-            //        double z = this.getZ() + (this.random.nextDouble() - 0.5) * 64.0;
-            //
-            //        this.teleportEntity(playerEntity, x, y, z);
-            //    }
-            //}
-        //}
-
     }
 
 }

@@ -23,9 +23,6 @@
 35. magic core block can be made using 1 copper block and 4 elemental dusts
 36. fire ingot, water ingot, wind ingot can be created using one copper ingot and a specific charge
 37. new ingots along with new crystals and other hard to obtain items craft items with new abilities but can also be sold for money.
-38. Ender creeper charged behaviour
-39. Ender creeper particles
-40. Ender creeper code clearing
 41. Instead of dropping the blocks at their destroyed block position 
 I could make it so that the drop appears always at mob explosion position.
 - Such behaviour should be easier to render and calculate as less ItemStacks would be created.

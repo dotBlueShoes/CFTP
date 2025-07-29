@@ -1,7 +1,8 @@
 package cftp.entity.creeper;
 
-import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.utility.PseudoRandom;
+import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -12,15 +13,14 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
 
-import java.util.Random;
-
 public class CreeperEarthEntity extends CreeperElementalEntity {
 
-    protected int explosionRadius = 5;
+    protected int ExplosionDiameter = 5;
 
     public CreeperEarthEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -44,34 +44,36 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
             Blocks.CLAY.getDefaultState(),
     };
 
-    final public static int[] EARTH_BLOCKS_PSEUDO_RAND = {
-            1, 4, 5, 0, 2, 4, 3, 3, 1, 6,
-            2, 1, 6, 5, 0, 3, 1, 0, 2, 4,
-            5, 2, 3, 4, 0, 6, 1, 5, 2, 6,
-            4, 2, 5, 1, 3, 0, 6, 5, 3, 6,
-            1, 0, 2, 4, 3, 2, 6, 1, 4, 0,
-            3, 2, 4, 5, 6, 3, 5, 2, 6, 4,
-            0, 5, 1, 3, 2, 4, 6, 1, 0, 5,
-            2, 6, 4, 3, 0, 1, 5, 6, 2, 4,
-            1, 3, 5, 2, 4, 0, 6, 5, 1, 3,
-            4, 0, 6, 2, 1, 5, 0, 4, 6, 3,
-            2, 6, 1, 0, 4, 5, 3, 2, 6, 5,
-            0, 4, 1, 3, 2, 6, 4, 5, 0, 1,
-            2, 3, 6, 5, 4, 2, 3, 0, 5, 6,
-            4, 1, 2, 6, 5, 0, 3, 4, 1, 5,
-            6, 2, 0, 4, 3, 1, 2, 6, 5, 4,
-            2, 1, 3, 6, 0, 4, 5, 2, 3, 1,
-            6, 0, 5, 4, 2, 6, 1, 3, 4, 0
-    };
 
     @Override
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final float chargedRadius = this.isCharged() ? 2.0F : 1.0F;
-            final int radius = (int)(this.explosionRadius * chargedRadius);
-            final int half = radius / 2;
+            final Difficulty difficulty = this.getWorld().getDifficulty();
+
+            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+
+            // For the case of extending the difficulty enum. We provide a default.
+            float diameter = this.ExplosionDiameter;
+            int dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+
+            switch (difficulty) {
+                case EASY: {
+                    diameter *= chargedPower;
+                } break;
+                case NORMAL: {
+                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    diameter *= 1.5f * chargedPower;
+                } break;
+                case HARD: {
+                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    diameter *= 2.0f * chargedPower;
+                } break;
+            }
+
+            final int iDiameter = (int) diameter;
+            final int radius = iDiameter / 2;
 
             // We're creating a pseudo explosion just to verify if the behaviour of blocks when destroyed.
             final ExplosionImpl explosion = new ExplosionImpl(
@@ -80,30 +82,28 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
                     Explosion.DestructionType.DESTROY
             );
 
-            for (int y = 0; y < radius; ++y) {
-                for (int x = 0; x < radius; ++x) {
-                    for (int z = 0; z < radius; ++z) {
+            var seed = (int)this.getX() + (int)this.getY() + (int)this.getZ();
 
-                        if (Math.pow(x - half, 2) + Math.pow(y - half, 2) + Math.pow(z - half, 2) <= Math.pow(half, 2)) {
+            for (int y = 0; y < iDiameter; ++y) {
+                for (int x = 0; x < iDiameter; ++x) {
+                    for (int z = 0; z < iDiameter; ++z) {
+                        if (Shapes.isSphere(x, y, z, radius)) {
                             BlockPos blockPos = BlockPos.ofFloored(
-                                    this.getX() + x - half,
-                                    this.getY() + y - half,
-                                    this.getZ() + z - half
+                                    this.getX() + x - radius,
+                                    this.getY() + y - radius,
+                                    this.getZ() + z - radius
                             );
 
                             BlockState state = serverWorld.getBlockState(blockPos);
                             Block block = state.getBlock();
 
-                            var start = (int)this.getX() % 3 + (int)this.getY() % 3 + (int)this.getZ() % 3;
-                            var index = EARTH_BLOCKS_PSEUDO_RAND[start + (x * radius * radius) + (y * radius) + z];
-                            CFTP.LOGGER.info("num: {}", index);
-
-                            ///EARTH_BLOCKS
+                            var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
+                            var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % EARTH_BLOCKS.length;
 
                             serverWorld.setBlockState(blockPos, EARTH_BLOCKS[index], Block.NOTIFY_ALL);
 
-                            // So that specific blocks won't drop.
-                            if (block.shouldDropItemsOnExplosion(explosion)) {
+                            // So that specific blocks won't drop and with a chance of not dropping at all.
+                            if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
 
                                 if (block.equals(Blocks.GRASS_BLOCK)) {
                                     block = Blocks.DIRT;
@@ -114,9 +114,7 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
                                 Block.dropStack(serverWorld, blockPos, itemStack);
                             }
 
-
                         }
-
                     }
                 }
             }

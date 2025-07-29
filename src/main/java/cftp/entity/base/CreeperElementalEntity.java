@@ -53,26 +53,31 @@ public class CreeperElementalEntity extends HostileEntity {
     protected int headsDropped;
 
     protected int fuseTime = 10;
-    protected int explosionRadius = 3;
+    protected int explosionDiameter = 3;
+
+
+    public static final float DROP_EXPLOSION_ITEM_CHANCE_EASY   = 1.00f;
+    public static final float DROP_EXPLOSION_ITEM_CHANCE_NORMAL = 0.75f;
+    public static final float DROP_EXPLOSION_ITEM_CHANCE_HARD   = 0.50f;
 
     // world.getDifficulty() != Difficulty.PEACEFUL
 
-    public void difficulty (Difficulty difficulty) {
-        switch (difficulty) {
-            case EASY -> {
-                explosionRadius = 3;
-                fuseTime = 30;
-            }
-            case NORMAL -> {
-                explosionRadius = 3;
-                fuseTime = 20;
-            }
-            case HARD -> {
-                explosionRadius = 4;
-                fuseTime = 10;
-            }
-        }
-    }
+    //public void difficulty (Difficulty difficulty) {
+    //    switch (difficulty) {
+    //        case EASY -> {
+    //            explosionRadius = 3;
+    //            fuseTime = 30;
+    //        }
+    //        case NORMAL -> {
+    //            explosionRadius = 3;
+    //            fuseTime = 20;
+    //        }
+    //        case HARD -> {
+    //            explosionRadius = 4;
+    //            fuseTime = 10;
+    //        }
+    //    }
+    //}
 
     public CreeperElementalEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -128,7 +133,7 @@ public class CreeperElementalEntity extends HostileEntity {
         }
 
         nbt.putShort("Fuse", (short)this.fuseTime);
-        nbt.putByte("ExplosionRadius", (byte)this.explosionRadius);
+        nbt.putByte("ExplosionDiameter", (byte)this.explosionDiameter);
         nbt.putBoolean("ignited", this.isIgnited());
     }
 
@@ -140,8 +145,8 @@ public class CreeperElementalEntity extends HostileEntity {
             this.fuseTime = nbt.getShort("Fuse");
         }
 
-        if (nbt.contains("ExplosionRadius", NbtElement.NUMBER_TYPE)) {
-            this.explosionRadius = nbt.getByte("ExplosionRadius");
+        if (nbt.contains("ExplosionDiameter", NbtElement.NUMBER_TYPE)) {
+            this.explosionDiameter = nbt.getByte("ExplosionDiameter");
         }
 
         if (nbt.getBoolean("ignited")) {
@@ -254,12 +259,12 @@ public class CreeperElementalEntity extends HostileEntity {
 
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
-            float chargedRadius = this.isCharged() ? 2.0F : 1.0F;
+            float chargedPower = this.isCharged() ? 2.0F : 1.0F;
             this.dead = true;
 
             serverWorld.createExplosion(
                     this, this.getX(), this.getY(), this.getZ(),
-                    (float)this.explosionRadius * chargedRadius,
+                    (float)this.explosionDiameter * chargedPower,
                     World.ExplosionSourceType.MOB
             );
 

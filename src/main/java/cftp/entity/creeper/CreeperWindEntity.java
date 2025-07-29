@@ -48,7 +48,7 @@ public class CreeperWindEntity extends CreeperElementalEntity {
     //        //TagKey.of(RegistryKeys.BLOCK, Identifier.of("minecraft", "blocks_wind_charge_explosions"));
     //);
 
-    protected int explosionRadius = 2;
+    protected int ExplosionDiameter = 5;
 
     public CreeperWindEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
@@ -152,7 +152,7 @@ public class CreeperWindEntity extends CreeperElementalEntity {
                     null,
                     EXPLOSION_BEHAVIOR,
                     entityPosition,
-                    5.0F, // HACK. We can cheat by setting this value higher than trigger distance.
+                    ExplosionDiameter, // HACK. We can cheat by setting this value higher than trigger distance.
                     false,
                     World.ExplosionSourceType.MOB
                     //ParticleTypes.GUST_EMITTER_SMALL,

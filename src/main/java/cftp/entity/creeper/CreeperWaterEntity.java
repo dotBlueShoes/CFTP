@@ -1,6 +1,7 @@
 package cftp.entity.creeper;
 
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -17,7 +18,7 @@ import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperWaterEntity extends CreeperElementalEntity {
 
-    protected int explosionRadius = 5;
+    protected int ExplosionDiameter = 5;
 
     public CreeperWaterEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
@@ -39,9 +40,9 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final float chargedRadius = this.isCharged() ? 2.0F : 1.0F;
-            final int radius = (int)(this.explosionRadius * chargedRadius);
-            final int half = radius / 2;
+            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+            final int diameter = (int)(this.ExplosionDiameter * chargedPower);
+            final int radius = diameter / 2;
 
             // TODO
             // 1. Instead of dropping the blocks at their destroyed block position
@@ -59,15 +60,15 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
             );
 
             // unoptimized
-            for (int y = 0; y < radius; ++y) {
-                for (int x = 0; x < radius; ++x) {
-                    for (int z = 0; z < radius; ++z) {
+            for (int y = 0; y < diameter; ++y) {
+                for (int x = 0; x < diameter; ++x) {
+                    for (int z = 0; z < diameter; ++z) {
+                        if (Shapes.isSphere(x, y, z, radius)) {
 
-                        if (Math.pow(x - half, 2) + Math.pow(y - half, 2) + Math.pow(z - half, 2) <= Math.pow(half, 2)) {
                             BlockPos blockPos = BlockPos.ofFloored(
-                                    this.getX() + x - half,
-                                    this.getY() + y - half,
-                                    this.getZ() + z - half
+                                    this.getX() + x - radius,
+                                    this.getY() + y - radius,
+                                    this.getZ() + z - radius
                             );
 
                             BlockState state = serverWorld.getBlockState(blockPos);
@@ -89,7 +90,6 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
 
 
                         }
-
                     }
                 }
             }

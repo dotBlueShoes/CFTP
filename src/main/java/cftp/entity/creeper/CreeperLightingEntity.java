@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class CreeperLightingEntity extends CreeperElementalEntity {
 
-    protected int explosionRadius = 2;
+    protected int ExplosionDiameter = 2;
 
     // TODO
     // 1. For lighting creeper implement own "ExplosionImpl" class.
@@ -62,7 +62,7 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final float chargedRadius = this.isCharged() ? 2.0F : 1.0F;
+            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
 
             { // Lighting Bolt
 
@@ -77,7 +77,7 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
 
             serverWorld.createExplosion(
                     this, this.getX(), this.getY(), this.getZ(),
-                    explosionRadius * chargedRadius, World.ExplosionSourceType.MOB
+                    ExplosionDiameter * chargedPower, World.ExplosionSourceType.MOB
             );
 
             this.spawnEffectsCloud();

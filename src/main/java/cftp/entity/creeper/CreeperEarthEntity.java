@@ -11,6 +11,7 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -75,7 +76,7 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
             final int iDiameter = (int) diameter;
             final int radius = iDiameter / 2;
 
-            // We're creating a pseudo explosion just to verify if the behaviour of blocks when destroyed.
+            // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
             final ExplosionImpl explosion = new ExplosionImpl(
                     serverWorld, null, null,
                     null, null, 1, false,
@@ -105,11 +106,19 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
                             // So that specific blocks won't drop and with a chance of not dropping at all.
                             if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
 
+                                ItemStack itemStack;
+
+                                // TODO. This prob. can be done better.
                                 if (block.equals(Blocks.GRASS_BLOCK)) {
                                     block = Blocks.DIRT;
+                                    itemStack = new ItemStack(block.asItem(), 1);
+                                } else if (block.equals(Blocks.SHORT_GRASS)) {
+                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
+                                } else if (block.equals(Blocks.TALL_GRASS)) {
+                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
+                                } else {
+                                    itemStack = new ItemStack(block.asItem(), 1);
                                 }
-
-                                ItemStack itemStack = new ItemStack(block.asItem(), 1);
 
                                 Block.dropStack(serverWorld, blockPos, itemStack);
                             }

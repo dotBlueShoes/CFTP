@@ -4,7 +4,7 @@
 12. Make it so that fire creeper leaves trails only at hard mode
 16. Flip Creeper
 17. Dark Creeper
-19. Ghost Creeper (requires custom renderer) has a chance of spawning when a creeper dies
+19. Ghost Creeper (requires custom renderer) has a chance of spawning when a creeper dies (hard + normal)
 20. Fish Creeper (requires custom everything)
 22. Make proper spawns for all the creepers.
 24. Think about trap-making
@@ -26,6 +26,12 @@
 38. Ender creeper charged behaviour
 39. Ender creeper particles
 40. Ender creeper code clearing
+41. Instead of dropping the blocks at their destroyed block position 
+I could make it so that the drop appears always at mob explosion position.
+- Such behaviour should be easier to render and calculate as less ItemStacks would be created.
+42. Randomize a little the sphere shape.
+43. Make it so long short grass drops seeds instead when explosion encountered.
+44. Water creeper can waterlog instead of replacing a block with water.
 
 Missing Creepers
 - Ghost Creeper (only visible in close range)

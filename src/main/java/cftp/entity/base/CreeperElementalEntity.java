@@ -1,8 +1,10 @@
 package cftp.entity.base;
 
 import cftp.CFTP;
+import cftp.entity.CFTPEntities;
 import cftp.entity.creeper.CreeperCookieEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
+import cftp.utility.PseudoRandom;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -59,6 +61,14 @@ public class CreeperElementalEntity extends HostileEntity {
     public static final float DROP_EXPLOSION_ITEM_CHANCE_EASY   = 1.00f;
     public static final float DROP_EXPLOSION_ITEM_CHANCE_NORMAL = 0.75f;
     public static final float DROP_EXPLOSION_ITEM_CHANCE_HARD   = 0.50f;
+
+    public static final float GHOST_CREEPER_KILL_CHANCE_EASY   = 0.00f;
+    public static final float GHOST_CREEPER_KILL_CHANCE_NORMAL = 0.25f;
+    public static final float GHOST_CREEPER_KILL_CHANCE_HARD   = 0.50f;
+
+    public static final float GHOST_CREEPER_EXPLODE_CHANCE_EASY   = 0.000f;
+    public static final float GHOST_CREEPER_EXPLODE_CHANCE_NORMAL = 0.125f;
+    public static final float GHOST_CREEPER_EXPLODE_CHANCE_HARD   = 0.250f;
 
     // world.getDifficulty() != Difficulty.PEACEFUL
 
@@ -337,62 +347,45 @@ public class CreeperElementalEntity extends HostileEntity {
         return 15;
     }
 
+    protected void SpawnGhostCreeper (ServerWorld world, int ghostCreeperChance) {
+        var seed = Math.abs((int) (world.getTimeOfDay()) + (int) (this.getX()) + (int) (this.getY()) + (int) (this.getZ()) + ++PseudoRandom.helperCounter) % 256;
+
+        if (PseudoRandom.UNIFORM_PERMUTATION[seed] <= ghostCreeperChance) {
+            var entity = CFTPEntities.CREEPER_GHOST.create(world, SpawnReason.NATURAL);
+            EntityData entityData = null;
+
+            if (entity == null) {
+                CFTP.LOGGER.warn("Error when creating a Ghost Creeper.");
+                return;
+            }
+
+            entity.refreshPositionAndAngles(getX(), getY(), getZ(), world.random.nextFloat() * 360.0F, 0.0F);
+            entityData = entity.initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.NATURAL, entityData);
+            world.spawnEntityAndPassengers(entity);
+        }
+    }
+
     @Override
     public void onDeath(DamageSource damageSource) {
         super.onDeath(damageSource);
 
-        int weight = random.nextInt(100);
+        World world = getWorld();
+        if (world instanceof ServerWorld serverWorld) {
 
-        if (weight > 75) {
-            World world = getWorld();
+            final Difficulty difficulty = this.getWorld().getDifficulty();
 
-            if (world instanceof ServerWorld serverWorld) {
-                CFTP.LOGGER.info("Server Spawn");
-
-                EntityData entityData = null;
-                var entity = CREEPER_COOKIE.create(world, SpawnReason.NATURAL);
-                if (entity == null) {
-                    CFTP.LOGGER.warn("Error");
-                    return;
-                }
-
-                entity.refreshPositionAndAngles(getX(), getY(), getZ(), world.random.nextFloat() * 360.0F, 0.0F);
-                entityData = entity.initialize(serverWorld, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.NATURAL, entityData);
-                serverWorld.spawnEntityAndPassengers(entity);
+            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_KILL_CHANCE_EASY);
+            switch (difficulty) {
+                case NORMAL: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_KILL_CHANCE_NORMAL);
+                } break;
+                case HARD: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_KILL_CHANCE_HARD);
+                } break;
             }
+
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
-
-
-
-        //SpawnHelper.createMob
-
-
-
-        //if (isValidSpawn(world, mobEntity, f)) {
-
-        //entityData = entity.initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.NATURAL, entityData);
-
-        //    j++;
-        //    p++;
-        //    world.spawnEntityAndPassengers(mobEntity);
-        //    runner.run(mobEntity, chunk);
-        //    if (j >= mobEntity.getLimitPerChunk()) {
-        //        return;
-        //    }
-
-        //    if (mobEntity.spawnsTooManyForEachTry(p)) {
-        //        break;
-        //    }
-
-        //try {
-        //    if (CREEPER_COOKIE.create(getWorld(), SpawnReason.NATURAL) instanceof MobEntity mobEntity) {
-        //        //return mobEntity;
-        //    }
-        //
-        //    //LOGGER.warn("Can't spawn entity of type: {}", Registries.ENTITY_TYPE.getId(type));
-        //} catch (Exception exception) {
-        //    //LOGGER.warn("Failed to create mob", (Throwable)var4);
-        //}
 
     }
 }

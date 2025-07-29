@@ -18,6 +18,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 public class CreeperFireEntity extends CreeperElementalEntity {
@@ -58,9 +59,21 @@ public class CreeperFireEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
+            final Difficulty difficulty = this.getWorld().getDifficulty();
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
             final int diameter = (int)(this.ExplosionDiameter * chargedPower);
             final int radius = diameter / 2;
+
+            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+
+            switch (difficulty) {
+                case NORMAL: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                } break;
+                case HARD: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                } break;
+            }
 
             for (int y = 0; y < diameter; ++y) {
                 for (int x = 0; x < diameter; ++x) {
@@ -159,6 +172,8 @@ public class CreeperFireEntity extends CreeperElementalEntity {
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
+
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

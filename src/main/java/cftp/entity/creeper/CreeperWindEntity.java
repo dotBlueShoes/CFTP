@@ -28,6 +28,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
 import net.minecraft.world.explosion.Explosion;
@@ -84,8 +85,21 @@ public class CreeperWindEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
+            final Difficulty difficulty = this.getWorld().getDifficulty();
+
             final float chargedPower = this.isCharged() ? 3.27F * 2.0f : 3.27F;
             final Vec3d entityPosition = this.getPos();
+
+            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+
+            switch (difficulty) {
+                case NORMAL: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                } break;
+                case HARD: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                } break;
+            }
 
             final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
                     false, false, Optional.of(chargedPower),
@@ -163,6 +177,8 @@ public class CreeperWindEntity extends CreeperElementalEntity {
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
+
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

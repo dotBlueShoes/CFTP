@@ -29,6 +29,7 @@ I could make it so that the drop appears always at mob explosion position.
 42. Randomize a little the sphere shape.
 43. Make it so long short grass drops seeds instead when explosion encountered.
 44. Water creeper can waterlog instead of replacing a block with water.
+45. Right clicking a normal creeper with a special item makes it a special kind of creeper like cookie creeper
 
 Missing Creepers
 - Ghost Creeper (only visible in close range)

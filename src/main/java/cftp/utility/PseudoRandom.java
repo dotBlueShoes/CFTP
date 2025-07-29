@@ -35,6 +35,8 @@ public class PseudoRandom {
     //        0, 6, 2, 4, 3, 1, 5, 0, 6, 2
     //};
 
+    public static int helperCounter = 0;
+
     final public static int[] UNIFORM_PERMUTATION = {
             24, 154, 118, 211, 80, 183, 121, 97, 122, 58, 246, 132, 174, 198, 101, 0,       // 1
             42, 111, 31, 4, 53, 6, 127, 38, 136, 162, 106, 181, 73, 108, 84, 252,           // 2

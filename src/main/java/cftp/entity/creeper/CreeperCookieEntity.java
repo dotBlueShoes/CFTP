@@ -13,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 public class CreeperCookieEntity extends CreeperElementalEntity {
@@ -54,6 +55,18 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
             int chargedAmount = this.isCharged() ? 2 : 1;
             this.dead = true;
 
+            final Difficulty difficulty = this.getWorld().getDifficulty();
+            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+
+            switch (difficulty) {
+                case NORMAL: {
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                } break;
+                case HARD: {
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                } break;
+            }
+
             { // Generate cookies as the explosion.
                 ItemEntity itemEntity = new ItemEntity(
                         serverWorld, this.getX(), this.getY(), this.getZ(),
@@ -73,6 +86,7 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
             this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
             this.discard();
 
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

@@ -89,6 +89,16 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_lava")))
     );
 
+    public static final EntityType<CreeperGhostEntity> CREEPER_GHOST = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_ghost")),
+            EntityType.Builder.create(CreeperGhostEntity::new, SpawnGroup.MONSTER)
+                    .makeFireImmune()
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_ghost")))
+    );
+
+
     public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")),
@@ -132,6 +142,7 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_DIRT, CreeperDirtEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_LAVA, CreeperLavaEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_WIND, CreeperWindEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_GHOST, CreeperGhostEntity.createAttributes());
     }
 
 }

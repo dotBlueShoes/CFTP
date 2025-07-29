@@ -43,12 +43,12 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
             this.dead = true;
 
             final Difficulty difficulty = this.getWorld().getDifficulty();
-
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
 
             // For the case of extending the difficulty enum. We provide a default.
             float diameter = this.ExplosionDiameter;
             int dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
 
             switch (difficulty) {
                 case EASY: {
@@ -56,10 +56,12 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
                 } break;
                 case NORMAL: {
                     dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.5f * chargedPower;
                 } break;
                 case HARD: {
                     dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 2.0f * chargedPower;
                 } break;
             }
@@ -122,6 +124,8 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
+
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

@@ -352,31 +352,51 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
         final World world = this.getWorld();
 
         if (world instanceof ServerWorld serverWorld) {
+            this.dead = true;
+
+            final Difficulty difficulty = serverWorld.getDifficulty();
 
             int chargedAmount = this.isCharged() ? 3 : 1;
-            this.dead = true;
+            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
 
             // Create teleport particles at creeper position.
             createTeleportParticles(serverWorld, this.getX(), this.getY(), this.getZ());
 
-            if (serverWorld.getDifficulty() == Difficulty.HARD) {
+            switch (difficulty) {
+                case HARD: {
 
-                for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
-                    getHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
+                    for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
+                        getHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
+                    }
+
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+
+                } break;
+
+                case NORMAL: {
+
+                    for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
+                        getNonHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
+                    }
+
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+
+                } break;
+
+                default: {
+
+                    for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
+                        getNonHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
+                    }
+
                 }
-
-            } else {
-
-                for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
-                    getNonHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
-                }
-
             }
 
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
 
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

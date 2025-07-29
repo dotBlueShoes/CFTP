@@ -14,6 +14,7 @@ import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 public class CreeperLightingEntity extends CreeperElementalEntity {
@@ -62,7 +63,18 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
+            final Difficulty difficulty = this.getWorld().getDifficulty();
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+
+            switch (difficulty) {
+                case NORMAL: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                } break;
+                case HARD: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                } break;
+            }
 
             { // Lighting Bolt
 
@@ -83,6 +95,8 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
             this.discard();
+
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

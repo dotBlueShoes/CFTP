@@ -2,11 +2,9 @@ package cftp.item.items;
 
 import cftp.CFTP;
 import cftp.entity.charge.EarthChargeEntity;
+import cftp.entity.charge.FireChargeEntity;
 import cftp.entity.charge.WaterChargeEntity;
 import cftp.registries.CFTPItems;
-import cftp.registries.CFTPTags;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.ConsumableComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -147,7 +145,7 @@ public class Wand extends RangedWeaponItem {
         System.out.println("Found projectile: " + ammo);
 
         if (ammoStack.getItem() == Items.FIRE_CHARGE) {
-            controlledProjectile = new WaterChargeEntity(user, world, position.getX(), position.getY(), position.getZ());
+            controlledProjectile = new FireChargeEntity(user, world, position.getX(), position.getY(), position.getZ());
             CFTP.LOGGER.info("fire_c!");
         } else if (ammoStack.getItem() == Items.WIND_CHARGE) {
             controlledProjectile = new WindChargeEntity(user, world, position.getX(), position.getY(), position.getZ());
@@ -181,6 +179,17 @@ public class Wand extends RangedWeaponItem {
                 );
             }
 
+            if (world.isClient) {
+                CFTP.instance.registerTickHandler();
+                //ClientProxy.registerTickHandler()
+                //ClientTickEvents.END_CLIENT_TICK.register(client -> {
+                //    if (client.player != null) {
+                //        CFTP.LOGGER.info("call");
+                //        //updateProjectilePosition(client.player);
+                //    }
+                //});
+            }
+
             user.setCurrentHand(hand);
             return ActionResult.CONSUME;
 
@@ -193,17 +202,17 @@ public class Wand extends RangedWeaponItem {
 
     @Override
     public void usageTick(World world, LivingEntity user, ItemStack stack, int remainingUseTicks) {
-        //if (world instanceof ServerWorld serverWorld) {
-            final float RADIUS = 2.0f;
-
-            var lookVector = user.getRotationVec(1.0F);
-            var position = user.getEyePos();
-
-            position = position.add(lookVector.multiply(RADIUS));
-
-            ////controlledProjectile.setPosition(position);
-            controlledProjectile.refreshPositionAndAngles(position.x, position.y, position.z, controlledProjectile.getYaw(), controlledProjectile.getPitch());
-        //}
+        ////if (world instanceof ServerWorld serverWorld) {
+        //    final float RADIUS = 2.0f;
+        //
+        //    var lookVector = user.getRotationVec(1.0F);
+        //    var position = user.getEyePos();
+        //
+        //    position = position.add(lookVector.multiply(RADIUS));
+        //
+        //    ////controlledProjectile.setPosition(position);
+        //    controlledProjectile.refreshPositionAndAngles(position.x, position.y, position.z, controlledProjectile.getYaw(), controlledProjectile.getPitch());
+        ////}
     }
 
 }

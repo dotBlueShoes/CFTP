@@ -26,6 +26,7 @@ public class CFTPEntitiesClient {
 
         EntityRendererRegistry.register(CFTPEntities.WATER_CHARGE, WaterChargeEntityRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.EARTH_CHARGE, EarthChargeEntityRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.FIRE_CHARGE, FireChargeEntityRenderer::new);
     }
 
 }

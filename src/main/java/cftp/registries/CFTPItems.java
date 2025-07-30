@@ -33,6 +33,10 @@ public class CFTPItems {
             new Item.Settings().useCooldown(0.5F)
     );
 
+    public static final Item FIRE_CHARGE = register("fire_charge", WaterChargeItem::new,
+            new Item.Settings().useCooldown(0.5F)
+    );
+
     public static final Item COIN_COPPER = register("coin_copper", Item::new,
             new Item.Settings()
     );

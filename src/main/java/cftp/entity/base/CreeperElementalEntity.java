@@ -30,6 +30,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
@@ -116,16 +118,16 @@ public class CreeperElementalEntity extends HostileEntity {
         return this.getTarget() == null ? this.getSafeFallDistance(0.0F) : this.getSafeFallDistance(this.getHealth() - 1.0F);
     }
 
-    @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
-        boolean bl = super.handleFallDamage(fallDistance, damageMultiplier, damageSource);
-        this.currentFuseTime += (int)(fallDistance * 1.5F);
-        if (this.currentFuseTime > this.fuseTime - 5) {
-            this.currentFuseTime = this.fuseTime - 5;
-        }
-
-        return bl;
-    }
+    //@Override
+    //public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    //    boolean bl = super.handleFallDamage(fallDistance, damageMultiplier, damageSource);
+    //    this.currentFuseTime += (int)(fallDistance * 1.5F);
+    //    if (this.currentFuseTime > this.fuseTime - 5) {
+    //        this.currentFuseTime = this.fuseTime - 5;
+    //    }
+    //
+    //    return bl;
+    //}
 
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
@@ -133,6 +135,16 @@ public class CreeperElementalEntity extends HostileEntity {
         builder.add(FUSE_SPEED, -1);
         builder.add(CHARGED, false);
         builder.add(IGNITED, false);
+    }
+
+    @Override
+    public void writeData(WriteView view) {
+        super.writeData(view);
+    }
+
+    @Override
+    public void readData(ReadView view) {
+        super.readData(view);
     }
 
     @Override

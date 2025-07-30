@@ -14,6 +14,7 @@
 
   "entity.cftp.water_charge": "Water Charge",
   "entity.cftp.earth_charge": "Earth Charge",
+  "entity.cftp.fire_charge": "Fire Charge",
 
   "block.cftp.saw_dust_block": "Saw Dust Block",
   "item.cftp.saw_dust_block": "Saw Dust Block",

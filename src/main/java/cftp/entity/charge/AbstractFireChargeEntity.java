@@ -1,6 +1,5 @@
 package cftp.entity.charge;
 
-import cftp.CFTP;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -28,24 +27,24 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.function.Function;
 
-public abstract class AbstractWaterChargeEntity extends ExplosiveProjectileEntity implements FlyingItemEntity {
+public abstract class AbstractFireChargeEntity extends ExplosiveProjectileEntity implements FlyingItemEntity {
     public static final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
             true, false, Optional.empty(), Registries.BLOCK.getOptional(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
     );
     public static final double field_52224 = 0.25;
 
-    public AbstractWaterChargeEntity(EntityType<? extends AbstractWaterChargeEntity> entityType, World world) {
+    public AbstractFireChargeEntity(EntityType<? extends AbstractFireChargeEntity> entityType, World world) {
         super(entityType, world);
         this.accelerationPower = 0.0;
     }
 
-    public AbstractWaterChargeEntity(EntityType<? extends AbstractWaterChargeEntity> type, World world, Entity owner, double x, double y, double z) {
+    public AbstractFireChargeEntity(EntityType<? extends AbstractFireChargeEntity> type, World world, Entity owner, double x, double y, double z) {
         super(type, x, y, z, world);
         this.setOwner(owner);
         this.accelerationPower = 0.0;
     }
 
-    public AbstractWaterChargeEntity(EntityType<? extends AbstractWaterChargeEntity> entityType, double d, double e, double f, Vec3d vec3d, World world) {
+    public AbstractFireChargeEntity(EntityType<? extends AbstractFireChargeEntity> entityType, double d, double e, double f, Vec3d vec3d, World world) {
         super(entityType, d, e, f, vec3d, world);
         this.accelerationPower = 0.0;
     }
@@ -60,12 +59,12 @@ public abstract class AbstractWaterChargeEntity extends ExplosiveProjectileEntit
 
     @Override
     public boolean collidesWith(Entity other) {
-        return !(other instanceof AbstractWaterChargeEntity) && super.collidesWith(other);
+        return !(other instanceof AbstractFireChargeEntity) && super.collidesWith(other);
     }
 
     @Override
     protected boolean canHit(Entity entity) {
-        if (entity instanceof AbstractWaterChargeEntity) {
+        if (entity instanceof AbstractFireChargeEntity) {
             return false;
         } else {
             return entity.getType() != EntityType.END_CRYSTAL && super.canHit(entity);

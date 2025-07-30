@@ -42,11 +42,11 @@ public class SparkBlock extends ColoredFallingBlock {
 
             if (stack.getItem() == Items.AIR) {
                 //CFTP.LOGGER.info("yes");
-                world.addParticle(
-                        ParticleTypes.HEART,
-                        pos.getX() + 0.5f, pos.getY() + 1.0f, pos.getZ() + 0.5f,
-                        0.0, 0.0, 0.0
-                );
+                //world.addParticle(
+                //        ParticleTypes.HEART,
+                //        pos.getX() + 0.5f, pos.getY() + 1.0f, pos.getZ() + 0.5f,
+                //        0.0, 0.0, 0.0
+                //);
             }
         }
 
@@ -57,11 +57,11 @@ public class SparkBlock extends ColoredFallingBlock {
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
         super.onPlaced(world, pos, state, placer, itemStack);
 
-        world.addParticle(
-                ParticleTypes.HEART,
-                pos.getX(), pos.getY(), pos.getZ(),
-                0.0, 0.0, 0.0
-        );
+        //world.addParticle(
+        //        ParticleTypes.HEART,
+        //        pos.getX(), pos.getY(), pos.getZ(),
+        //        0.0, 0.0, 0.0
+        //);
 
     }
 }

@@ -24,6 +24,8 @@ public class CFTP implements ModInitializer {
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	public static CommonProxy instance;
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -37,6 +39,8 @@ public class CFTP implements ModInitializer {
 		CFTPItemGroups.register();
 		CFTPEntities.register();
 		CFTPEntitySpawns.register();
+
+
 
 		//ItemStack itemStack = new ItemStack(CFTPItems.EARTH_CHARGE, 1);
 		//if (itemStack.isIn(CFTPTags.CHARGES)) {

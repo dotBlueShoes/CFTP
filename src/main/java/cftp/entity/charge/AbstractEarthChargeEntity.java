@@ -61,7 +61,7 @@ public abstract class AbstractEarthChargeEntity extends ExplosiveProjectileEntit
 
     @Override
     public boolean collidesWith(Entity other) {
-        return other instanceof AbstractEarthChargeEntity ? false : super.collidesWith(other);
+        return !(other instanceof AbstractEarthChargeEntity) && super.collidesWith(other);
     }
 
     @Override
@@ -69,7 +69,7 @@ public abstract class AbstractEarthChargeEntity extends ExplosiveProjectileEntit
         if (entity instanceof AbstractEarthChargeEntity) {
             return false;
         } else {
-            return entity.getType() == EntityType.END_CRYSTAL ? false : super.canHit(entity);
+            return entity.getType() != EntityType.END_CRYSTAL && super.canHit(entity);
         }
     }
 

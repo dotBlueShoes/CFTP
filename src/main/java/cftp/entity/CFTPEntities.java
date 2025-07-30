@@ -2,6 +2,7 @@ package cftp.entity;
 
 import cftp.CFTP;
 import cftp.entity.charge.EarthChargeEntity;
+import cftp.entity.charge.FireChargeEntity;
 import cftp.entity.charge.WaterChargeEntity;
 import cftp.entity.creeper.*;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -121,6 +122,18 @@ public class CFTPEntities {
                     .maxTrackingRange(4)
                     .trackingTickInterval(10)
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "earth_charge")))
+    );
+
+    public static final EntityType<FireChargeEntity> FIRE_CHARGE = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "fire_charge")),
+            EntityType.Builder.<FireChargeEntity>create(FireChargeEntity::new, SpawnGroup.MISC)
+                    .dropsNothing()
+                    .dimensions(0.3125F, 0.3125F)
+                    .eyeHeight(0.0F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(10)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "fire_charge")))
     );
 
     //public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(

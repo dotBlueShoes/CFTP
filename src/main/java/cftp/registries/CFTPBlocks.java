@@ -37,7 +37,7 @@ public class CFTPBlocks {
                     .sounds(BlockSoundGroup.GRAVEL)
                     .burnable()
                     //.nonOpaque()
-                    .noCollision()
+                    //.noCollision()
                     //.allowsSpawning(Blocks::never)
                     //.solidBlock(Blocks::never)
                     //.suffocates(Blocks::always)

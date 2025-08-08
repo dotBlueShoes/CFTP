@@ -257,9 +257,8 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
             BlockPos position = BlockPos.ofFloored(x, y, z);
 
             BlockState blockState = serverWorld.getBlockState(position);
-            boolean isInLava = blockState.getFluidState().isIn(FluidTags.LAVA);
 
-            if (!blockState.blocksMovement()) {
+            if (!blockState.isSolidBlock(serverWorld, position)) {
                 break;
             }
 
@@ -294,7 +293,7 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
             BlockState blockState = serverWorld.getBlockState(position);
             boolean isInLava = blockState.getFluidState().isIn(FluidTags.LAVA);
 
-            if (!blockState.blocksMovement() && !isInLava) {
+            if (!blockState.isSolidBlock(serverWorld, position) && !isInLava) {
                 break;
             }
 

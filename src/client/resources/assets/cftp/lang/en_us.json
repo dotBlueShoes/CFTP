@@ -11,6 +11,7 @@
   "entity.cftp.creeper_lava": "Lava Creeper",
   "entity.cftp.creeper_wind": "Wind Creeper",
   "entity.cftp.creeper_ghost": "Ghost Creeper",
+  "entity.cftp.creeper_nether": "Nether Creeper",
 
   "entity.cftp.water_charge": "Water Charge",
   "entity.cftp.earth_charge": "Earth Charge",

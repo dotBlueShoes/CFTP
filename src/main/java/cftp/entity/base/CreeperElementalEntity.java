@@ -2,7 +2,6 @@ package cftp.entity.base;
 
 import cftp.CFTP;
 import cftp.entity.CFTPEntities;
-import cftp.entity.creeper.CreeperCookieEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.utility.PseudoRandom;
 import net.minecraft.entity.*;
@@ -15,16 +14,12 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.GoatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -33,16 +28,12 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.SpawnHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-
-import static cftp.entity.CFTPEntities.CREEPER_COOKIE;
 
 public class CreeperElementalEntity extends HostileEntity {
 
@@ -107,25 +98,25 @@ public class CreeperElementalEntity extends HostileEntity {
         this.targetSelector.add(2, new RevengeGoal(this));
     }
 
-    public static DefaultAttributeContainer.Builder createCreeperAttributes() {
-        return HostileEntity.createHostileAttributes().add(EntityAttributes.MOVEMENT_SPEED, 0.25);
-    }
+    //public static DefaultAttributeContainer.Builder createCreeperAttributes() {
+    //    return HostileEntity.createHostileAttributes().add(EntityAttributes.MOVEMENT_SPEED, 0.25);
+    //}
 
     @Override
     public int getSafeFallDistance() {
         return this.getTarget() == null ? this.getSafeFallDistance(0.0F) : this.getSafeFallDistance(this.getHealth() - 1.0F);
     }
 
-    @Override
-    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
-        boolean bl = super.handleFallDamage(fallDistance, damageMultiplier, damageSource);
-        this.currentFuseTime += (int)(fallDistance * 1.5F);
-        if (this.currentFuseTime > this.fuseTime - 5) {
-            this.currentFuseTime = this.fuseTime - 5;
-        }
-
-        return bl;
-    }
+    //@Override
+    //public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+    //    boolean bl = super.handleFallDamage(fallDistance, damageMultiplier, damageSource);
+    //    this.currentFuseTime += (int)(fallDistance * 1.5F);
+    //    if (this.currentFuseTime > this.fuseTime - 5) {
+    //        this.currentFuseTime = this.fuseTime - 5;
+    //    }
+    //
+    //    return bl;
+    //}
 
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
@@ -135,34 +126,34 @@ public class CreeperElementalEntity extends HostileEntity {
         builder.add(IGNITED, false);
     }
 
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        if (this.dataTracker.get(CHARGED)) {
-            nbt.putBoolean("powered", true);
-        }
-
-        nbt.putShort("Fuse", (short)this.fuseTime);
-        nbt.putByte("ExplosionDiameter", (byte)this.explosionDiameter);
-        nbt.putBoolean("ignited", this.isIgnited());
-    }
-
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(CHARGED, nbt.getBoolean("powered"));
-        if (nbt.contains("Fuse", NbtElement.NUMBER_TYPE)) {
-            this.fuseTime = nbt.getShort("Fuse");
-        }
-
-        if (nbt.contains("ExplosionDiameter", NbtElement.NUMBER_TYPE)) {
-            this.explosionDiameter = nbt.getByte("ExplosionDiameter");
-        }
-
-        if (nbt.getBoolean("ignited")) {
-            this.ignite();
-        }
-    }
+    //@Override
+    //public void writeCustomDataToNbt(NbtCompound nbt) {
+    //    super.writeCustomDataToNbt(nbt);
+    //    if (this.dataTracker.get(CHARGED)) {
+    //        nbt.putBoolean("powered", true);
+    //    }
+    //
+    //    nbt.putShort("Fuse", (short)this.fuseTime);
+    //    nbt.putByte("ExplosionDiameter", (byte)this.explosionDiameter);
+    //    nbt.putBoolean("ignited", this.isIgnited());
+    //}
+    //
+    //@Override
+    //public void readCustomDataFromNbt(NbtCompound nbt) {
+    //    super.readCustomDataFromNbt(nbt);
+    //    this.dataTracker.set(CHARGED, nbt.getBoolean("powered"));
+    //    if (nbt.contains("Fuse", NbtElement.NUMBER_TYPE)) {
+    //        this.fuseTime = nbt.getShort("Fuse");
+    //    }
+    //
+    //    if (nbt.contains("ExplosionDiameter", NbtElement.NUMBER_TYPE)) {
+    //        this.explosionDiameter = nbt.getByte("ExplosionDiameter");
+    //    }
+    //
+    //    if (nbt.getBoolean("ignited")) {
+    //        this.ignite();
+    //    }
+    //}
 
     @Override
     public void tick() {

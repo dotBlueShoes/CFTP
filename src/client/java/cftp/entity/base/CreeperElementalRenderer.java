@@ -50,6 +50,7 @@ public abstract class CreeperElementalRenderer<T extends CreeperElementalEntity>
         return (int)(time * 10.0F) % 2 == 0 ? 0.0F : MathHelper.clamp(time, 0.5F, 1.0F);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void updateRenderState(CreeperElementalEntity creeperEntity, CreeperEntityRenderState creeperEntityRenderState, float tickDelta) {
         super.updateRenderState((T) creeperEntity, creeperEntityRenderState, tickDelta);

@@ -1,6 +1,7 @@
 package cftp.entity.creeper;
 
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
@@ -35,21 +36,10 @@ public class CreeperNetherEntity extends CreeperElementalEntity {
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
     }
 
-    final public static BlockState[] NETHER_BLOCKS = {
-            Blocks.NETHERRACK.getDefaultState(),
-            Blocks.BASALT.getDefaultState(),
-            Blocks.SOUL_SAND.getDefaultState(),
-            Blocks.SOUL_SOIL.getDefaultState(),
-            Blocks.GRAVEL.getDefaultState(),
-            Blocks.BLACKSTONE.getDefaultState(),
-            Blocks.GLOWSTONE.getDefaultState(),
-            // More valuable blocks.
-            Blocks.NETHER_GOLD_ORE.getDefaultState(),
-            Blocks.NETHER_QUARTZ_ORE.getDefaultState(),
-            // It has higher chance of producing NETHER_RACK and SOUL_SAND
-            Blocks.NETHERRACK.getDefaultState(),
-            Blocks.SOUL_SAND.getDefaultState(),
-    }; // + 4
+    @Override
+    protected int getElementalCreeperType() {
+        return CreeperMath.CREEPER_TYPE.NETHER.getType();
+    }
 
     @Override
     protected void explode() {
@@ -107,9 +97,9 @@ public class CreeperNetherEntity extends CreeperElementalEntity {
                             Block block = state.getBlock();
 
                             var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                            var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % NETHER_BLOCKS.length;
+                            var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.NETHER_BLOCKS.length;
 
-                            serverWorld.setBlockState(blockPos, NETHER_BLOCKS[index], Block.NOTIFY_ALL);
+                            serverWorld.setBlockState(blockPos, CreeperMath.NETHER_BLOCKS[index], Block.NOTIFY_ALL);
 
                             // So that specific blocks won't drop and with a chance of not dropping at all.
                             if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {

@@ -3,6 +3,7 @@ package cftp.entity.base;
 import cftp.CFTP;
 import cftp.entity.CFTPEntities;
 import cftp.goals.CreeperElementalIgniteGoal;
+import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -20,6 +21,8 @@ import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -61,25 +64,6 @@ public class CreeperElementalEntity extends HostileEntity {
     public static final float GHOST_CREEPER_EXPLODE_CHANCE_NORMAL = 0.125f;
     public static final float GHOST_CREEPER_EXPLODE_CHANCE_HARD   = 0.250f;
 
-    // world.getDifficulty() != Difficulty.PEACEFUL
-
-    //public void difficulty (Difficulty difficulty) {
-    //    switch (difficulty) {
-    //        case EASY -> {
-    //            explosionRadius = 3;
-    //            fuseTime = 30;
-    //        }
-    //        case NORMAL -> {
-    //            explosionRadius = 3;
-    //            fuseTime = 20;
-    //        }
-    //        case HARD -> {
-    //            explosionRadius = 4;
-    //            fuseTime = 10;
-    //        }
-    //    }
-    //}
-
     public CreeperElementalEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -98,25 +82,21 @@ public class CreeperElementalEntity extends HostileEntity {
         this.targetSelector.add(2, new RevengeGoal(this));
     }
 
-    //public static DefaultAttributeContainer.Builder createCreeperAttributes() {
-    //    return HostileEntity.createHostileAttributes().add(EntityAttributes.MOVEMENT_SPEED, 0.25);
-    //}
-
     @Override
     public int getSafeFallDistance() {
         return this.getTarget() == null ? this.getSafeFallDistance(0.0F) : this.getSafeFallDistance(this.getHealth() - 1.0F);
     }
 
-    //@Override
-    //public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
-    //    boolean bl = super.handleFallDamage(fallDistance, damageMultiplier, damageSource);
-    //    this.currentFuseTime += (int)(fallDistance * 1.5F);
-    //    if (this.currentFuseTime > this.fuseTime - 5) {
-    //        this.currentFuseTime = this.fuseTime - 5;
-    //    }
-    //
-    //    return bl;
-    //}
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        boolean bl = super.handleFallDamage(fallDistance, damageMultiplier, damageSource);
+        this.currentFuseTime += (int)(fallDistance * 1.5F);
+        if (this.currentFuseTime > this.fuseTime - 5) {
+            this.currentFuseTime = this.fuseTime - 5;
+        }
+
+        return bl;
+    }
 
     @Override
     protected void initDataTracker(DataTracker.Builder builder) {
@@ -126,34 +106,34 @@ public class CreeperElementalEntity extends HostileEntity {
         builder.add(IGNITED, false);
     }
 
-    //@Override
-    //public void writeCustomDataToNbt(NbtCompound nbt) {
-    //    super.writeCustomDataToNbt(nbt);
-    //    if (this.dataTracker.get(CHARGED)) {
-    //        nbt.putBoolean("powered", true);
-    //    }
-    //
-    //    nbt.putShort("Fuse", (short)this.fuseTime);
-    //    nbt.putByte("ExplosionDiameter", (byte)this.explosionDiameter);
-    //    nbt.putBoolean("ignited", this.isIgnited());
-    //}
-    //
-    //@Override
-    //public void readCustomDataFromNbt(NbtCompound nbt) {
-    //    super.readCustomDataFromNbt(nbt);
-    //    this.dataTracker.set(CHARGED, nbt.getBoolean("powered"));
-    //    if (nbt.contains("Fuse", NbtElement.NUMBER_TYPE)) {
-    //        this.fuseTime = nbt.getShort("Fuse");
-    //    }
-    //
-    //    if (nbt.contains("ExplosionDiameter", NbtElement.NUMBER_TYPE)) {
-    //        this.explosionDiameter = nbt.getByte("ExplosionDiameter");
-    //    }
-    //
-    //    if (nbt.getBoolean("ignited")) {
-    //        this.ignite();
-    //    }
-    //}
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        if (this.dataTracker.get(CHARGED)) {
+            nbt.putBoolean("powered", true);
+        }
+
+        nbt.putShort("Fuse", (short)this.fuseTime);
+        nbt.putByte("ExplosionDiameter", (byte)this.explosionDiameter);
+        nbt.putBoolean("ignited", this.isIgnited());
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.dataTracker.set(CHARGED, nbt.getBoolean("powered"));
+        if (nbt.contains("Fuse", NbtElement.NUMBER_TYPE)) {
+            this.fuseTime = nbt.getShort("Fuse");
+        }
+
+        if (nbt.contains("ExplosionDiameter", NbtElement.NUMBER_TYPE)) {
+            this.explosionDiameter = nbt.getByte("ExplosionDiameter");
+        }
+
+        if (nbt.getBoolean("ignited")) {
+            this.ignite();
+        }
+    }
 
     @Override
     public void tick() {
@@ -338,6 +318,10 @@ public class CreeperElementalEntity extends HostileEntity {
         return 15;
     }
 
+    protected int getElementalCreeperType() {
+        return CreeperMath.CREEPER_TYPE.VANILLA.getType();
+    }
+
     protected void SpawnGhostCreeper (ServerWorld world, int ghostCreeperChance) {
         var seed = Math.abs((int) (world.getTimeOfDay()) + (int) (this.getX()) + (int) (this.getY()) + (int) (this.getZ()) + ++PseudoRandom.helperCounter) % 256;
 
@@ -350,6 +334,7 @@ public class CreeperElementalEntity extends HostileEntity {
                 return;
             }
 
+            entity.parentType = getElementalCreeperType();
             entity.refreshPositionAndAngles(getX(), getY(), getZ(), world.random.nextFloat() * 360.0F, 0.0F);
             entityData = entity.initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.NATURAL, entityData);
             world.spawnEntityAndPassengers(entity);

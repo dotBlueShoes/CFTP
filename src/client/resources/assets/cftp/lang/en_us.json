@@ -13,6 +13,18 @@
   "entity.cftp.creeper_ghost": "Ghost Creeper",
   "entity.cftp.creeper_nether": "Nether Creeper",
 
+  "item.cftp.creeper_cookie_spawn_egg": "Cookie Creeper Spawn Egg",
+  "item.cftp.creeper_dirt_spawn_egg": "Dirt Creeper Spawn Egg",
+  "item.cftp.creeper_earth_spawn_egg": "Earth Creeper Spawn Egg",
+  "item.cftp.creeper_ender_spawn_egg": "Ender Creeper Spawn Egg",
+  "item.cftp.creeper_fire_spawn_egg": "Fire Creeper Spawn Egg",
+  "item.cftp.creeper_ghost_spawn_egg": "Ghost Creeper Spawn Egg",
+  "item.cftp.creeper_lava_spawn_egg": "Lava Creeper Spawn Egg",
+  "item.cftp.creeper_lighting_spawn_egg": "Lighting Creeper Spawn Egg",
+  "item.cftp.creeper_nether_spawn_egg": "Nether Creeper Spawn Egg",
+  "item.cftp.creeper_water_spawn_egg": "Water Creeper Spawn Egg",
+  "item.cftp.creeper_wind_spawn_egg": "Wind Creeper Spawn Egg",
+
   "entity.cftp.water_charge": "Water Charge",
   "entity.cftp.earth_charge": "Earth Charge",
 

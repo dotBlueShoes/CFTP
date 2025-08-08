@@ -3,6 +3,7 @@ package cftp.entity.creeper;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.goals.CreeperFireAttackGoal;
+import cftp.utility.CreeperMath;
 import cftp.utility.Shapes;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Block;
@@ -38,6 +39,11 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
                 .add(EntityAttributes.ATTACK_DAMAGE, 1)
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
+    }
+
+    @Override
+    protected int getElementalCreeperType() {
+        return CreeperMath.CREEPER_TYPE.FIRE.getType();
     }
 
     @Override

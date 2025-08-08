@@ -3,6 +3,7 @@ package cftp.entity.creeper;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 
+import cftp.utility.CreeperMath;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.impl.networking.server.ServerNetworkingImpl;
 import net.fabricmc.fabric.mixin.registry.sync.RegistriesAccessor;
@@ -64,6 +65,11 @@ public class CreeperWindEntity extends CreeperElementalEntity {
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
                 .add(EntityAttributes.ATTACK_DAMAGE, 10)
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
+    }
+
+    @Override
+    protected int getElementalCreeperType() {
+        return CreeperMath.CREEPER_TYPE.WIND.getType();
     }
 
     @Override

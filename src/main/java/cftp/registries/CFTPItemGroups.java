@@ -1,9 +1,12 @@
 package cftp.registries;
 
 import cftp.CFTP;
+import cftp.entity.CFTPEntities;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -30,10 +33,26 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.COIN_GOLD);
                                 entries.add(CFTPItems.COPPER_ROD);
                                 entries.add(CFTPBlocks.SAW_DUST_BLOCK);
+                                //
+                                entries.add(CFTPItems.CREEPER_COOKIE_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_DIRT_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_EARTH_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_ENDER_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_FIRE_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_GHOST_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_LAVA_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_LIGHTING_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_NETHER_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_WATER_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_WIND_SPAWN_EGG);
                             }
                     )
                     .build()
     );
+
+    //ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
+    //    entries.add(CREEPER_COOKIE_SPAWN_EGG);
+    //});
 
     // HACK. Java is weird. We need to call a method even if empty. To make the unreferenced variables
     //  we made compile from this file-class.

@@ -2,6 +2,7 @@ package cftp.entity.creeper;
 
 import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.utility.CreeperMath;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -45,6 +46,11 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
                 .add(EntityAttributes.ATTACK_DAMAGE, 0)
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
+    }
+
+    @Override
+    protected int getElementalCreeperType() {
+        return CreeperMath.CREEPER_TYPE.ENDER.getType();
     }
 
     //private void teleportEntity(LivingEntity entity, double x, double y, double z) {

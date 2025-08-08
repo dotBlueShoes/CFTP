@@ -2,6 +2,7 @@ package cftp.entity.creeper;
 
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
+import cftp.utility.CreeperMath;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
@@ -42,6 +43,11 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.45f)
                 .add(EntityAttributes.ATTACK_DAMAGE, 10)
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
+    }
+
+    @Override
+    protected int getElementalCreeperType() {
+        return CreeperMath.CREEPER_TYPE.LIGHTING.getType();
     }
 
     @Override

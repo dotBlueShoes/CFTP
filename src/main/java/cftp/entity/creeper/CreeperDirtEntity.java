@@ -53,11 +53,14 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
 
             // For the case of extending the difficulty enum. We provide a default.
             float diameter = this.ExplosionDiameter;
-            int dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
-            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+            int dropExplosionItemChance;
+            int ghostCreeperChance;
 
             switch (difficulty) {
+                case PEACEFUL:
                 case EASY: {
+                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
                 } break;
                 case NORMAL: {
@@ -65,7 +68,8 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.5f * chargedPower;
                 } break;
-                case HARD: {
+                case HARD:
+                default: {
                     dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 2.0f * chargedPower;

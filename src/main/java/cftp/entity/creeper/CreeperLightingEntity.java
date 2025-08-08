@@ -71,13 +71,18 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
 
             final Difficulty difficulty = this.getWorld().getDifficulty();
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+            int ghostCreeperChance;
 
             switch (difficulty) {
+                case PEACEFUL:
+                case EASY: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                }
                 case NORMAL: {
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                 } break;
-                case HARD: {
+                case HARD:
+                default: {
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                 } break;
             }

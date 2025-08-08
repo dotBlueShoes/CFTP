@@ -58,6 +58,7 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
             int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
 
             switch (difficulty) {
+                case PEACEFUL:
                 case EASY: {
                     diameter *= chargedPower;
                 } break;
@@ -66,7 +67,8 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.25f * chargedPower;
                 } break;
-                case HARD: {
+                case HARD:
+                default: {
                     dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 1.50f * chargedPower;

@@ -55,6 +55,7 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
         this.targetSelector.add(2, new RevengeGoal(this));
     }
 
+
     @Override
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
@@ -62,13 +63,19 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
             this.dead = true;
 
             final Difficulty difficulty = this.getWorld().getDifficulty();
-            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+
+            int ghostCreeperChance;
 
             switch (difficulty) {
+                case PEACEFUL:
+                case EASY: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                }
                 case NORMAL: {
                     ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                 } break;
-                case HARD: {
+                case HARD:
+                default: {
                     ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                 } break;
             }

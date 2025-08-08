@@ -67,19 +67,30 @@ public class CreeperFireEntity extends CreeperElementalEntity {
 
             final Difficulty difficulty = this.getWorld().getDifficulty();
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            final int diameter = (int)(this.ExplosionDiameter * chargedPower);
-            final int radius = diameter / 2;
 
-            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+            float diameter = this.ExplosionDiameter;
+
+            int ghostCreeperChance;
 
             switch (difficulty) {
+                case PEACEFUL:
+                case EASY: {
+                    diameter *= chargedPower;
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                } break;
                 case NORMAL: {
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                    diameter *= 1.5f * chargedPower;
                 } break;
-                case HARD: {
+                case HARD:
+                default: {
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                    diameter *= 2.0f * chargedPower;
                 } break;
             }
+
+            final int iDiameter = (int) diameter;
+            final int radius = iDiameter / 2;
 
             for (int y = 0; y < diameter; ++y) {
                 for (int x = 0; x < diameter; ++x) {

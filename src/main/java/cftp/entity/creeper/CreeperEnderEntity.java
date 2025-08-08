@@ -368,15 +368,14 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
             createTeleportParticles(serverWorld, this.getX(), this.getY(), this.getZ());
 
             switch (difficulty) {
-                case HARD: {
+                case PEACEFUL:
+                case EASY: {
 
                     for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
-                        getHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
+                        getNonHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
                     }
 
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-
-                } break;
+                }
 
                 case NORMAL: {
 
@@ -388,13 +387,16 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
 
                 } break;
 
-                default: {
+                case HARD:
+                default:{
 
                     for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
-                        getNonHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
+                        getHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
                     }
 
-                }
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+
+                } break;
             }
 
             this.spawnEffectsCloud();

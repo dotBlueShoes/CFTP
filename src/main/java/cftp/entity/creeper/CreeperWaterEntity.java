@@ -10,9 +10,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -105,26 +107,40 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
 
                             var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
 
-                            serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                            //BlockState state = serverWorld.getBlockState(blockPos);
 
-                            // So that specific blocks won't drop.
-                            if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
+                            if (state.contains(Properties.WATERLOGGED)) {
 
-                                ItemStack itemStack;
+                                BlockState waterloggedState = state.with(Properties.WATERLOGGED, true);
+                                serverWorld.setBlockState(blockPos, waterloggedState, 3);
 
-                                // TODO. This prob. can be done better.
-                                if (block.equals(Blocks.GRASS_BLOCK)) {
-                                    block = Blocks.DIRT;
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                } else if (block.equals(Blocks.SHORT_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else if (block.equals(Blocks.TALL_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else {
-                                    itemStack = new ItemStack(block.asItem(), 1);
+                                // Also schedule water fluid tick for proper fluid behavior
+                                //serverWorld.getFluidTickScheduler().schedule(blockPos, Fluids.WATER, Fluids.WATER.getTickRate(serverWorld));
+
+                            } else {
+
+                                serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+
+                                // So that specific blocks won't drop.
+                                if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
+
+                                    ItemStack itemStack;
+
+                                    // TODO. This prob. can be done better.
+                                    if (block.equals(Blocks.GRASS_BLOCK)) {
+                                        block = Blocks.DIRT;
+                                        itemStack = new ItemStack(block.asItem(), 1);
+                                    } else if (block.equals(Blocks.SHORT_GRASS)) {
+                                        itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
+                                    } else if (block.equals(Blocks.TALL_GRASS)) {
+                                        itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
+                                    } else {
+                                        itemStack = new ItemStack(block.asItem(), 1);
+                                    }
+
+                                    Block.dropStack(serverWorld, blockPos, itemStack);
                                 }
 
-                                Block.dropStack(serverWorld, blockPos, itemStack);
                             }
 
                         }

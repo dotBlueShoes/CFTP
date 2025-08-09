@@ -27,6 +27,7 @@ I could make it so that the drop appears always at mob explosion position.
 52. Make friendly creeper tamable like wolves and cats.
 53. Make such friendly creeper explosion exclude the player the creeper belongs to.
 54. Make flip creepers flip the space on y axis.
+55. Make flip creepers rare to spwan.
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - swamp creeper

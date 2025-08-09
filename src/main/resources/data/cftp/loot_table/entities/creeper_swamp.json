@@ -26,7 +26,7 @@
               "function": "minecraft:enchanted_count_increase"
             }
           ],
-          "name": "minecraft:ender_pearl"
+          "name": "cftp:elemental_powder"
         }
       ],
       "rolls": 1.0
@@ -52,5 +52,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "minecraft:entities/creeper_ender"
+  "random_sequence": "minecraft:entities/creeper_swamp"
 }

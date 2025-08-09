@@ -45,6 +45,10 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.CREEPER_NETHER_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_WATER_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_WIND_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_FLIP_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_FRIENDLY_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_SNOW_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_SWAMP_SPAWN_EGG);
                             }
                     )
                     .build()

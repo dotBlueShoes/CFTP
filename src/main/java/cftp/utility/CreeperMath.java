@@ -1,11 +1,8 @@
 package cftp.utility;
 
-
-import cftp.entity.creeper.*;
 import cftp.registries.CFTPItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
@@ -24,6 +21,10 @@ public class CreeperMath {
             CFTPItems.CREEPER_NETHER_SPAWN_EGG,
             CFTPItems.CREEPER_WATER_SPAWN_EGG,
             CFTPItems.CREEPER_WIND_SPAWN_EGG,
+            CFTPItems.CREEPER_FLIP_SPAWN_EGG,
+            CFTPItems.CREEPER_FRIENDLY_SPAWN_EGG,
+            CFTPItems.CREEPER_SNOW_SPAWN_EGG,
+            CFTPItems.CREEPER_SWAMP_SPAWN_EGG,
     };
 
     public enum CREEPER_TYPE {
@@ -38,7 +39,12 @@ public class CreeperMath {
         LIGHTING    (8),
         NETHER      (9),
         WATER       (10),
-        WIND        (11);
+        WIND        (11),
+        FLIP        (11),
+        FRIENDLY    (11),
+        SNOW        (11),
+        SWAMP       (11),
+        ;
 
         private final int type;
 
@@ -59,7 +65,31 @@ public class CreeperMath {
             Blocks.ANDESITE.getDefaultState(),
             Blocks.GRAVEL.getDefaultState(),
             Blocks.CLAY.getDefaultState(),
-    };
+    }; // 7
+
+    final public static BlockState[] SNOW_BLOCKS = {
+            Blocks.SNOW_BLOCK.getDefaultState(),
+            Blocks.POWDER_SNOW.getDefaultState(),
+            Blocks.ICE.getDefaultState(),
+            Blocks.PACKED_ICE.getDefaultState(),
+            // It has higher chance of producing SNOW_BLOCK and POWDER_SNOW
+            Blocks.SNOW_BLOCK.getDefaultState(),
+            Blocks.POWDER_SNOW.getDefaultState(),
+    }; // 6
+
+    final public static BlockState[] SWAMP_BLOCKS = {
+            Blocks.GRASS_BLOCK.getDefaultState(),
+            Blocks.DIRT.getDefaultState(),
+            Blocks.COBWEB.getDefaultState(),
+            Blocks.MUD.getDefaultState(),
+            Blocks.CLAY.getDefaultState(),
+            Blocks.OAK_LEAVES.getDefaultState(),
+            Blocks.MANGROVE_LEAVES.getDefaultState(),
+            Blocks.MANGROVE_ROOTS.getDefaultState(),
+            Blocks.WATER.getDefaultState(),
+            // It has higher chance of producing GRASS_BLOCK
+            Blocks.GRASS_BLOCK.getDefaultState(),
+    }; // 8
 
     final public static BlockState[] NETHER_BLOCKS = {
             Blocks.NETHERRACK.getDefaultState(),
@@ -68,14 +98,21 @@ public class CreeperMath {
             Blocks.SOUL_SOIL.getDefaultState(),
             Blocks.GRAVEL.getDefaultState(),
             Blocks.BLACKSTONE.getDefaultState(),
+            // More valuable blocks. RARE
             Blocks.GLOWSTONE.getDefaultState(),
-            // More valuable blocks.
             Blocks.NETHER_GOLD_ORE.getDefaultState(),
             Blocks.NETHER_QUARTZ_ORE.getDefaultState(),
             // It has higher chance of producing NETHER_RACK and SOUL_SAND
             Blocks.NETHERRACK.getDefaultState(),
             Blocks.SOUL_SAND.getDefaultState(),
-    }; // + 4
+            // double not RARE
+            Blocks.NETHERRACK.getDefaultState(),
+            Blocks.BASALT.getDefaultState(),
+            Blocks.SOUL_SAND.getDefaultState(),
+            Blocks.SOUL_SOIL.getDefaultState(),
+            Blocks.GRAVEL.getDefaultState(),
+            Blocks.BLACKSTONE.getDefaultState(),
+    }; // 17
 
     //public enum CREEPERS {
     //    COOKIE      (CreeperCookieEntity.class)     ,

@@ -125,6 +125,30 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item CREEPER_FLIP_SPAWN_EGG = register(
+            "creeper_flip_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_FLIP, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_FRIENDLY_SPAWN_EGG = register(
+            "creeper_friendly_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_FRIENDLY, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_SNOW_SPAWN_EGG = register(
+            "creeper_snow_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_SNOW, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_SWAMP_SPAWN_EGG = register(
+            "creeper_swamp_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_SWAMP, settings),
+            new Item.Settings()
+    );
+
     //public static final Item CREEPER_COOKIE_SPAWN_EGG = Registry.register(
     //        Registries.ITEM,
     //        new Identifier("cftp", "creeper_cookie_spawn_egg"),

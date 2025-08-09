@@ -106,6 +106,38 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_nether")))
     );
 
+    public static final EntityType<CreeperFlipEntity> CREEPER_FLIP = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_flip")),
+            EntityType.Builder.create(CreeperFlipEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_flip")))
+    );
+
+    public static final EntityType<CreeperFriendlyEntity> CREEPER_FRIENDLY = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_friendly")),
+            EntityType.Builder.create(CreeperFriendlyEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_friendly")))
+    );
+
+    public static final EntityType<CreeperSnowEntity> CREEPER_SNOW = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_snow")),
+            EntityType.Builder.create(CreeperSnowEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_snow")))
+    );
+
+    public static final EntityType<CreeperSwampEntity> CREEPER_SWAMP = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_swamp")),
+            EntityType.Builder.create(CreeperSwampEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_swamp")))
+    );
+
     public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")),
@@ -151,7 +183,10 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_WIND, CreeperWindEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_GHOST, CreeperGhostEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_NETHER, CreeperNetherEntity.createAttributes());
-
+        FabricDefaultAttributeRegistry.register(CREEPER_FLIP, CreeperFlipEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_FRIENDLY, CreeperFriendlyEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_SNOW, CreeperSnowEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_SWAMP, CreeperSwampEntity.createAttributes());
     }
 
 }

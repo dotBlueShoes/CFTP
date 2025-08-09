@@ -23,10 +23,14 @@ I could make it so that the drop appears always at mob explosion position.
 48. An enchantment to possess elemental creeper power.
 49. Make Ghost Creeper only visible in close range.
 50. Make a spawn predicate so that spawning of a creature changes with difficulty set as to what biome and what group size.
+51. Make friendly creepers go after other hostile mobs not only explode close range.
+52. Make friendly creeper tamable like wolves and cats.
+53. Make such friendly creeper explosion exclude the player the creeper belongs to.
+54. Make flip creepers flip the space on y axis.
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - swamp creeper
-- make normal creeper have a chance of spawning ghost creeper
+- desert creeper
 - nether midnight biome (dark blue, stone ruins, bluish or reddish everfire)
 - aether... aether creeper (dirt, stone, ore)
 - expirience fluid -> non-infinite, 3 tiles flow, standing in it gives expirience...
@@ -48,12 +52,24 @@ magma cream + nether wart
 
 Missing Creepers
 - Snow Creeper (fill both powder and normal snow - could be different for difficulty)
-- Dark Creeper (applies a vision debuff spawns a monster if difficulty )
+- Dark Creeper (applies a vision debuff spawns a monster if difficulty + kinda scary sound effect)
 - Flip Creeper (flips terrain)
 - Jump Creeper (jumps when moving)
 - Mama Creeper (summons child creepers at death)
 - Child Creeper (faster than normal creeper)
 
+Swamp ideas
+- (mehh) rainbow slimes look at sheep code (as sheep can be colored in rgb)
+- (cool) generate small packages of mud quite often
+- (cool) spider holes filled with webs
+- (cool) swamp creeper (grass block, dirt, web, water, mud, oak leaves, clay, mangrove leaves, mangrove roots)
+- (cool) 0 or 1 web or always a web generates on under swamp tree crown and 0-1 web spawns instead of leaves at the crown
+- (cool) special kind of web (blueish, greenish, yellowish like)
+- (cool) yellow mushroom
+- bog spider throws webs at player
+
+
+// gimp - always do hue-chroma change or use some new color models
 
 // Actual entity spawning is handled inside:
 // SpawnHelper.spawnEntitiesInChunk

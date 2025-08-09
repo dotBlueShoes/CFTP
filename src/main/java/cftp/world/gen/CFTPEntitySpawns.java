@@ -18,37 +18,76 @@ public class CFTPEntitySpawns {
     @SuppressWarnings("unchecked")
     public static void register() {
 
+        // OVERWORLD_DRY
+        // BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU,
+
+        // OVERWORLD_JUNGLE
+        // BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE,
+
+        // OVERWORLD_WATER
+        // BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN,
+        // BiomeKeys.DEEP_LUKEWARM_OCEAN, BiomeKeys.OCEAN,
+        // BiomeKeys.DEEP_OCEAN, BiomeKeys.COLD_OCEAN,
+        // BiomeKeys.DEEP_COLD_OCEAN,
+
         final RegistryKey<?>[] OVERWORLD = {
                 BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS,
-                BiomeKeys.SNOWY_PLAINS, BiomeKeys.ICE_SPIKES,
-                BiomeKeys.DESERT, BiomeKeys.SWAMP,
-                BiomeKeys.MANGROVE_SWAMP, BiomeKeys.FOREST,
-                BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST,
-                BiomeKeys.DARK_FOREST, BiomeKeys.PALE_GARDEN,
+                BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST,
+                BiomeKeys.BIRCH_FOREST, BiomeKeys.DARK_FOREST,
                 BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA,
-                BiomeKeys.SNOWY_TAIGA, BiomeKeys.SAVANNA,
-                BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_HILLS,
-                BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST,
-                BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.JUNGLE,
-                BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE,
+                BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS,
+                BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_SAVANNA,
                 BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS,
                 BiomeKeys.WOODED_BADLANDS, BiomeKeys.MEADOW,
                 BiomeKeys.CHERRY_GROVE, BiomeKeys.GROVE,
-                BiomeKeys.SNOWY_SLOPES, BiomeKeys.FROZEN_PEAKS,
                 BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS,
-                BiomeKeys.RIVER, BiomeKeys.FROZEN_RIVER,
-                BiomeKeys.BEACH, BiomeKeys.SNOWY_BEACH,
-                BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN,
-                BiomeKeys.DEEP_LUKEWARM_OCEAN, BiomeKeys.OCEAN,
-                BiomeKeys.DEEP_OCEAN, BiomeKeys.COLD_OCEAN,
-                BiomeKeys.DEEP_COLD_OCEAN, BiomeKeys.FROZEN_OCEAN,
-                BiomeKeys.DEEP_FROZEN_OCEAN, BiomeKeys.MUSHROOM_FIELDS,
+                BiomeKeys.RIVER, BiomeKeys.BEACH,
+                //
                 BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.LUSH_CAVES,
-                BiomeKeys.DEEP_DARK,
+                BiomeKeys.DEEP_DARK, BiomeKeys.PALE_GARDEN,
+                //
+                BiomeKeys.SNOWY_PLAINS, BiomeKeys.ICE_SPIKES,
+                BiomeKeys.SNOWY_TAIGA, BiomeKeys.SNOWY_SLOPES,
+                BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_RIVER,
+                BiomeKeys.SNOWY_BEACH, BiomeKeys.FROZEN_OCEAN,
+                BiomeKeys.DEEP_FROZEN_OCEAN,
+                //
+                BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP,
+        };
+
+        final RegistryKey<?>[] OVERWORLD_TEMPERATE = {
+                BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS,
+                BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST,
+                BiomeKeys.BIRCH_FOREST, BiomeKeys.DARK_FOREST,
+                BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA,
+                BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS,
+                BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_SAVANNA,
+                BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS,
+                BiomeKeys.WOODED_BADLANDS, BiomeKeys.MEADOW,
+                BiomeKeys.CHERRY_GROVE, BiomeKeys.GROVE,
+                BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS,
+                BiomeKeys.RIVER, BiomeKeys.BEACH,
+                //
+                BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.LUSH_CAVES,
+                BiomeKeys.DEEP_DARK, BiomeKeys.PALE_GARDEN,
+        };
+
+        final RegistryKey<?>[] OVERWORLD_SNOW = {
+                BiomeKeys.SNOWY_PLAINS, BiomeKeys.ICE_SPIKES,
+                BiomeKeys.SNOWY_TAIGA, BiomeKeys.SNOWY_SLOPES,
+                BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_RIVER,
+                BiomeKeys.SNOWY_BEACH, BiomeKeys.FROZEN_OCEAN,
+                BiomeKeys.DEEP_FROZEN_OCEAN,
+        };
+
+        final RegistryKey<?>[] OVERWORLD_SWAMP = {
+                BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP,
         };
 
         final RegistryKey<?>[] NETHER = {
-
+                BiomeKeys.NETHER_WASTES, BiomeKeys.WARPED_FOREST,
+                BiomeKeys.CRIMSON_FOREST, BiomeKeys.SOUL_SAND_VALLEY,
+                BiomeKeys.BASALT_DELTAS,
         };
 
         final RegistryKey<?>[] OVERWORLD_NETHER = {
@@ -215,7 +254,7 @@ public class CFTPEntitySpawns {
 
         { // LIGHTING
             BiomeModifications.addSpawn(
-                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD),
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_TEMPERATE),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_LIGHTING,
                     CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
             );
@@ -230,7 +269,7 @@ public class CFTPEntitySpawns {
 
         { // WATER
             BiomeModifications.addSpawn(
-                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD),
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_TEMPERATE),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_WATER,
                     CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
             );
@@ -245,7 +284,7 @@ public class CFTPEntitySpawns {
 
         { // EARTH
             BiomeModifications.addSpawn(
-                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD),
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_TEMPERATE),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_EARTH,
                     CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
             );
@@ -297,6 +336,66 @@ public class CFTPEntitySpawns {
 
             SpawnRestriction.register(
                     CFTPEntities.CREEPER_NETHER,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnInDark
+            );
+        }
+
+        { // FLIP
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_FLIP,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_FLIP,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnInDark
+            );
+        }
+
+        { // FRIENDLY
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey(BiomeKeys.MUSHROOM_FIELDS),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_FRIENDLY,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_FRIENDLY,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnInDark
+            );
+        }
+
+        { // SNOW
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_SNOW),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_SNOW,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_SNOW,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnInDark
+            );
+        }
+
+        { // SWAMP
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_SWAMP),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_SWAMP,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_SWAMP,
                     SpawnLocationTypes.ON_GROUND,
                     Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                     HostileEntity::canSpawnInDark

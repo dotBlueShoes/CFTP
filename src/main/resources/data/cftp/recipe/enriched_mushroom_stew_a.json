@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "cftp:yellow_mushroom",
+    "minecraft:brown_mushroom",
+    "minecraft:red_mushroom",
+    "minecraft:bowl"
+  ],
+  "result": {
+    "count": 1,
+    "id": "cftp:enriched_mushroom_stew"
+  }
+}

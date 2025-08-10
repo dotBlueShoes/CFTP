@@ -32,6 +32,8 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.COIN_IRON);
                                 entries.add(CFTPItems.COIN_GOLD);
                                 entries.add(CFTPItems.COPPER_ROD);
+                                entries.add(CFTPItems.ENRICHED_MUSHROOM_STEW);
+                                //
                                 entries.add(CFTPBlocks.SAW_DUST_BLOCK);
                                 entries.add(CFTPBlocks.YELLOW_MUSHROOM);
                                 entries.add(CFTPBlocks.BLUE_MUSHROOM);

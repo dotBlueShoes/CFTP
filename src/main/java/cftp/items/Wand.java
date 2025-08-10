@@ -1,4 +1,4 @@
-package cftp.item.items;
+package cftp.items;
 
 import cftp.CFTP;
 import cftp.entity.charge.EarthChargeEntity;

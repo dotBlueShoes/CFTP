@@ -2,13 +2,13 @@ package cftp.registries;
 
 import cftp.CFTP;
 import cftp.entity.CFTPEntities;
-import cftp.item.items.*;
+import cftp.items.EarthChargeItem;
+import cftp.items.ElementalPowderItem;
+import cftp.items.Wand;
+import cftp.items.WaterChargeItem;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.item.SpawnEggItem;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
@@ -16,10 +16,10 @@ import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
 
+import static net.minecraft.item.Items.BOWL;
+
 public class CFTPItems {
 
-    //public static final TagKey<Item> GUNS_TAG = TagKey.of(RegistryKeys.ITEM,  Identifier.of("my_mod", "guns"));
-    //public static final TagKey<Item> CHARGES = TagKey.of(RegistryKeys.ITEM,  Identifier.of("cftp", "charges"));
     public static final TagKey<Item> CHARGES = TagKey.of(RegistryKeys.ITEM, Identifier.of(CFTP.MOD_ID, "charges"));
 
     public static final Item ELEMENTAL_POWDER = register("elemental_powder", ElementalPowderItem::new,
@@ -31,11 +31,13 @@ public class CFTPItems {
     );
 
     public static final Item EARTH_CHARGE = register("earth_charge", EarthChargeItem::new,
-            new Item.Settings().useCooldown(0.5F)
+            new Item.Settings()
+                    .useCooldown(0.5F)
     );
 
     public static final Item WATER_CHARGE = register("water_charge", WaterChargeItem::new,
-            new Item.Settings().useCooldown(0.5F)
+            new Item.Settings()
+                    .useCooldown(0.5F)
     );
 
     public static final Item COIN_COPPER = register("coin_copper", Item::new,
@@ -50,9 +52,12 @@ public class CFTPItems {
             new Item.Settings()
     );
 
-    //public static final Item COPPER_ROD = register("copper_rod", Item::new,
-    //        new Item.Settings()
-    //);
+    public static final Item ENRICHED_MUSHROOM_STEW = register("enriched_mushroom_stew", Item::new,
+            new Item.Settings()
+                    .maxCount(1)
+                    .food(CFTPFoods.ENRICHED_MUSHROOM_STEW) // 10 hearts
+                    .useRemainder(BOWL)
+    );
 
     public static final Item COPPER_ROD = register("copper_rod", Wand::new,
             new Wand.Settings()

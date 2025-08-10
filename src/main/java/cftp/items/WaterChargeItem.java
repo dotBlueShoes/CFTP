@@ -1,6 +1,5 @@
-package cftp.item.items;
+package cftp.items;
 
-import cftp.entity.charge.EarthChargeEntity;
 import cftp.entity.charge.WaterChargeEntity;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,11 +19,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
-public class EarthChargeItem extends Item implements ProjectileItem {
+public class WaterChargeItem extends Item implements ProjectileItem {
 
     public static float POWER = 1.5F;
 
-    public EarthChargeItem(Item.Settings settings) {
+    public WaterChargeItem(Item.Settings settings) {
         super(settings);
     }
 
@@ -33,7 +32,9 @@ public class EarthChargeItem extends Item implements ProjectileItem {
         ItemStack itemStack = user.getStackInHand(hand);
         if (world instanceof ServerWorld serverWorld) {
             ProjectileEntity.spawnWithVelocity(
-                    (world2, shooter, stack) -> new EarthChargeEntity(user, world, user.getPos().getX(), user.getEyePos().getY(), user.getPos().getZ()),
+                    (world2, shooter, stack) -> new WaterChargeEntity(
+                            user, world, user.getPos().getX(), user.getEyePos().getY(), user.getPos().getZ()
+                    ),
                     serverWorld,
                     itemStack,
                     user,
@@ -65,16 +66,15 @@ public class EarthChargeItem extends Item implements ProjectileItem {
         double d = random.nextTriangular((double)direction.getOffsetX(), 0.11485000000000001);
         double e = random.nextTriangular((double)direction.getOffsetY(), 0.11485000000000001);
         double f = random.nextTriangular((double)direction.getOffsetZ(), 0.11485000000000001);
-
         Vec3d vec3d = new Vec3d(d, e, f);
 
-        EarthChargeEntity earthChargeEntity = new EarthChargeEntity(
+        WaterChargeEntity waterChargeEntity = new WaterChargeEntity(
                 world, pos.getX(), pos.getY(), pos.getZ(), vec3d
         );
 
-        earthChargeEntity.setVelocity(vec3d);
+        waterChargeEntity.setVelocity(vec3d);
 
-        return earthChargeEntity;
+        return waterChargeEntity;
     }
 
     @Override

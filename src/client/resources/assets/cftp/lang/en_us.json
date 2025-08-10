@@ -39,6 +39,12 @@
   "block.cftp.saw_dust_block": "Saw Dust Block",
   "item.cftp.saw_dust_block": "Saw Dust Block",
 
+  "block.cftp.yellow_mushroom": "Yellow mushroom",
+  "item.cftp.yellow_mushroom": "Yellow mushroom",
+
+  "block.cftp.blue_mushroom": "Blue mushroom",
+  "item.cftp.blue_mushroom": "Blue mushroom",
+
   "item.cftp.elemental_powder": "Elemental Powder",
   "item.cftp.earth_charge": "Earth Charge",
   "item.cftp.water_charge": "Water Charge",

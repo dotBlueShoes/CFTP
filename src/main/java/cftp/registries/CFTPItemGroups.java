@@ -33,6 +33,8 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.COIN_GOLD);
                                 entries.add(CFTPItems.COPPER_ROD);
                                 entries.add(CFTPBlocks.SAW_DUST_BLOCK);
+                                entries.add(CFTPBlocks.YELLOW_MUSHROOM);
+                                entries.add(CFTPBlocks.BLUE_MUSHROOM);
                                 //
                                 entries.add(CFTPItems.CREEPER_COOKIE_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_DIRT_SPAWN_EGG);

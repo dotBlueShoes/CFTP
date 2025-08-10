@@ -13,7 +13,9 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -22,7 +24,7 @@ import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperFlipEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 5;
+    protected int ExplosionDiameter = 6;
 
     public CreeperFlipEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -52,83 +54,75 @@ public class CreeperFlipEntity extends CreeperElementalEntity {
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
             float diameter = this.ExplosionDiameter;
 
-            int dropExplosionItemChance;
             int ghostCreeperChance;
 
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    diameter *= chargedPower;
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    diameter *= chargedPower;
                 } break;
                 case NORMAL: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.5f * chargedPower;
+                    diameter *= 1.25f * chargedPower;
                 } break;
                 case HARD:
                 default: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 2.0f * chargedPower;
+                    diameter *= 1.5f * chargedPower;
                 } break;
             }
 
             final int iDiameter = (int) diameter;
             final int radius = iDiameter / 2;
 
-            // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl explosion = new ExplosionImpl(
-                    serverWorld, null, null,
-                    null, null, 1, false,
-                    Explosion.DestructionType.DESTROY
-            );
-
-            var seed = (int)this.getX() + (int)this.getY() + (int)this.getZ();
-
-            for (int y = 0; y < iDiameter; ++y) {
+            for (int y = 0; y < radius; ++y) {
                 for (int x = 0; x < iDiameter; ++x) {
                     for (int z = 0; z < iDiameter; ++z) {
                         if (Shapes.isSphere(x, y, z, radius)) {
-                            BlockPos blockPos = BlockPos.ofFloored(
+
+                            // selected
+                            BlockPos sblockPos = BlockPos.ofFloored(
                                     this.getX() + x - radius,
                                     this.getY() + y - radius,
                                     this.getZ() + z - radius
                             );
 
-                            BlockState state = serverWorld.getBlockState(blockPos);
-                            Block block = state.getBlock();
+                            // mirrored
+                            BlockPos mBlockPos = BlockPos.ofFloored(
+                                    this.getX() + x - radius,
+                                    this.getY() - (y - radius) - 1,
+                                    this.getZ() + z - radius
+                            );
 
-                            var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                            var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.EARTH_BLOCKS.length;
+                            BlockState sState = serverWorld.getBlockState(sblockPos);
+                            var sBlock = sState.getBlock().getDefaultState();
 
-                            serverWorld.setBlockState(blockPos, CreeperMath.EARTH_BLOCKS[index], Block.NOTIFY_ALL);
+                            BlockState mState = serverWorld.getBlockState(mBlockPos);
+                            var mBlock = mState.getBlock().getDefaultState();
 
-                            // So that specific blocks won't drop and with a chance of not dropping at all.
-                            if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
-
-                                ItemStack itemStack;
-
-                                // TODO. This prob. can be done better.
-                                if (block.equals(Blocks.GRASS_BLOCK)) {
-                                    block = Blocks.DIRT;
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                } else if (block.equals(Blocks.SHORT_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else if (block.equals(Blocks.TALL_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else {
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                }
-
-                                Block.dropStack(serverWorld, blockPos, itemStack);
-                            }
+                            serverWorld.setBlockState(sblockPos, mBlock, Block.NOTIFY_ALL);
+                            serverWorld.setBlockState(mBlockPos, sBlock, Block.NOTIFY_ALL);
 
                         }
                     }
                 }
             }
+
+            serverWorld.createExplosion(
+                    this,
+                    Explosion.createDamageSource(serverWorld, this),
+                    CreeperMath.noDestroyExplosionBehaviour,
+                    this.getX(),
+                    this.getY() - 2,
+                    this.getZ(),
+                    diameter,
+                    false,
+                    World.ExplosionSourceType.MOB,
+                    ParticleTypes.EXPLOSION,
+                    ParticleTypes.EXPLOSION_EMITTER,
+                    SoundEvents.ENTITY_GENERIC_EXPLODE
+            );
 
             this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();

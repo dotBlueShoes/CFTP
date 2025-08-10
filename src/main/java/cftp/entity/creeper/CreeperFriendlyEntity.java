@@ -107,17 +107,10 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity {
                 } break;
             }
 
-            var explosionBehaviour = new ExplosionBehavior() {
-                @Override
-                public boolean canDestroyBlock(Explosion explosion, BlockView world, BlockPos pos, BlockState state, float power) {
-                    return false; // No blocks destroyed
-                }
-            };
-
             serverWorld.createExplosion(
                     this,
                     Explosion.createDamageSource(serverWorld, this),
-                    explosionBehaviour,
+                    CreeperMath.noDestroyExplosionBehaviour,
                     this.getX(),
                     this.getY(),
                     this.getZ(),

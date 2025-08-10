@@ -26,11 +26,17 @@ I could make it so that the drop appears always at mob explosion position.
 51. Make friendly creepers go after other hostile mobs not only explode close range.
 52. Make friendly creeper tamable like wolves and cats.
 53. Make such friendly creeper explosion exclude the player the creeper belongs to.
-54. Make flip creepers flip the space on y axis.
-55. Make flip creepers rare to spwan.
+54. Make flip creepers flip the space on y-axis.
+55. Make flip creepers rare to spawn.
+56. ??? make yellow mushroom grow in light
+57. make blue mushroom (jungle variant)
+58. make yellow and blue mushroom spawn.
+59. make yellow mushroom only able to place and grow at swamp biomes
+60. make blue mushroom only able to place and grow at jungle biomes
+61. make ghost creeper egg drop follow the same logic as ghost creeper spawn chance system.
+62. Add a magical biome like from Thaumcraft. -> new wood type (maybe floating islands ?)
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
-- swamp creeper
 - desert creeper
 - nether midnight biome (dark blue, stone ruins, bluish or reddish everfire)
 - aether... aether creeper (dirt, stone, ore)
@@ -49,10 +55,24 @@ I could make it so that the drop appears always at mob explosion position.
 wand recipe
 rod + honey +
 magma cream + nether wart
+special string?
+]
+
+[
+maybe fish creepers as fishing rod item??
+that item would spark and if picked would do a small explosion
+if waited till it stopped sparking it then can be picked normally.
+]
+
+[
+petals
+- meat block re-texture
+- meat block animate texture
+- meat rain weather effect (creates flesh blocks)
+- pumpkin head on top of a flesh block creates john
 ]
 
 Missing Creepers
-- Snow Creeper (fill both powder and normal snow - could be different for difficulty)
 - Dark Creeper (applies a vision debuff spawns a monster if difficulty + kinda scary sound effect)
 - Flip Creeper (flips terrain)
 - Jump Creeper (jumps when moving)
@@ -62,7 +82,7 @@ Missing Creepers
 Swamp ideas
 - (mehh) rainbow slimes look at sheep code (as sheep can be colored in rgb)
 - (cool) generate small packages of mud quite often
-- (cool) spider holes filled with webs
+- (cool) spider holes on surface filled with webs
 - (cool) swamp creeper (grass block, dirt, web, water, mud, oak leaves, clay, mangrove leaves, mangrove roots)
 - (cool) 0 or 1 web or always a web generates on under swamp tree crown and 0-1 web spawns instead of leaves at the crown
 - (cool) special kind of web (blueish, greenish, yellowish like)

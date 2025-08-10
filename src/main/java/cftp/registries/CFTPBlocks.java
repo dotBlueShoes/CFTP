@@ -5,6 +5,7 @@ import cftp.blocks.SparkBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -15,6 +16,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
 public class CFTPBlocks {
 
@@ -44,6 +46,34 @@ public class CFTPBlocks {
                     //.blockVision(Blocks::always)
     );
 
+    public static final Block YELLOW_MUSHROOM = registerMushroomBlock(
+            "yellow_mushroom",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BROWN)
+                    .noCollision()
+                    .ticksRandomly()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.GRASS)
+                    .luminance(state -> 1)
+                    .postProcess(Blocks::always)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+    );
+
+    public static final Block BLUE_MUSHROOM = registerMushroomBlock(
+            "blue_mushroom",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BROWN)
+                    .noCollision()
+                    .ticksRandomly()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.GRASS)
+                    .luminance(state -> 1)
+                    .postProcess(Blocks::always)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+    );
+
+
+
     //Block GLASS = register(
     //        "glass",
     //        TransparentBlock::new,
@@ -70,6 +100,18 @@ public class CFTPBlocks {
         );
 
         Block block = new SparkBlock(new ColorCode(-8356741), blockSettings.registryKey(key));
+        registerBlockItem(name, block);
+
+        return Registry.register(Registries.BLOCK, key, block);
+    }
+
+    private static Block registerMushroomBlock(String name, AbstractBlock.Settings blockSettings) {
+        RegistryKey<Block> key = RegistryKey.of(
+                RegistryKeys.BLOCK,
+                Identifier.of(CFTP.MOD_ID, name)
+        );
+
+        Block block = new MushroomPlantBlock(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, blockSettings.registryKey(key));
         registerBlockItem(name, block);
 
         return Registry.register(Registries.BLOCK, key, block);
@@ -115,6 +157,14 @@ public class CFTPBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
                 entries -> entries.add(SAW_DUST_BLOCK)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(YELLOW_MUSHROOM)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(BLUE_MUSHROOM)
         );
 
         // Hay block values.

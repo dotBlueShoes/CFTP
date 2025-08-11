@@ -26,15 +26,25 @@ I could make it so that the drop appears always at mob explosion position.
 51. Make friendly creepers go after other hostile mobs not only explode close range.
 52. Make friendly creeper tamable like wolves and cats.
 53. Make such friendly creeper explosion exclude the player the creeper belongs to.
-54. Make flip creepers flip the space on y-axis.
 55. Make flip creepers rare to spawn.
 56. ??? make yellow mushroom grow in light
-57. make blue mushroom (jungle variant)
-58. make yellow and blue mushroom spawn.
 59. make yellow mushroom only able to place and grow at swamp biomes
 60. make blue mushroom only able to place and grow at jungle biomes
 61. make ghost creeper egg drop follow the same logic as ghost creeper spawn chance system.
 62. Add a magical biome like from Thaumcraft. -> new wood type (maybe floating islands ?)
+63. Make the spider_hole visually better
+64. Make the spider hole protected from water
+65. Make the spider hole summon spiders
+66. Make a yellow spider
+67. Make a blue spider
+68. Make a yellow cobweb
+69. Make a blue cobweb
+70. Make a variant for spider hole
+71. Make a fire bat (sets the player on fire on contact)
+72. Make a poisonous bat (applies the poison on contact)
+73. Cyborg Zombie
+74. flesh rain
+75. John creature
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper
@@ -74,21 +84,18 @@ petals
 
 Missing Creepers
 - Dark Creeper (applies a vision debuff spawns a monster if difficulty + kinda scary sound effect)
-- Flip Creeper (flips terrain)
 - Jump Creeper (jumps when moving)
 - Mama Creeper (summons child creepers at death)
 - Child Creeper (faster than normal creeper)
 
 Swamp ideas
 - (mehh) rainbow slimes look at sheep code (as sheep can be colored in rgb)
-- (cool) generate small packages of mud quite often
-- (cool) spider holes on surface filled with webs
-- (cool) swamp creeper (grass block, dirt, web, water, mud, oak leaves, clay, mangrove leaves, mangrove roots)
 - (cool) 0 or 1 web or always a web generates on under swamp tree crown and 0-1 web spawns instead of leaves at the crown
 - (cool) special kind of web (blueish, greenish, yellowish like)
-- (cool) yellow mushroom
 - bog spider throws webs at player
-
+- rare change for a single frog_light to generate
+- (cool) rare chance for a chest with simple potions, lingerings, splashes, arrows along with simple nature like items
+- (cool) higher chance for mimic to spawn (when in hard/normal mode also during the day)
 
 // gimp - always do hue-chroma change or use some new color models
 

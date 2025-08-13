@@ -16,6 +16,7 @@
   "entity.cftp.creeper_friendly": "Friendly Creeper",
   "entity.cftp.creeper_snow": "Snow Creeper",
   "entity.cftp.creeper_swamp": "Swamp Creeper",
+  "entity.cftp.creeper_dark": "Dark Creeper",
 
   "item.cftp.creeper_cookie_spawn_egg": "Cookie Creeper Spawn Egg",
   "item.cftp.creeper_dirt_spawn_egg": "Dirt Creeper Spawn Egg",
@@ -32,6 +33,7 @@
   "item.cftp.creeper_friendly_spawn_egg": "Friendly Creeper Spawn Egg",
   "item.cftp.creeper_snow_spawn_egg": "Snow Creeper Spawn Egg",
   "item.cftp.creeper_swamp_spawn_egg": "Swamp Creeper Spawn Egg",
+  "item.cftp.creeper_dark_spawn_egg": "Dark Creeper Spawn Egg",
 
   "entity.cftp.water_charge": "Water Charge",
   "entity.cftp.earth_charge": "Earth Charge",

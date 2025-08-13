@@ -45,6 +45,7 @@ I could make it so that the drop appears always at mob explosion position.
 73. Cyborg Zombie
 74. flesh rain
 75. John creature
+76. Spider creeper (spider 2.0 AI with creeper like texture which explodes just as normal creeper)
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper

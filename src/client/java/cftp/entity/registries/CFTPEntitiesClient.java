@@ -23,6 +23,7 @@ public class CFTPEntitiesClient {
         EntityRendererRegistry.register(CFTPEntities.CREEPER_FRIENDLY, CreeperFriendlyRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_SNOW, CreeperSnowRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_SWAMP, CreeperSwampRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_DARK, CreeperDarkRenderer::new);
 
         // "Wind Charge" is referenced in:
         // WindChargeEntityRenderer

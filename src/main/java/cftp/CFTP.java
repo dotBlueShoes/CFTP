@@ -4,31 +4,18 @@ import cftp.entity.CFTPEntities;
 import cftp.registries.CFTPBlocks;
 import cftp.registries.CFTPItemGroups;
 import cftp.registries.CFTPItems;
-import cftp.registries.CFTPTags;
-import cftp.world.features.PillarFeature;
 import cftp.world.gen.CFTPEntitySpawns;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectionContext;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.registry.*;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class CFTP implements ModInitializer {
 	public static final String MOD_ID = "cftp";

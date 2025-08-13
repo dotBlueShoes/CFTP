@@ -1,8 +1,11 @@
 package cftp.entity.creeper;
 
+//import net.minecraft.command.
+//import net.minecraft.command.Comamnd
+
+import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
-import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -10,21 +13,45 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.LootCondition;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.context.LootWorldContext;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.context.ContextParameter;
+import net.minecraft.util.context.ContextParameterMap;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
 
-public class CreeperEarthEntity extends CreeperElementalEntity {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-    protected int ExplosionDiameter = 5;
+public class CreeperDarkEntity extends CreeperElementalEntity {
 
-    public CreeperEarthEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
+    protected int ExplosionDiameter = 18;
+    protected int DARKNESS_EFFECT_TICKS_EASY = 20 * 30;     // = 0m 30s
+    protected int DARKNESS_EFFECT_TICKS_NORMAL = 20 * 45;   // = 0m 45s
+    protected int DARKNESS_EFFECT_TICKS_HARD = 20 * 60;     // = 1m 00s
+
+    public CreeperDarkEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -52,26 +79,26 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
             float diameter = this.ExplosionDiameter;
 
-            int dropExplosionItemChance;
+            int darknessEffectTicks;
             int ghostCreeperChance;
 
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_EASY * (int)chargedPower;
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
                 } break;
                 case NORMAL: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_NORMAL * (int)chargedPower;
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.5f * chargedPower;
+                    diameter *= 1.25f * chargedPower;
                 } break;
                 case HARD:
                 default: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_HARD * (int)chargedPower;
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 2.0f * chargedPower;
+                    diameter *= 1.50f * chargedPower;
                 } break;
             }
 
@@ -82,15 +109,37 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
             final ExplosionImpl explosion = new ExplosionImpl(
                     serverWorld, null, null,
                     null, null, 1, false,
-                    Explosion.DestructionType.DESTROY
+                    Explosion.DestructionType.KEEP
             );
 
-            var seed = (int)this.getX() + (int)this.getY() + (int)this.getZ();
+            Box box = new Box(
+                    this.getX() - radius,
+                    this.getY() - radius,
+                    this.getZ() - radius,
+                    this.getX() + radius,
+                    this.getY() + radius,
+                    this.getZ() + radius
+            );
 
+            List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
+
+            for (ServerPlayerEntity player : players) {
+                player.addStatusEffect(new StatusEffectInstance(
+                        StatusEffects.DARKNESS,
+                        darknessEffectTicks,
+                        4,   // amplifier (0 == level I)
+                        true,        // ambient (optional)
+                        true,        // showParticles (set false to hide)
+                        true         // showIcon
+                ));
+            }
+
+            // Destroy ALL light blocks
             for (int y = 0; y < iDiameter; ++y) {
                 for (int x = 0; x < iDiameter; ++x) {
                     for (int z = 0; z < iDiameter; ++z) {
                         if (Shapes.isSphere(x, y, z, radius)) {
+
                             BlockPos blockPos = BlockPos.ofFloored(
                                     this.getX() + x - radius,
                                     this.getY() + y - radius,
@@ -99,30 +148,17 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
 
                             BlockState state = serverWorld.getBlockState(blockPos);
                             Block block = state.getBlock();
+                            int emittedLight = state.getLuminance();
 
-                            var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                            var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.EARTH_BLOCKS.length;
+                            if (block.shouldDropItemsOnExplosion(explosion) && emittedLight > 0) {
 
-                            serverWorld.setBlockState(blockPos, CreeperMath.EARTH_BLOCKS[index], Block.NOTIFY_ALL);
+                                serverWorld.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
 
-                            // So that specific blocks won't drop and with a chance of not dropping at all.
-                            if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
-
-                                ItemStack itemStack;
-
-                                // TODO. This prob. can be done better.
-                                if (block.equals(Blocks.GRASS_BLOCK)) {
-                                    block = Blocks.DIRT;
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                } else if (block.equals(Blocks.SHORT_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else if (block.equals(Blocks.TALL_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else {
-                                    itemStack = new ItemStack(block.asItem(), 1);
+                                // This might lag. -> tho I am being told it shouldn't really.
+                                var drops = CreeperMath.GetBlockLootTable(serverWorld, this, block);
+                                for (ItemStack drop : drops) {
+                                    Block.dropStack(serverWorld, blockPos, drop);
                                 }
-
-                                Block.dropStack(serverWorld, blockPos, itemStack);
                             }
 
                         }

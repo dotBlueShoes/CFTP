@@ -402,6 +402,21 @@ public class CFTPEntitySpawns {
             );
         }
 
+        { // DARK
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_DARK,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_DARK,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
         // ---
 
     }

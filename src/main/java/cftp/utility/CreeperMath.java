@@ -1,14 +1,28 @@
 package cftp.utility;
 
 import cftp.registries.CFTPItems;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.context.LootWorldContext;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class CreeperMath {
 
@@ -124,6 +138,42 @@ public class CreeperMath {
             return false; // No blocks destroyed
         }
     };
+
+    public static List<ItemStack> GetBlockLootTable(ServerWorld serverWorld, Entity entity, Block block) {
+        var blockState = block.getDefaultState();
+
+        Optional<RegistryKey<LootTable>> registryKey = block.getLootTableKey();
+
+        if (registryKey.isPresent()) {
+
+            Optional<LootTable> optional = serverWorld.getServer()
+                    .getReloadableRegistries()
+                    .createRegistryLookup()
+                    .getOptionalEntry(registryKey.get())
+                    .map(RegistryEntry::value);
+
+            LootWorldContext lootWorldContext = new LootWorldContext.Builder(serverWorld)
+                    .add(LootContextParameters.ORIGIN, entity.getPos())
+                    .add(LootContextParameters.THIS_ENTITY, entity)
+                    .add(LootContextParameters.BLOCK_STATE, blockState)
+                    .build(LootContextTypes.BLOCK_USE);
+
+            if (optional.isPresent()) {
+                return optional.get().generateLoot(lootWorldContext);
+
+                    //BlockPos blockPos = BlockPos.ofFloored(
+                    //        this.getX(),
+                    //        this.getY(),
+                    //        this.getZ()
+                    //);
+                    //for (ItemStack drop : drops) {
+                    //    Block.dropStack(serverWorld, blockPos, drop);
+                    //}
+            }
+        }
+
+        return new ArrayList<>();
+    }
 
     //public enum CREEPERS {
     //    COOKIE      (CreeperCookieEntity.class)     ,

@@ -154,6 +154,12 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item CREEPER_DARK_SPAWN_EGG = register(
+            "creeper_dark_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_DARK, settings),
+            new Item.Settings()
+    );
+
     //public static final Item CREEPER_COOKIE_SPAWN_EGG = Registry.register(
     //        Registries.ITEM,
     //        new Identifier("cftp", "creeper_cookie_spawn_egg"),

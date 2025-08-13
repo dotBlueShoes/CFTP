@@ -22,6 +22,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
+import java.util.Objects;
+
 import static cftp.utility.CreeperMath.CREEPER_EGGS;
 
 public class CreeperGhostEntity extends CreeperElementalEntity {
@@ -50,7 +52,15 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
 
     @Override
     public void onDeath(DamageSource damageSource) {
-        super.onDeath(damageSource);
+
+        final Difficulty difficulty = this.getWorld().getDifficulty();
+
+        // Ghost Creepers won't spawn ghost creepers when not in HARD difficulty.
+        if (Objects.requireNonNull(difficulty) == Difficulty.HARD) {
+            super.onDeath(damageSource);
+        } else {
+            super.onSuperDeath(damageSource);
+        }
 
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             ItemStack getItem = new ItemStack (CREEPER_EGGS[parentType], 1);
@@ -67,23 +77,5 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
             serverWorld.spawnEntity(itemEntity);
         }
     }
-
-    //@Override
-    //protected void explode() {
-    //    if (this.getWorld() instanceof ServerWorld serverWorld) {
-    //        float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-    //        this.dead = true;
-    //
-    //        serverWorld.createExplosion(
-    //                this, this.getX(), this.getY(), this.getZ(),
-    //                (float)this.explosionDiameter * chargedPower,
-    //                World.ExplosionSourceType.MOB
-    //        );
-    //
-    //        this.spawnEffectsCloud();
-    //        this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
-    //        this.discard();
-    //    }
-    //}
 
 }

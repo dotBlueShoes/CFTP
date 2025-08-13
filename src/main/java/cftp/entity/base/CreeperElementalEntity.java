@@ -341,6 +341,10 @@ public class CreeperElementalEntity extends HostileEntity {
         }
     }
 
+    protected void onSuperDeath(DamageSource damageSource) {
+        super.onDeath(damageSource);
+    }
+
     @Override
     public void onDeath(DamageSource damageSource) {
         super.onDeath(damageSource);

@@ -46,6 +46,7 @@ I could make it so that the drop appears always at mob explosion position.
 74. flesh rain
 75. John creature
 76. Spider creeper (spider 2.0 AI with creeper like texture which explodes just as normal creeper)
+77. Make dark creeper also play a kinda scary sound effect.
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper
@@ -84,7 +85,6 @@ petals
 ]
 
 Missing Creepers
-- Dark Creeper (applies a vision debuff spawns a monster if difficulty + kinda scary sound effect)
 - Jump Creeper (jumps when moving)
 - Mama Creeper (summons child creepers at death)
 - Child Creeper (faster than normal creeper)

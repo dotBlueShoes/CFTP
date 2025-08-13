@@ -85,21 +85,24 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_EASY * (int)chargedPower;
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_EASY * (int) chargedPower;
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
-                } break;
+                }
+                break;
                 case NORMAL: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_NORMAL * (int)chargedPower;
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_NORMAL * (int) chargedPower;
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.25f * chargedPower;
-                } break;
+                }
+                break;
                 case HARD:
                 default: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_HARD * (int)chargedPower;
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_HARD * (int) chargedPower;
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 1.50f * chargedPower;
-                } break;
+                }
+                break;
             }
 
             final int iDiameter = (int) diameter;
@@ -112,27 +115,32 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
                     Explosion.DestructionType.KEEP
             );
 
-            Box box = new Box(
-                    this.getX() - radius,
-                    this.getY() - radius,
-                    this.getZ() - radius,
-                    this.getX() + radius,
-                    this.getY() + radius,
-                    this.getZ() + radius
-            );
+            { // The DARKNESS effect is being applied in BOX rather in SPHERE. That's OK.
+                double darknessRadius = radius - 3;
 
-            List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
+                Box box = new Box(
+                        this.getX() - darknessRadius,
+                        this.getY() - darknessRadius,
+                        this.getZ() - darknessRadius,
+                        this.getX() + darknessRadius,
+                        this.getY() + darknessRadius,
+                        this.getZ() + darknessRadius
+                );
 
-            for (ServerPlayerEntity player : players) {
-                player.addStatusEffect(new StatusEffectInstance(
-                        StatusEffects.DARKNESS,
-                        darknessEffectTicks,
-                        4,   // amplifier (0 == level I)
-                        true,        // ambient (optional)
-                        true,        // showParticles (set false to hide)
-                        true         // showIcon
-                ));
+                List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
+
+                for (ServerPlayerEntity player : players) {
+                    player.addStatusEffect(new StatusEffectInstance(
+                            StatusEffects.DARKNESS,
+                            darknessEffectTicks,
+                            4,   // amplifier (0 == level I)
+                            true,        // ambient (optional)
+                            true,        // showParticles (set false to hide)
+                            true         // showIcon
+                    ));
+                }
             }
+
 
             // Destroy ALL light blocks
             for (int y = 0; y < iDiameter; ++y) {
@@ -155,6 +163,10 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
                                 serverWorld.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
 
                                 // This might lag. -> tho I am being told it shouldn't really.
+                                // todo:
+                                //  1. Consider multiple explosions at the very same time. Maybe some null checking
+                                //   and extra registering so that we know a block only breaks once for sure.
+                                //  2. Maybe i can cull blocks of said type. - Tho it would behave differently from a normal creeper then.
                                 var drops = CreeperMath.GetBlockLootTable(serverWorld, this, block);
                                 for (ItemStack drop : drops) {
                                     Block.dropStack(serverWorld, blockPos, drop);

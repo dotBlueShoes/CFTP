@@ -160,18 +160,10 @@ public class CreeperMath {
 
             if (optional.isPresent()) {
                 return optional.get().generateLoot(lootWorldContext);
-
-                    //BlockPos blockPos = BlockPos.ofFloored(
-                    //        this.getX(),
-                    //        this.getY(),
-                    //        this.getZ()
-                    //);
-                    //for (ItemStack drop : drops) {
-                    //    Block.dropStack(serverWorld, blockPos, drop);
-                    //}
             }
         }
 
+        // Return an empty list. No null checking just size checking.
         return new ArrayList<>();
     }
 

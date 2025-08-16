@@ -37,6 +37,8 @@ public class CFTPItemGroups {
                                 entries.add(CFTPBlocks.SAW_DUST_BLOCK);
                                 entries.add(CFTPBlocks.YELLOW_MUSHROOM);
                                 entries.add(CFTPBlocks.BLUE_MUSHROOM);
+                                entries.add(CFTPBlocks.YELLOW_COBWEB);
+                                entries.add(CFTPBlocks.BLUE_COBWEB);
                                 //
                                 entries.add(CFTPItems.CREEPER_COOKIE_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_DIRT_SPAWN_EGG);
@@ -54,6 +56,8 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.CREEPER_SNOW_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_SWAMP_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_DARK_SPAWN_EGG);
+                                entries.add(CFTPItems.SPIDER_YELLOW_SPAWN_EGG);
+                                entries.add(CFTPItems.SPIDER_BLUE_SPAWN_EGG);
                             }
                     )
                     .build()

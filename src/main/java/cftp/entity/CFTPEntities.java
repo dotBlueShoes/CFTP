@@ -4,9 +4,13 @@ import cftp.CFTP;
 import cftp.entity.charge.EarthChargeEntity;
 import cftp.entity.charge.WaterChargeEntity;
 import cftp.entity.creeper.*;
+import cftp.entity.spider.SpiderBlueEntity;
+import cftp.entity.spider.SpiderYellowEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -146,6 +150,28 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_dark")))
     );
 
+    public static final EntityType<SpiderYellowEntity> SPIDER_YELLOW = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_yellow")),
+            EntityType.Builder.create(SpiderYellowEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(1.4F, 0.9F)
+                    .eyeHeight(0.65F)
+                    .passengerAttachments(0.765F)
+                    .maxTrackingRange(8)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_yellow")))
+    );
+
+    public static final EntityType<SpiderBlueEntity> SPIDER_BLUE = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_blue")),
+            EntityType.Builder.create(SpiderBlueEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(1.4F, 0.9F)
+                    .eyeHeight(0.65F)
+                    .passengerAttachments(0.765F)
+                    .maxTrackingRange(8)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_blue")))
+    );
+
     public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")),
@@ -196,6 +222,8 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_SNOW, CreeperSnowEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_SWAMP, CreeperSwampEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_DARK, CreeperSwampEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SPIDER_YELLOW, SpiderYellowEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(SPIDER_BLUE, SpiderBlueEntity.createAttributes());
     }
 
 }

@@ -56,6 +56,7 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
         final Difficulty difficulty = this.getWorld().getDifficulty();
 
         // Ghost Creepers won't spawn ghost creepers when not in HARD difficulty.
+        // TODO. Getting 7 creepers in a row seems a bit bad design...
         if (Objects.requireNonNull(difficulty) == Difficulty.HARD) {
             super.onDeath(damageSource);
         } else {

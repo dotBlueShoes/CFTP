@@ -1,7 +1,9 @@
 package cftp.registries;
 
 import cftp.CFTP;
+import cftp.blocks.BlueCobwebBlock;
 import cftp.blocks.SparkBlock;
+import cftp.blocks.YellowCobwebBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
@@ -18,20 +20,22 @@ import net.minecraft.util.ColorCode;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
+import java.util.function.Function;
+
 public class CFTPBlocks {
 
-    //public static final Block SAW_DUST_BLOCK = registerDefaultBlock(
-    //        "saw_dust_block",
-    //        AbstractBlock.Settings.create()
-    //                .mapColor(MapColor.DIRT_BROWN)
-    //                .strength(0.5F)
-    //                .sounds(BlockSoundGroup.GRAVEL)
-    //                .burnable()
+
+    // 1. add SAW_DUST_WIRE (once burnt it is destroyed, it does not have an on/off state instead a particle emitter travels through)
+    //Blocks
+    //public static final Block REDSTONE_WIRE = register(
+    //        "redstone_wire", RedstoneWireBlock::new, AbstractBlock.Settings.create().noCollision().breakInstantly().pistonBehavior(PistonBehavior.DESTROY)
     //);
+    // 2. Find Flame particle. It will travel through as signal.
+    // 3. A Lock has to be defined. MAX_SAWDUST_SIGNALS -> 20. Which would mean that at the same time there can be at max
+    //  20 signals burning inside a world or server and not more. a 4 connection makes 1 signal split into 4...
 
-    //  world.addParticle(ParticleTypes.HEART, playerEntity.getX(), playerEntity.getY() + 2.0, playerEntity.getZ(), 0.0, 0.0, 0.0);
-
-    public static final Block SAW_DUST_BLOCK = registerFallingBlock(
+    public static final Block SAW_DUST_BLOCK = registerBlock(
+            settings -> new SparkBlock(new ColorCode(-8356741), settings),
             "saw_dust_block",
             AbstractBlock.Settings.create()
                     .mapColor(MapColor.DIRT_BROWN)
@@ -46,7 +50,8 @@ public class CFTPBlocks {
                     //.blockVision(Blocks::always)
     );
 
-    public static final Block YELLOW_MUSHROOM = registerMushroomBlock(
+    public static final Block YELLOW_MUSHROOM = registerBlock(
+            settings -> new MushroomPlantBlock(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, settings),
             "yellow_mushroom",
             AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
@@ -59,7 +64,8 @@ public class CFTPBlocks {
                     .pistonBehavior(PistonBehavior.DESTROY)
     );
 
-    public static final Block BLUE_MUSHROOM = registerMushroomBlock(
+    public static final Block BLUE_MUSHROOM = registerBlock(
+            settings -> new MushroomPlantBlock(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, settings),
             "blue_mushroom",
             AbstractBlock.Settings.create()
                     .mapColor(MapColor.BROWN)
@@ -72,75 +78,45 @@ public class CFTPBlocks {
                     .pistonBehavior(PistonBehavior.DESTROY)
     );
 
+    public static final Block YELLOW_COBWEB = registerBlock(
+            YellowCobwebBlock::new,
+            "yellow_cobweb",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.WHITE)
+                    .sounds(BlockSoundGroup.COBWEB)
+                    .solid()
+                    .noCollision()
+                    .requiresTool()
+                    .strength(4.0F)
+    );
 
+    public static final Block BLUE_COBWEB = registerBlock(
+            BlueCobwebBlock::new,
+            "blue_cobweb",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.WHITE)
+                    .sounds(BlockSoundGroup.COBWEB)
+                    .solid()
+                    .noCollision()
+                    .requiresTool()
+                    .strength(4.0F)
+    );
 
-    //Block GLASS = register(
-    //        "glass",
-    //        TransparentBlock::new,
-    //        AbstractBlock.Settings.create()
-    //                .instrument(NoteBlockInstrument.HAT)
-    //                .strength(0.3F)
-    //                .sounds(BlockSoundGroup.GLASS)
-    //                .nonOpaque()
-    //                .allowsSpawning(Blocks::never)
-    //                .solidBlock(Blocks::never)
-    //                .suffocates(Blocks::never)
-    //                .blockVision(Blocks::never)
-
-    //public static final Block SAW_DUST_BLOCK = register(
-    //        "saw_dust_block",
-    //        settings -> new ColoredFallingBlock(new ColorCode(-8356741), settings),
-    //        AbstractBlock.Settings.create().mapColor(MapColor.STONE_GRAY).instrument(NoteBlockInstrument.SNARE).strength(0.6F).sounds(BlockSoundGroup.GRAVEL)
-    //);
-
-    private static Block registerFallingBlock(String name, AbstractBlock.Settings blockSettings) {
+    private static <T extends Block> T registerBlock(
+            Function<AbstractBlock.Settings, T> blockFactory,
+            String name,
+            AbstractBlock.Settings blockSettings
+    ) {
         RegistryKey<Block> key = RegistryKey.of(
                 RegistryKeys.BLOCK,
                 Identifier.of(CFTP.MOD_ID, name)
         );
 
-        Block block = new SparkBlock(new ColorCode(-8356741), blockSettings.registryKey(key));
+        T block = blockFactory.apply(blockSettings.registryKey(key));
         registerBlockItem(name, block);
 
         return Registry.register(Registries.BLOCK, key, block);
     }
-
-    private static Block registerMushroomBlock(String name, AbstractBlock.Settings blockSettings) {
-        RegistryKey<Block> key = RegistryKey.of(
-                RegistryKeys.BLOCK,
-                Identifier.of(CFTP.MOD_ID, name)
-        );
-
-        Block block = new MushroomPlantBlock(TreeConfiguredFeatures.HUGE_BROWN_MUSHROOM, blockSettings.registryKey(key));
-        registerBlockItem(name, block);
-
-        return Registry.register(Registries.BLOCK, key, block);
-    }
-
-    //private static Block registerCauldron(String name, AbstractBlock.Settings blockSettings) {
-    //    RegistryKey<Block> key = RegistryKey.of(
-    //            RegistryKeys.BLOCK,
-    //            Identifier.of(CFTP.MOD_ID, name)
-    //    );
-    //
-    //    LeveledCauldronBlock block = new LeveledCauldronBlock(blockSettings.registryKey(key));
-    //    registerBlockItem(name, block);
-    //
-    //    return Registry.register(Registries.BLOCK, key, block);
-    //}
-
-    private static Block registerDefaultBlock(String name, AbstractBlock.Settings blockSettings) {
-        RegistryKey<Block> key = RegistryKey.of(
-                RegistryKeys.BLOCK,
-                Identifier.of(CFTP.MOD_ID, name)
-        );
-
-        Block block = new Block(blockSettings.registryKey(key));
-        registerBlockItem(name, block);
-
-        return Registry.register(Registries.BLOCK, key, block);
-    }
-
 
     private static void registerBlockItem(String name, Block block) {
         RegistryKey<Item> key = RegistryKey.of(
@@ -151,7 +127,6 @@ public class CFTPBlocks {
         BlockItem item = new BlockItem(block, new Item.Settings().registryKey(key));
         Registry.register(Registries.ITEM, key, item);
     }
-
 
     public static void register() {
 
@@ -165,6 +140,14 @@ public class CFTPBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(BLUE_MUSHROOM)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(YELLOW_COBWEB)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(BLUE_COBWEB)
         );
 
         // Hay block values.

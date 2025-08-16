@@ -18,6 +18,9 @@
   "entity.cftp.creeper_swamp": "Swamp Creeper",
   "entity.cftp.creeper_dark": "Dark Creeper",
 
+  "entity.cftp.spider_yellow": "Yellow Creeper",
+  "entity.cftp.spider_blue": "Blue Creeper",
+
   "item.cftp.creeper_cookie_spawn_egg": "Cookie Creeper Spawn Egg",
   "item.cftp.creeper_dirt_spawn_egg": "Dirt Creeper Spawn Egg",
   "item.cftp.creeper_earth_spawn_egg": "Earth Creeper Spawn Egg",
@@ -35,17 +38,26 @@
   "item.cftp.creeper_swamp_spawn_egg": "Swamp Creeper Spawn Egg",
   "item.cftp.creeper_dark_spawn_egg": "Dark Creeper Spawn Egg",
 
+  "item.cftp.spider_yellow_spawn_egg": "Yellow Spider Spawn Egg",
+  "item.cftp.spider_blue_spawn_egg": "Blue Spider Spawn Egg",
+
   "entity.cftp.water_charge": "Water Charge",
   "entity.cftp.earth_charge": "Earth Charge",
 
   "block.cftp.saw_dust_block": "Saw Dust Block",
   "item.cftp.saw_dust_block": "Saw Dust Block",
 
-  "block.cftp.yellow_mushroom": "Yellow mushroom",
-  "item.cftp.yellow_mushroom": "Yellow mushroom",
+  "block.cftp.yellow_mushroom": "Yellow Mushroom",
+  "item.cftp.yellow_mushroom": "Yellow Mushroom",
 
-  "block.cftp.blue_mushroom": "Blue mushroom",
-  "item.cftp.blue_mushroom": "Blue mushroom",
+  "block.cftp.blue_mushroom": "Blue Mushroom",
+  "item.cftp.blue_mushroom": "Blue Mushroom",
+
+  "block.cftp.yellow_cobweb": "Yellow Cobweb",
+  "item.cftp.yellow_cobweb": "Yellow Cobweb",
+
+  "block.cftp.blue_cobweb": "Blue Cobweb",
+  "item.cftp.blue_cobweb": "Blue Cobweb",
 
 
   "item.cftp.enriched_mushroom_stew": "Enriched Mushroom Stew",

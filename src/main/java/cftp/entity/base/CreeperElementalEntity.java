@@ -14,7 +14,9 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.GoatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
@@ -39,6 +41,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 
 public class CreeperElementalEntity extends HostileEntity {
+
+    //SpiderEntity;
+    //CaveSpiderEntity;
 
     protected static final TrackedData<Integer> FUSE_SPEED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.INTEGER);
     protected static final TrackedData<Boolean> CHARGED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);

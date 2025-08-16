@@ -160,6 +160,18 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item SPIDER_YELLOW_SPAWN_EGG = register(
+            "spider_yellow_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.SPIDER_YELLOW, settings),
+            new Item.Settings()
+    );
+
+    public static final Item SPIDER_BLUE_SPAWN_EGG = register(
+            "spider_blue_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.SPIDER_BLUE, settings),
+            new Item.Settings()
+    );
+
     //public static final Item CREEPER_COOKIE_SPAWN_EGG = Registry.register(
     //        Registries.ITEM,
     //        new Identifier("cftp", "creeper_cookie_spawn_egg"),

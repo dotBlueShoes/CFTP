@@ -1,6 +1,6 @@
 package cftp;
 
-import cftp.entity.registries.CFTPEntitiesClient;
+import cftp.registries.CFTPEntitiesClient;
 import cftp.registries.CFTPBlocks;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -17,5 +17,8 @@ public class CFTPClient implements ClientModInitializer {
 
 		BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.YELLOW_MUSHROOM, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.BLUE_MUSHROOM, RenderLayer.getCutout());
+
+        BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.YELLOW_COBWEB, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.BLUE_COBWEB, RenderLayer.getCutout());
 	}
 }

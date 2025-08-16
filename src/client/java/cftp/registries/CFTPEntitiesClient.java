@@ -1,8 +1,10 @@
-package cftp.entity.registries;
+package cftp.registries;
 
 import cftp.entity.CFTPEntities;
 import cftp.entity.charge.*;
 import cftp.entity.creeper.*;
+import cftp.entity.spider.SpiderBlueRenderer;
+import cftp.entity.spider.SpiderYellowRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public class CFTPEntitiesClient {
@@ -24,6 +26,9 @@ public class CFTPEntitiesClient {
         EntityRendererRegistry.register(CFTPEntities.CREEPER_SNOW, CreeperSnowRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_SWAMP, CreeperSwampRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_DARK, CreeperDarkRenderer::new);
+
+        EntityRendererRegistry.register(CFTPEntities.SPIDER_YELLOW, SpiderYellowRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.SPIDER_BLUE, SpiderBlueRenderer::new);
 
         // "Wind Charge" is referenced in:
         // WindChargeEntityRenderer

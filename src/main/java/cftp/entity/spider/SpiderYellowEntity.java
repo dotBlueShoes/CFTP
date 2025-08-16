@@ -17,8 +17,8 @@ public class SpiderYellowEntity extends SpiderEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return HostileEntity.createHostileAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 16.0)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.3F);
+                .add(EntityAttributes.MAX_HEALTH, 12.0)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.55F);
     }
 
     @Override

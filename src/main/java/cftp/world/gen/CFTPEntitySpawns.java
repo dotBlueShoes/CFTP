@@ -84,6 +84,10 @@ public class CFTPEntitySpawns {
                 BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP,
         };
 
+        final RegistryKey<?>[] OVERWORLD_JUNGLE = {
+                BiomeKeys.JUNGLE, BiomeKeys.BAMBOO_JUNGLE,
+        };
+
         final RegistryKey<?>[] NETHER = {
                 BiomeKeys.NETHER_WASTES, BiomeKeys.WARPED_FOREST,
                 BiomeKeys.CRIMSON_FOREST, BiomeKeys.SOUL_SAND_VALLEY,
@@ -411,6 +415,36 @@ public class CFTPEntitySpawns {
 
             SpawnRestriction.register(
                     CFTPEntities.CREEPER_DARK,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // SPIDER YELLOW
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_SWAMP),
+                    SpawnGroup.MONSTER, CFTPEntities.SPIDER_YELLOW,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.SPIDER_YELLOW,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // SPIDER BLUE
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_JUNGLE),
+                    SpawnGroup.MONSTER, CFTPEntities.SPIDER_BLUE,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.SPIDER_BLUE,
                     SpawnLocationTypes.ON_GROUND,
                     Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                     HostileEntity::canSpawnIgnoreLightLevel

@@ -25,6 +25,9 @@ import java.util.function.Function;
 public class CFTPBlocks {
 
 
+    // + Elemental Lamp
+
+
     // 1. add SAW_DUST_WIRE (once burnt it is destroyed, it does not have an on/off state instead a particle emitter travels through)
     //Blocks
     //public static final Block REDSTONE_WIRE = register(

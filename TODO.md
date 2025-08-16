@@ -35,11 +35,7 @@ I could make it so that the drop appears always at mob explosion position.
 63. Make the spider_hole visually better
 64. Make the spider hole protected from water
 65. Make the spider hole summon spiders
-66. Make a yellow spider
-67. Make a blue spider
-68. Make a yellow cobweb
-69. Make a blue cobweb
-70. Make a variant for spider hole
+70. Divide Spider Hole gen into Swamp Spider Hole and Jungle Spider Hole
 71. Make a fire bat (sets the player on fire on contact)
 72. Make a poisonous bat (applies the poison on contact)
 73. Cyborg Zombie
@@ -47,6 +43,9 @@ I could make it so that the drop appears always at mob explosion position.
 75. John creature
 76. Spider creeper (spider 2.0 AI with creeper like texture which explodes just as normal creeper)
 77. Make dark creeper also play a kinda scary sound effect.
+78. Make cobwebs, mushrooms less dark
+79. Make jungle blue mushroom gen ~2x less
+80. Elemental Ingot + Elemental Block (copper ingot + elemental power (not powder) ) 
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper
@@ -88,6 +87,9 @@ Missing Creepers
 - Jump Creeper (jumps when moving)
 - Mama Creeper (summons child creepers at death)
 - Child Creeper (faster than normal creeper)
+- Illusion Creeper (when near player create 2-easy, 3-normal/hard illusions)
+  (original creeper explodes just as normal creeper, illusions don't explode for real)
+- Ballistic Creeper (throws ignited tnt at player instead, (spawns only on hard difficulty))
 
 Swamp ideas
 - (mehh) rainbow slimes look at sheep code (as sheep can be colored in rgb)

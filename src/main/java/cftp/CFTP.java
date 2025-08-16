@@ -37,6 +37,12 @@ public class CFTP implements ModInitializer {
     public static final RegistryKey<PlacedFeature> DISK_COBWEB_PLACED =
             RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("cftp", "disk_cobweb_placed"));
 
+    public static final RegistryKey<PlacedFeature> DISK_YELLOW_COBWEB_PLACED =
+            RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("cftp", "disk_yellow_cobweb_placed"));
+
+    public static final RegistryKey<PlacedFeature> DISK_BLUE_COBWEB_PLACED =
+            RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("cftp", "disk_blue_cobweb_placed"));
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -87,6 +93,18 @@ public class CFTP implements ModInitializer {
                     //BiomeSelectors.foundInOverworld(),
                     GenerationStep.Feature.UNDERGROUND_ORES,
                     DISK_COBWEB_PLACED
+            );
+
+            BiomeModifications.addFeature(
+                    BiomeSelectors.includeByKey(BiomeKeys.SWAMP),
+                    GenerationStep.Feature.UNDERGROUND_ORES,
+                    DISK_YELLOW_COBWEB_PLACED
+            );
+
+            BiomeModifications.addFeature(
+                    BiomeSelectors.includeByKey(BiomeKeys.JUNGLE),
+                    GenerationStep.Feature.UNDERGROUND_ORES,
+                    DISK_BLUE_COBWEB_PLACED
             );
 
         }

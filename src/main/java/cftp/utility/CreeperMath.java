@@ -44,6 +44,7 @@ public class CreeperMath {
             CFTPItems.CREEPER_SNOW_SPAWN_EGG,
             CFTPItems.CREEPER_SWAMP_SPAWN_EGG,
             CFTPItems.CREEPER_DARK_SPAWN_EGG,
+            CFTPItems.CREEPER_BALLISTIC_SPAWN_EGG,
     };
 
     public enum CREEPER_TYPE {
@@ -64,6 +65,7 @@ public class CreeperMath {
         SNOW        (14),
         SWAMP       (15),
         DARK        (16),
+        BALLISTIC   (17),
         ;
 
         private final int type;

@@ -56,6 +56,7 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.CREEPER_SNOW_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_SWAMP_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_DARK_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_BALLISTIC_SPAWN_EGG);
                                 entries.add(CFTPItems.SPIDER_YELLOW_SPAWN_EGG);
                                 entries.add(CFTPItems.SPIDER_BLUE_SPAWN_EGG);
                             }

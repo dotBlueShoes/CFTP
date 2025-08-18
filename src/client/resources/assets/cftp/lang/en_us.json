@@ -17,6 +17,7 @@
   "entity.cftp.creeper_snow": "Snow Creeper",
   "entity.cftp.creeper_swamp": "Swamp Creeper",
   "entity.cftp.creeper_dark": "Dark Creeper",
+  "entity.cftp.creeper_ballistic": "Ballistic Creeper",
 
   "entity.cftp.spider_yellow": "Yellow Creeper",
   "entity.cftp.spider_blue": "Blue Creeper",
@@ -37,6 +38,7 @@
   "item.cftp.creeper_snow_spawn_egg": "Snow Creeper Spawn Egg",
   "item.cftp.creeper_swamp_spawn_egg": "Swamp Creeper Spawn Egg",
   "item.cftp.creeper_dark_spawn_egg": "Dark Creeper Spawn Egg",
+  "item.cftp.creeper_ballistic_spawn_egg": "Ballistic Creeper Spawn Egg",
 
   "item.cftp.spider_yellow_spawn_egg": "Yellow Spider Spawn Egg",
   "item.cftp.spider_blue_spawn_egg": "Blue Spider Spawn Egg",

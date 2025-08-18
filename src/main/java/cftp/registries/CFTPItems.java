@@ -160,6 +160,12 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item CREEPER_BALLISTIC_SPAWN_EGG = register(
+            "creeper_ballistic_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_BALLISTIC, settings),
+            new Item.Settings()
+    );
+
     public static final Item SPIDER_YELLOW_SPAWN_EGG = register(
             "spider_yellow_spawn_egg",
             settings -> new SpawnEggItem(CFTPEntities.SPIDER_YELLOW, settings),

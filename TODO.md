@@ -100,6 +100,8 @@ Swamp ideas
 - (cool) rare chance for a chest with simple potions, lingerings, splashes, arrows along with simple nature like items
 - (cool) higher chance for mimic to spawn (when in hard/normal mode also during the day)
 
+- new nether only fluid ? - required to craft new armor sets
+
 // gimp - always do hue-chroma change or use some new color models
 
 // Actual entity spawning is handled inside:

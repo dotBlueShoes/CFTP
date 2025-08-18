@@ -105,6 +105,17 @@ public class CFTPBlocks {
                     .strength(4.0F)
     );
 
+    public static final Block ELEMENTAL_BLOCK = registerBlock(
+            Block::new,
+            "elemental_block",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.WHITE)
+                    .sounds(BlockSoundGroup.COBWEB)
+                    .solid()
+                    .requiresTool()
+                    .strength(4.0F)
+    );
+
     private static <T extends Block> T registerBlock(
             Function<AbstractBlock.Settings, T> blockFactory,
             String name,
@@ -151,6 +162,10 @@ public class CFTPBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(BLUE_COBWEB)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
+                entries -> entries.add(ELEMENTAL_BLOCK)
         );
 
         // Hay block values.

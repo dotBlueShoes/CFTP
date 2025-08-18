@@ -63,12 +63,15 @@ public class CFTPItems {
             new Wand.Settings()
     );
 
+    public static final Item ELEMENTAL_INGOT = register("elemental_ingot", Item::new,
+            new Item.Settings()
+    );
+
     public static final Item CREEPER_COOKIE_SPAWN_EGG = register(
             "creeper_cookie_spawn_egg",
             settings -> new SpawnEggItem(CFTPEntities.CREEPER_COOKIE, settings),
             new Item.Settings()
     );
-
 
     public static final Item CREEPER_DIRT_SPAWN_EGG = register(
             "creeper_dirt_spawn_egg",

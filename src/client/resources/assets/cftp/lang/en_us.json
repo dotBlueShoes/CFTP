@@ -61,6 +61,10 @@
   "block.cftp.blue_cobweb": "Blue Cobweb",
   "item.cftp.blue_cobweb": "Blue Cobweb",
 
+  "block.cftp.elemental_block": "Elemental Block",
+  "item.cftp.elemental_block": "Elemental Block",
+  "item.cftp.elemental_ingot": "Elemental Ingot",
+
 
   "item.cftp.enriched_mushroom_stew": "Enriched Mushroom Stew",
   "item.cftp.elemental_powder": "Elemental Powder",

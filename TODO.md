@@ -46,6 +46,7 @@ I could make it so that the drop appears always at mob explosion position.
 78. Make cobwebs, mushrooms less dark
 79. Make jungle blue mushroom gen ~2x less
 80. Elemental Ingot + Elemental Block (copper ingot + elemental power (not powder) ) 
+81. Make ballistic creeper only spawn on hard difficulty.
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper
@@ -89,7 +90,6 @@ Missing Creepers
 - Child Creeper (faster than normal creeper)
 - Illusion Creeper (when near player create 2-easy, 3-normal/hard illusions)
   (original creeper explodes just as normal creeper, illusions don't explode for real)
-- Ballistic Creeper (throws ignited tnt at player instead, (spawns only on hard difficulty))
 
 Swamp ideas
 - (mehh) rainbow slimes look at sheep code (as sheep can be colored in rgb)

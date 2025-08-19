@@ -73,10 +73,14 @@ public class CreeperElementalEntity extends HostileEntity {
         super(entityType, world);
     }
 
+    protected float getIgniteDistance() {
+        return 7.0F;
+    }
+
     @Override
     protected void initGoals() {
         this.goalSelector.add(1, new SwimGoal(this));
-        this.goalSelector.add(2, new CreeperElementalIgniteGoal(this, 7.0F));
+        this.goalSelector.add(2, new CreeperElementalIgniteGoal(this, getIgniteDistance()));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, OcelotEntity.class, 6.0F, 1.0, 1.2));
         this.goalSelector.add(3, new FleeEntityGoal<>(this, CatEntity.class, 6.0F, 1.0, 1.2));
         this.goalSelector.add(4, new MeleeAttackGoal(this, 1.0, false));

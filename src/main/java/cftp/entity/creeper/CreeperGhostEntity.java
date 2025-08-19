@@ -43,6 +43,19 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.30f)
                 .add(EntityAttributes.ATTACK_DAMAGE, 1)
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
+
+        // This makes the ghost creeper not scary at all.
+        //  should be a config setting. Make Ghost Creepers Easy.
+        //.add(EntityAttributes.MOVEMENT_SPEED, 0.20f)
+    }
+
+    @Override
+    protected float getIgniteDistance() {
+        return 5.0F;
+
+        // This makes the ghost creeper not scary at all.
+        //  should be a config setting. Make Ghost Creepers Easy.
+        //return 3.0F;
     }
 
     @Override

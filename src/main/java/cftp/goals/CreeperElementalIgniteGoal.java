@@ -1,5 +1,6 @@
 package cftp.goals;
 
+import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
@@ -50,6 +51,7 @@ public class CreeperElementalIgniteGoal extends Goal {
             this.creeper.setFuseSpeed(-1);
         } else if (this.creeper.squaredDistanceTo(this.target) > 49.0) {
             this.creeper.setFuseSpeed(-1);
+            CFTP.LOGGER.info("distance!");
         } else if (!this.creeper.getVisibilityCache().canSee(this.target)) {
             this.creeper.setFuseSpeed(-1);
         } else {

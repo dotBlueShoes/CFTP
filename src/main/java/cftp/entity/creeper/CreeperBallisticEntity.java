@@ -1,26 +1,22 @@
 package cftp.entity.creeper;
 
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.goals.CreeperBallisticAttackGoal;
+import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.utility.CreeperMath;
-import cftp.utility.PseudoRandom;
-import cftp.utility.Shapes;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.TntEntity;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.OcelotEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperBallisticEntity extends CreeperElementalEntity {
 
@@ -43,36 +39,65 @@ public class CreeperBallisticEntity extends CreeperElementalEntity {
         return CreeperMath.CREEPER_TYPE.BALLISTIC.getType();
     }
 
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(1, new SwimGoal(this));
+        this.goalSelector.add(2, new CreeperElementalIgniteGoal(this, 7.0F));
+        this.goalSelector.add(3, new FleeEntityGoal<>(this, OcelotEntity.class, 6.0F, 1.0, 1.2));
+        this.goalSelector.add(3, new FleeEntityGoal<>(this, CatEntity.class, 6.0F, 1.0, 1.2));
+        this.goalSelector.add(4, new CreeperBallisticAttackGoal(this, 1.0, false));
+        this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.8));
+        this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+        this.goalSelector.add(6, new LookAroundGoal(this));
+        this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
+        this.targetSelector.add(2, new RevengeGoal(this));
+    }
+
 
     @Override
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
-            //this.dead = true;
+            this.dead = true;
 
-            { // TNT. But this method is being called over and over so it's wrong to do it here!
-                // Create primed TNT
-                TntEntity tnt = new TntEntity(EntityType.TNT, serverWorld);
-                tnt.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), 0.0f, 0.0f);
+            final Difficulty difficulty = this.getWorld().getDifficulty();
 
-                // Set fuse duration (default is 80 ticks = 4 seconds)
-                tnt.setFuse(80);
+            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+            float diameter = this.ExplosionDiameter ;
 
-                // get player position;
-                Vec3d velocity = new Vec3d(1, 1, 1);
+            int ghostCreeperChance;
 
-                // Apply velocity
-                tnt.setVelocity(velocity);
-
-                // Add to world
-                serverWorld.spawnEntity(tnt);
+            switch (difficulty) {
+                case PEACEFUL:
+                case EASY: {
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    diameter *= chargedPower;
+                }
+                break;
+                case NORMAL: {
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                    diameter *= 1.25f * chargedPower;
+                }
+                break;
+                case HARD:
+                default: {
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                    diameter *= 1.50f * chargedPower;
+                }
+                break;
             }
 
-            //this.playExplosionSound(serverWorld);
-            //this.spawnEffectsCloud();
-            //this.onRemoval(serverWorld, RemovalReason.KILLED);
-            //this.discard();
+            serverWorld.createExplosion(
+                    this, this.getX(), this.getY(), this.getZ(),
+                    diameter,
+                    World.ExplosionSourceType.MOB
+            );
 
-            //SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            this.playExplosionSound(serverWorld);
+            this.spawnEffectsCloud();
+            this.onRemoval(serverWorld, RemovalReason.KILLED);
+            this.discard();
+
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

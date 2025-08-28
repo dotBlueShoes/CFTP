@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.Shapes;
@@ -8,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -118,6 +120,22 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
                             true,        // showParticles (set false to hide)
                             true         // showIcon
                     ));
+
+                    EntityAttributeInstance maxAbsorption = player.getAttributeInstance(EntityAttributes.MAX_ABSORPTION);
+                    EntityAttributeInstance maxHealth = player.getAttributeInstance(EntityAttributes.MAX_HEALTH);
+
+                    //if (inst != null && inst.getBaseValue() < points) {
+                    //    inst.setBaseValue(points); // allow at least this much absorption
+                    //}
+
+                    assert maxAbsorption != null;
+                    assert maxHealth != null;
+
+                    maxAbsorption.setBaseValue(40);
+                    maxHealth.setBaseValue(6);
+
+                    player.setAbsorptionAmount(40);
+                    CFTP.LOGGER.info("absorption: {}", player.getAbsorptionAmount());
                 }
             }
 

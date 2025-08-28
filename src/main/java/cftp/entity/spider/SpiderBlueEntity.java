@@ -22,7 +22,13 @@ public class SpiderBlueEntity extends SpiderEntity {
     public static DefaultAttributeContainer.Builder createAttributes() {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.MAX_HEALTH, 20.0)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.45f);
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.45f)
+                .add(EntityAttributes.ATTACK_DAMAGE, 3.5F);
+    }
+
+    @Override
+    public float getSoundPitch() {
+        return 0.5f;
     }
 
     @Override

@@ -21,6 +21,11 @@ public class SpiderYellowRenderer extends SpiderEntityRenderer<SpiderYellowEntit
     }
 
     @Override
+    protected float getShadowRadius(LivingEntityRenderState livingEntityRenderState) {
+        return 0.5f * super.getShadowRadius(livingEntityRenderState);
+    }
+
+    @Override
     protected void scale(LivingEntityRenderState state, MatrixStack matrices) {
         matrices.scale(0.5f, 0.5f, 0.5f);
     }

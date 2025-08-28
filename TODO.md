@@ -47,6 +47,13 @@ I could make it so that the drop appears always at mob explosion position.
 79. Make jungle blue mushroom gen ~2x less
 80. Elemental Ingot + Elemental Block (copper ingot + elemental power (not powder) ) 
 81. Make ballistic creeper only spawn on hard difficulty.
+82. Slimes have the simplified AI -> Pathfinding. This means I can create a creeper_bridger / breaker
+-> It always goes player direction (no advanced pathfinding) and explodes when meet with any collision
+83. Golden Creeper -> Gives Absorption healths for a duration of a time to all entities in an area.
+84. Ender creeper should also be able to teleport other living entities.
+85. Add a bug based of endermite -> Maybe some variants like normal/jungle/snow/nether (maybe they would interact with sludge liquid!)
+86. Make Golden Creeper -> gives absorption hearts, maybe even a gold-ore block -> or replaces stone/deepstone/netherrack in a small radius with gold!
+87. Flesh block does not drop itself it can be crafted with 8 flesh or found in caves as generated as block when destroyed gived john curse for the duration of a day - makes johns spawn.
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper

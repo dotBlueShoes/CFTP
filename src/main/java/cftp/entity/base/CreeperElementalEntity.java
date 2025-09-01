@@ -42,9 +42,6 @@ import java.util.Collection;
 
 public class CreeperElementalEntity extends HostileEntity {
 
-    //SpiderEntity;
-    //CaveSpiderEntity;
-
     protected static final TrackedData<Integer> FUSE_SPEED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.INTEGER);
     protected static final TrackedData<Boolean> CHARGED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> IGNITED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -53,7 +50,7 @@ public class CreeperElementalEntity extends HostileEntity {
     protected int currentFuseTime;
     protected int headsDropped;
 
-    protected int fuseTime = 10;
+    protected int fuseTime = 25;
     protected int explosionDiameter = 3;
 
 

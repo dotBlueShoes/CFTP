@@ -436,6 +436,21 @@ public class CFTPEntitySpawns {
             );
         }
 
+        { // GOLDEN
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_GOLDEN,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_GOLDEN,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
         { // SPIDER YELLOW
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_SWAMP),

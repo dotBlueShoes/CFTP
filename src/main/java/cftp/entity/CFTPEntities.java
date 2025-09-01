@@ -158,6 +158,14 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_ballistic")))
     );
 
+    public static final EntityType<CreeperGoldenEntity> CREEPER_GOLDEN = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_golden")),
+            EntityType.Builder.create(CreeperGoldenEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_golden")))
+    );
+
     public static final EntityType<SpiderYellowEntity> SPIDER_YELLOW = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_yellow")),
@@ -229,8 +237,9 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_FRIENDLY, CreeperFriendlyEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_SNOW, CreeperSnowEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_SWAMP, CreeperSwampEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(CREEPER_DARK, CreeperSwampEntity.createAttributes());
-        FabricDefaultAttributeRegistry.register(CREEPER_BALLISTIC, CreeperSwampEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_DARK, CreeperDarkEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_BALLISTIC, CreeperBallisticEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_GOLDEN, CreeperGoldenEntity.createAttributes());
         //
         FabricDefaultAttributeRegistry.register(SPIDER_YELLOW, SpiderYellowEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(SPIDER_BLUE, SpiderBlueEntity.createAttributes());

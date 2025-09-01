@@ -3,6 +3,7 @@ package cftp.entity.creeper;
 import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
+import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,6 +16,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -26,14 +28,12 @@ import net.minecraft.world.explosion.ExplosionImpl;
 
 import java.util.List;
 
-public class CreeperDarkEntity extends CreeperElementalEntity {
+public class CreeperGoldenEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 18;
-    protected int DARKNESS_EFFECT_TICKS_EASY = 20 * 30;     // = 0m 30s
-    protected int DARKNESS_EFFECT_TICKS_NORMAL = 20 * 45;   // = 0m 45s
-    protected int DARKNESS_EFFECT_TICKS_HARD = 20 * 60;     // = 1m 00s
+    final int MAX_ABSORPTION = 40;
+    protected int ExplosionDiameter = 3;
 
-    public CreeperDarkEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
+    public CreeperGoldenEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -47,9 +47,8 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.DARK.getType();
+        return CreeperMath.CREEPER_TYPE.GOLDEN.getType();
     }
-
 
     @Override
     protected void explode() {
@@ -61,28 +60,28 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
             float diameter = this.ExplosionDiameter;
 
-            int darknessEffectTicks;
             int ghostCreeperChance;
+            int absorptionGive;
 
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_EASY * (int) chargedPower;
                     ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
+                    absorptionGive = 10;
                 }
                 break;
                 case NORMAL: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_NORMAL * (int) chargedPower;
                     ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.25f * chargedPower;
+                    absorptionGive = 20;
                 }
                 break;
                 case HARD:
                 default: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_HARD * (int) chargedPower;
                     ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 1.50f * chargedPower;
+                    absorptionGive = 40;
                 }
                 break;
             }
@@ -90,41 +89,39 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
             final int iDiameter = (int) diameter;
             final int radius = iDiameter / 2;
 
-            // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl explosion = new ExplosionImpl(
-                    serverWorld, null, null,
-                    null, null, 1, false,
-                    Explosion.DestructionType.KEEP
-            );
-
-            { // The DARKNESS effect is being applied in BOX rather in SPHERE. That's OK.
-                double darknessRadius = radius - 3;
+            { // The absorption effect is being applied in BOX rather in SPHERE. That's OK.
+                double absorptionRadius = 5;
 
                 Box box = new Box(
-                        this.getX() - darknessRadius,
-                        this.getY() - darknessRadius,
-                        this.getZ() - darknessRadius,
-                        this.getX() + darknessRadius,
-                        this.getY() + darknessRadius,
-                        this.getZ() + darknessRadius
+                        this.getX() - absorptionRadius,
+                        this.getY() - absorptionRadius,
+                        this.getZ() - absorptionRadius,
+                        this.getX() + absorptionRadius,
+                        this.getY() + absorptionRadius,
+                        this.getZ() + absorptionRadius
                 );
 
                 List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
 
                 for (ServerPlayerEntity player : players) {
-                    player.addStatusEffect(new StatusEffectInstance(
-                            StatusEffects.DARKNESS,
-                            darknessEffectTicks,
-                            4,   // amplifier (0 == level I)
-                            true,        // ambient (optional)
-                            true,        // showParticles (set false to hide)
-                            true         // showIcon
-                    ));
+                    EntityAttributeInstance maxAbsorption = player.getAttributeInstance(EntityAttributes.MAX_ABSORPTION);
+                    EntityAttributeInstance maxHealth = player.getAttributeInstance(EntityAttributes.MAX_HEALTH);
+
+                    assert maxAbsorption != null;
+                    assert maxHealth != null;
+
+                    maxAbsorption.setBaseValue(MAX_ABSORPTION);
+
+                    // We're not adding we're always setting, but we don't set to less than what player might have.
+                    if (player.getAbsorptionAmount() < absorptionGive) {
+                        player.setAbsorptionAmount(absorptionGive);
+                    }
+
+                    //maxHealth.setBaseValue(6);
+                    //CFTP.LOGGER.info("absorption: {}", player.getAbsorptionAmount());
                 }
             }
 
-
-            // Destroy ALL light blocks
             for (int y = 0; y < iDiameter; ++y) {
                 for (int x = 0; x < iDiameter; ++x) {
                     for (int z = 0; z < iDiameter; ++z) {
@@ -138,21 +135,13 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
 
                             BlockState state = serverWorld.getBlockState(blockPos);
                             Block block = state.getBlock();
-                            int emittedLight = state.getLuminance();
 
-                            if (block.shouldDropItemsOnExplosion(explosion) && emittedLight > 0) {
-
-                                serverWorld.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
-
-                                // This might lag. -> tho I am being told it shouldn't really.
-                                // todo:
-                                //  1. Consider multiple explosions at the very same time. Maybe some null checking
-                                //   and extra registering so that we know a block only breaks once for sure.
-                                //  2. Maybe i can cull blocks of said type. - Tho it would behave differently from a normal creeper then.
-                                var drops = CreeperMath.GetBlockLootTable(serverWorld, this, block);
-                                for (ItemStack drop : drops) {
-                                    Block.dropStack(serverWorld, blockPos, drop);
-                                }
+                            if (block == Blocks.STONE) {
+                                serverWorld.setBlockState(blockPos, Blocks.GOLD_ORE.getDefaultState(), Block.NOTIFY_ALL);
+                            } else if (block == Blocks.DEEPSLATE) {
+                                serverWorld.setBlockState(blockPos, Blocks.DEEPSLATE_GOLD_ORE.getDefaultState(), Block.NOTIFY_ALL);
+                            } else if (block == Blocks.NETHERRACK) {
+                                serverWorld.setBlockState(blockPos, Blocks.NETHER_GOLD_ORE.getDefaultState(), Block.NOTIFY_ALL);
                             }
 
                         }

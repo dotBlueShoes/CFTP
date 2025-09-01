@@ -54,6 +54,12 @@ I could make it so that the drop appears always at mob explosion position.
 85. Add a bug based of endermite -> Maybe some variants like normal/jungle/snow/nether (maybe they would interact with sludge liquid!)
 86. Make Golden Creeper -> gives absorption hearts, maybe even a gold-ore block -> or replaces stone/deepstone/netherrack in a small radius with gold!
 87. Flesh block does not drop itself it can be crafted with 8 flesh or found in caves as generated as block when destroyed gived john curse for the duration of a day - makes johns spawn.
+88. Stomper invisible entity that makes fast moving noises spawns in caves or at night - does not attack (maybe does if certain condition is activated...)
+89. Lurking Zombie (white flesh) - goes after light torches and destroys them or makes them unlit for easy mode.
+90. Bridging Zombie (has a pickaxe) - slowly mines through to rich the player in straight line.
+91. Maybe make ghost creepers fuse time like 20 ... ?
+92. make ballistic creeper throw up to n tnt's and maybe recharge after ?
+93. Skeletons with slowness arrows, skeletons which can eat golden apples ????
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper

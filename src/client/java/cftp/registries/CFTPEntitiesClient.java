@@ -1,6 +1,7 @@
 package cftp.registries;
 
 import cftp.entity.CFTPEntities;
+import cftp.entity.HorseFieryRenderer;
 import cftp.entity.charge.*;
 import cftp.entity.creeper.*;
 import cftp.entity.spider.SpiderBlueRenderer;
@@ -32,6 +33,8 @@ public class CFTPEntitiesClient {
 
         EntityRendererRegistry.register(CFTPEntities.SPIDER_YELLOW, SpiderYellowRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.SPIDER_BLUE, SpiderBlueRenderer::new);
+
+        EntityRendererRegistry.register(CFTPEntities.HORSE_FIERY, HorseFieryRenderer::new);
 
         // "Wind Charge" is referenced in:
         // WindChargeEntityRenderer

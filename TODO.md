@@ -60,6 +60,27 @@ I could make it so that the drop appears always at mob explosion position.
 91. Maybe make ghost creepers fuse time like 20 ... ?
 92. make ballistic creeper throw up to n tnt's and maybe recharge after ?
 93. Skeletons with slowness arrows, skeletons which can eat golden apples ????
+94. slider zombie it is in crawling pose always it can squeeze through 1 space. 
+95. firestarter zombie - will set on fire any blocks in his path
+96. batspider from times to time flyes around or flyes to the player
+97. maybe I could make it so golden hearts from creeper are not given fully if the total amount of hearts is higher then 30
+98. cultists of herobrine (known as just cultists) they will attack the player, mobs, all (they are very strong early), player can follow clues left by them. following their quest will slowly make weird things. eventually readding herobrine back. 
+99. molotov item thrown kinda like bow can have power of throw and when collided creates fire in a circular radius.
+100. runic/elemental skeleton - glows in the dark has purple bones - maybe used for discovery.
+101. cultists make a repeat sound like "one of use" maybe it could grow in intensity the more cultists are there.
+102. red blaze (a stronger variant)
+103. stonze (a blaze like creature but throws stone blocks at player?)
+104. ? meh firefox
+105. slenderman ?
+106. fire resistant saddle for fiery horse? (only then the player does not take damage)
+107. fix fiery horse spawn rate
+108. make fiery horse not resistant to lava.
+109. make fiery horse not to go into lava.
+110. see why sometimes its red fire sometimes its blue both on soul block ???
+111. could make the fire the entity is in also blue when in blue fire ???
+112. firebat/firebee with firehive -> embedded in netherrack
+113. new nether fluid molten-x (copper/iron/gold/?tin) it's a slightly tinted lava with a little more contrast
+114. fiery horse new sounds death, hurt, jump_run_something
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper
@@ -90,6 +111,7 @@ if waited till it stopped sparking it then can be picked normally.
 ]
 
 [
+
 petals
 - meat block re-texture
 - meat block animate texture

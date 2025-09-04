@@ -187,6 +187,12 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item HORSE_FIERY_SPAWN_EGG = register(
+            "horse_fiery_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.HORSE_FIERY, settings),
+            new Item.Settings()
+    );
+
     //public static final Item CREEPER_COOKIE_SPAWN_EGG = Registry.register(
     //        Registries.ITEM,
     //        new Identifier("cftp", "creeper_cookie_spawn_egg"),

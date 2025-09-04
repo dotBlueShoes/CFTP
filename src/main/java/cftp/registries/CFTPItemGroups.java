@@ -62,6 +62,7 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.CREEPER_GOLDEN_SPAWN_EGG);
                                 entries.add(CFTPItems.SPIDER_YELLOW_SPAWN_EGG);
                                 entries.add(CFTPItems.SPIDER_BLUE_SPAWN_EGG);
+                                entries.add(CFTPItems.HORSE_FIERY_SPAWN_EGG);
                             }
                     )
                     .build()

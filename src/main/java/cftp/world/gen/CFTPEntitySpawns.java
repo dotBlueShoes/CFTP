@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.SpawnRestriction;
+import net.minecraft.entity.mob.AmbientEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.Heightmap;
@@ -478,6 +479,21 @@ public class CFTPEntitySpawns {
                     SpawnLocationTypes.ON_GROUND,
                     Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                     HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // HORSE FIERY
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) NETHER),
+                    SpawnGroup.AMBIENT, CFTPEntities.HORSE_FIERY,
+                    60, 1, 5
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.HORSE_FIERY,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    AmbientEntity::canMobSpawn
             );
         }
 

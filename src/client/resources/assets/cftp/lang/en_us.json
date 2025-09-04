@@ -23,6 +23,8 @@
   "entity.cftp.spider_yellow": "Yellow Creeper",
   "entity.cftp.spider_blue": "Blue Creeper",
 
+  "entity.cftp.horse_fiery": "Fiery Horse",
+
   "item.cftp.creeper_cookie_spawn_egg": "Cookie Creeper Spawn Egg",
   "item.cftp.creeper_dirt_spawn_egg": "Dirt Creeper Spawn Egg",
   "item.cftp.creeper_earth_spawn_egg": "Earth Creeper Spawn Egg",
@@ -44,6 +46,8 @@
 
   "item.cftp.spider_yellow_spawn_egg": "Yellow Spider Spawn Egg",
   "item.cftp.spider_blue_spawn_egg": "Blue Spider Spawn Egg",
+
+  "item.cftp.horse_fiery_spawn_egg": "Fiery Horse Spawn Egg",
 
   "entity.cftp.water_charge": "Water Charge",
   "entity.cftp.earth_charge": "Earth Charge",

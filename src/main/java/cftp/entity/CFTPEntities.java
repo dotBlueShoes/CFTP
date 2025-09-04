@@ -7,10 +7,8 @@ import cftp.entity.creeper.*;
 import cftp.entity.spider.SpiderBlueEntity;
 import cftp.entity.spider.SpiderYellowEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -188,6 +186,18 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_blue")))
     );
 
+    public static final EntityType<HorseFieryEntity> HORSE_FIERY = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "horse_fiery")),
+            EntityType.Builder.create(HorseFieryEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(1.3964844F, 1.6F)
+                    .eyeHeight(1.52F)
+                    .passengerAttachments(1.44375F)
+                    .maxTrackingRange(10)
+                    .makeFireImmune()
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "horse_fiery")))
+    );
+
     public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")),
@@ -243,6 +253,9 @@ public class CFTPEntities {
         //
         FabricDefaultAttributeRegistry.register(SPIDER_YELLOW, SpiderYellowEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(SPIDER_BLUE, SpiderBlueEntity.createAttributes());
+        //
+        FabricDefaultAttributeRegistry.register(HORSE_FIERY, HorseFieryEntity.createAttributes());
+
     }
 
 }

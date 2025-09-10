@@ -1,11 +1,12 @@
 {
-	"required": true,
-	"package": "cftp.mixin",
-	"compatibilityLevel": "JAVA_21",
-	"mixins": [
-		"CFTPMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
+  "required": true,
+  "package": "cftp.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "CFTPMixin",
+    "SpawnHelperMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
 	}
 }

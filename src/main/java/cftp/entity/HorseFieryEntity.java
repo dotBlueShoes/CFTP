@@ -3,16 +3,25 @@ package cftp.entity;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AbstractHorseEntity;
+import net.minecraft.entity.passive.StriderEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 
 public class HorseFieryEntity extends AbstractHorseEntity {
 
@@ -28,6 +37,26 @@ public class HorseFieryEntity extends AbstractHorseEntity {
                 .add(EntityAttributes.FOLLOW_RANGE,     20)
                 .add(EntityAttributes.TEMPT_RANGE,      16.0f)
         ;
+    }
+
+    //@Override
+    //public boolean canSpawn(ServerWorldAccess world, SpawnReason spawnReason) {
+    //    return true;
+    //}
+
+    @Override
+    public boolean canSpawn(WorldAccess world, SpawnReason spawnReason) {
+        return true;
+    }
+
+    @Override
+    public boolean canSpawn(WorldView world) {
+        return true;
+    }
+
+    public static boolean canSpawn(EntityType<HorseFieryEntity> entityType, ServerWorldAccess world, SpawnReason spawnReason, BlockPos blockPos, Random random) {
+        BlockPos.Mutable mutable = blockPos.mutableCopy();
+        return world.getBlockState(mutable.down()).isSolidBlock(world, mutable.down());
     }
 
     //@Override
@@ -100,5 +129,4 @@ public class HorseFieryEntity extends AbstractHorseEntity {
     public boolean isOnFire() {
         return true;
     }
-
 }

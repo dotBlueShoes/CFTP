@@ -81,6 +81,17 @@ I could make it so that the drop appears always at mob explosion position.
 112. firebat/firebee with firehive -> embedded in netherrack
 113. new nether fluid molten-x (copper/iron/gold/?tin) it's a slightly tinted lava with a little more contrast
 114. fiery horse new sounds death, hurt, jump_run_something
+115. fishing rod zombie
+116. skulk creeper - transforms everything into skulk
+117. a ghost creeper thats under the effect of a potion or other will now apply that effect to living entities in a radius
+118. giant octopus (meat-like orange color)
+119. wisps would be such a good addition cube like model - there wood always be a different one for each biome. They might be hard to kill, do not attack back, when killed drop "soul"
+120. Horse fiery goals are invalid as they look for grass around fix it
+121. Horse fiery for still does not spawn as many times as it should...
+> This is due to lava. Strider entity is just more flexible and when said entity spawns there's no more need for horse to spawn.
+> Ideally I should separate IN_LAVA and ON_GROUND spawning for this to work...
+> To test this first i should remove strider entity from pool to see if the result would be better.
+122. Horse fiery could drop fire-resistant leather for saddle.
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper

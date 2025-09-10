@@ -1,6 +1,7 @@
 package cftp.world.gen;
 
 import cftp.entity.CFTPEntities;
+import cftp.entity.HorseFieryEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.entity.EntityType;
@@ -482,18 +483,20 @@ public class CFTPEntitySpawns {
             );
         }
 
+        // SpawnLocationTypes.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES
+
         { // HORSE FIERY
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey((RegistryKey<Biome>[]) NETHER),
-                    SpawnGroup.AMBIENT, CFTPEntities.HORSE_FIERY,
-                    60, 1, 5
+                    SpawnGroup.CREATURE, CFTPEntities.HORSE_FIERY,
+                    200, 1, 4
             );
 
             SpawnRestriction.register(
                     CFTPEntities.HORSE_FIERY,
                     SpawnLocationTypes.ON_GROUND,
                     Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-                    AmbientEntity::canMobSpawn
+                    HorseFieryEntity::canSpawn
             );
         }
 

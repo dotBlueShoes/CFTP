@@ -9,6 +9,7 @@ import cftp.entity.spider.SpiderYellowEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.passive.StriderEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -189,6 +190,17 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_blue")))
     );
 
+    public static final EntityType<SlendermanEntity> SLENDERMAN = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "slenderman")),
+            EntityType.Builder.create(SlendermanEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 2.9F)
+                    .eyeHeight(2.55F)
+                    .passengerAttachments(2.80625F)
+                    .maxTrackingRange(8)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "slenderman")))
+    );
+
     public static final EntityType<HorseFieryEntity> HORSE_FIERY = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "horse_fiery")),
@@ -256,6 +268,8 @@ public class CFTPEntities {
         //
         FabricDefaultAttributeRegistry.register(SPIDER_YELLOW, SpiderYellowEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(SPIDER_BLUE, SpiderBlueEntity.createAttributes());
+        //
+        FabricDefaultAttributeRegistry.register(SLENDERMAN, SlendermanEntity.createAttributes());
         //
         FabricDefaultAttributeRegistry.register(HORSE_FIERY, HorseFieryEntity.createAttributes());
 

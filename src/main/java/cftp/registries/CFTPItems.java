@@ -187,6 +187,12 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item SLENDERMAN_SPAWN_EGG = register(
+            "slenderman_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.SLENDERMAN, settings),
+            new Item.Settings()
+    );
+
     public static final Item HORSE_FIERY_SPAWN_EGG = register(
             "horse_fiery_spawn_egg",
             settings -> new SpawnEggItem(CFTPEntities.HORSE_FIERY, settings),

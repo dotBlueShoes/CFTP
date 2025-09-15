@@ -92,6 +92,9 @@ I could make it so that the drop appears always at mob explosion position.
 > Ideally I should separate IN_LAVA and ON_GROUND spawning for this to work...
 > To test this first i should remove strider entity from pool to see if the result would be better.
 122. Horse fiery could drop fire-resistant leather for saddle.
+123. SlendermanRenderer uses EndermanEntityRenderState which is wrong as slenderman does not use special eyes texture and does not hold a block model.
+124. Make a camera noise filter for slenderman entity.
+125. Make a Slenderman spawn condition.
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper

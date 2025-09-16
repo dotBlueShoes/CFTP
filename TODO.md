@@ -94,7 +94,7 @@ I could make it so that the drop appears always at mob explosion position.
 122. Horse fiery could drop fire-resistant leather for saddle.
 123. SlendermanRenderer uses EndermanEntityRenderState which is wrong as slenderman does not use special eyes texture and does not hold a block model.
 124. Make a camera noise filter for slenderman entity.
-125. Make a Slenderman spawn condition.
+125. Make a Slenderman spawn condition. (during special moon phase ?)
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper

@@ -1,5 +1,8 @@
 package cftp.entity;
 
+import cftp.CFTPClient;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.DefaultFramebufferSet;
 import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -41,6 +44,12 @@ public class SlendermanRenderer extends MobEntityRenderer<SlendermanEntity, Ende
 
     @Override
     public Identifier getTexture(EndermanEntityRenderState state) {
+
+        //CFTPClient.noiseProcessor = MinecraftClient.getInstance().getShaderLoader().loadPostEffect(
+        //        Identifier.of("minecraft", "shaders/post/noise"),
+        //        DefaultFramebufferSet.MAIN_ONLY
+        //);
+
         return TEXTURE;
     }
 

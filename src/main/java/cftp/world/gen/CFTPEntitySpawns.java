@@ -4,18 +4,33 @@ import cftp.entity.CFTPEntities;
 import cftp.entity.HorseFieryEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.SpawnLocationTypes;
-import net.minecraft.entity.SpawnRestriction;
+import net.minecraft.entity.*;
 import net.minecraft.entity.mob.AmbientEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.registry.RegistryKey;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 
 public class CFTPEntitySpawns {
+
+    public static boolean canSpawnIgnoreLightLevel(
+            EntityType<? extends LivingEntity> type,
+            WorldAccess world,
+            SpawnReason spawnReason,
+            BlockPos pos, Random random
+    ) {
+        if (world.getDifficulty() != Difficulty.PEACEFUL) {
+            BlockPos blockPos = pos.down();
+            return SpawnReason.isAnySpawner(spawnReason) || world.getBlockState(blockPos).allowsSpawning(world, blockPos, type);
+        } else {
+            return false;
+        }
+    }
 
     @SuppressWarnings("unchecked")
     public static void register() {
@@ -127,11 +142,11 @@ public class CFTPEntitySpawns {
                 BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.BASALT_DELTAS,
         };
 
-        // final RegistryKey<?>[] END = {
-        //         BiomeKeys.THE_END, BiomeKeys.END_HIGHLANDS,
-        //         BiomeKeys.END_MIDLANDS, BiomeKeys.SMALL_END_ISLANDS,
-        //         BiomeKeys.END_BARRENS,
-        // };
+        final RegistryKey<?>[] END = {
+                BiomeKeys.THE_END, BiomeKeys.END_HIGHLANDS,
+                BiomeKeys.END_MIDLANDS, BiomeKeys.SMALL_END_ISLANDS,
+                BiomeKeys.END_BARRENS,
+        };
 
         final RegistryKey<?>[] ALL_BIOMES = {
                 BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS,
@@ -501,6 +516,36 @@ public class CFTPEntitySpawns {
         }
 
         // ---
+
+        { // VANILLA
+
+            { // PHANTOM
+                BiomeModifications.addSpawn(
+                        BiomeSelectors.includeByKey((RegistryKey<Biome>[]) END),
+                        SpawnGroup.MONSTER, EntityType.PHANTOM,
+                        20, 1, 4
+                );
+
+                // From net.minecraft.entity.SpawnRestriction.java
+                // register(EntityType.PHANTOM, SpawnLocationTypes.UNRESTRICTED, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::canMobSpawn);
+
+                //SpawnRestriction.register(
+                //        EntityType.PHANTOM,
+                //        SpawnLocationTypes.UNRESTRICTED,
+                //        Heightmap.Type.MOTION_BLOCKING,
+                //        CFTPEntitySpawns::canSpawnIgnoreLightLevel
+                //);
+
+                // make them spawn in end dimension // DONE
+                // also remove golden and flip creepers from end
+                // add a chance for thrower creeper
+                // add an end_creeper variant -> a new end block would be cool like null-fluid or something
+                // -> a block that somewhat looks like end-portal but it's a block and its hard collect?
+                // also to many of them spawns there now.
+
+            }
+
+        }
 
     }
 

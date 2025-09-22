@@ -91,10 +91,22 @@ I could make it so that the drop appears always at mob explosion position.
 > This is due to lava. Strider entity is just more flexible and when said entity spawns there's no more need for horse to spawn.
 > Ideally I should separate IN_LAVA and ON_GROUND spawning for this to work...
 > To test this first i should remove strider entity from pool to see if the result would be better.
-122. Horse fiery could drop fire-resistant leather for saddle.
+122. Horse fiery could drop fire-resistant leather for saddle?
 123. SlendermanRenderer uses EndermanEntityRenderState which is wrong as slenderman does not use special eyes texture and does not hold a block model.
 124. Make a camera noise filter for slenderman entity.
 125. Make a Slenderman spawn condition. (during special moon phase ?)
+126. FIRE_CREEPER -> add Blocks.POWDER_SNOW to snow tag., add field to dirt like, remove dirt, coarse dirt
+  -> new tags -> meltable_snow, fertilized_dirt
+127. FIRE_CREEPER -> make the livingEntities in range deal 2-6 hearts of damage if no fire res. explosion.
+128. FIRE_CREEPER -> If there would be unlit torches it could light them back on.
+129. make snow_creeper able to change lava into obsidian ?
+130. fire resistant saddle
+131. ash, ash block
+132. sulphur ore that is rare and more common in nether, + sulphur that is a possible to craft all that gunpowder crafts to.
+
+AbstractFireBlock, FireBlock, SoulFireBlock
+-> add a chance of instead destorying a block create an ash/ashblock
+-> add a mechanic to change sand into glass
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper

@@ -3,6 +3,7 @@ package cftp.entity.creeper;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.goals.CreeperFireAttackGoal;
+import cftp.registries.CFTPTags;
 import cftp.utility.CreeperMath;
 import cftp.utility.Shapes;
 import net.minecraft.block.AbstractFireBlock;
@@ -157,14 +158,19 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                                 BlockState state = serverWorld.getBlockState(blockPos);
 
                                 int condition = 0;
-                                condition += (state.isIn(BlockTags.SNOW) ? 1 : 0);
+                                // todo config
+                                //condition += (state.isIn(BlockTags.SNOW) ? 1 : 0);
+                                condition += (state.isIn(CFTPTags.VAPORIZABLES) ? 1 : 0);
                                 condition += (state.isIn(BlockTags.ICE) ? 1 : 0) << 1;
                                 condition += (state.isIn(BlockTags.LEAVES) ? 1 : 0) << 2;
                                 condition += (state.isIn(BlockTags.FLOWERS) ? 1 : 0) << 3;
                                 condition += (state.isIn(BlockTags.SAND) ? 1 : 0) << 4;
                                 condition += (state.isIn(BlockTags.SAPLINGS) ? 1 : 0) << 5;
                                 condition += (state.isIn(BlockTags.CROPS) ? 1 : 0) << 6;
-                                condition += (state.isIn(BlockTags.DIRT) ? 1 : 0) << 7;
+                                // todo config
+                                //condition += (state.isIn(BlockTags.DIRT) ? 1 : 0) << 7;
+                                condition += (state.isIn(CFTPTags.FERTILIZED_DIRTS) ? 1 : 0) << 7;
+
 
                                 switch (condition) {
                                     case 1:         // Change SNOW-like to AIR.

@@ -32,6 +32,9 @@ public class CFTPClient implements ClientModInitializer {
 		CFTP.LOGGER.info("Hello Fabric Client!");
 		CFTPEntitiesClient.register();
 
+        //ItemRenderLayer
+        //ItemRenderLayerMap.INSTANCE.putItem(MyModItems.MY_ITEM, RenderLayer.getTranslucent());
+
 		// TEST
 		//BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.SAW_DUST_BLOCK, RenderLayer.getTranslucent());
 

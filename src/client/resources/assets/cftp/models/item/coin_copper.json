@@ -2,5 +2,6 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "cftp:item/coin_copper"
-  }
+  },
+  "render_type": "translucent"
 }

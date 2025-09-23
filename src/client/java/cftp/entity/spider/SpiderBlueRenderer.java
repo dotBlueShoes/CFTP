@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 public class SpiderBlueRenderer extends SpiderEntityRenderer<SpiderBlueEntity> {
 
     private static final Identifier TEXTURE = Identifier.of("cftp", "textures/entity/spider_blue.png");
+    private static final float SCALE = 1.25f;
 
     public SpiderBlueRenderer(EntityRendererFactory.Context context) {
         this(context, EntityModelLayers.SPIDER);
@@ -22,12 +23,12 @@ public class SpiderBlueRenderer extends SpiderEntityRenderer<SpiderBlueEntity> {
 
     @Override
     protected float getShadowRadius(LivingEntityRenderState livingEntityRenderState) {
-        return 1.5f * super.getShadowRadius(livingEntityRenderState);
+        return SCALE * super.getShadowRadius(livingEntityRenderState);
     }
 
     @Override
     protected void scale(LivingEntityRenderState state, MatrixStack matrices) {
-        matrices.scale(1.5f, 1.5f, 1.5f);
+        matrices.scale(SCALE, SCALE, SCALE);
     }
 
     @Override

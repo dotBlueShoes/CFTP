@@ -1,5 +1,4 @@
 10. Make Cookie creeper drop random.
-12. Make it so that fire creeper leaves trails only at hard mode
 24. Think about trap-making
 26. earth charge hit particle burst.
 28. Carpenter's Table - Stone cutter alternative for wood
@@ -21,7 +20,7 @@ I could make it so that the drop appears always at mob explosion position.
 46. Creeper in the bottle throw an elemental or normal creeper.
 47. An enchantment that increases the amount of experience gain when killing an enemy does not work with mending
 48. An enchantment to possess elemental creeper power.
-49. Make Ghost Creeper only visible in close range.
+49. Make an Invisible Creeper (only visible in close range).
 50. Make a spawn predicate so that spawning of a creature changes with difficulty set as to what biome and what group size.
 51. Make friendly creepers go after other hostile mobs not only explode close range.
 52. Make friendly creeper tamable like wolves and cats.
@@ -70,8 +69,6 @@ I could make it so that the drop appears always at mob explosion position.
 101. cultists make a repeat sound like "one of use" maybe it could grow in intensity the more cultists are there.
 102. red blaze (a stronger variant)
 103. stonze (a blaze like creature but throws stone blocks at player?)
-104. ? meh firefox
-105. slenderman ?
 106. fire resistant saddle for fiery horse? (only then the player does not take damage)
 107. fix fiery horse spawn rate
 108. make fiery horse not resistant to lava.
@@ -90,7 +87,7 @@ I could make it so that the drop appears always at mob explosion position.
 121. Horse fiery for still does not spawn as many times as it should...
 > This is due to lava. Strider entity is just more flexible and when said entity spawns there's no more need for horse to spawn.
 > Ideally I should separate IN_LAVA and ON_GROUND spawning for this to work...
-> To test this first i should remove strider entity from pool to see if the result would be better.
+> To test this first I should remove strider entity from pool to see if the result would be better.
 122. Horse fiery could drop fire-resistant leather for saddle?
 123. SlendermanRenderer uses EndermanEntityRenderState which is wrong as slenderman does not use special eyes texture and does not hold a block model.
 124. Make a camera noise filter for slenderman entity.
@@ -101,12 +98,26 @@ I could make it so that the drop appears always at mob explosion position.
 128. FIRE_CREEPER -> If there would be unlit torches it could light them back on.
 129. make snow_creeper able to change lava into obsidian ?
 130. fire resistant saddle
-131. ash, ash block
+131. ash, ash block (can be colorized?) (applies slowness like soulsand?) (crafting item)
 132. sulphur ore that is rare and more common in nether, + sulphur that is a possible to craft all that gunpowder crafts to.
+133. smelting sulphur ore will make an explosion just like tnt does. sulphur ore will also explode if ignited just like tnt.
+-> maybe just flammable. sulphur might not explode when in chunks.
+134. rain or snow could/should create something special like a new type of flower or mushroom, maybe allow spawning of new entity, could increase the chances for water creepers
+135. dependency -> https://www.curseforge.com/minecraft/mc-mods/burnt (some things are really cool, same energy, some not quite my thing)
+136. snow-creeper -> spawns more POWDER_SNOW ?
+137. coins need to have translucent 3d draw when dropped. This is something that should be postponed to 1.21.9
+
+sludge fluid, (poisonus)
+quicksand but dirt texture, water with cobweb logic (so it looks like animated dirt texture) it also has a distingish sound on enter, swim and exit
+
+fluid water variant but the top layer texture is green only. (organic, infested)
+- Duckweed, algae, pond scum (best), water moss
 
 AbstractFireBlock, FireBlock, SoulFireBlock
 -> add a chance of instead destorying a block create an ash/ashblock
 -> add a mechanic to change sand into glass
+
+- unknown potion (I) -> gives virus infested effect for 10 seconds, during this time u can drink milk to remove this effect. If u don't u turn into a zombie. This zombie will keep all your inventory and equip aromor and best sword that was in players inventory.
 
 - fish creepers ( sponge creeper - destroys water blocks and places a sponge?)
 - desert creeper

@@ -7,6 +7,7 @@ import cftp.blocks.YellowCobwebBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
+import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -51,6 +52,30 @@ public class CFTPBlocks {
                     //.solidBlock(Blocks::never)
                     //.suffocates(Blocks::always)
                     //.blockVision(Blocks::always)
+    );
+
+    public static final Block YELLOW_MUSHROOM_BLOCK = registerBlock(
+            MushroomBlock::new,
+            "yellow_mushroom_block",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.YELLOW)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .sounds(BlockSoundGroup.COBWEB)
+                    .strength(0.2F)
+                    .sounds(BlockSoundGroup.WOOD)
+                    .burnable()
+    );
+
+    public static final Block BLUE_MUSHROOM_BLOCK = registerBlock(
+            MushroomBlock::new,
+            "blue_mushroom_block",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BLUE)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .sounds(BlockSoundGroup.COBWEB)
+                    .strength(0.2F)
+                    .sounds(BlockSoundGroup.WOOD)
+                    .burnable()
     );
 
     public static final Block YELLOW_MUSHROOM = registerBlock(
@@ -154,6 +179,14 @@ public class CFTPBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(BLUE_MUSHROOM)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(YELLOW_MUSHROOM_BLOCK)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(BLUE_MUSHROOM_BLOCK)
         );
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(

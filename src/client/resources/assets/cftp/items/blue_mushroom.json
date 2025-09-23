@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "cftp:block/blue_mushroom"
+    "model": "cftp:item/blue_mushroom"
   }
 }

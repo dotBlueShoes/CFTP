@@ -110,6 +110,9 @@ I could make it so that the drop appears always at mob explosion position.
 146. IMPORTANT! add creeper jumper.
 147. IMPORTANT! config file
 148. meaty squid variant, squid meat?
+149. make yellow mushroom less bright
+150. make mushroom island generate big yellow and blue mushroom
+151. make yellow and blue mushroom grow their big variants
 
 
 Creatures From The Past

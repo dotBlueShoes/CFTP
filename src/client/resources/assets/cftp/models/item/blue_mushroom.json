@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "cftp:item/coin_copper"
+    "layer0": "cftp:block/blue_mushroom"
   }
 }

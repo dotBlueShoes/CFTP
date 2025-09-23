@@ -39,6 +39,8 @@ public class CFTPItemGroups {
                                 entries.add(CFTPBlocks.SAW_DUST_BLOCK);
                                 entries.add(CFTPBlocks.YELLOW_MUSHROOM);
                                 entries.add(CFTPBlocks.BLUE_MUSHROOM);
+                                entries.add(CFTPBlocks.YELLOW_MUSHROOM_BLOCK);
+                                entries.add(CFTPBlocks.BLUE_MUSHROOM_BLOCK);
                                 entries.add(CFTPBlocks.YELLOW_COBWEB);
                                 entries.add(CFTPBlocks.BLUE_COBWEB);
                                 entries.add(CFTPBlocks.ELEMENTAL_BLOCK);

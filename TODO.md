@@ -106,6 +106,12 @@ I could make it so that the drop appears always at mob explosion position.
 135. dependency -> https://www.curseforge.com/minecraft/mc-mods/burnt (some things are really cool, same energy, some not quite my thing)
 136. snow-creeper -> spawns more POWDER_SNOW ?
 137. coins need to have translucent 3d draw when dropped. This is something that should be postponed to 1.21.9
+138. make piggy creeper spawn 2-4 pigs upon explosion
+139. make bridger creeper explode upon any collision make its pathfinding simple
+140. add deep dark creeper
+141. add missing recipes for all creepers
+142. make creepers right-clickable with scissors to diffuse them which adds creeper fuses
+143. make cobwebs drop normal string
 
 sludge fluid, (poisonus)
 quicksand but dirt texture, water with cobweb logic (so it looks like animated dirt texture) it also has a distingish sound on enter, swim and exit

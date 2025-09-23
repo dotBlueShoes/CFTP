@@ -168,6 +168,22 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_golden")))
     );
 
+    public static final EntityType<CreeperBridgerEntity> CREEPER_BRIDGER = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_bridger")),
+            EntityType.Builder.create(CreeperBridgerEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_bridger")))
+    );
+
+    public static final EntityType<CreeperPiggyEntity> CREEPER_PIGGY = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_piggy")),
+            EntityType.Builder.create(CreeperPiggyEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_piggy")))
+    );
+
     public static final EntityType<SpiderYellowEntity> SPIDER_YELLOW = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_yellow")),
@@ -265,6 +281,8 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_DARK, CreeperDarkEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_BALLISTIC, CreeperBallisticEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_GOLDEN, CreeperGoldenEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_BRIDGER, CreeperBridgerEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_PIGGY, CreeperPiggyEntity.createAttributes());
         //
         FabricDefaultAttributeRegistry.register(SPIDER_YELLOW, SpiderYellowEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(SPIDER_BLUE, SpiderBlueEntity.createAttributes());

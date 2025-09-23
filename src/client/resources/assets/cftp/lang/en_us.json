@@ -19,9 +19,11 @@
   "entity.cftp.creeper_dark": "Dark Creeper",
   "entity.cftp.creeper_ballistic": "Ballistic Creeper",
   "entity.cftp.creeper_golden": "Golden Creeper",
+  "entity.cftp.creeper_bridger": "Bridger Creeper",
+  "entity.cftp.creeper_piggy": "Piggy Creeper",
 
-  "entity.cftp.spider_yellow": "Yellow Creeper",
-  "entity.cftp.spider_blue": "Blue Creeper",
+  "entity.cftp.spider_yellow": "Yellow Spider",
+  "entity.cftp.spider_blue": "Blue Spider",
   "entity.cftp.slenderman": "Slenderman",
   "entity.cftp.horse_fiery": "Fiery Horse",
 
@@ -43,6 +45,8 @@
   "item.cftp.creeper_dark_spawn_egg": "Dark Creeper Spawn Egg",
   "item.cftp.creeper_ballistic_spawn_egg": "Ballistic Creeper Spawn Egg",
   "item.cftp.creeper_golden_spawn_egg": "Golden Creeper Spawn Egg",
+  "item.cftp.creeper_bridger_spawn_egg": "Bridger Creeper Spawn Egg",
+  "item.cftp.creeper_piggy_spawn_egg": "Piggy Creeper Spawn Egg",
 
   "item.cftp.spider_yellow_spawn_egg": "Yellow Spider Spawn Egg",
   "item.cftp.spider_blue_spawn_egg": "Blue Spider Spawn Egg",
@@ -77,6 +81,7 @@
   "item.cftp.earth_charge": "Earth Charge",
   "item.cftp.water_charge": "Water Charge",
   "item.cftp.saw_dust": "Saw Dust",
+  "item.cftp.creeper_fuse": "Creeper Fuse",
 
   "item.cftp.coin_copper": "Copper Coin",
   "item.cftp.coin_iron": "Iron Coin",

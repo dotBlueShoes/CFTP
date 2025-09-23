@@ -67,6 +67,10 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item CREEPER_FUSE = register("creeper_fuse", Item::new,
+            new Item.Settings()
+    );
+
     public static final Item CREEPER_COOKIE_SPAWN_EGG = register(
             "creeper_cookie_spawn_egg",
             settings -> new SpawnEggItem(CFTPEntities.CREEPER_COOKIE, settings),
@@ -172,6 +176,18 @@ public class CFTPItems {
     public static final Item CREEPER_GOLDEN_SPAWN_EGG = register(
             "creeper_golden_spawn_egg",
             settings -> new SpawnEggItem(CFTPEntities.CREEPER_GOLDEN, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_BRIDGER_SPAWN_EGG = register(
+            "creeper_bridger_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_BRIDGER, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_PIGGY_SPAWN_EGG = register(
+            "creeper_piggy_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_PIGGY, settings),
             new Item.Settings()
     );
 

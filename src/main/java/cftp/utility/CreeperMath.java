@@ -46,6 +46,8 @@ public class CreeperMath {
             CFTPItems.CREEPER_DARK_SPAWN_EGG,
             CFTPItems.CREEPER_BALLISTIC_SPAWN_EGG,
             CFTPItems.CREEPER_GOLDEN_SPAWN_EGG,
+            CFTPItems.CREEPER_BRIDGER_SPAWN_EGG,
+            CFTPItems.CREEPER_PIGGY_SPAWN_EGG,
     };
 
     public enum CREEPER_TYPE {
@@ -68,6 +70,8 @@ public class CreeperMath {
         DARK        (16),
         BALLISTIC   (17),
         GOLDEN      (18),
+        BRIDGER     (19),
+        PIGGY       (20),
         ;
 
         private final int type;

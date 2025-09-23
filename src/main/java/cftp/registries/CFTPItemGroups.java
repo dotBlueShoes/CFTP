@@ -33,6 +33,7 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.COIN_GOLD);
                                 entries.add(CFTPItems.COPPER_ROD);
                                 entries.add(CFTPItems.ELEMENTAL_INGOT);
+                                entries.add(CFTPItems.CREEPER_FUSE);
                                 entries.add(CFTPItems.ENRICHED_MUSHROOM_STEW);
                                 //
                                 entries.add(CFTPBlocks.SAW_DUST_BLOCK);
@@ -60,6 +61,8 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.CREEPER_DARK_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_BALLISTIC_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_GOLDEN_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_BRIDGER_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_PIGGY_SPAWN_EGG);
                                 entries.add(CFTPItems.SPIDER_YELLOW_SPAWN_EGG);
                                 entries.add(CFTPItems.SPIDER_BLUE_SPAWN_EGG);
                                 entries.add(CFTPItems.SLENDERMAN_SPAWN_EGG);

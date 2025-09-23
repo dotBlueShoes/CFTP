@@ -468,6 +468,36 @@ public class CFTPEntitySpawns {
             );
         }
 
+        { // BRIDGER
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_BRIDGER,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_BRIDGER,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // PIGGY
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_PIGGY,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_PIGGY,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
         { // SPIDER YELLOW
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_SWAMP),

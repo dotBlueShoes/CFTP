@@ -44,7 +44,7 @@ public class CFTPClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.YELLOW_COBWEB, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.BLUE_COBWEB, RenderLayer.getCutout());
 
-        MinecraftClient mc = MinecraftClient.getInstance();
+        //MinecraftClient mc = MinecraftClient.getInstance();
 
         //ShaderProgram
 

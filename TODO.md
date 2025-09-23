@@ -1,5 +1,4 @@
-10. Make Cookie creeper drop random.
-24. Think about trap-making
+10. IMPORTANT! Make Cookie creeper drop random.
 26. earth charge hit particle burst.
 28. Carpenter's Table - Stone cutter alternative for wood
 30. change getLimitPerChunk for zombies and skeletons.
@@ -21,28 +20,27 @@ I could make it so that the drop appears always at mob explosion position.
 47. An enchantment that increases the amount of experience gain when killing an enemy does not work with mending
 48. An enchantment to possess elemental creeper power.
 49. Make an Invisible Creeper (only visible in close range).
-50. Make a spawn predicate so that spawning of a creature changes with difficulty set as to what biome and what group size.
-51. Make friendly creepers go after other hostile mobs not only explode close range.
-52. Make friendly creeper tamable like wolves and cats.
+50. IMPORTANT! Make a spawn predicate so that spawning of a creature changes with difficulty set as to what biome and what group size.
+51. IMPORTANT! Make friendly creepers go after other hostile mobs not only explode close range.
+52. IMPORTANT! Make friendly creeper tamable like wolves and cats.
 53. Make such friendly creeper explosion exclude the player the creeper belongs to.
-55. Make flip creepers rare to spawn.
+55. IMPORTANT! Make some creepers rare to spawn.
 56. ??? make yellow mushroom grow in light
 59. make yellow mushroom only able to place and grow at swamp biomes
 60. make blue mushroom only able to place and grow at jungle biomes
 61. make ghost creeper egg drop follow the same logic as ghost creeper spawn chance system.
 62. Add a magical biome like from Thaumcraft. -> new wood type (maybe floating islands ?)
-63. Make the spider_hole visually better
-64. Make the spider hole protected from water
-65. Make the spider hole summon spiders
-70. Divide Spider Hole gen into Swamp Spider Hole and Jungle Spider Hole
+63. IMPORTANT! Make the spider_hole visually better
+64. IMPORTANT! Make the spider hole protected from fliud gen
+65. IMPORTANT! Make the spider hole summon spiders
+70. IMPORTANT! Divide Spider Hole gen into Swamp Spider Hole and Jungle Spider Hole. also update on the idea.
 71. Make a fire bat (sets the player on fire on contact)
 72. Make a poisonous bat (applies the poison on contact)
 73. Cyborg Zombie
 74. flesh rain
 75. John creature
 76. Spider creeper (spider 2.0 AI with creeper like texture which explodes just as normal creeper)
-77. Make dark creeper also play a kinda scary sound effect.
-78. Make cobwebs, mushrooms less dark
+77. IMPORTANT! Make dark creeper also play a kinda scary sound effect.
 79. Make jungle blue mushroom gen ~2x less
 80. Elemental Ingot + Elemental Block (copper ingot + elemental power (not powder) ) 
 81. Make ballistic creeper only spawn on hard difficulty.
@@ -56,7 +54,6 @@ I could make it so that the drop appears always at mob explosion position.
 88. Stomper invisible entity that makes fast moving noises spawns in caves or at night - does not attack (maybe does if certain condition is activated...)
 89. Lurking Zombie (white flesh) - goes after light torches and destroys them or makes them unlit for easy mode.
 90. Bridging Zombie (has a pickaxe) - slowly mines through to rich the player in straight line.
-91. Maybe make ghost creepers fuse time like 20 ... ?
 92. make ballistic creeper throw up to n tnt's and maybe recharge after ?
 93. Skeletons with slowness arrows, skeletons which can eat golden apples ????
 94. slider zombie it is in crawling pose always it can squeeze through 1 space. 
@@ -70,9 +67,7 @@ I could make it so that the drop appears always at mob explosion position.
 102. red blaze (a stronger variant)
 103. stonze (a blaze like creature but throws stone blocks at player?)
 106. fire resistant saddle for fiery horse? (only then the player does not take damage)
-107. fix fiery horse spawn rate
-108. make fiery horse not resistant to lava.
-109. make fiery horse not to go into lava.
+109. make fiery horse not to go into lava by itself.
 110. see why sometimes its red fire sometimes its blue both on soul block ???
 111. could make the fire the entity is in also blue when in blue fire ???
 112. firebat/firebee with firehive -> embedded in netherrack
@@ -92,26 +87,39 @@ I could make it so that the drop appears always at mob explosion position.
 123. SlendermanRenderer uses EndermanEntityRenderState which is wrong as slenderman does not use special eyes texture and does not hold a block model.
 124. Make a camera noise filter for slenderman entity.
 125. Make a Slenderman spawn condition. (during special moon phase ?)
-126. FIRE_CREEPER -> add Blocks.POWDER_SNOW to snow tag., add field to dirt like, remove dirt, coarse dirt
-  -> new tags -> meltable_snow, fertilized_dirt
-127. FIRE_CREEPER -> make the livingEntities in range deal 2-6 hearts of damage if no fire res. explosion.
+127. IMPORTANT! FIRE_CREEPER -> make the livingEntities in range deal 2-6 hearts of damage if no fire res. explosion.
 128. FIRE_CREEPER -> If there would be unlit torches it could light them back on.
 129. make snow_creeper able to change lava into obsidian ?
 130. fire resistant saddle
 131. ash, ash block (can be colorized?) (applies slowness like soulsand?) (crafting item)
-132. sulphur ore that is rare and more common in nether, + sulphur that is a possible to craft all that gunpowder crafts to.
+132. IMPORTANT! sulphur ore that is rare and more common in nether, + sulphur that is a possible to craft all that gunpowder crafts to.
 133. smelting sulphur ore will make an explosion just like tnt does. sulphur ore will also explode if ignited just like tnt.
 -> maybe just flammable. sulphur might not explode when in chunks.
 134. rain or snow could/should create something special like a new type of flower or mushroom, maybe allow spawning of new entity, could increase the chances for water creepers
 135. dependency -> https://www.curseforge.com/minecraft/mc-mods/burnt (some things are really cool, same energy, some not quite my thing)
 136. snow-creeper -> spawns more POWDER_SNOW ?
 137. coins need to have translucent 3d draw when dropped. This is something that should be postponed to 1.21.9
-138. make piggy creeper spawn 2-4 pigs upon explosion
-139. make bridger creeper explode upon any collision make its pathfinding simple
-140. add deep dark creeper
-141. add missing recipes for all creepers
+138. IMPORTANT! make piggy creeper spawn 2-4 pigs upon explosion
+139. IMPORTANT! make bridger creeper explode upon any collision make its pathfinding simple
+140. IMPORTANT! add deep dark creeper
+141. IMPORTANT! add missing recipes/droptables for all creepers
 142. make creepers right-clickable with scissors to diffuse them which adds creeper fuses
-143. make cobwebs drop normal string
+143. IMPORTANT! make cobwebs drop normal string
+144. IMPORTANT! Creepers should not replace blocks that are entities without dropping items, or destroy blast resistant blocks
+145. make swamp trees and jungle trees spawn cobwebs, yellow, blue variants too.
+146. IMPORTANT! add creeper jumper.
+147. IMPORTANT! config file
+148. meaty squid variant, squid meat?
+
+
+Creatures From The Past
+Chapter 1. Creeps.
+Chapter 2. Ogres and magi.
+-> ogres (frost, fire, -, cave, armored, hellish, overthrown (cave Dripstone Caves variant))
+-> wisps (slime based, different color for every biome)
+-> thaumcraft forest
+-> wands
+-> elemental ingot?
 
 sludge fluid, (poisonus)
 quicksand but dirt texture, water with cobweb logic (so it looks like animated dirt texture) it also has a distingish sound on enter, swim and exit

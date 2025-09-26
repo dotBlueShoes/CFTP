@@ -111,8 +111,12 @@ I could make it so that the drop appears always at mob explosion position.
 147. IMPORTANT! config file
 148. meaty squid variant, squid meat?
 149. make yellow mushroom less bright
-150. make mushroom island generate big yellow and blue mushroom
-151. make yellow and blue mushroom grow their big variants
+150. make mushroom island generate big yellow and blue mushrooms
+151. IMPORTANT! make yellow and blue mushroom grow their big variants
+152. IMPORTANT! make recipes/droptables for yellow/blue mushroom blocks
+153. Mushroom creeper? -> generates all mushroom upon detonation
+154. each creeper type can now only drop a very specific disk. definitely a config option
+155. chester entity like from old terra-firma-craft modpack.
 
 
 Creatures From The Past

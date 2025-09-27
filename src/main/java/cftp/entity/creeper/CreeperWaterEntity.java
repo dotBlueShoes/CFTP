@@ -117,6 +117,10 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                                 // Also schedule water fluid tick for proper fluid behavior
                                 //serverWorld.getFluidTickScheduler().schedule(blockPos, Fluids.WATER, Fluids.WATER.getTickRate(serverWorld));
 
+                            } else if (block == Blocks.LAVA) {
+
+                                serverWorld.setBlockState(blockPos, Blocks.OBSIDIAN.getDefaultState(), Block.NOTIFY_ALL);
+
                             } else {
 
                                 serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);

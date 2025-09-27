@@ -20,6 +20,7 @@ import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -63,6 +64,14 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
         entity.refreshPositionAndAngles(x, y, z, world.random.nextFloat() * 360.0F, 0.0F);
         entityData = entity.initialize(world, world.getLocalDifficulty(entity.getBlockPos()), SpawnReason.NATURAL, entityData);
         world.spawnEntityAndPassengers(entity);
+
+        world.spawnParticles(ParticleTypes.CLOUD,
+                x, y, z,
+                5,
+                0.5f, 0.5f, 0.5f,
+                0.05f
+        );
+
     }
 
 

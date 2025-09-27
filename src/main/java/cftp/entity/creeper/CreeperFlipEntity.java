@@ -96,13 +96,19 @@ public class CreeperFlipEntity extends CreeperElementalEntity {
                             );
 
                             BlockState sState = serverWorld.getBlockState(sblockPos);
-                            var sBlock = sState.getBlock().getDefaultState();
+                            var sBlock = sState.getBlock();
 
                             BlockState mState = serverWorld.getBlockState(mBlockPos);
-                            var mBlock = mState.getBlock().getDefaultState();
+                            var mBlock = mState.getBlock();
 
-                            serverWorld.setBlockState(sblockPos, mBlock, Block.NOTIFY_ALL);
-                            serverWorld.setBlockState(mBlockPos, sBlock, Block.NOTIFY_ALL);
+                            float sBlastResistance = sBlock.getBlastResistance();
+                            float mBlastResistance = mBlock.getBlastResistance();
+
+                            // Swap only if both selected and mirrored blocks are not so blastResistant.
+                            if (sBlastResistance < 600 && mBlastResistance < 600) {
+                                serverWorld.setBlockState(sblockPos, mState, Block.NOTIFY_ALL);
+                                serverWorld.setBlockState(mBlockPos, sState, Block.NOTIFY_ALL);
+                            }
 
                         }
                     }

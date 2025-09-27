@@ -20,6 +20,7 @@ import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.PigEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -46,8 +47,12 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
         return CreeperMath.CREEPER_TYPE.PIGGY.getType();
     }
 
-    void SpawnPig (ServerWorld world, double x, double y, double z) {
-        var entity = EntityType.PIG.create(world, SpawnReason.NATURAL);
+    void SpawnPig (ServerWorld world, RegistryKey<World> dimension, double x, double y, double z) {
+
+        var entity = (this.isCharged() || dimension == World.NETHER) ?
+                EntityType.PIGLIN.create(world, SpawnReason.NATURAL) :
+                EntityType.PIG.create(world, SpawnReason.NATURAL);
+
         EntityData entityData = null;
 
         if (entity == null) {
@@ -66,7 +71,8 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
+            final RegistryKey<World> dimension = serverWorld.getRegistryKey();
+            final Difficulty difficulty = serverWorld.getDifficulty();
 
             final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
             float diameter = this.ExplosionDiameter ;
@@ -101,33 +107,44 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
             //  1. Instead x, y, z should be random so each entity spawns in a random position.
             //  2. If it's nether it could spawn zombie_pig_men ?
 
-            outer: for (int y = 0; y < 3; ++y) {
-                for (int x = 0; x < 9; ++x) {
-                    for (int z = 0; z < 9; ++z) {
+            final int iDiameter = (int) diameter;
+            final int randomCallsCount = 10;
 
-                        if (pigsCount <= 0) break outer;
+            // Try `randomCallsCount` times to summon the pig at random positions.
+            for (int i = randomCallsCount; i > 0 && pigsCount > 0; --i) {
+                int y = random.nextInt(3);
+                int x = random.nextInt(iDiameter);
+                int z = random.nextInt(iDiameter);
 
-                        BlockPos blockPos = BlockPos.ofFloored(
-                                this.getX() + x - 4,
-                                this.getY() + y - 1,
-                                this.getZ() + z - 4
-                        );
+                BlockPos blockPos = BlockPos.ofFloored(
+                        this.getX() + x - 4,
+                        this.getY() + y - 1,
+                        this.getZ() + z - 4
+                );
 
-                        BlockState state = serverWorld.getBlockState(blockPos);
+                BlockState state = serverWorld.getBlockState(blockPos);
+                boolean isValid = state.getCollisionShape(serverWorld, blockPos).isEmpty();
 
-                        ///  Spawn in air is allowed (even preferred) !
-                        ///boolean isValidGround = state.getCollisionShape(serverWorld, blockPos).isEmpty()
-                        ///        && serverWorld.getBlockState(blockPos.down())
-                        ///            .isSolidBlock(serverWorld, blockPos.down());
-
-                        boolean isValid = state.getCollisionShape(serverWorld, blockPos).isEmpty();
-
-                        if (isValid) {
-                            --pigsCount;
-                            SpawnPig(serverWorld, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
-                        }
-                    }
+                if (isValid) {
+                    --pigsCount;
+                    SpawnPig(serverWorld, dimension, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
                 }
+
+            }
+
+            // If the above failed to summon all pigsCount instead summon them in the position of the creeper.
+            for (int i = pigsCount; i > 0; --i) {
+
+                CFTP.LOGGER.info("call");
+
+                // Ensure they do not spawn in wall (because their collision shape is different from a creeper)
+                BlockPos blockPosition = BlockPos.ofFloored(
+                        this.getX(),
+                        this.getY(),
+                        this.getZ()
+                );
+
+                SpawnPig(serverWorld, dimension, blockPosition.getX() + 0.5f, blockPosition.getY() , blockPosition.getZ() + 0.5f);
             }
 
             this.playExplosionSound(serverWorld);

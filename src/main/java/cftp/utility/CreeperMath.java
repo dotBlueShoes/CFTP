@@ -105,6 +105,13 @@ public class CreeperMath {
             Blocks.POWDER_SNOW.getDefaultState(),
     }; // 6
 
+    final public static BlockState[] LAVA_BLOCKS = {
+            Blocks.LAVA.getDefaultState(),
+            Blocks.MAGMA_BLOCK.getDefaultState(),
+            // It has higher chance of producing MAGMA_BLOCK
+            Blocks.LAVA.getDefaultState(),
+    }; // 3
+
     final public static BlockState[] SWAMP_BLOCKS = {
             Blocks.GRASS_BLOCK.getDefaultState(),
             Blocks.DIRT.getDefaultState(),

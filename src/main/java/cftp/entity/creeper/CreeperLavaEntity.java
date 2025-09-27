@@ -2,6 +2,7 @@ package cftp.entity.creeper;
 
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
+import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,6 +14,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -102,8 +104,19 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
                             Block block = state.getBlock();
 
                             var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
+                            var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.LAVA_BLOCKS.length;
 
-                            serverWorld.setBlockState(blockPos, Blocks.LAVA.getDefaultState(), Block.NOTIFY_ALL);
+                            /// Vaporize water ? - Nah. just delete all.
+                            ///if (state.contains(Properties.WATERLOGGED)) {
+                            ///    BlockState waterloggedState = state.with(Properties.WATERLOGGED, false);
+                            ///    serverWorld.setBlockState(blockPos, waterloggedState, 3);
+                            ///}
+
+                            if (block == Blocks.WATER) {
+                                serverWorld.setBlockState(blockPos, Blocks.OBSIDIAN.getDefaultState(), Block.NOTIFY_ALL);
+                            } else {
+                                serverWorld.setBlockState(blockPos, CreeperMath.LAVA_BLOCKS[index], Block.NOTIFY_ALL);
+                            }
 
                             // So that specific blocks won't drop.
                             if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {

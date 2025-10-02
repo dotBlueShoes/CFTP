@@ -9,6 +9,7 @@ import cftp.entity.spider.SpiderYellowEntity;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.TntEntity;
 import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.passive.StriderEntity;
 import net.minecraft.registry.Registries;
@@ -251,6 +252,29 @@ public class CFTPEntities {
                     .maxTrackingRange(4)
                     .trackingTickInterval(10)
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "earth_charge")))
+    );
+
+    //public static final EntityType<TntEntity> TNT = EntityType.register(
+    //        "tnt",
+    //        EntityType.Builder.create(TntEntity::new, SpawnGroup.MISC)
+    //                .dropsNothing()
+    //                .makeFireImmune()
+    //                .dimensions(0.98f, 0.98f)
+    //                .eyeHeight(0.15f)
+    //                .maxTrackingRange(10)
+    //                .trackingTickInterval(10)
+    //);
+
+    public static final EntityType<SulphurEntity> SULPHUR_CLOUD = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "sulphur_cloud")),
+            EntityType.Builder.<SulphurEntity>create(SulphurEntity::new, SpawnGroup.MISC)
+                    .dropsNothing()
+                    .dimensions(0.98f, 0.98F)
+                    .eyeHeight(0.15f)
+                    .maxTrackingRange(10)
+                    .trackingTickInterval(10)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "sulphur_cloud")))
     );
 
     //public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(

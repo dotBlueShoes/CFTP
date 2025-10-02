@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "cftp:elemental_block",
+    "cftp:sulphur_ore",
+    "cftp:deepslate_sulphur_ore",
+    "cftp:nether_sulphur_ore"
+  ]
+}

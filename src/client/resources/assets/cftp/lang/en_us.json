@@ -79,6 +79,14 @@
 
   "block.cftp.elemental_block": "Elemental Block",
   "item.cftp.elemental_block": "Elemental Block",
+
+  "block.cftp.sulphur_ore": "Sulphur Ore",
+  "item.cftp.sulphur_ore": "Sulphur Ore",
+  "block.cftp.deepslate_sulphur_ore": "Deepslate Sulphur Ore",
+  "item.cftp.deepslate_sulphur_ore": "Deepslate Sulphur Ore",
+  "block.cftp.nether_sulphur_ore": "Nether Sulphur Ore",
+  "item.cftp.nether_sulphur_ore": "Nether Sulphur Ore",
+
   "item.cftp.elemental_ingot": "Elemental Ingot",
 
 
@@ -90,6 +98,7 @@
   "item.cftp.creeper_fuse": "Creeper Fuse",
   "item.cftp.sulphur": "Sulphur",
 
+  "item.cftp.creeper_fish": "Creeper Fish",
 
   "item.cftp.coin_copper": "Copper Coin",
   "item.cftp.coin_iron": "Iron Coin",

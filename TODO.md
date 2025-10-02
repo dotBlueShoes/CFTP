@@ -42,12 +42,35 @@
 2. See if I changed it for creepers. What are implications of that?
 3. If not what did i change? why are there so many creepers?
 
+### Spider
+
+1. Make the textures less dark. or like have more contrast.
+2. ? Maybe getting bit would make player smaller or bigger for a small duration of a time. 
+
+### Potions
+
+1. Make the potion that makes the player smaller for a duration of a time.
+2. Make the potion that makes the player bigger for a duration of a time.
+
 ### Spider Hole
 
 1. Make the spider_hole visually look better.
 2. Make the spider_hole protected from any fluid generation.
 3. Make the spider_hole summon my custom spiders.
 4. Divide spider_hole gen into spider_hole_swamp and spider_hole_jungle.
+
+### Sulphur
+
+1. Villagers (smithers) can trade gunpowder for sulphur and emeralds.
+2. Create sulphur ore blocks for stone, deepslate, nether.
+3. Make these blocks be minable with diamond-tier only (+ config option)
+4. Make these blocks drop sulphur.
+5. Make smelling sulphur or sulphur ore block explode. (destroy some blocks some set on fire)
+
+### New Villagers
+
+1. New model/s, new textures, mew sounds.
+2. Read, check code how can this be done. Maybe this can be done fully using resource-packs.
 
 ### Other
 
@@ -181,6 +204,9 @@
 153. Mushroom creeper? -> generates all mushroom upon detonation
 154. each creeper type can now only drop a very specific disk. definitely a config option
 155. chester entity like from old terra-firma-craft modpack.
+156. void creeper -> capable of destroying bedrock
+157. ore creeper -> generates random ore blocks, webs, fluids, ...
+158. maybe some creepers can only be spawned from amalgam creeper explosion
 
 
 Creatures From The Past

@@ -3,6 +3,7 @@ package cftp.registries;
 import cftp.CFTP;
 import cftp.blocks.BlueCobwebBlock;
 import cftp.blocks.SparkBlock;
+import cftp.blocks.SulphurBlock;
 import cftp.blocks.YellowCobwebBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
@@ -19,6 +20,8 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
 import java.util.function.Function;
@@ -134,11 +137,44 @@ public class CFTPBlocks {
             Block::new,
             "elemental_block",
             AbstractBlock.Settings.create()
-                    .mapColor(MapColor.WHITE)
-                    .sounds(BlockSoundGroup.COBWEB)
-                    .solid()
+                    .mapColor(MapColor.PURPLE)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .sounds(BlockSoundGroup.STONE)
                     .requiresTool()
-                    .strength(4.0F)
+                    .strength(3.0F)
+    );
+
+    public static final Block SULPHUR_ORE = registerBlock(
+            settings -> new SulphurBlock(UniformIntProvider.create(0, 3), settings),
+            "sulphur_ore",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.STONE_GRAY)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .sounds(BlockSoundGroup.STONE)
+                    .requiresTool()
+                    .strength(3.0F)
+    );
+
+    public static final Block DEEPSLATE_SULPHUR_ORE = registerBlock(
+            settings -> new SulphurBlock(ConstantIntProvider.create(0), settings),
+            "deepslate_sulphur_ore",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.DEEPSLATE_GRAY)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .sounds(BlockSoundGroup.DEEPSLATE)
+                    .requiresTool()
+                    .strength(3.0F)
+    );
+
+    public static final Block NETHER_SULPHUR_ORE = registerBlock(
+            settings -> new SulphurBlock(UniformIntProvider.create(0, 2), settings),
+            "nether_sulphur_ore",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.DARK_RED)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
+                    .sounds(BlockSoundGroup.NETHER_ORE)
+                    .requiresTool()
+                    .strength(3.0F)
     );
 
     private static <T extends Block> T registerBlock(
@@ -200,6 +236,20 @@ public class CFTPBlocks {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
                 entries -> entries.add(ELEMENTAL_BLOCK)
         );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
+                entries -> entries.add(SULPHUR_ORE)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
+                entries -> entries.add(DEEPSLATE_SULPHUR_ORE)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
+                entries -> entries.add(NETHER_SULPHUR_ORE)
+        );
+
+
 
         // Hay block values.
         FlammableBlockRegistry.getDefaultInstance().add(SAW_DUST_BLOCK, 60, 20);

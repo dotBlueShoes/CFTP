@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 
 public class BlueCobwebBlock extends CobwebBlock {
 
-    final Vec3d COBWEB_SLOW = new Vec3d(0.25, 0.05F, 0.05);
-    final Vec3d COBWEB_WEAVING_SLOW = new Vec3d(0.5, 0.25, 0.25);
+    final Vec3d COBWEB_SLOW         = new Vec3d(0.90, 0.90, 0.10);
+    final Vec3d COBWEB_WEAVING_SLOW = new Vec3d(1.00, 1.00, 0.25);
 
     public BlueCobwebBlock(Settings settings) {
         super(settings);

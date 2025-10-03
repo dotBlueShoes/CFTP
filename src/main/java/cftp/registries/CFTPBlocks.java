@@ -237,15 +237,15 @@ public class CFTPBlocks {
                 entries -> entries.add(ELEMENTAL_BLOCK)
         );
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(SULPHUR_ORE)
         );
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(DEEPSLATE_SULPHUR_ORE)
         );
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(NETHER_SULPHUR_ORE)
         );
 

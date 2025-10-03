@@ -11,8 +11,8 @@ import net.minecraft.world.World;
 
 public class YellowCobwebBlock extends CobwebBlock {
 
-    final Vec3d COBWEB_SLOW = new Vec3d(0.05, 0.05F, 0.25);
-    final Vec3d COBWEB_WEAVING_SLOW = new Vec3d(0.25, 0.25, 0.5);
+    final Vec3d COBWEB_SLOW         = new Vec3d(0.10, 0.90, 0.90);
+    final Vec3d COBWEB_WEAVING_SLOW = new Vec3d(0.25, 1.00, 1.00);
 
     public YellowCobwebBlock(Settings settings) {
         super(settings);

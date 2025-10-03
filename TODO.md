@@ -207,6 +207,8 @@
 156. void creeper -> capable of destroying bedrock
 157. ore creeper -> generates random ore blocks, webs, fluids, ...
 158. maybe some creepers can only be spawned from amalgam creeper explosion
+159. SULPHUR - make it more common in desert (hot biomes) less common in other biomes
+160. darken darker spots in cobweb variants sprites.
 
 
 Creatures From The Past

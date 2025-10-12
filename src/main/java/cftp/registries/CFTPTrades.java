@@ -15,7 +15,7 @@ public class CFTPTrades {
 
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.ARMORER, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
-                    new TradedItem(Items.EMERALD, 4),
+                    new TradedItem(Items.EMERALD, 3),
                     Optional.of(new TradedItem(CFTPItems.SULPHUR, 3)),
                     new ItemStack(Items.GUNPOWDER, 3),
                     6,
@@ -28,7 +28,7 @@ public class CFTPTrades {
             factories.add((entity, random) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 2),
                     Optional.of(new TradedItem(CFTPItems.SAW_DUST, 16)),
-                    new ItemStack(Items.CARROT, 5),
+                    new ItemStack(Items.CARROT, 8),
                     3,
                     1,
                     0.15F

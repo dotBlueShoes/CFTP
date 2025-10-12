@@ -7,6 +7,7 @@ import net.minecraft.client.render.entity.feature.HorseMarkingFeatureRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.model.HorseEntityModel;
 import net.minecraft.client.render.entity.state.HorseEntityRenderState;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.HorseColor;
 import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.passive.HorseMarking;

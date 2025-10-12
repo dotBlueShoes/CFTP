@@ -1,13 +1,11 @@
 package cftp.registries;
 
 import cftp.CFTP;
-import cftp.blocks.BlueCobwebBlock;
-import cftp.blocks.SparkBlock;
-import cftp.blocks.SulphurBlock;
-import cftp.blocks.YellowCobwebBlock;
+import cftp.blocks.*;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
+import net.minecraft.block.MushroomBlock;
 import net.minecraft.block.enums.NoteBlockInstrument;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.item.BlockItem;
@@ -177,6 +175,39 @@ public class CFTPBlocks {
                     .strength(3.0F)
     );
 
+    //TntBlock
+
+    // 1. NON-AIR VERSION
+    public static final Block SULPHUR_CLOUD = registerBlock(
+            SulphurCloud::new,
+            "sulphur_cloud",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.CLEAR)
+                    .sounds(BlockSoundGroup.SUSPICIOUS_SAND)
+                    .requiresTool()
+                    .nonOpaque()
+                    .noCollision()
+                    .strength(-1.0f, 1.0f)
+                    .dropsNothing()
+                    .allowsSpawning(Blocks::never)  // not sure
+                    .burnable()
+                    .solidBlock(Blocks::never)      // not sure
+                    .replaceable()                  // maybe it shouldn't be
+    );
+
+    // 2. AIR VERSION (it seems the .air blocks the possibility of being destroyed via tnt)
+    //public static final Block SULPHUR_CLOUD = registerBlock(
+    //        AirSulphurCloud::new,
+    //        //SulphurCloud::new,
+    //        "sulphur_cloud",
+    //        AbstractBlock.Settings.create()
+    //                //.replaceable()
+    //                .noCollision()
+    //                //.nonOpaque()
+    //                .dropsNothing()
+    //                .air()
+    //);
+
     private static <T extends Block> T registerBlock(
             Function<AbstractBlock.Settings, T> blockFactory,
             String name,
@@ -249,10 +280,21 @@ public class CFTPBlocks {
                 entries -> entries.add(NETHER_SULPHUR_ORE)
         );
 
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(SULPHUR_CLOUD)
+        );
 
 
         // Hay block values.
         FlammableBlockRegistry.getDefaultInstance().add(SAW_DUST_BLOCK, 60, 20);
+        // TNT block values.
+        FlammableBlockRegistry.getDefaultInstance().add(SULPHUR_CLOUD, 15, 100);
+
+        // Weird. Webs and mushrooms do not burn in this game.
+        //FlammableBlockRegistry.getDefaultInstance().add(YELLOW_COBWEB,          5, 5);
+        //FlammableBlockRegistry.getDefaultInstance().add(BLUE_COBWEB,            5, 5);
+        //FlammableBlockRegistry.getDefaultInstance().add(YELLOW_MUSHROOM_BLOCK,  5, 5);
+        //FlammableBlockRegistry.getDefaultInstance().add(BLUE_MUSHROOM_BLOCK,    5, 5);
 
     }
 

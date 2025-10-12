@@ -33,6 +33,9 @@ public class SurphurCloudEntityRenderer extends EntityRenderer<SulphurEntity, Tn
 
         float f = tntEntityRenderState.fuse;
 
+        final float scale = 0.9f;
+        matrixStack.scale(scale, scale, scale);
+
         if (tntEntityRenderState.fuse < 10.0F) {
             float g = 1.0F - tntEntityRenderState.fuse / 10.0F;
             g = MathHelper.clamp(g, 0.0F, 1.0F);
@@ -49,10 +52,11 @@ public class SurphurCloudEntityRenderer extends EntityRenderer<SulphurEntity, Tn
         if (tntEntityRenderState.blockState != null) {
             TntMinecartEntityRenderer.renderFlashingBlock(
                     this.blockRenderManager,
-                    tntEntityRenderState.blockState, // CFTPBlocks.SULPHUR_ORE.getDefaultState(), //
+                    CFTPBlocks.SULPHUR_CLOUD.getDefaultState(),
+                    // tntEntityRenderState.blockState,
                     matrixStack,
                     vertexConsumerProvider, i,
-                    (int)f / 5 % 2 == 0);
+                    (int) f / 5 % 2 == 0);
         }
 
         matrixStack.pop();

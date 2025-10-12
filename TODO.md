@@ -209,7 +209,19 @@
 158. maybe some creepers can only be spawned from amalgam creeper explosion
 159. SULPHUR - make it more common in desert (hot biomes) less common in other biomes
 160. darken darker spots in cobweb variants sprites.
-
+161. sand in a bottle (as a useless item (maybe?))
+161. gold tnt (timed tnt) -> tnt + clock 
+162. make sulphur cloud ignitable
+163. make sulphur cloud have an animated texture
+164. make sulphur cloud collectable via bucket ?
+165. make a config option which says whether a sulphur cloud is being created or not
+    if not the ores explode with their normal ore texture.
+166. make a config option to make sulphur clouds not air like / cleanable. but triggerable with a flint and steel.
+167. make sulphur ore get triggered via fire arrows.
+168. signaler (repeater like device, but it has an ui in which a specific time of a day/night can be picked) requires a clock in its recipe.
+169. masked tnt (a dirt like texture tnt) that can be brought just like suspicious sand/gravel from a new type of villager (maniac)
+170. ! make sulphur cloud not explode when replaced with a different block but make it so that action triggers adjacent sulphur clouds to prime.
+171. ! make sulphur clouds generate but not near lava on not on air
 
 Creatures From The Past
 Chapter 1. Creeps.

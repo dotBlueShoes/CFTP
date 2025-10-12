@@ -35,8 +35,8 @@ public class CFTPClient implements ClientModInitializer {
         //ItemRenderLayer
         //ItemRenderLayerMap.INSTANCE.putItem(MyModItems.MY_ITEM, RenderLayer.getTranslucent());
 
-		// TEST
-		//BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.SAW_DUST_BLOCK, RenderLayer.getTranslucent());
+		BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.SULPHUR_CLOUD, RenderLayer.getTranslucent());
+        //BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.SULPHUR_CLOUD, RenderLayer.getCutout());
 
 		BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.YELLOW_MUSHROOM, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.BLUE_MUSHROOM, RenderLayer.getCutout());

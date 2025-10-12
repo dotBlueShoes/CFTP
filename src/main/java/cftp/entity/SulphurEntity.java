@@ -55,7 +55,7 @@ public class SulphurEntity extends TntEntity {
         double d = world.random.nextDouble() * 6.2831854820251465;
 
         this.setVelocity(-Math.sin(d) * 0.02, 0.2f, -Math.cos(d) * 0.02);
-        this.setFuse(20);
+        this.setFuse(18 + world.random.nextInt(6)); // [ 18 ; 24 )
 
         this.prevX = x;
         this.prevY = y;

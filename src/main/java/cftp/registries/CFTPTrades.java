@@ -24,6 +24,17 @@ public class CFTPTrades {
             ));
         });
 
+        TradeOfferHelper.registerVillagerOffers(VillagerProfession.ARMORER, 3, factories -> {
+            factories.add((entity, random) -> new TradeOffer(
+                    new TradedItem(Items.EMERALD, 5),
+                    Optional.of(new TradedItem(CFTPItems.SULPHUR, 2)),
+                    new ItemStack(CFTPItems.SULPHUR_DUST_BUCKET, 1),
+                    3,
+                    9,
+                    0.05F
+            ));
+        });
+
         TradeOfferHelper.registerVillagerOffers(VillagerProfession.FARMER, 1, factories -> {
             factories.add((entity, random) -> new TradeOffer(
                     new TradedItem(Items.EMERALD, 2),

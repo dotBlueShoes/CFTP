@@ -191,7 +191,7 @@ public class CFTPBlocks {
                     .dropsNothing()
                     .allowsSpawning(Blocks::never)  // not sure
                     .burnable()
-                    .solidBlock(Blocks::never)      // not sure
+                    //.solidBlock(Blocks::never)      // not sure
                     .replaceable()                  // maybe it shouldn't be
     );
 
@@ -280,10 +280,9 @@ public class CFTPBlocks {
                 entries -> entries.add(NETHER_SULPHUR_ORE)
         );
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-                entries -> entries.add(SULPHUR_CLOUD)
-        );
-
+        //ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+        //        entries -> entries.add(SULPHUR_CLOUD)
+        //);
 
         // Hay block values.
         FlammableBlockRegistry.getDefaultInstance().add(SAW_DUST_BLOCK, 60, 20);

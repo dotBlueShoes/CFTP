@@ -7,11 +7,12 @@ import cftp.items.ElementalPowderItem;
 import cftp.items.Wand;
 import cftp.items.WaterChargeItem;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.SpawnEggItem;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.*;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 
 import java.util.function.Function;
@@ -73,6 +74,11 @@ public class CFTPItems {
 
     public static final Item SULPHUR = register("sulphur", Item::new,
             new Item.Settings()
+    );
+
+    public static final Item SULPHUR_DUST_BUCKET = register("sulphur_dust_bucket",
+            (Item.Settings settings) -> new PowderSnowBucketItem(CFTPBlocks.SULPHUR_CLOUD, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, (Item.Settings)settings),
+            new Item.Settings().maxCount(1).useItemPrefixedTranslationKey()
     );
 
     public static final Item CREEPER_FISH = register("creeper_fish", Item::new,

@@ -38,7 +38,16 @@ public class CFTPFeatures {
     public static final RegistryKey<PlacedFeature> ORE_NETHER_SULPHUR_PLACED =
             RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("cftp", "ore_nether_sulphur"));
 
+    public static final RegistryKey<PlacedFeature> CLOUD_SULPHUR_PLACED =
+            RegistryKey.of(RegistryKeys.PLACED_FEATURE, Identifier.of("cftp", "cloud_sulphur"));
+
     public static void register() {
+        BiomeModifications.addFeature(
+                BiomeSelectors.all(),
+                GenerationStep.Feature.UNDERGROUND_ORES,
+                CLOUD_SULPHUR_PLACED
+        );
+
         BiomeModifications.addFeature(
                 BiomeSelectors.foundInOverworld(),
                 GenerationStep.Feature.UNDERGROUND_ORES,

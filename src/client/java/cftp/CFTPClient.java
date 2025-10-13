@@ -1,5 +1,6 @@
 package cftp;
 
+import cftp.registries.CFTPBlocksClient;
 import cftp.registries.CFTPEntitiesClient;
 import cftp.registries.CFTPBlocks;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -30,21 +31,9 @@ public class CFTPClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		CFTP.LOGGER.info("Hello Fabric Client!");
+
 		CFTPEntitiesClient.register();
-
-        //ItemRenderLayer
-        //ItemRenderLayerMap.INSTANCE.putItem(MyModItems.MY_ITEM, RenderLayer.getTranslucent());
-
-		BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.SULPHUR_CLOUD, RenderLayer.getTranslucent());
-        //BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.SULPHUR_CLOUD, RenderLayer.getCutout());
-
-		BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.YELLOW_MUSHROOM, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.BLUE_MUSHROOM, RenderLayer.getCutout());
-
-        BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.YELLOW_COBWEB, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.BLUE_COBWEB, RenderLayer.getCutout());
-
-        //MinecraftClient mc = MinecraftClient.getInstance();
+        CFTPBlocksClient.register();
 
         //ShaderProgram
 

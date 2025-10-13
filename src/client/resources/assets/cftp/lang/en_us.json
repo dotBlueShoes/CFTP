@@ -89,6 +89,9 @@
   "block.cftp.sulphur_cloud": "Sulphur Cloud",
   "item.cftp.sulphur_cloud": "Sulphur Cloud",
 
+  "item.cftp.sulphur_dust_bucket": "Sulphur Dust Bucket",
+  "item.cftp.sulphur": "Sulphur",
+
   "item.cftp.elemental_ingot": "Elemental Ingot",
 
 
@@ -98,7 +101,6 @@
   "item.cftp.water_charge": "Water Charge",
   "item.cftp.saw_dust": "Saw Dust",
   "item.cftp.creeper_fuse": "Creeper Fuse",
-  "item.cftp.sulphur": "Sulphur",
 
   "item.cftp.creeper_fish": "Creeper Fish",
 

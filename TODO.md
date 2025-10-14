@@ -222,6 +222,11 @@
 169. masked tnt (a dirt like texture tnt) that can be brought just like suspicious sand/gravel from a new type of villager (maniac)
 170. ! make sulphur cloud not explode when replaced with a different block but make it so that action triggers adjacent sulphur clouds to prime.
 171. ! make sulphur clouds generate but not near lava on not on air
+172. make a trade using sawdust + water bucket + emeralds that will at max level give fertilized_farmland block
+173. plants on fertilized_farmland grow instantly but after single use are transformed into normal farmlands. they also do not need water source.
+174. if I would introduce bugs, ants etc. i could make fertilized_farmland resistant to some bad effect.
+
+
 
 Creatures From The Past
 Chapter 1. Creeps.

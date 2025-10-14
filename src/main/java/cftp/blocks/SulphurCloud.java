@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
@@ -106,7 +107,12 @@ public class SulphurCloud extends Block {
 
         if (world instanceof ServerWorld serverWorld) {
             boolean wasReplacedWithAir = newState.isOf(Blocks.AIR) && !isBeingDestroyedViaExplosion;
-            if (wasReplacedWithAir || newState.isOf(Blocks.FIRE) || newState.isOf(Blocks.SOUL_FIRE)) {
+            boolean wasReplacedWithFire = newState.isOf(Blocks.FIRE) || newState.isOf(Blocks.SOUL_FIRE);
+            boolean wasReplacedWithFireLike =
+                    newState.isOf(Blocks.TORCH) || newState.isOf(Blocks.WALL_TORCH) ||
+                    newState.isOf(Blocks.SOUL_TORCH) || newState.isOf(Blocks.SOUL_WALL_TORCH);
+
+            if (wasReplacedWithAir || wasReplacedWithFire || wasReplacedWithFireLike) {
                 SulphurLogic.primeSulphur(serverWorld, pos);
             }
         }
@@ -129,7 +135,8 @@ public class SulphurCloud extends Block {
         if (!worldView.isClient() && isNeighbourSulphurCloudReplaced) {
 
             boolean isNewStateNotTriggering =
-                    neighborState == Blocks.AIR.getDefaultState();
+                    neighborState == Blocks.AIR.getDefaultState() ||
+                    neighborState.getFluidState().isIn(FluidTags.WATER);
 
             ServerWorld world = (ServerWorld)worldView;
 

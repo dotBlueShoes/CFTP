@@ -58,14 +58,14 @@ public class SulphurBlock extends ExperienceDroppingBlock {
         }
     }
 
-    @Override
-    protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (world instanceof ServerWorld serverWorld ) {
-            if (sourceBlock.getDefaultState() == CFTPBlocks.SULPHUR_CLOUD.getDefaultState()) {
-                serverWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
-                SulphurLogic.primeSulphur(serverWorld, pos);
-            }
-        }
-    }
+    //@Override
+    //protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
+    //    if (world instanceof ServerWorld serverWorld ) {
+    //        if (sourceBlock.getDefaultState() == CFTPBlocks.SULPHUR_CLOUD.getDefaultState()) {
+    //            serverWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
+    //            SulphurLogic.primeSulphur(serverWorld, pos);
+    //        }
+    //    }
+    //}
 
 }

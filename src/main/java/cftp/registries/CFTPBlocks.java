@@ -2,6 +2,7 @@ package cftp.registries;
 
 import cftp.CFTP;
 import cftp.blocks.*;
+import cftp.blocks.FieryBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
@@ -175,7 +176,16 @@ public class CFTPBlocks {
                     .strength(3.0F)
     );
 
-    //TntBlock
+    public static final Block FIERY_BLOCK = registerBlock(
+            FieryBlock::new,
+            "fiery_block",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.RED)
+                    .sounds(BlockSoundGroup.SUSPICIOUS_SAND)
+                    .strength(0.5F)
+                    .sounds(BlockSoundGroup.GRAVEL)
+                    .burnable()
+    );
 
     // 1. NON-AIR VERSION
     public static final Block SULPHUR_CLOUD = registerBlock(
@@ -278,6 +288,10 @@ public class CFTPBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(NETHER_SULPHUR_ORE)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(FIERY_BLOCK)
         );
 
         //ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(

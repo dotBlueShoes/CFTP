@@ -61,11 +61,7 @@
 
 ### Sulphur
 
-1. Villagers (smithers) can trade gunpowder for sulphur and emeralds.
-2. Create sulphur ore blocks for stone, deepslate, nether.
-3. Make these blocks be minable with diamond-tier only (+ config option)
-4. Make these blocks drop sulphur.
-5. Make smelling sulphur or sulphur ore block explode. (destroy some blocks some set on fire)
+1. diamond-tier only (+ config option)
 
 ### New Villagers
 

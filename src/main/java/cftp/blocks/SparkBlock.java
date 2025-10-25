@@ -1,7 +1,9 @@
 package cftp.blocks;
 
 import cftp.CFTP;
+import cftp.registries.CFTPBlocks;
 import net.minecraft.block.AirBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ColoredFallingBlock;
 import net.minecraft.entity.LivingEntity;
@@ -19,6 +21,7 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.block.WireOrientation;
 import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
@@ -28,6 +31,17 @@ public class SparkBlock extends ColoredFallingBlock {
 
     public SparkBlock(ColorCode color, Settings settings) {
         super(color, settings);
+    }
+
+    @Override
+    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        if (world instanceof ServerWorld serverWorld) {
+            if (stack.getItem() == Items.FLINT_AND_STEEL) {
+                serverWorld.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState());
+            }
+        }
+
+        return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
     }
 
     //@Override

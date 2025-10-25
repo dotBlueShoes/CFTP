@@ -67,35 +67,35 @@ public class SulphurCloud extends Block {
         }
     }
 
-    @Override
-    protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-
-        // TODO
-        //  Implement sulphur_dust_bucket logic. So that when a config exists this method might run
-        //  and the sulphur_cloud will become a collectable.
-
-        Item item = stack.getItem();
-
-        if (!stack.isOf(Items.FLINT_AND_STEEL) && !stack.isOf(Items.FIRE_CHARGE)) {
-            return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
-        }
-
-        world.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL_AND_REDRAW);
-
-        if (world instanceof ServerWorld serverWorld) {
-            SulphurLogic.primeSulphur(serverWorld, pos);
-        }
-
-        if (stack.isOf(Items.FLINT_AND_STEEL)) {
-            stack.damage(1, player, LivingEntity.getSlotForHand(hand));
-        } else {
-            stack.decrementUnlessCreative(1, player);
-        }
-
-        player.incrementStat(Stats.USED.getOrCreateStat(item));
-
-        return ActionResult.SUCCESS;
-    }
+    //@Override
+    //protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+    //
+    //    // TODO
+    //    //  Implement sulphur_dust_bucket logic. So that when a config exists this method might run
+    //    //  and the sulphur_cloud will become a collectable.
+    //
+    //    Item item = stack.getItem();
+    //
+    //    if (!stack.isOf(Items.FLINT_AND_STEEL) && !stack.isOf(Items.FIRE_CHARGE)) {
+    //        return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
+    //    }
+    //
+    //    world.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL_AND_REDRAW);
+    //
+    //    if (world instanceof ServerWorld serverWorld) {
+    //        SulphurLogic.primeSulphur(serverWorld, pos);
+    //    }
+    //
+    //    if (stack.isOf(Items.FLINT_AND_STEEL)) {
+    //        stack.damage(1, player, LivingEntity.getSlotForHand(hand));
+    //    } else {
+    //        stack.decrementUnlessCreative(1, player);
+    //    }
+    //
+    //    player.incrementStat(Stats.USED.getOrCreateStat(item));
+    //
+    //    return ActionResult.SUCCESS;
+    //}
 
     @Override
     public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
@@ -167,9 +167,22 @@ public class SulphurCloud extends Block {
     // This makes it not interactable ! (so onUseWithItem is useless)
     //
 
+
+
     @Override
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+
+        // TODO. This can be in mixins for swords to make them not hit grass/plants etc.
+        //if (context instanceof EntityShapeContext esc) {
+        //    var entity = esc.getEntity();
+        //    if (entity instanceof PlayerEntity player) {
+        //        ItemStack stack = player.getMainHandStack();
+        //        if (stack.isOf(Items.DIAMOND_SWORD)) {
+        //            return super.getOutlineShape(state, world, pos, context);
+        //        }
+        //    }
+        //}
+
         return VoxelShapes.empty();
     }
-
 }

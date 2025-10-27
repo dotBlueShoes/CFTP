@@ -1,12 +1,14 @@
 {
-	"required": true,
-	"package": "cftp.mixin.client",
-	"compatibilityLevel": "JAVA_21",
-	"client": [
-		"CFTPClientMixin",
-        "MinecraftClientMixin"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "package": "cftp.mixin.client",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "BlockModelRendererMixin",
+    "CFTPClientMixin",
+    "FluidRendererMixin",
+    "MinecraftClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

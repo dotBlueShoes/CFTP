@@ -125,6 +125,19 @@
 
 # OLD TODO
 
+SoulOre + Souls
+soul_fiery_ore did not work. HOWEVER a soul_ore_block with an animated texture like that would be so cool.
+It would require the best shovel or pickaxe, maybe both, or something completely new?
+And it would create a way to craft spawn eggs. Soul's could have nbt data that says what creature it is connected to.
+and 8 rotten flesh + soul would create the egg.
+
+Make stone variants with heads of monsters and maybe not only.
+This block when mined it gives regular stone.
+But when right-clicked with soul something special happens.
+I also think with could be a teleporter maybe a marked teleporter.
+A creeper-stone will only teleport to other creeper-stones or like
+a dirt-block-stone will teleport to the alpha world dim ?
+
 33. I copper rods, II blaze rods, III breeze rods allow control of the elemental charge
  I. the particle can now be controlled in the air for a limited time.
  II. Consumes 2 instead to create a stronger effect.

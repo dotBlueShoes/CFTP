@@ -184,8 +184,17 @@ public class CFTPBlocks {
                     .sounds(BlockSoundGroup.SUSPICIOUS_SAND)
                     .strength(0.5F)
                     .sounds(BlockSoundGroup.GRAVEL)
-                    .burnable()
     );
+
+    //nope public static final Block SOUL_FIERY_BLOCK = registerBlock(
+    //nope         FieryBlock::new,
+    //nope         "soul_fiery_block",
+    //nope         AbstractBlock.Settings.create()
+    //nope                 .mapColor(MapColor.BLUE)
+    //nope                 .sounds(BlockSoundGroup.SUSPICIOUS_SAND)
+    //nope                 .strength(0.5F)
+    //nope                 .sounds(BlockSoundGroup.GRAVEL)
+    //nope );
 
     // 1. NON-AIR VERSION
     public static final Block SULPHUR_CLOUD = registerBlock(
@@ -293,6 +302,10 @@ public class CFTPBlocks {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(FIERY_BLOCK)
         );
+
+        //ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+        //        entries -> entries.add(SOUL_FIERY_BLOCK)
+        //);
 
         //ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
         //        entries -> entries.add(SULPHUR_CLOUD)

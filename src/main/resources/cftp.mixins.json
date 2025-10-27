@@ -3,6 +3,7 @@
   "package": "cftp.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BlockStateMixin",
     "CFTPMixin",
     "SpawnHelperMixin"
   ],

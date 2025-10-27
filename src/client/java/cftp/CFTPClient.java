@@ -16,6 +16,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
 import net.minecraft.util.Identifier;
 import org.joml.Matrix4f;
+import org.lwjgl.opengl.GL11;
 
 import java.util.Map;
 import java.util.Set;
@@ -32,8 +33,21 @@ public class CFTPClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		CFTP.LOGGER.info("Hello Fabric Client!");
 
+        //String version = GL11.glGetString(GL11.GL_VERSION);
+        //String renderer = GL11.glGetString(GL11.GL_RENDERER);
+        //String vendor = GL11.glGetString(GL11.GL_VENDOR);
+        //CFTP.LOGGER.info("v: {}, r: {}, v:{}", version, renderer, vendor);
+
 		CFTPEntitiesClient.register();
         CFTPBlocksClient.register();
+
+        // OpenGL 3.2.0 for 1.21.4
+        //HudRenderCallback.EVENT.register((matrices, tickDelta) -> {
+        //    String version = GL11.glGetString(GL11.GL_VERSION);
+        //    String renderer = GL11.glGetString(GL11.GL_RENDERER);
+        //    String vendor = GL11.glGetString(GL11.GL_VENDOR);
+        //    CFTP.LOGGER.info("v: {}, r: {}, v:{}", version, renderer, vendor);
+        //});
 
         //ShaderProgram
 

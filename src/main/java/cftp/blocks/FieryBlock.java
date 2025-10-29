@@ -1,30 +1,47 @@
 package cftp.blocks;
 
 import cftp.CFTP;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import cftp.mixin.FireBlockAccessor;
+import cftp.registries.CFTPBlocks;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.block.WireOrientation;
+import net.minecraft.world.dimension.NetherPortal;
 import org.jetbrains.annotations.Nullable;
 
 public class FieryBlock extends Block {
+
+    public static final IntProperty AGE = Properties.AGE_15;
+    //private static final int LIFETIME = 15;
+    //private int currentLifetime = LIFETIME;
 
     // NOTE. This makes fire not able to attach to the block anymore.
     private static final VoxelShape COLLISION_SHAPE = Block.createCuboidShape(1.0, 1.0, 1.0, 15.0, 15.0, 15.0);
 
     public FieryBlock(Settings settings) {
         super(settings);
+        this.setDefaultState(this.stateManager.getDefaultState().with(AGE, 0));
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(AGE);
     }
 
     @Override
@@ -42,6 +59,147 @@ public class FieryBlock extends Block {
             }
         }
     }
+
+    private static int getFireTickDelay(Random random) {
+        return 30 + random.nextInt(10);
+    }
+
+    @Override
+    protected void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
+        super.onBlockAdded(state, world, pos, oldState, notify);
+        world.scheduleBlockTick(pos, this, getFireTickDelay(world.random));
+    }
+
+    // to make fire create FieryBlocks when in contact with SawDustBlock
+    // i need to create a mixin for FireBlock.trySpreadingFire() and make an if SawDust then FieryBlock
+
+    private static boolean isOverworldOrNether(World world) {
+        return world.getRegistryKey() == World.OVERWORLD || world.getRegistryKey() == World.NETHER;
+    }
+
+    private static boolean shouldLightPortalAt(World world, BlockPos pos, Direction direction) {
+        if (!isOverworldOrNether(world)) {
+            return false;
+        } else {
+            BlockPos.Mutable mutable = pos.mutableCopy();
+            boolean bl = false;
+
+            for (Direction direction2 : Direction.values()) {
+                if (world.getBlockState(mutable.set(pos).move(direction2)).isOf(Blocks.OBSIDIAN)) {
+                    bl = true;
+                    break;
+                }
+            }
+
+            if (!bl) {
+                return false;
+            } else {
+                Direction.Axis axis = direction.getAxis().isHorizontal()
+                        ? direction.rotateYCounterclockwise().getAxis()
+                        : Direction.Type.HORIZONTAL.randomAxis(world.random);
+                return NetherPortal.getNewPortal(world, pos, axis).isPresent();
+            }
+        }
+    }
+
+    private void igniteBlock (World world, BlockPos pos, Direction direction) {
+        BlockState blockState = world.getBlockState(pos);
+
+        boolean isValid = blockState.isAir() &&
+                FireBlock.getState(world, pos).canPlaceAt(world, pos) ||
+                shouldLightPortalAt(world, pos, direction);
+
+        if (blockState.getBlock() == CFTPBlocks.SAW_DUST_BLOCK) {
+            world.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState().with(AGE, 0), Block.NOTIFY_ALL);
+        } else if (isValid) {
+            BlockState fireState = AbstractFireBlock.getState(world, pos).with(AGE, 0);
+            world.setBlockState(pos, fireState, Block.NOTIFY_ALL);
+        }
+    }
+
+    @Override
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+
+        // 1. Forever fire (netherrack)
+        // 2. is that formula correct?
+        // 3. Check for what normal fire checks...
+        // 4. isIncreasedFireBurnout
+
+        { // AGING
+            int prevAge = state.get(AGE);
+            CFTP.LOGGER.info("prevAge: {}", prevAge);
+            if (prevAge >= 15) {
+                world.removeBlock(pos, false);
+                return;
+            }
+
+            int nextAge = Math.min(15, prevAge + random.nextInt(3) / 2);
+
+            state = state.with(AGE, nextAge);
+            world.setBlockState(pos, state, Block.NO_REDRAW);
+        }
+
+        world.scheduleBlockTick(pos, this, getFireTickDelay(world.random));
+
+        //boolean isIncreasedFireBurnout = world.getBiome(pos).isIn(BiomeTags.INCREASED_FIRE_BURNOUT);
+        //int sfe = isIncreasedFireBurnout ? -50 : 0;
+        //int currentAge = 15; //state.get(FireBlock.AGE);
+
+        //this.trySpreadingFire(world, pos.east(),  300 + sfe, random, currentAge);
+        //this.trySpreadingFire(world, pos.west(),  300 + sfe, random, currentAge);
+        //this.trySpreadingFire(world, pos.down(),  250 + sfe, random, currentAge);
+        //this.trySpreadingFire(world, pos.up(),    250 + sfe, random, currentAge);
+        //this.trySpreadingFire(world, pos.north(), 300 + sfe, random, currentAge);
+        //this.trySpreadingFire(world, pos.south(), 300 + sfe, random, currentAge);
+        //world.setBlockState(pos.east(), Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+
+        BlockPos a = pos.east();
+        BlockPos b = pos.west();
+        BlockPos c = pos.north();
+        BlockPos d = pos.south();
+        BlockPos e = pos.up();
+        BlockPos f = pos.down();
+
+        igniteBlock(world, a, Direction.random(random));
+        igniteBlock(world, b, Direction.random(random));
+        igniteBlock(world, c, Direction.random(random));
+        igniteBlock(world, d, Direction.random(random));
+        igniteBlock(world, e, Direction.random(random));
+        igniteBlock(world, f, Direction.random(random));
+
+    }
+
+    //private void trySpreadingFire(World world, BlockPos pos, int spreadFactor, Random random, int currentAge) {
+    //    int i = this.getSpreadChance(world.getBlockState(pos));
+    //    if (random.nextInt(spreadFactor) < i) {
+    //        BlockState blockState = world.getBlockState(pos);
+    //        if (random.nextInt(currentAge + 10) < 5 && !world.hasRain(pos)) {
+    //            int j = Math.min(currentAge + random.nextInt(5) / 4, 15);
+    //            world.setBlockState(pos, this.getStateWithAge(world, pos, j), Block.NOTIFY_ALL);
+    //        } else {
+    //            world.removeBlock(pos, false);
+    //        }
+    //
+    //        Block block = blockState.getBlock();
+    //        if (block instanceof TntBlock) {
+    //            TntBlock.primeTnt(world, pos);
+    //        }
+    //    }
+    //}
+
+    //private int getSpreadChance(BlockState state) {
+    //    FireBlock fire = (FireBlock) Blocks.FIRE;
+    //    FireBlockAccessor accessor = (FireBlockAccessor) fire;
+    //
+    //    return state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED) ?
+    //            0 :
+    //            accessor.getSpreadChances().getInt(state.getBlock());
+    //}
+
+    //private BlockState getStateWithAge(WorldView world, BlockPos pos, int age) {
+    //    BlockState blockState = FireBlock.getState(world, pos);
+    //    return blockState.isOf(Blocks.FIRE) ? blockState.with(FireBlock.AGE, age) : blockState;
+    //}
 
     // TODO
     //  1. If a block below turns into an air_block this block changes into an entity
@@ -114,11 +272,5 @@ public class FieryBlock extends Block {
     //
     // Every fire spread ticks it will spread fire to all neighbour blocks at once.
     // after a time this block will burn too.
-
-    @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        CFTP.LOGGER.info("a");
-        super.scheduledTick(state, world, pos, random);
-    }
 
 }

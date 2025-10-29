@@ -5,6 +5,7 @@
   "mixins": [
     "BlockStateMixin",
     "CFTPMixin",
+    "FireBlockAccessor",
     "SpawnHelperMixin"
   ],
   "injectors": {

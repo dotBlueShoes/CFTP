@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.Hand;
@@ -35,14 +36,21 @@ public class SparkBlock extends ColoredFallingBlock {
 
     @Override
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world instanceof ServerWorld serverWorld) {
+
             if (stack.getItem() == Items.FLINT_AND_STEEL) {
-                serverWorld.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState());
+                if (world instanceof ServerWorld serverWorld) {
+                    serverWorld.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState());
+                    stack.damage(1, player, LivingEntity.getSlotForHand(hand));
+                    player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
+                }
+                return ActionResult.SUCCESS;
             }
-        }
+
 
         return super.onUseWithItem(stack, state, world, pos, player, hand, hit);
     }
+
+    //onDestroyedByFire
 
     //@Override
     //protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {

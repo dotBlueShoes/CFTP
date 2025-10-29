@@ -61,7 +61,8 @@
 
 ### Sulphur
 
-1. diamond-tier only (+ config option)
+1. Fix bug sometimes neighbouring sulphur cloud disappears (no sulphur cloud entity spawns) ... Why.
+2. diamond-tier only (+ config option)
 
 ### New Villagers
 

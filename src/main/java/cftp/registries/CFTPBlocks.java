@@ -19,8 +19,10 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.ColorCode;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
 import java.util.function.Function;
@@ -64,7 +66,6 @@ public class CFTPBlocks {
                     .instrument(NoteBlockInstrument.BASS)
                     .sounds(BlockSoundGroup.COBWEB)
                     .strength(0.2F)
-                    .sounds(BlockSoundGroup.WOOD)
                     .burnable()
     );
 
@@ -76,7 +77,6 @@ public class CFTPBlocks {
                     .instrument(NoteBlockInstrument.BASS)
                     .sounds(BlockSoundGroup.COBWEB)
                     .strength(0.2F)
-                    .sounds(BlockSoundGroup.WOOD)
                     .burnable()
     );
 
@@ -181,20 +181,26 @@ public class CFTPBlocks {
             "fiery_block",
             AbstractBlock.Settings.create()
                     .mapColor(MapColor.RED)
-                    .sounds(BlockSoundGroup.SUSPICIOUS_SAND)
                     .strength(0.5F)
                     .sounds(BlockSoundGroup.GRAVEL)
+                    .allowsSpawning((state, world, pos, entityType) -> entityType.isFireImmune())
+                    .luminance(state -> 15)
+                    .emissiveLighting(Blocks::always)
     );
 
-    //nope public static final Block SOUL_FIERY_BLOCK = registerBlock(
-    //nope         FieryBlock::new,
-    //nope         "soul_fiery_block",
-    //nope         AbstractBlock.Settings.create()
-    //nope                 .mapColor(MapColor.BLUE)
-    //nope                 .sounds(BlockSoundGroup.SUSPICIOUS_SAND)
-    //nope                 .strength(0.5F)
-    //nope                 .sounds(BlockSoundGroup.GRAVEL)
-    //nope );
+    public static final Block SOUL_FIERY_BLOCK = registerBlock(
+            SoulOre::new,
+            "soul_fiery_block",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.BLUE)
+                    .strength(0.5F)
+                    .sounds(BlockSoundGroup.SOUL_SAND)
+                    .allowsSpawning((state, world, pos, entityType) -> entityType.isFireImmune())
+                    .emissiveLighting(Blocks::always)
+                    .ticksRandomly()
+    );
+
+    //AbstractFireBlock
 
     // 1. NON-AIR VERSION
     public static final Block SULPHUR_CLOUD = registerBlock(
@@ -303,9 +309,9 @@ public class CFTPBlocks {
                 entries -> entries.add(FIERY_BLOCK)
         );
 
-        //ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-        //        entries -> entries.add(SOUL_FIERY_BLOCK)
-        //);
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(SOUL_FIERY_BLOCK)
+        );
 
         //ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
         //        entries -> entries.add(SULPHUR_CLOUD)

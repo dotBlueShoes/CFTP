@@ -7,10 +7,14 @@ import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
@@ -18,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
@@ -102,18 +107,24 @@ public class FieryBlock extends Block {
         }
     }
 
-    private void igniteBlock (World world, BlockPos pos, Direction direction) {
+    private void igniteBlock (ServerWorld world, BlockPos pos, Random random) {
+
+        BlockState fireState = AbstractFireBlock.getState(world, pos);
         BlockState blockState = world.getBlockState(pos);
+        Direction direction = Direction.random(random);
 
-        boolean isValid = blockState.isAir() &&
-                FireBlock.getState(world, pos).canPlaceAt(world, pos) ||
-                shouldLightPortalAt(world, pos, direction);
+        if (fireState.canPlaceAt(world, pos) || shouldLightPortalAt(world, pos, direction)) {
+            if (blockState.getBlock() == CFTPBlocks.SAW_DUST_BLOCK) {
+                world.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState().with(AGE, 0), Block.NOTIFY_ALL);
+            } else if (blockState.isAir()) {
+                world.setBlockState(pos, fireState, Block.NOTIFY_ALL_AND_REDRAW);
+            } else if (blockState.isBurnable()) {
+                int destroyChance = random.nextInt(100);
 
-        if (blockState.getBlock() == CFTPBlocks.SAW_DUST_BLOCK) {
-            world.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState().with(AGE, 0), Block.NOTIFY_ALL);
-        } else if (isValid) {
-            BlockState fireState = AbstractFireBlock.getState(world, pos).with(AGE, 0);
-            world.setBlockState(pos, fireState, Block.NOTIFY_ALL);
+                if (destroyChance > 75) {
+                    world.setBlockState(pos, fireState, Block.NOTIFY_ALL_AND_REDRAW);
+                }
+            }
         }
     }
 
@@ -127,13 +138,39 @@ public class FieryBlock extends Block {
 
         { // AGING
             int prevAge = state.get(AGE);
-            CFTP.LOGGER.info("prevAge: {}", prevAge);
+            //CFTP.LOGGER.info("prevAge: {}", prevAge);
             if (prevAge >= 15) {
                 world.removeBlock(pos, false);
                 return;
             }
 
             int nextAge = Math.min(15, prevAge + random.nextInt(3) / 2);
+
+            if (prevAge != nextAge) {
+
+                { // Spread fire every new Age. (This gives a little more control and less cpu usage.)
+                    BlockPos a = pos.east();
+                    BlockPos b = pos.west();
+                    BlockPos c = pos.north();
+                    BlockPos d = pos.south();
+                    BlockPos e = pos.up();
+                    BlockPos f = pos.down();
+
+                    igniteBlock(world, a, random);
+                    igniteBlock(world, b, random);
+                    igniteBlock(world, c, random);
+                    igniteBlock(world, d, random);
+                    igniteBlock(world, e, random);
+                    igniteBlock(world, f, random);
+                }
+
+                world.playSound( // Each tick make a crackle sound so the player knows the time left.
+                        null, pos.getX(), pos.getY(), pos.getZ(),
+                        SoundEvents.BLOCK_CAMPFIRE_CRACKLE,
+                        SoundCategory.BLOCKS
+                );
+
+            }
 
             state = state.with(AGE, nextAge);
             world.setBlockState(pos, state, Block.NO_REDRAW);
@@ -144,7 +181,6 @@ public class FieryBlock extends Block {
         //boolean isIncreasedFireBurnout = world.getBiome(pos).isIn(BiomeTags.INCREASED_FIRE_BURNOUT);
         //int sfe = isIncreasedFireBurnout ? -50 : 0;
         //int currentAge = 15; //state.get(FireBlock.AGE);
-
         //this.trySpreadingFire(world, pos.east(),  300 + sfe, random, currentAge);
         //this.trySpreadingFire(world, pos.west(),  300 + sfe, random, currentAge);
         //this.trySpreadingFire(world, pos.down(),  250 + sfe, random, currentAge);
@@ -152,20 +188,6 @@ public class FieryBlock extends Block {
         //this.trySpreadingFire(world, pos.north(), 300 + sfe, random, currentAge);
         //this.trySpreadingFire(world, pos.south(), 300 + sfe, random, currentAge);
         //world.setBlockState(pos.east(), Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
-
-        BlockPos a = pos.east();
-        BlockPos b = pos.west();
-        BlockPos c = pos.north();
-        BlockPos d = pos.south();
-        BlockPos e = pos.up();
-        BlockPos f = pos.down();
-
-        igniteBlock(world, a, Direction.random(random));
-        igniteBlock(world, b, Direction.random(random));
-        igniteBlock(world, c, Direction.random(random));
-        igniteBlock(world, d, Direction.random(random));
-        igniteBlock(world, e, Direction.random(random));
-        igniteBlock(world, f, Direction.random(random));
 
     }
 
@@ -239,16 +261,20 @@ public class FieryBlock extends Block {
         }
     }
 
+
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        if (world instanceof ServerWorld serverWorld) {
-            BlockState belowState = world.getBlockState(pos.down());
+        BlockState belowState = world.getBlockState(pos.down());
 
-            if (belowState.isAir()) {
+        if (belowState.isAir()) { // TODO. EntityFieryBlock
+            if (world instanceof ServerWorld serverWorld) {
                 CFTP.LOGGER.info("is air a!");
                 serverWorld.breakBlock(pos, true);
             }
+        } else {
+            SparkBlock.createIgniteParticles(world, pos);
         }
+
 
         super.onPlaced(world, pos, state, placer, itemStack);
     }
@@ -258,7 +284,7 @@ public class FieryBlock extends Block {
         if (world instanceof ServerWorld serverWorld) {
             BlockState belowState = world.getBlockState(pos.down());
 
-            if (belowState.isAir()) {
+            if (belowState.isAir()) { // TODO. EntityFieryBlock
                 CFTP.LOGGER.info("is air b!");
                 serverWorld.breakBlock(pos, true);
             }

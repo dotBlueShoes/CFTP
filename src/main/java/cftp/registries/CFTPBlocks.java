@@ -220,6 +220,32 @@ public class CFTPBlocks {
                     .replaceable()                  // maybe it shouldn't be
     );
 
+    public static final Block ENGRAVED_CREEPER_STONE = registerBlock(
+            EngravedBlock::new,
+            "engraved_creeper_stone",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.STONE_GRAY)
+                    .sounds(BlockSoundGroup.STONE)
+                    .requiresTool()
+                    .strength(1.0f, 1.0f) // check stone
+                    .allowsSpawning(Blocks::always)
+    );
+
+    public static final Block ENGRAVED_CREEPER_STONE_ACTIVATED = registerBlock(
+            EngravedBlock::new,
+            "engraved_creeper_stone_activated",
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.STONE_GRAY)
+                    .sounds(BlockSoundGroup.STONE)
+                    .requiresTool()
+                    .strength(1.0f, 1.0f) // check stone
+                    .allowsSpawning(Blocks::always)
+                    //.luminance(state -> 1)
+                    //.emissiveLighting(Blocks::always)
+    );
+
+
+
     // 2. AIR VERSION (it seems the .air blocks the possibility of being destroyed via tnt)
     //public static final Block SULPHUR_CLOUD = registerBlock(
     //        AirSulphurCloud::new,
@@ -311,6 +337,14 @@ public class CFTPBlocks {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(SOUL_FIERY_BLOCK)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(ENGRAVED_CREEPER_STONE)
+        );
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
+                entries -> entries.add(ENGRAVED_CREEPER_STONE_ACTIVATED)
         );
 
         //ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(

@@ -1,10 +1,31 @@
 ## Chapter 1. Creeps.
 
+### Creeper Fuse
+
+1. Retexture (it needs to look more like 2 cubes not diamonds).
+2. Make for all creepers option to be sheared.
+3. Implement creeper_shear action via scissors item.
+4. Setting for enabling/disabling shearing creepers.
+
+### Piggy Creeper
+
+1. Should have a different explosion sound. (rewarding)
+
+### Wind Creeper
+
+1. Should have a different explosion sound. (windy...)
+2. Slight retexture (something distinct like wings?)
+
+### Golden Creeper
+
+1. Should have a different explosion sound. (rewarding)
+
 ### Creeper Cookie
 
-1. Make him drop random amount of cookies. Amount depends on difficulty setting.
-2. Ensure the drop works for both explosion and kill.
-3. Think of a good place where should this entity spawn.
+1. Should have a different explosion sound. (rewarding)
+2. Make him drop random amount of cookies. Amount depends on difficulty setting.
+3. Ensure the drop works for both explosion and kill.
+4. Think of a good place where should this entity spawn.
 
 ### Creeper Friendly
 
@@ -16,11 +37,21 @@
 ### Ghost Creeper
 
 1. Something different should drop. not a ghost creeper spawn egg. Think about it.
+2. Should just as piglin have a chance to spawn through nether portal.
 
 ### Deep Dark Creeper
 
 1. Has a texture similar to the XP block.
 2. Creates those XP blocks with a chance of generating skulkers, etc.
+
+### Earth Creeper
+
+1. Needs a retexture (more contrast or missing detail)
+
+### Nether Creeper
+
+1. Needs a retexture (more contrast or missing detail)
+2. Should just as piglin have a chance to spawn through nether portal.
 
 ### Earth Charge
 
@@ -61,8 +92,10 @@
 
 ### Sulphur
 
-1. Fix bug sometimes neighbouring sulphur cloud disappears (no sulphur cloud entity spawns) ... Why.
-2. diamond-tier only (+ config option)
+1. Sound for when bucket is used (pfff) like throwing enormous amount of light dust
+2. Same sound for when a block is created using pickaxe.
+3. Fix bug sometimes neighbouring sulphur cloud disappears (no sulphur cloud entity spawns) ... Why.
+4. diamond-tier only (+ config option)
 
 ### New Villagers
 

@@ -53,6 +53,8 @@ public class CFTPItemGroups {
                                 entries.add(CFTPBlocks.SULPHUR_CLOUD);
                                 entries.add(CFTPBlocks.FIERY_BLOCK);
                                 entries.add(CFTPBlocks.SOUL_FIERY_BLOCK);
+                                entries.add(CFTPBlocks.ENGRAVED_CREEPER_STONE);
+                                entries.add(CFTPBlocks.ENGRAVED_CREEPER_STONE_ACTIVATED);
                                 //
                                 entries.add(CFTPItems.CREEPER_COOKIE_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_DIRT_SPAWN_EGG);

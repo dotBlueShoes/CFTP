@@ -86,6 +86,12 @@
   "block.cftp.soul_fiery_block": "Soul Fiery Block",
   "item.cftp.soul_fiery_block": "Soul Fiery Block",
 
+  "block.cftp.engraved_creeper_stone": "Engraved Creeper Stone",
+  "item.cftp.engraved_creeper_stone": "Engraved Creeper Stone",
+
+  "block.cftp.engraved_creeper_stone_activated": "Engraved Creeper Stone Activated",
+  "item.cftp.engraved_creeper_stone_activated": "Engraved Creeper Stone Activated",
+
   "block.cftp.sulphur_ore": "Sulphur Ore",
   "item.cftp.sulphur_ore": "Sulphur Ore",
   "block.cftp.deepslate_sulphur_ore": "Deepslate Sulphur Ore",

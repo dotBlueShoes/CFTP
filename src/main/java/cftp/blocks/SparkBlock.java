@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ColorCode;
@@ -34,14 +36,49 @@ public class SparkBlock extends ColoredFallingBlock {
         super(color, settings);
     }
 
+    public static void createIgniteParticles(World world, BlockPos pos) {
+        world.addParticle(
+                ParticleTypes.FLAME,
+                pos.getX() + 0.00 + 0.11, pos.getY() + 0.80, pos.getZ() + 0.00 + 0.05,
+                0.01, 0.10, 0.03
+        );
+
+        world.addParticle(
+                ParticleTypes.FLAME,
+                pos.getX() + 1.00 - 0.08, pos.getY() + 0.83, pos.getZ() + 0.00 + 0.19,
+                -0.06, 0.09, 0.02
+        );
+
+        world.addParticle(
+                ParticleTypes.FLAME,
+                pos.getX() + 0.00 + 0.23, pos.getY() + 0.79, pos.getZ() + 1.00 - 0.10,
+                0.04, 0.11, -0.01
+        );
+
+        world.addParticle(
+                ParticleTypes.FLAME,
+                pos.getX() + 1.00 - 0.31, pos.getY() + 0.75, pos.getZ() + 1.00 - 0.12,
+                -0.01, 0.10, -0.02
+        );
+    }
+
     @Override
     protected ActionResult onUseWithItem(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 
             if (stack.getItem() == Items.FLINT_AND_STEEL) {
                 if (world instanceof ServerWorld serverWorld) {
                     serverWorld.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState());
+
                     stack.damage(1, player, LivingEntity.getSlotForHand(hand));
                     player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
+
+                    serverWorld.playSound(
+                            null, pos.getX(), pos.getY() + 0.5f, pos.getZ(),
+                            SoundEvents.ITEM_FLINTANDSTEEL_USE,
+                            SoundCategory.BLOCKS
+                    );
+                } else {
+                    createIgniteParticles(world, pos);
                 }
                 return ActionResult.SUCCESS;
             }

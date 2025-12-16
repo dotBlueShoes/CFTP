@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "cftp:soul_fiery_block"
+    "cftp:soul_fiery_block",
+    "cftp:engraved_creeper_stone_activated"
   ]
 }

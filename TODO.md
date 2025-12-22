@@ -1,11 +1,54 @@
 ## Chapter 1. Creeps.
 
+### Creeper Giant
+
+Twice the size. Twice/Thrice the health. Regenerates health.
+Twice the fuse time. Twice the explosion radius! But also slightly slower.
+Player has to slowly and safely kill it or skip it.
+Spawns in Caves or during night in overworld only. Has a very small chance of spawning.
+
 ### Creeper Fuse
 
 1. Retexture (it needs to look more like 2 cubes not diamonds).
 2. Make for all creepers option to be sheared.
 3. Implement creeper_shear action via scissors item.
 4. Setting for enabling/disabling shearing creepers.
+5. gunpowder + sawdust + creeper_fuse + sulphur -> C4? - old tnt sound???
+> or creeper_fuse + elemental_dust + tnt -> elemental_creeper
+> or creeper_fuse + gunpowder + tnt -> gunpowder_creeper
+> or fuse + clock + tnt -> timed_tnt
+> or simply fuse can replace one gunpowder in tnt recipe
+
+### Amalgam Creeper
+### Oceanid Creeper
+### Harvest Creeper
+### Amethyst Creeper
+### Brewer Creeper
+
+/// grapes ? make leaves not only drop sticks/apple but also something more? -> birch catkins
+/// recipe sawdust_block -> 4sawdust
+/// sawdust block -> Block of Sawdust
+/// golden and piggy creeper dont explode just by seeing a player.
+/// positive creepers and hard creepers have lower chance of spawning
+/// piggy creeper should also drop porkchop
+/// lurker zombie -> 1block collision, always crawling, actually a bit faster then normal zombie.
+/// fiery skeleton -> red, on fire, shots fire arrows spawns in fortress. (drops fire arrows?)
+/// explosive shield -> when right-clicked will make a windy explosion
+/// make turtle hat scares creepers away. or neutral.
+/// funny idea ... portal creeper -> teleports player overworld->nether->end
+///
+/// it also would be cool if zombies could frenzy -> like rage every now and then making them faster for a limited time.
+/// nah. still not good. -> but what if elemental powder could be eaten to give like 4-10 seconds of mining/running speed.
+/// ### Elemental Dust -> Elemental Powder
+/// 1. Rename.
+/// 2. Make it look pore like pixie dust from terraria.
+/// 3. burns just like placed sawdust but does not destroy itself?
+/// 4. See if what creepers drop it what don't (some should drop elemental powder other gunpowder)
+
+### Ender Creeper
+
+1. Eyes on a different layer.
+2. Should have an AI to teleport sometimes + water avoiding.
 
 ### Piggy Creeper
 
@@ -52,6 +95,10 @@
 
 1. Needs a retexture (more contrast or missing detail)
 2. Should just as piglin have a chance to spawn through nether portal.
+
+### Water Creeper
+
+1. On hard difficulty also summons a 0-2 fishes.
 
 ### Earth Charge
 

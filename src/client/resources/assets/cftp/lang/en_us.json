@@ -56,8 +56,8 @@
   "entity.cftp.water_charge": "Water Charge",
   "entity.cftp.earth_charge": "Earth Charge",
 
-  "block.cftp.saw_dust_block": "Saw Dust Block",
-  "item.cftp.saw_dust_block": "Saw Dust Block",
+  "block.cftp.saw_dust_block": "Block of Saw Dust",
+  "item.cftp.saw_dust_block": "Block of Saw Dust",
 
   "block.cftp.yellow_mushroom": "Yellow Mushroom",
   "item.cftp.yellow_mushroom": "Yellow Mushroom",

@@ -58,38 +58,14 @@ public class BlueCobwebBlock extends CobwebBlock {
 
     @Override
     protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        Box newBox = getBlockBox(pos);
 
-        // NOT NEEDED
-        //double rotationY = entity.getPitch();
-        //double rotationX = entity.getYaw();
-
-        //{ // TYPE A
-        //    // Get in-block position.
-        //    Vec3d position = entity.getPos();
-        //    double x = (position.x) - (int) (position.x);
-        //
-        //    if (x > OFFSET && x < (1 - OFFSET)) {
-        //        if (entity instanceof LivingEntity livingEntity && livingEntity.hasStatusEffect(StatusEffects.WEAVING)) {
-        //            entity.slowMovement(state, COBWEB_WEAVING_SLOW);
-        //        }
-        //
-        //        entity.slowMovement(state, COBWEB_SLOW);
-        //    }
-        //}
-
-        { // TYPE B
-            Box newBox = getBlockBox(pos);
-
-            if (entity.getBoundingBox().intersects(newBox)) {
-                if (entity instanceof LivingEntity livingEntity && livingEntity.hasStatusEffect(StatusEffects.WEAVING)) {
-                    entity.slowMovement(state, COBWEB_WEAVING_SLOW);
-                }
-
-                entity.slowMovement(state, COBWEB_SLOW);
+        if (entity.getBoundingBox().intersects(newBox)) {
+            if (entity instanceof LivingEntity livingEntity && livingEntity.hasStatusEffect(StatusEffects.WEAVING)) {
+                entity.slowMovement(state, COBWEB_WEAVING_SLOW);
             }
+            entity.slowMovement(state, COBWEB_SLOW);
         }
-
-
     }
 
     // Define the Block's collision box.
@@ -108,4 +84,5 @@ public class BlueCobwebBlock extends CobwebBlock {
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return COLLISION_SHAPES[type.getType()];
     }
+
 }

@@ -188,11 +188,11 @@ public class CFTPEntitySpawns {
         /// };
 
 
-        final int CREEPER_GROUP_WEIGHT = 20;
+        final int CREEPER_GROUP_WEIGHT = 10;
         final int CREEPER_GROUP_MIN = 2;
         final int CREEPER_GROUP_MAX = 7;
 
-        final int ZOMBIE_GROUP_WEIGHT = 30;
+        final int ZOMBIE_GROUP_WEIGHT = 10;
         final int ZOMBIE_GROUP_MIN = 5;
         final int ZOMBIE_GROUP_MAX = 12;
 

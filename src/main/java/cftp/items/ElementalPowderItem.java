@@ -25,6 +25,11 @@ public class ElementalPowderItem extends Item {
         super(settings);
     }
 
+    @Override
+    public boolean hasGlint(ItemStack stack) {
+        return true;
+    }
+
     private static void createCombustionParticles(ServerWorld world, BlockPos position) {
         world.spawnParticles(ParticleTypes.EFFECT,
                 position.getX() + 0.5, position.getY() + 0.9, position.getZ() + 0.5,

@@ -25,6 +25,7 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 ### Amethyst Creeper
 ### Brewer Creeper
 
+/// change yellow and blue mushrooms to candle-like blocks (more than one mushroom inside one block)
 /// grapes ? make leaves not only drop sticks/apple but also something more? -> birch catkins
 /// recipe sawdust_block -> 4sawdust
 /// sawdust block -> Block of Sawdust

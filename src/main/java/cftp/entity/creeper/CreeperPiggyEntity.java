@@ -93,20 +93,20 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
                 case PEACEFUL:
                 case EASY: {
                     ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    pigsCount = 1 + random.nextInt(1);
+                    pigsCount = 1 + random.nextInt(2); // 1-2
                     diameter *= chargedPower;
                 }
                 break;
                 case NORMAL: {
                     ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    pigsCount = 1 + random.nextInt(2);
+                    pigsCount = 1 + random.nextInt(3); // 1-3
                     diameter *= 1.25f * chargedPower;
                 }
                 break;
                 case HARD:
                 default: {
                     ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    pigsCount = 2 + random.nextInt(2);
+                    pigsCount = 2 + random.nextInt(3); // 2-4
                     diameter *= 1.50f * chargedPower;
                 }
                 break;
@@ -144,7 +144,7 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
             // If the above failed to summon all pigsCount instead summon them in the position of the creeper.
             for (int i = pigsCount; i > 0; --i) {
 
-                CFTP.LOGGER.info("call");
+                // CFTP.LOGGER.info("call");
 
                 // Ensure they do not spawn in wall (because their collision shape is different from a creeper)
                 BlockPos blockPosition = BlockPos.ofFloored(

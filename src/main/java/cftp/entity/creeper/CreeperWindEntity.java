@@ -41,15 +41,6 @@ import java.util.function.Function;
 
 public class CreeperWindEntity extends CreeperElementalEntity {
 
-    //private static final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
-    //        false, false, Optional.of(1.22F),
-    //        //Registries.BLOCK.getOptional(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
-    //        Registries.BLOCK.getOptional(
-    //                TagKey.of(RegistryKeys.BLOCK, Identifier.ofVanilla("blocks_wind_charge_explosions"))
-    //        ).map(Function.identity())
-    //        //TagKey.of(RegistryKeys.BLOCK, Identifier.of("minecraft", "blocks_wind_charge_explosions"));
-    //);
-
     protected int ExplosionDiameter = 5;
 
     public CreeperWindEntity(

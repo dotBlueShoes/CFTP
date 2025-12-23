@@ -11,6 +11,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.mob.EndermiteEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
@@ -46,6 +47,7 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
                 .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
                 .add(EntityAttributes.ATTACK_DAMAGE, 0)
                 .add(EntityAttributes.FOLLOW_RANGE, 20);
+
     }
 
     @Override
@@ -405,6 +407,34 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
 
             SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
+    }
+
+    public void createWalkingParticle() {
+        for (int i = 0; i < 2; i++) {
+            this.getWorld().addParticle(
+                    ParticleTypes.PORTAL,
+                    this.getParticleX(0.5),
+                    this.getRandomBodyY() - 0.25,
+                    this.getParticleZ(0.5),
+                    (this.random.nextDouble() - 0.5) * 2.0,
+                    -this.random.nextDouble(),
+                    (this.random.nextDouble() - 0.5) * 2.0
+            );
+        }
+    }
+
+    @Override
+    public void tickMovement() {
+        if (this.getWorld().isClient) {
+            createWalkingParticle();
+        }
+
+        //this.jumping = false;
+        //if (!this.getWorld().isClient) {
+        //    this.tickAngerLogic((ServerWorld)this.getWorld(), true);
+        //}
+
+        super.tickMovement();
     }
 
 }

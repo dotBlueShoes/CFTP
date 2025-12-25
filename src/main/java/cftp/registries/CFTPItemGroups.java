@@ -1,12 +1,9 @@
 package cftp.registries;
 
 import cftp.CFTP;
-import cftp.entity.CFTPEntities;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SpawnEggItem;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
@@ -76,6 +73,14 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.CREEPER_GOLDEN_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_BRIDGER_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_PIGGY_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_AMALGAM_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_AMETHYST_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_BREWER_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_GIANT_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_HARVEST_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_OCEANID_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_SAND_SPAWN_EGG);
+                                entries.add(CFTPItems.CREEPER_SCULK_SPAWN_EGG);
                                 entries.add(CFTPItems.SPIDER_YELLOW_SPAWN_EGG);
                                 entries.add(CFTPItems.SPIDER_BLUE_SPAWN_EGG);
                                 entries.add(CFTPItems.SLENDERMAN_SPAWN_EGG);

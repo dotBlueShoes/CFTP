@@ -48,6 +48,14 @@ public class CreeperMath {
             CFTPItems.CREEPER_GOLDEN_SPAWN_EGG,
             CFTPItems.CREEPER_BRIDGER_SPAWN_EGG,
             CFTPItems.CREEPER_PIGGY_SPAWN_EGG,
+            CFTPItems.CREEPER_AMALGAM_SPAWN_EGG,
+            CFTPItems.CREEPER_AMETHYST_SPAWN_EGG,
+            CFTPItems.CREEPER_BREWER_SPAWN_EGG,
+            CFTPItems.CREEPER_GIANT_SPAWN_EGG,
+            CFTPItems.CREEPER_HARVEST_SPAWN_EGG,
+            CFTPItems.CREEPER_OCEANID_SPAWN_EGG,
+            CFTPItems.CREEPER_SAND_SPAWN_EGG,
+            CFTPItems.CREEPER_SCULK_SPAWN_EGG,
     };
 
     public enum CREEPER_TYPE {
@@ -72,6 +80,14 @@ public class CreeperMath {
         GOLDEN      (18),
         BRIDGER     (19),
         PIGGY       (20),
+        AMALGAM     (21),
+        AMETHYST    (22),
+        BREWER      (23),
+        GIANT       (24),
+        HARVEST     (25),
+        OCEANID     (26),
+        SAND        (27),
+        SCULK       (28),
         ;
 
         private final int type;

@@ -22,6 +22,15 @@
   "entity.cftp.creeper_bridger": "Bridger Creeper",
   "entity.cftp.creeper_piggy": "Piggy Creeper",
 
+  "entity.cftp.creeper_amalgam": "Amalgam Creeper",
+  "entity.cftp.creeper_amethyst": "Amethyst Creeper",
+  "entity.cftp.creeper_brewer": "Brewer Creeper",
+  "entity.cftp.creeper_giant": "Giant Creeper",
+  "entity.cftp.creeper_harvest": "Harvest Creeper",
+  "entity.cftp.creeper_oceanid": "Oceanid Creeper",
+  "entity.cftp.creeper_sand": "Sand Creeper",
+  "entity.cftp.creeper_sculk": "Sculk Creeper",
+
   "entity.cftp.spider_yellow": "Yellow Spider",
   "entity.cftp.spider_blue": "Blue Spider",
   "entity.cftp.slenderman": "Slenderman",
@@ -47,6 +56,15 @@
   "item.cftp.creeper_golden_spawn_egg": "Golden Creeper Spawn Egg",
   "item.cftp.creeper_bridger_spawn_egg": "Bridger Creeper Spawn Egg",
   "item.cftp.creeper_piggy_spawn_egg": "Piggy Creeper Spawn Egg",
+
+  "item.cftp.creeper_amalgam_spawn_egg": "Amalgam Creeper Spawn Egg",
+  "item.cftp.creeper_amethyst_spawn_egg": "Amethyst Creeper Spawn Egg",
+  "item.cftp.creeper_brewer_spawn_egg": "Brewer Creeper Spawn Egg",
+  "item.cftp.creeper_giant_spawn_egg": "Giant Creeper Spawn Egg",
+  "item.cftp.creeper_harvest_spawn_egg": "Harvest Creeper Spawn Egg",
+  "item.cftp.creeper_oceanid_spawn_egg": "Oceanid Creeper Spawn Egg",
+  "item.cftp.creeper_sand_spawn_egg": "Sand Creeper Spawn Egg",
+  "item.cftp.creeper_sculk_spawn_egg": "Sculk Creeper Spawn Egg",
 
   "item.cftp.spider_yellow_spawn_egg": "Yellow Spider Spawn Egg",
   "item.cftp.spider_blue_spawn_egg": "Blue Spider Spawn Egg",

@@ -1,6 +1,6 @@
 package cftp.entity.charge;
 
-import cftp.entity.CFTPEntities;
+import cftp.registries.CFTPEntities;
 import cftp.registries.CFTPItems;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

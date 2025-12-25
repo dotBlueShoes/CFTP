@@ -1,6 +1,5 @@
 package cftp.registries;
 
-import cftp.entity.CFTPEntities;
 import cftp.entity.HorseFieryRenderer;
 import cftp.entity.SlendermanRenderer;
 import cftp.entity.SurphurCloudEntityRenderer;
@@ -33,6 +32,14 @@ public class CFTPEntitiesClient {
         EntityRendererRegistry.register(CFTPEntities.CREEPER_GOLDEN, CreeperGoldenRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_BRIDGER, CreeperBridgerRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_PIGGY, CreeperPiggyRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_AMALGAM, CreeperAmalgamRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_AMETHYST, CreeperAmethystRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_BREWER, CreeperBrewerRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_GIANT, CreeperGiantRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_HARVEST, CreeperHarvestRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_OCEANID, CreeperOceanidRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_SAND, CreeperSandRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_SCULK, CreeperSculkRenderer::new);
 
 
         EntityRendererRegistry.register(CFTPEntities.SPIDER_YELLOW, SpiderYellowRenderer::new);

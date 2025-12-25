@@ -1,11 +1,10 @@
 package cftp.world.gen;
 
-import cftp.entity.CFTPEntities;
+import cftp.registries.CFTPEntities;
 import cftp.entity.HorseFieryEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.entity.*;
-import net.minecraft.entity.mob.AmbientEntity;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.math.BlockPos;
@@ -492,6 +491,126 @@ public class CFTPEntitySpawns {
 
             SpawnRestriction.register(
                     CFTPEntities.CREEPER_PIGGY,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // AMALGAM
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_AMALGAM,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_AMALGAM,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // AMETHYST
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_AMETHYST,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_AMETHYST,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // BREWER
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_BREWER,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_BREWER,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // GIANT
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_GIANT,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_GIANT,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // HARVEST
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_HARVEST,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_HARVEST,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // OCEANID
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_OCEANID,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_OCEANID,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // SAND
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_SAND,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_SAND,
+                    SpawnLocationTypes.ON_GROUND,
+                    Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+                    HostileEntity::canSpawnIgnoreLightLevel
+            );
+        }
+
+        { // SCULK
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey((RegistryKey<Biome>[]) ALL_BIOMES),
+                    SpawnGroup.MONSTER, CFTPEntities.CREEPER_SCULK,
+                    CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+            );
+
+            SpawnRestriction.register(
+                    CFTPEntities.CREEPER_SCULK,
                     SpawnLocationTypes.ON_GROUND,
                     Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                     HostileEntity::canSpawnIgnoreLightLevel

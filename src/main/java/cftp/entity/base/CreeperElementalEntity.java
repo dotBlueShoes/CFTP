@@ -1,22 +1,18 @@
 package cftp.entity.base;
 
 import cftp.CFTP;
-import cftp.entity.CFTPEntities;
+import cftp.registries.CFTPEntities;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.mob.CaveSpiderEntity;
 import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.GoatEntity;
 import net.minecraft.entity.passive.OcelotEntity;

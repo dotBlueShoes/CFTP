@@ -1,17 +1,14 @@
-package cftp.entity;
+package cftp.registries;
 
 import cftp.CFTP;
-import cftp.entity.charge.EarthChargeEntity;
-import cftp.entity.charge.WaterChargeEntity;
+import cftp.entity.*;
+import cftp.entity.base.*;
 import cftp.entity.creeper.*;
-import cftp.entity.spider.SpiderBlueEntity;
-import cftp.entity.spider.SpiderYellowEntity;
+import cftp.entity.spider.*;
+import cftp.entity.charge.*;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.entity.TntEntity;
-import net.minecraft.entity.mob.EndermanEntity;
-import net.minecraft.entity.passive.StriderEntity;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
@@ -185,6 +182,70 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_piggy")))
     );
 
+    public static final EntityType<CreeperAmalgamEntity> CREEPER_AMALGAM = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_amalgam")),
+            EntityType.Builder.create(CreeperAmalgamEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_amalgam")))
+    );
+
+    public static final EntityType<CreeperAmethystEntity> CREEPER_AMETHYST = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_amethyst")),
+            EntityType.Builder.create(CreeperAmethystEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_amethyst")))
+    );
+
+    public static final EntityType<CreeperBrewerEntity> CREEPER_BREWER = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_brewer")),
+            EntityType.Builder.create(CreeperBrewerEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_brewer")))
+    );
+
+    public static final EntityType<CreeperGiantEntity> CREEPER_GIANT = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_giant")),
+            EntityType.Builder.create(CreeperGiantEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_giant")))
+    );
+
+    public static final EntityType<CreeperHarvestEntity> CREEPER_HARVEST = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_harvest")),
+            EntityType.Builder.create(CreeperHarvestEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_harvest")))
+    );
+
+    public static final EntityType<CreeperOceanidEntity> CREEPER_OCEANID = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_oceanid")),
+            EntityType.Builder.create(CreeperOceanidEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_oceanid")))
+    );
+
+    public static final EntityType<CreeperSandEntity> CREEPER_SAND = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_sand")),
+            EntityType.Builder.create(CreeperSandEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_sand")))
+    );
+
+    public static final EntityType<CreeperSculkEntity> CREEPER_SCULK = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_sculk")),
+            EntityType.Builder.create(CreeperSculkEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_sculk")))
+    );
+
     public static final EntityType<SpiderYellowEntity> SPIDER_YELLOW = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "spider_yellow")),
@@ -307,6 +368,14 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_GOLDEN, CreeperGoldenEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_BRIDGER, CreeperBridgerEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_PIGGY, CreeperPiggyEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_AMALGAM, CreeperAmalgamEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_AMETHYST, CreeperAmethystEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_BREWER, CreeperBrewerEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_GIANT, CreeperGiantEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_HARVEST, CreeperHarvestEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_OCEANID, CreeperOceanidEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_SAND, CreeperSandEntity.createAttributes());
+        FabricDefaultAttributeRegistry.register(CREEPER_SCULK, CreeperSculkEntity.createAttributes());
         //
         FabricDefaultAttributeRegistry.register(SPIDER_YELLOW, SpiderYellowEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(SPIDER_BLUE, SpiderBlueEntity.createAttributes());

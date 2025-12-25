@@ -1,5 +1,93 @@
 ## Chapter 1. Creeps.
 
+---
+
+### Creeper Sculk
+1. Missing explode logic. -> a normal creeper explosion with additional sculk application around that explosion.
+2. Missing texture.
+3. Missing proper spawn condition.
+4. Missing random size.
+5. Missing distinguish stats.
+6. Missing charged behavior.
+7. Missing loot-table.
+
+### Creeper Sand 
+1. Missing explode logic. -> could make a fun use of sand-like blocks replace blocks under said sand with primed-tnt/lava/air/monsters.
+2. Missing texture.
+3. Missing proper spawn condition.
+4. Missing random size.
+5. Missing distinguish stats.
+6. Missing charged behavior.
+7. Missing loot-table.
+8. Missing sand fall particle walking effect.
+9. Missing custom explode sound. -> (No sound?)
+
+### Creeper Oceanid
+1. Missing explode logic. -> water, fishes/water-animal, oceanic-greenery. on hard also gives mining fatigue for short duration of time.
+2. Missing proper spawn condition. -> could only spawn certain moon-phase.
+3. Missing random size.
+4. Missing distinguish stats.
+5. Missing charged behavior.
+6. Missing loot-table.
+7. Missing custom explode sound. -> water-splash
+
+### Creeper Harvest
+1. Missing explode logic. -> makes props grow immediately, land-greenery.
+2. Missing proper spawn condition. -> should only spawn certain moon-phase.
+3. Missing random size.
+4. Missing distinguish stats.
+5. Missing charged behavior.
+6. Missing loot-table.
+7. Missing custom explode sound. -> (like harvest/plant/grass-cut)
+
+### Creeper Giant
+1. Missing explode logic. -> could make a bigger explosion and or summon normal creepers.
+2. Missing texture.
+3. Missing proper spawn condition. -> could only spawn certain moon-phase/structure/action.
+4. Missing random size.
+5. Missing distinguish stats.
+6. Missing charged behavior.
+7. Missing loot-table.
+8. Missing custom giant sounds.
+
+### Creeper Brewer
+1. Missing explode logic. -> will explode in an effect of a random potion + can be applied a potion.
+2. Missing proper spawn condition. -> could only spawn certain moon-phase/structure/action.
+3. Missing random size.
+4. Missing distinguish stats. 
+5. Missing charged behavior. -> could add a level to said potion. 
+6. Missing loot-table. 
+7. Missing potion particle walking effect.
+8. Missing custom explode sound. -> like potion splash sound (but no glass, but puff)
+
+### Creeper Amethyst
+1. Missing explode logic. -> it's explosion will create a smaller amethyst geode that has water inside and walls are 2 blocks thick.
+2. Missing proper spawn condition. -> could only spawn certain moon-phase.
+3. Missing random size.
+4. Missing distinguish stats. 
+5. Missing charged behavior. -> Instead now creates a normal size geode. 
+6. Missing loot-table. 
+7. Missing Amethyst sparkle walking effect.
+8. Missing custom explode sound. -> like experience sound
+
+### Creeper Amalgam
+1. Missing explode logic. -> Explodes into easy/normal/hard <-> 2/3/4 random creepers.
+2. Missing texture. -> It's texture has a bit of every creeper.
+3. Missing proper spawn condition. -> should only spawn via action.
+4. Missing random size.
+5. Missing distinguish stats.
+6. Missing charged behavior. -> explodes into 1.75 more random creepers.
+7. Missing loot-table.
+8. Missing custom explode particle.
+9. Missing custom explode sound.
+
+### Water Creeper 
+1. Now sets the player water-breathing to easy/normal/hard <-> nope/5/0.
+2. Missing proper spawn condition -> could only spawn certain moon-phase.
+3. Missing custom explode sound. -> water-splash
+
+---
+
 ### Creeper Giant
 
 Twice the size. Twice/Thrice the health. Regenerates health.

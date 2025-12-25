@@ -52,7 +52,7 @@ public class CreeperBridgerEntity extends CreeperElementalEntity {
     }
 
 
-    @Override
+    @Override // TODO
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;

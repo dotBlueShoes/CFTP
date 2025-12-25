@@ -1,13 +1,11 @@
 package cftp.registries;
 
 import cftp.CFTP;
-import cftp.entity.CFTPEntities;
 import cftp.items.EarthChargeItem;
 import cftp.items.ElementalPowderItem;
 import cftp.items.Wand;
 import cftp.items.WaterChargeItem;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.*;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -202,6 +200,54 @@ public class CFTPItems {
     public static final Item CREEPER_PIGGY_SPAWN_EGG = register(
             "creeper_piggy_spawn_egg",
             settings -> new SpawnEggItem(CFTPEntities.CREEPER_PIGGY, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_AMALGAM_SPAWN_EGG = register(
+            "creeper_amalgam_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_AMALGAM, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_AMETHYST_SPAWN_EGG = register(
+            "creeper_amethyst_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_AMETHYST, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_BREWER_SPAWN_EGG = register(
+            "creeper_brewer_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_BREWER, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_GIANT_SPAWN_EGG = register(
+            "creeper_giant_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_GIANT, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_HARVEST_SPAWN_EGG = register(
+            "creeper_harvest_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_HARVEST, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_OCEANID_SPAWN_EGG = register(
+            "creeper_oceanid_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_OCEANID, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_SAND_SPAWN_EGG = register(
+            "creeper_sand_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_SAND, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_SCULK_SPAWN_EGG = register(
+            "creeper_sculk_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_SCULK, settings),
             new Item.Settings()
     );
 

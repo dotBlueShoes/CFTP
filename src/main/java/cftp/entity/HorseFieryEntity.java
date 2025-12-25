@@ -25,7 +25,7 @@ import net.minecraft.world.WorldView;
 
 public class HorseFieryEntity extends AbstractHorseEntity {
 
-    protected HorseFieryEntity(EntityType<? extends AbstractHorseEntity> entityType, World world) {
+    public HorseFieryEntity(EntityType<? extends AbstractHorseEntity> entityType, World world) {
         super(entityType, world);
     }
 

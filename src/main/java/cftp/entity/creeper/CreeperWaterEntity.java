@@ -186,4 +186,13 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
         }
     }
 
+    @Override
+    public void tickMovement() {
+        if (this.getWorld().isClient) {
+            CreeperMath.createWaterWalkingParticle(this);
+        }
+
+        super.tickMovement();
+    }
+
 }

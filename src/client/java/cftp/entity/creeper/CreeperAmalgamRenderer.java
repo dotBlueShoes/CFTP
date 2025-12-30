@@ -4,6 +4,7 @@ import cftp.CFTP;
 import cftp.entity.base.CreeperElementalRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class CreeperAmalgamRenderer extends CreeperElementalRenderer<CreeperAmalgamEntity> {
@@ -17,6 +18,12 @@ public class CreeperAmalgamRenderer extends CreeperElementalRenderer<CreeperAmal
     @Override
     public Identifier getTexture(CreeperEntityRenderState state) {
         return Identifier.of(CFTP.MOD_ID, TEXTURE_PATH);
+    }
+
+    @Override
+    protected void scale(CreeperEntityRenderState state, MatrixStack matrices) {
+        matrices.scale(1.08f, 1.08f, 1.08f);
+        super.scale(state, matrices);
     }
 
 }

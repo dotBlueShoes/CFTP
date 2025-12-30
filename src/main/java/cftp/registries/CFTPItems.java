@@ -83,6 +83,10 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item CATKINS = register("catkins", Item::new,
+            new Item.Settings()
+    );
+
     public static final Item CREEPER_COOKIE_SPAWN_EGG = register(
             "creeper_cookie_spawn_egg",
             settings -> new SpawnEggItem(CFTPEntities.CREEPER_COOKIE, settings),

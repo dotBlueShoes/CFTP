@@ -1,5 +1,6 @@
 package cftp.utility;
 
+import cftp.entity.base.CreeperElementalEntity;
 import cftp.registries.CFTPItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,11 +13,14 @@ import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.loot.context.LootWorldContext;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
 
@@ -164,6 +168,19 @@ public class CreeperMath {
             Blocks.GRAVEL.getDefaultState(),
             Blocks.BLACKSTONE.getDefaultState(),
     }; // 17
+
+    public static void createWaterWalkingParticle(CreeperElementalEntity creeper) {
+        Random random = creeper.getRandom();
+        creeper.getWorld().addParticle(
+                ParticleTypes.DOLPHIN,
+                creeper.getParticleX(0.5),
+                creeper.getRandomBodyY(),
+                creeper.getParticleZ(0.5),
+                (random.nextDouble() - 0.5) * 2.0,
+                -random.nextDouble(),
+                (random.nextDouble() - 0.5) * 2.0
+        );
+    }
 
     public static ExplosionBehavior noDestroyExplosionBehaviour = new ExplosionBehavior() {
         @Override

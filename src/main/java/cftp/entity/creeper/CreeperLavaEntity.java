@@ -13,9 +13,11 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
@@ -160,6 +162,32 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
     @Override
     public boolean isOnFire() {
         return true;
+    }
+
+    public void createWalkingParticle() {
+
+        Random random = this.random;
+
+        if (random.nextInt(10) > 6) {
+            this.getWorld().addParticle(
+                    ParticleTypes.FALLING_LAVA,
+                    this.getParticleX(0.50),
+                    this.getRandomBodyY(),
+                    this.getParticleZ(0.50),
+                    (random.nextDouble() - 0.5),
+                    -random.nextDouble() / 2.0,
+                    (random.nextDouble() - 0.5)
+            );
+        }
+    }
+
+    @Override
+    public void tickMovement() {
+        if (this.getWorld().isClient) {
+            createWalkingParticle();
+        }
+
+        super.tickMovement();
     }
 
 }

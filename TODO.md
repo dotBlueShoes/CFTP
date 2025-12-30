@@ -32,7 +32,7 @@
 7. Missing custom explode sound. -> water-splash
 
 ### Creeper Harvest
-1. Missing explode logic. -> makes props grow immediately, land-greenery.
+1. Missing explode logic. -> makes props grow immediately, land-greenery. ParticleTypes.EGG_CRACK
 2. Missing proper spawn condition. -> should only spawn certain moon-phase.
 3. Missing random size.
 4. Missing distinguish stats.

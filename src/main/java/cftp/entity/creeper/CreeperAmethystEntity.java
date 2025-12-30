@@ -12,6 +12,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
@@ -53,6 +54,15 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
         }
+    }
+
+    @Override
+    public void tickMovement() {
+        if (this.getWorld().isClient) {
+            CreeperMath.createWaterWalkingParticle(this);
+        }
+
+        super.tickMovement();
     }
 
 }

@@ -34,6 +34,7 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.SULPHUR);
                                 //entries.add(CFTPItems.SULPHUR_DUST_BUCKET);
                                 entries.add(CFTPItems.CREEPER_FISH);
+                                entries.add(CFTPItems.CATKINS);
                                 entries.add(CFTPItems.ENRICHED_MUSHROOM_STEW);
                                 //
                                 entries.add(CFTPBlocks.SAW_DUST_BLOCK);

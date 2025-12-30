@@ -409,12 +409,17 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
         }
     }
 
+    @Override
+    public boolean hurtByWater() {
+        return true;
+    }
+
     public void createWalkingParticle() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             this.getWorld().addParticle(
                     ParticleTypes.PORTAL,
                     this.getParticleX(0.5),
-                    this.getRandomBodyY() - 0.25,
+                    this.getRandomBodyY() + 0.25,
                     this.getParticleZ(0.5),
                     (this.random.nextDouble() - 0.5) * 2.0,
                     -this.random.nextDouble(),

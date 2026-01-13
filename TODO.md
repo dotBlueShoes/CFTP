@@ -1,6 +1,13 @@
 ## Chapter 1. Creeps.
 
----
+### Creeper Stone (block)
+1. When mined or set a flame using flint_and_steel or fireball it releases a creeper-like spirit (particle/s).
+2. Either applies a timed or forever debuff making wilder creepers to spawn in the world.
+3. Needs a retexture (Cracked and/or light up sometimes by itself (so the user knows something's wrong), maybe make noise like "tssss" when it is being mined.)
+4. It also drops a normal stone.
+
+### Retexture ideas
+1. It might work to simply shift pixels on creeper's textures. - creeper texture
 
 ### Creeper Sculk
 1. Missing explode logic. -> a normal creeper explosion with additional sculk application around that explosion.
@@ -12,7 +19,7 @@
 7. Missing loot-table.
 
 ### Creeper Sand 
-1. Missing explode logic. -> could make a fun use of sand-like blocks replace blocks under said sand with primed-tnt/lava/air/monsters.
+1. Missing explode logic. -> could make a fun use of sand-like blocks replace blocks under said sand with primed-tnt/lava/air/monsters, or like make all blocks except bedrock in a chunk be affected by gravity.
 2. Missing texture.
 3. Missing proper spawn condition.
 4. Missing random size.
@@ -86,6 +93,14 @@
 2. Missing proper spawn condition -> could only spawn certain moon-phase.
 3. Missing custom explode sound. -> water-splash
 
+### Dirt Creeper 
+1. could create suspicious_dirt/coarse_dirt 
+
+### Bridger Creeper
+1. missing logic.
+2. should spawn quite often but maybe not always (moon-phase or action locked).
+3. it also needs a simple retexture (find old creeper texture).
+
 ---
 
 ### Creeper Giant
@@ -151,6 +166,7 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 ### Golden Creeper
 
 1. Should have a different explosion sound. (rewarding)
+2. Should give fewer hearts and spawn in groups of 1 always.
 
 ### Creeper Cookie
 
@@ -158,6 +174,7 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 2. Make him drop random amount of cookies. Amount depends on difficulty setting.
 3. Ensure the drop works for both explosion and kill.
 4. Think of a good place where should this entity spawn.
+5. Spawns too much (should be jungle-like only biomes).
 
 ### Creeper Friendly
 
@@ -176,9 +193,16 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 1. Has a texture similar to the XP block.
 2. Creates those XP blocks with a chance of generating skulkers, etc.
 
+### Dark Creeper
+1. Needs a retexture (missing detail)
+2. Needs a walking particle. (let it drop dark-like matter.)
+3. Explosion range is too big.
+4. Maybe rename to shadow creeper.
+
 ### Earth Creeper
 
 1. Needs a retexture (more contrast or missing detail)
+2. Normal and Hard should also apply slowness effect.
 
 ### Nether Creeper
 
@@ -209,6 +233,11 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 2. See if I changed it for creepers. What are implications of that?
 3. If not what did i change? why are there so many creepers?
 
+## TESTS
+
+### Farmland retexture.
+1. so that it is not just dirt on the sides. (preferably a gradient from farmland-top to normal dirt at the bottom).
+
 ### Spider
 
 1. Make the textures less dark. or like have more contrast.
@@ -228,10 +257,11 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 
 ### Sulphur
 
-1. Sound for when bucket is used (pfff) like throwing enormous amount of light dust
-2. Same sound for when a block is created using pickaxe.
-3. Fix bug sometimes neighbouring sulphur cloud disappears (no sulphur cloud entity spawns) ... Why.
-4. diamond-tier only (+ config option)
+1. Make sulphur_cloud spawn dust particles constantly.
+2. Sound for when bucket is used (pfff) like throwing enormous amount of light dust.
+3. Same sound for when a block is created using pickaxe.
+4. Fix bug sometimes neighbouring sulphur cloud disappears (no sulphur cloud entity spawns) ... Why.
+5. diamond-tier only (+ config option).
 
 ### New Villagers
 
@@ -244,36 +274,48 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 2. Make some of the creepers rare to spawn (piggy, friendly).
 3. Remove coins drop for now.
 
-### FEATURES
+## FEATURES
 
-#### Mushrooms
+### Elemental Vortex
+
+1. A spawner like block transparent block, particle, emissive only, that might appear over every 2 night.
+2. Spawns Elemental Creepers
+3. Has a Nether variant.
+
+### Elemental Box 
+
+1. An item that can be obtained only via looting. Contains a random elemental thing inside.
+2. Water/Fire/Earth/Wind Creeper Egg, Water/Fire/Earth/Wind Charge, Elemental Powder or Spawn an elemental Vortex
+3. Has a Nether and Overworld variant. (Gust/Lava/Nether/Wind Creeper Egg)
+
+ Mushrooms
 
 1. ? Make yellow mushroom grow in light
 2. Make yellow mushroom only able to place and grow at swamp biomes
 3. Make blue mushroom only able to place and grow at jungle biomes
 
-#### Config
+### Config
 
 1. An option to make all creepers always drop their explosion block loot_table at creeper's position.
 
 
-#### Ice Charge
+### Ice Charge
 
 1. Cannot be crafted but can be obtained via trading or loot-drop like from chest.
 2. Places an ICE block when collided with a different block (turns lava into obsidian).
 3. When hit a livingEntity gives them slow and effect of powder snow for a duration of 5 seconds.
 
-#### Invisible Creeper
+### Invisible Creeper
 
 1. Only visible in very close range, same explosion as normal creeper.
 
-#### Amalgam Creeper
+### Amalgam Creeper
 
 1. Has a chunky-rainbow like look.
 2. Spawns like 6-9 random elemental creepers.
 3. Is very rare.
 
-#### Other
+### Other
 
 1. Randomize a little the sphere shape of all the creepers.
 2. Right-clicking a normal creeper with a special item makes it a special kind of creeper like cookie_creeper with cookie.

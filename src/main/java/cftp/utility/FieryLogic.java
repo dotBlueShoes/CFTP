@@ -64,6 +64,8 @@ public class FieryLogic {
                 world.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL_AND_REDRAW);
                 TntEntity tnt = new TntEntity(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f,null);
                 world.spawnEntity(tnt);
+            } else if (blockState.getBlock() == Blocks.SAND || blockState.getBlock() == Blocks.RED_SAND ) {
+                world.setBlockState(pos, Blocks.GLASS.getDefaultState(), Block.NOTIFY_ALL_AND_REDRAW);
             } else if (blockState.isAir()) {
                 world.setBlockState(pos, fireState, Block.NOTIFY_ALL_AND_REDRAW);
             } else if (blockState.isBurnable()) {

@@ -184,6 +184,7 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 2. Make him tamable like wolves and cats.
 3. Make his explosion exclude the player the creeper belongs to.
 4. Maybe his model should be smaller ?
+5. definitely should only spawn at mushroom island in caves.
 
 ### Ghost Creeper
 

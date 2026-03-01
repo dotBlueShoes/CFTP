@@ -32,7 +32,7 @@ public class FieryProjectileEntityRenderer extends EntityRenderer<FieryBlockEnti
 
         final float scale = 0.7f;
         matrixStack.scale(scale, scale, scale);
-        
+
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-90.0F));
         matrixStack.translate(-0.5F, -0.5F, 0.5F);
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90.0F));

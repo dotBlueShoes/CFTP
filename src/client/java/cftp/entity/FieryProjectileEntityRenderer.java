@@ -30,33 +30,43 @@ public class FieryProjectileEntityRenderer extends EntityRenderer<FieryBlockEnti
         matrixStack.push();
         matrixStack.translate(0.0F, 0.5F, 0.0F);
 
-        float f = tntEntityRenderState.fuse;
+        //float f = tntEntityRenderState.fuse;
 
-        final float scale = 0.7f;
+        final float scale = 0.8f;
         matrixStack.scale(scale, scale, scale);
 
-        if (tntEntityRenderState.fuse < 10.0F) {
-            float g = 1.0F - tntEntityRenderState.fuse / 10.0F;
-            g = MathHelper.clamp(g, 0.0F, 1.0F);
-            g *= g;
-            g *= g;
-            float h = 1.0F + g * 0.3F;
-            matrixStack.scale(h, h, h);
-        }
+        //if (tntEntityRenderState.fuse < 10.0F) {
+        //    float g = 1.0F - tntEntityRenderState.fuse / 10.0F;
+        //    g = MathHelper.clamp(g, 0.0F, 1.0F);
+        //    g *= g;
+        //    g *= g;
+        //    float h = 1.0F + g * 0.3F;
+        //    matrixStack.scale(h, h, h);
+        //}
 
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-90.0F));
         matrixStack.translate(-0.5F, -0.5F, 0.5F);
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(90.0F));
 
-        if (tntEntityRenderState.blockState != null) {
-            TntMinecartEntityRenderer.renderFlashingBlock(
-                    this.blockRenderManager,
-                    CFTPBlocks.FIERY_BLOCK.getDefaultState(),
-                    // tntEntityRenderState.blockState,
-                    matrixStack,
-                    vertexConsumerProvider, i,
-                    (int) f / 5 % 2 == 0);
-        }
+        //if (tntEntityRenderState.blockState != null) {
+        //    TntMinecartEntityRenderer.renderFlashingBlock(
+        //            this.blockRenderManager,
+        //            CFTPBlocks.FIERY_BLOCK.getDefaultState(),
+        //            // tntEntityRenderState.blockState,
+        //            matrixStack,
+        //            vertexConsumerProvider, i,
+        //            (int) f / 5 % 2 == 0);
+        //}
+
+        TntMinecartEntityRenderer.renderFlashingBlock(
+                this.blockRenderManager,
+                CFTPBlocks.FIERY_BLOCK.getDefaultState(),
+                matrixStack,
+                vertexConsumerProvider, i,
+                false
+        );
+
+        //EntityRenderer
 
         matrixStack.pop();
         super.render(tntEntityRenderState, matrixStack, vertexConsumerProvider, i);

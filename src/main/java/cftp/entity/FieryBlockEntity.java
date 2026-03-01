@@ -1,15 +1,19 @@
 package cftp.entity;
 
+import cftp.CFTP;
 import cftp.registries.CFTPEntities;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.TntEntity;
+import net.minecraft.entity.*;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -17,11 +21,11 @@ import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class FieryBlockEntity extends TntEntity {
 
-    //public BlockState sulphurBlockState = null; // Blocks.TNT.getDefaultState();
     private @Nullable LivingEntity causingEntity;
     private boolean teleported;
 
@@ -53,11 +57,13 @@ public class FieryBlockEntity extends TntEntity {
         this(CFTPEntities.FIERY_PROJECTILE, world);
         this.setBlockState(blockState);
 
-        this.setPosition(x, y, z);
-        double d = world.random.nextDouble() * 6.2831854820251465;
+        float offX = (world.random.nextInt(50) - 25) * 0.01f;
+        float offZ = (world.random.nextInt(50) - 25) * 0.01f;
 
-        this.setVelocity(-Math.sin(d) * 0.02, 0.2f, -Math.cos(d) * 0.02);
-        this.setFuse(18 + world.random.nextInt(6)); // [ 18 ; 24 )
+        this.setPosition(x + offX, y, z + offZ);
+        this.setVelocity(0.0, -0.1f, 0.0);
+
+        this.setFuse(80);
 
         this.prevX = x;
         this.prevY = y;
@@ -66,53 +72,85 @@ public class FieryBlockEntity extends TntEntity {
         this.causingEntity = igniter;
     }
 
-    //@Override
-    //public boolean hasNoGravity() {
-    //    return true; // Makes Minecraft skip the gravity update
-    //}
-    //
-    //@Override
-    //public void applyExplosionKnockback(float strength, double dx, double dz) {
-    //    // Do nothing: ignore explosion knockback
-    //}
+    private void explode(ServerWorld serverWorld) {
+        BlockPos pos = new BlockPos((int)this.getX() - 1, (int)this.getY(), (int)this.getZ() - 1);
 
-    private void explode() {
-        float explosionPower = 2.0f;
-        this.getWorld().createExplosion(
-                this,
-                Explosion.createDamageSource(this.getWorld(), this),
-                this.teleported ? TELEPORTED_EXPLOSION_BEHAVIOR : null,
-                this.getX(), this.getBodyY(0.0625), this.getZ(),
-                explosionPower,
-                false,
-                World.ExplosionSourceType.TNT // todo. this makes those particles.
+        BlockPos sh = pos.south();
+        BlockPos nh = pos.north();
+        BlockPos et = pos.east();
+        BlockPos wt = pos.west();
+        BlockPos dn = pos.down();
+        BlockPos up = pos.up();
+
+        serverWorld.setBlockState(pos, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+
+        serverWorld.setBlockState(sh, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        serverWorld.setBlockState(nh, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        serverWorld.setBlockState(et, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        serverWorld.setBlockState(wt, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        serverWorld.setBlockState(dn, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        serverWorld.setBlockState(up, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+
+        serverWorld.playSound(
+                null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.ENTITY_DRAGON_FIREBALL_EXPLODE,
+                SoundCategory.PLAYERS
         );
+
+        serverWorld.spawnParticles(
+                ParticleTypes.POOF,
+                getX(), getY(), getZ(),
+                20,
+                0.5, 0.5, 0.5,
+                0.02
+        );
+
     }
+
 
     @Override
     public void tick() {
+
+        World world = this.getWorld();
+        int fuse;
+
         this.tickPortalTeleportation();
         this.applyGravity();
-        //this.move(MovementType.SELF, this.getVelocity());
-        //this.tickBlockCollision();
-        this.setVelocity(Vec3d.ZERO);
+        this.move(MovementType.SELF, this.getVelocity());
+        this.setVelocity(this.getVelocity().multiply(0.99));
 
-        //if (this.isOnGround()) {
-        //    this.setVelocity(this.getVelocity().multiply(0.7, -0.5, 0.7));
-        //}
+        fuse = this.getFuse() - 1;
 
-        int i = this.getFuse() - 1;
-        this.setFuse(i);
+        if (world instanceof ServerWorld serverWorld) {
+            boolean hitBlock = this.horizontalCollision || this.verticalCollision;
 
-        if (i <= 0) {
-            this.discard();
-            if (!this.getWorld().isClient) {
-                this.explode();
+            List<Entity> entities = serverWorld.getOtherEntities(
+                    this,
+                    this.getBoundingBox(),
+                    Entity::isAlive
+            );
+
+            boolean hitEntity = !entities.isEmpty();
+
+            if (hitBlock || hitEntity) fuse = 0;
+
+            for (Entity entity : entities) {
+                DamageSource source = serverWorld.getDamageSources().explosion(entity, getOwner());
+                entity.damage(serverWorld, source, 8.0F);
+            }
+        }
+
+        this.setFuse(fuse);
+
+        if (fuse <= 0) {
+            if (world instanceof ServerWorld serverWorld) {
+                this.explode(serverWorld);
+                this.discard();
             }
         } else {
             this.updateWaterState();
-            if (this.getWorld().isClient) {
-                this.getWorld().addParticle(
+            if (world.isClient) {
+                world.addParticle(
                         ParticleTypes.SMOKE,
                         this.getX(), this.getY() + 0.5, this.getZ(),
                         0.0, 0.0, 0.0
@@ -120,16 +158,6 @@ public class FieryBlockEntity extends TntEntity {
             }
         }
     }
-
-    //@Override
-    //private void setTeleported(boolean teleported) {
-    //    this.teleported = teleported;
-    //}
-    //@Override
-    //@Nullable
-    //public Entity teleportTo(TeleportTarget teleportTarget) {
-    //    return super.teleportTo(teleportTarget);
-    //}
 
     @Override
     @Nullable
@@ -145,10 +173,13 @@ public class FieryBlockEntity extends TntEntity {
         }
     }
 
-    //@Override
-    //protected void initDataTracker(DataTracker.Builder builder) {
-    //    builder.add(FUSE, 80);
-    //    builder.add(BLOCK_STATE, CFTPBlocks.SULPHUR_ORE.getDefaultState());
-    //}
+    @Override
+    protected Box calculateDefaultBoundingBox(Vec3d pos) {
+        float size = 0.25f; // so it's 50% size of a cube
+        return new Box(
+                pos.x - size, pos.y - size, pos.z - size,
+                pos.x + size, pos.y + size, pos.z + size
+        );
+    }
 
 }

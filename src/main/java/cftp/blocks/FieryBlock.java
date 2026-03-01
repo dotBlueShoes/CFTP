@@ -6,6 +6,7 @@ import cftp.entity.SulphurEntity;
 import cftp.mixin.FireBlockAccessor;
 import cftp.registries.CFTPBlocks;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -283,18 +284,18 @@ public class FieryBlock extends Block {
 
     @Override
     protected void neighborUpdate(BlockState state, World world, BlockPos pos, Block sourceBlock, @Nullable WireOrientation wireOrientation, boolean notify) {
-        if (world instanceof ServerWorld serverWorld) {
+        //if (world instanceof ServerWorld serverWorld) {
             BlockState belowState = world.getBlockState(pos.down());
 
             if (belowState.isAir()) { // TODO. EntityFieryBlock
                 //CFTP.LOGGER.info("is air b!");
-                primeFiery(serverWorld, pos);
-                serverWorld.breakBlock(pos, true);
+                primeFiery(world, pos);
+                world.breakBlock(pos, true);
             }
-        }
+        //}
     }
 
-    public static void primeFiery(ServerWorld world, BlockPos pos) {
+    public static void primeFiery(World world, BlockPos pos) {
         FieryBlockEntity fieryEntity = new FieryBlockEntity(
                 world,
                 (double)pos.getX() + (double)0.5F,
@@ -305,7 +306,34 @@ public class FieryBlock extends Block {
         );
 
         world.spawnEntity(fieryEntity);
+
+        if (world instanceof ServerWorld serverWorld) {
+            serverWorld.playSound(
+                    null, pos.getX(), pos.getY(), pos.getZ(),
+                    SoundEvents.ITEM_FIRECHARGE_USE,
+                    SoundCategory.PLAYERS
+            );
+        }
     }
+
+    //public static void primeFiery(ServerWorld world, BlockPos pos) {
+    //    FieryBlockEntity fieryEntity = new FieryBlockEntity(
+    //            world,
+    //            (double)pos.getX() + (double)0.5F,
+    //            pos.getY(),
+    //            (double)pos.getZ() + (double)0.5F,
+    //            null,
+    //            CFTPBlocks.FIERY_BLOCK.getDefaultState()
+    //    );
+//
+    //    world.spawnEntity(fieryEntity);
+//
+    //    world.playSound(
+    //            null, pos.getX(), pos.getY(), pos.getZ(),
+    //            SoundEvents.ITEM_FIRECHARGE_USE,
+    //            SoundCategory.PLAYERS
+    //    );
+    //}
 
     // TODO.
     // First call

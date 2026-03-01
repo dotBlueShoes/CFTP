@@ -1,7 +1,10 @@
 package cftp.entity;
 
 import cftp.CFTP;
+import cftp.blocks.FieryBlock;
+import cftp.registries.CFTPBlocks;
 import cftp.registries.CFTPEntities;
+import cftp.utility.FieryLogic;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -9,6 +12,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -27,27 +31,6 @@ import java.util.Optional;
 public class FieryBlockEntity extends TntEntity {
 
     private @Nullable LivingEntity causingEntity;
-    private boolean teleported;
-
-    private static final ExplosionBehavior TELEPORTED_EXPLOSION_BEHAVIOR = new ExplosionBehavior(){
-
-        @Override
-        public boolean canDestroyBlock(Explosion explosion, BlockView world, BlockPos pos, BlockState state, float power) {
-            if (state.isOf(Blocks.NETHER_PORTAL)) {
-                return false;
-            }
-            return super.canDestroyBlock(explosion, world, pos, state, power);
-        }
-
-        @Override
-        public Optional<Float> getBlastResistance(Explosion explosion, BlockView world, BlockPos pos, BlockState blockState, FluidState fluidState) {
-            if (blockState.isOf(Blocks.NETHER_PORTAL)) {
-                return Optional.empty();
-            }
-            return super.getBlastResistance(explosion, world, pos, blockState, fluidState);
-        }
-
-    };
 
     public FieryBlockEntity(EntityType<? extends TntEntity> entityType, World world) {
         super(entityType, world);
@@ -82,14 +65,30 @@ public class FieryBlockEntity extends TntEntity {
         BlockPos dn = pos.down();
         BlockPos up = pos.up();
 
-        serverWorld.setBlockState(pos, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        //if (state.getBlock() == CFTPBlocks.SAW_DUST_BLOCK) {
+        //    world.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState().with(FieryBlock.AGE, 0), Block.NOTIFY_ALL);
 
-        serverWorld.setBlockState(sh, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
-        serverWorld.setBlockState(nh, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
-        serverWorld.setBlockState(et, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
-        serverWorld.setBlockState(wt, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
-        serverWorld.setBlockState(dn, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
-        serverWorld.setBlockState(up, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        if (FieryLogic.isStateTriggering(serverWorld, pos))
+            FieryLogic.igniteBlock(serverWorld, pos, random);
+            //serverWorld.setBlockState(pos, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        if (FieryLogic.isStateTriggering(serverWorld, sh))
+            FieryLogic.igniteBlock(serverWorld, sh, random);
+            //serverWorld.setBlockState(sh, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        if (FieryLogic.isStateTriggering(serverWorld, nh))
+            FieryLogic.igniteBlock(serverWorld, nh, random);
+            //serverWorld.setBlockState(nh, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        if (FieryLogic.isStateTriggering(serverWorld, et))
+            FieryLogic.igniteBlock(serverWorld, et, random);
+            //serverWorld.setBlockState(et, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        if (FieryLogic.isStateTriggering(serverWorld, wt))
+            FieryLogic.igniteBlock(serverWorld, wt, random);
+            //serverWorld.setBlockState(wt, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        if (FieryLogic.isStateTriggering(serverWorld, dn))
+            FieryLogic.igniteBlock(serverWorld, dn, random);
+            //serverWorld.setBlockState(dn, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
+        if (FieryLogic.isStateTriggering(serverWorld, up))
+            FieryLogic.igniteBlock(serverWorld, up, random);
+            //serverWorld.setBlockState(up, Blocks.FIRE.getDefaultState(), Block.NOTIFY_ALL);
 
         serverWorld.playSound(
                 null, this.getX(), this.getY(), this.getZ(),

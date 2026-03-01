@@ -5,6 +5,7 @@ import cftp.entity.FieryBlockEntity;
 import cftp.entity.SulphurEntity;
 import cftp.mixin.FireBlockAccessor;
 import cftp.registries.CFTPBlocks;
+import cftp.utility.FieryLogic;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -81,55 +82,25 @@ public class FieryBlock extends Block {
     // to make fire create FieryBlocks when in contact with SawDustBlock
     // i need to create a mixin for FireBlock.trySpreadingFire() and make an if SawDust then FieryBlock
 
-    private static boolean isOverworldOrNether(World world) {
-        return world.getRegistryKey() == World.OVERWORLD || world.getRegistryKey() == World.NETHER;
-    }
-
-    private static boolean shouldLightPortalAt(World world, BlockPos pos, Direction direction) {
-        if (!isOverworldOrNether(world)) {
-            return false;
-        } else {
-            BlockPos.Mutable mutable = pos.mutableCopy();
-            boolean bl = false;
-
-            for (Direction direction2 : Direction.values()) {
-                if (world.getBlockState(mutable.set(pos).move(direction2)).isOf(Blocks.OBSIDIAN)) {
-                    bl = true;
-                    break;
-                }
-            }
-
-            if (!bl) {
-                return false;
-            } else {
-                Direction.Axis axis = direction.getAxis().isHorizontal()
-                        ? direction.rotateYCounterclockwise().getAxis()
-                        : Direction.Type.HORIZONTAL.randomAxis(world.random);
-                return NetherPortal.getNewPortal(world, pos, axis).isPresent();
-            }
-        }
-    }
-
-    private void igniteBlock (ServerWorld world, BlockPos pos, Random random) {
-
-        BlockState fireState = AbstractFireBlock.getState(world, pos);
-        BlockState blockState = world.getBlockState(pos);
-        Direction direction = Direction.random(random);
-
-        if (fireState.canPlaceAt(world, pos) || shouldLightPortalAt(world, pos, direction)) {
-            if (blockState.getBlock() == CFTPBlocks.SAW_DUST_BLOCK) {
-                world.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState().with(AGE, 0), Block.NOTIFY_ALL);
-            } else if (blockState.isAir()) {
-                world.setBlockState(pos, fireState, Block.NOTIFY_ALL_AND_REDRAW);
-            } else if (blockState.isBurnable()) {
-                int destroyChance = random.nextInt(100);
-
-                if (destroyChance > 75) {
-                    world.setBlockState(pos, fireState, Block.NOTIFY_ALL_AND_REDRAW);
-                }
-            }
-        }
-    }
+    //private void igniteBlock (ServerWorld world, BlockPos pos, Random random) {
+    //    BlockState fireState = AbstractFireBlock.getState(world, pos);
+    //    BlockState blockState = world.getBlockState(pos);
+    //    Direction direction = Direction.random(random);
+//
+    //    if (fireState.canPlaceAt(world, pos) || shouldLightPortalAt(world, pos, direction)) {
+    //        if (blockState.getBlock() == CFTPBlocks.SAW_DUST_BLOCK) {
+    //            world.setBlockState(pos, CFTPBlocks.FIERY_BLOCK.getDefaultState().with(AGE, 0), Block.NOTIFY_ALL);
+    //        } else if (blockState.isAir()) {
+    //            world.setBlockState(pos, fireState, Block.NOTIFY_ALL_AND_REDRAW);
+    //        } else if (blockState.isBurnable()) {
+    //            int destroyChance = random.nextInt(100);
+//
+    //            if (destroyChance > 75) {
+    //                world.setBlockState(pos, fireState, Block.NOTIFY_ALL_AND_REDRAW);
+    //            }
+    //        }
+    //    }
+    //}
 
     @Override
     protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
@@ -159,12 +130,12 @@ public class FieryBlock extends Block {
                     BlockPos e = pos.up();
                     BlockPos f = pos.down();
 
-                    igniteBlock(world, a, random);
-                    igniteBlock(world, b, random);
-                    igniteBlock(world, c, random);
-                    igniteBlock(world, d, random);
-                    igniteBlock(world, e, random);
-                    igniteBlock(world, f, random);
+                    FieryLogic.igniteBlock(world, a, random);
+                    FieryLogic.igniteBlock(world, b, random);
+                    FieryLogic.igniteBlock(world, c, random);
+                    FieryLogic.igniteBlock(world, d, random);
+                    FieryLogic.igniteBlock(world, e, random);
+                    FieryLogic.igniteBlock(world, f, random);
                 }
 
                 world.playSound( // Each tick make a crackle sound so the player knows the time left.

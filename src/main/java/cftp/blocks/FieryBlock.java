@@ -1,6 +1,8 @@
 package cftp.blocks;
 
 import cftp.CFTP;
+import cftp.entity.FieryBlockEntity;
+import cftp.entity.SulphurEntity;
 import cftp.mixin.FireBlockAccessor;
 import cftp.registries.CFTPBlocks;
 import net.minecraft.block.*;
@@ -285,10 +287,24 @@ public class FieryBlock extends Block {
             BlockState belowState = world.getBlockState(pos.down());
 
             if (belowState.isAir()) { // TODO. EntityFieryBlock
-                CFTP.LOGGER.info("is air b!");
+                //CFTP.LOGGER.info("is air b!");
+                primeFiery(serverWorld, pos);
                 serverWorld.breakBlock(pos, true);
             }
         }
+    }
+
+    public static void primeFiery(ServerWorld world, BlockPos pos) {
+        FieryBlockEntity fieryEntity = new FieryBlockEntity(
+                world,
+                (double)pos.getX() + (double)0.5F,
+                pos.getY(),
+                (double)pos.getZ() + (double)0.5F,
+                null,
+                CFTPBlocks.FIERY_BLOCK.getDefaultState()
+        );
+
+        world.spawnEntity(fieryEntity);
     }
 
     // TODO.

@@ -32,7 +32,7 @@ public class FieryProjectileEntityRenderer extends EntityRenderer<FieryBlockEnti
 
         float f = tntEntityRenderState.fuse;
 
-        final float scale = 0.9f;
+        final float scale = 0.7f;
         matrixStack.scale(scale, scale, scale);
 
         if (tntEntityRenderState.fuse < 10.0F) {
@@ -51,7 +51,7 @@ public class FieryProjectileEntityRenderer extends EntityRenderer<FieryBlockEnti
         if (tntEntityRenderState.blockState != null) {
             TntMinecartEntityRenderer.renderFlashingBlock(
                     this.blockRenderManager,
-                    CFTPBlocks.SULPHUR_CLOUD.getDefaultState(),
+                    CFTPBlocks.FIERY_BLOCK.getDefaultState(),
                     // tntEntityRenderState.blockState,
                     matrixStack,
                     vertexConsumerProvider, i,
@@ -70,7 +70,7 @@ public class FieryProjectileEntityRenderer extends EntityRenderer<FieryBlockEnti
     public void updateRenderState(FieryBlockEntity entity, TntEntityRenderState state, float tickDelta) {
         super.updateRenderState(entity, state, tickDelta);
         state.fuse = (float)entity.getFuse() - tickDelta + 1.0F;
-        state.blockState = entity.getBlockState(); //entity.sulphurBlockState;
+        state.blockState = entity.getBlockState();
     }
 
 

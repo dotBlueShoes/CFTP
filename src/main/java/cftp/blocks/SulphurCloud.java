@@ -9,6 +9,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.stat.Stats;
@@ -146,6 +147,13 @@ public class SulphurCloud extends Block {
             }
 
         }
+        World world = (World)worldView;
+        world.addParticle(
+                ParticleTypes.LARGE_SMOKE, // choose your particle type
+                pos.getX(), pos.getY(), pos.getZ(),
+                0.00, 0.04, 0.00 // motion
+        );
+
         return super.getStateForNeighborUpdate(state, worldView, tickView, pos, direction, neighborPos, neighborState, random);
     }
 

@@ -37,6 +37,8 @@
 5. Missing charged behavior.
 6. Missing loot-table.
 7. Missing custom explode sound. -> water-splash
+8. He spawns always in water. Has water breathing.
+9. Does not swim but walks on the ocean floor instead.
 
 ### Creeper Harvest
 1. Missing explode logic. -> makes props grow immediately, land-greenery. ParticleTypes.EGG_CRACK
@@ -281,6 +283,7 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 1. A spawner like block transparent block, particle, emissive only, that might appear over every 2 night.
 2. Spawns Elemental Creepers
 3. Has a Nether variant.
+4. OR! an entity which stays in place and creates creepers only if the player is somewhat close to it.
 
 ### Elemental Box 
 

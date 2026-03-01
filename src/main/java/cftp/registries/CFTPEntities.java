@@ -338,6 +338,18 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "sulphur_cloud")))
     );
 
+    public static final EntityType<FieryBlockEntity> FIERY_PROJECTILE = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "fiery_projectile")),
+            EntityType.Builder.<FieryBlockEntity>create(FieryBlockEntity::new, SpawnGroup.MISC)
+                    .dropsNothing()
+                    .dimensions(0.98f, 0.98F)
+                    .eyeHeight(0.15f)
+                    .maxTrackingRange(10)
+                    .trackingTickInterval(10)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "fiery_projectile")))
+    );
+
     //public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
     //        Registries.ENTITY_TYPE,
     //        Identifier.of(CFTP.MOD_ID, "packed_snowball"),

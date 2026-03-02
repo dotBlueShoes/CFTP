@@ -7,6 +7,7 @@ import cftp.utility.CreeperMath;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.impl.networking.server.ServerNetworkingImpl;
 import net.fabricmc.fabric.mixin.registry.sync.RegistriesAccessor;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.SpawnReason;
@@ -28,7 +29,10 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -37,12 +41,11 @@ import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionBehavior;
 import net.minecraft.world.explosion.ExplosionImpl;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 public class CreeperWindEntity extends CreeperElementalEntity {
-
-    protected int ExplosionDiameter = 5;
 
     public CreeperWindEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
@@ -85,97 +88,54 @@ public class CreeperWindEntity extends CreeperElementalEntity {
 
             final Difficulty difficulty = this.getWorld().getDifficulty();
 
-            final float chargedPower = this.isCharged() ? 3.27F * 2.0f : 3.27F;
-            final Vec3d entityPosition = this.getPos();
+            final float power = 3.27f;
+
+            float chargedPower = this.isCharged() ? power * 1.5f : power;
+            float radius;
 
             int ghostCreeperChance;
 
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    chargedPower *= 0.68f;
+                    radius = 4;
                 }
                 case NORMAL: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                } break;
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                    chargedPower *= 0.75f;
+                    radius = 5;
+                }
+                break;
                 case HARD:
                 default: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                } break;
+                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                    radius = 6;
+                }
+                break;
             }
 
-            final ExplosionBehavior EXPLOSION_BEHAVIOR = new AdvancedExplosionBehavior(
-                    false, false, Optional.of(chargedPower),
-                    Registries.BLOCK.getOptional(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS)
-                            .map(Function.identity())
-            );
+            { // air-explosion
+                Box radiusBox = new Box(
+                        this.getX() - radius, this.getY() - radius, this.getZ() - radius,
+                        this.getX() + radius, this.getY() + radius, this.getZ() + radius
+                );
 
-            // Fabric NETWORKING
-            // search - https://duckduckgo.com/?q=minecraft+fabric+existing+network+packet&t=vivaldi&ia=web.
-            // about - https://wiki.fabricmc.net/tutorial:networking
-            // state example - https://wiki.fabricmc.net/tutorial:persistent_states
+                List<Entity> entities = serverWorld.getOtherEntities(
+                        this,
+                        radiusBox,
+                        Entity::isAlive
+                );
 
-            //{ // Mimicking explosion (ideally we would want to be always pushed up at full value)
-            //
-            //    ExplosionImpl explosionImpl = new ExplosionImpl(
-            //            serverWorld, this, null, EXPLOSION_BEHAVIOR,
-            //            entityPosition, 1.2f, false, Explosion.DestructionType.KEEP
-            //    );
-            //
-            //    explosionImpl.explode();
-            //
-            //    MinecraftServer server = serverWorld.getServer();
-            //
-            //    for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
-            //        if (serverPlayerEntity.squaredDistanceTo(entityPosition) < 4096.0) {
-            //
-            //            // Change Player Position.
-            //            Optional<Vec3d> optional = Optional.ofNullable(
-            //                    explosionImpl.getKnockbackByPlayer().get(serverPlayerEntity)
-            //            );
-            //
-            //            // Create a Packet with Changed Position information.
-            //            ExplosionS2CPacket packet = new ExplosionS2CPacket(
-            //                    entityPosition, optional, null, null
-            //            );
-            //
-            //            //ServerPlayNetworking.send(
-            //            //        serverPlayerEntity,
-            //            //
-            //            //        //CustomPayloadS2CPacket
-            //            //        //ServerNetworkingImpl.createS2CPacket(packet)
-            //            //        // new ExplosionS2CPacket(entityPosition, optional, null, null)
-            //            //        //PacketByteBufs.empty()
-            //            //);
-            //
-            //            // PROB. Only possible from client ?!
-            //            //serverWorld.sendPacket(new ExplosionS2CPacket(entityPosition, optional, null, null));
-            //
-            //            // PROB. Breaks (prob runs on a separate thread)
-            //            //serverPlayerEntity.networkHandler.sendPacket(
-            //            //        new ExplosionS2CPacket(entityPosition, optional, null, null)
-            //            //);
-            //
-            //            // Does not help
-            //            //server.execute(() -> {
-            //            //});
-            //        }
-            //    }
-            //}
+                for (Entity entity : entities) {
+                    entity.addVelocity(0.0, chargedPower, 0.0);
+                    entity.velocityModified = true;
+                }
+            }
 
-            // Prob. It works perfectly if we stand inside it.
-            serverWorld.createExplosion(
-                    this,
-                    null,
-                    EXPLOSION_BEHAVIOR,
-                    entityPosition,
-                    ExplosionDiameter, // HACK. We can cheat by setting this value higher than trigger distance.
-                    false,
-                    World.ExplosionSourceType.MOB
-                    //ParticleTypes.GUST_EMITTER_SMALL,
-                    //ParticleTypes.GUST_EMITTER_LARGE,
-                    //SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST
-            );
+            this.createExplosionParticles(serverWorld);
+            this.createExplosionSound(serverWorld);
 
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
@@ -183,6 +143,90 @@ public class CreeperWindEntity extends CreeperElementalEntity {
 
             SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
+    }
+
+    public void createExplosionParticles(ServerWorld serverWorld) {
+        serverWorld.spawnParticles(
+                ParticleTypes.END_ROD,
+                this.getX(),
+                this.getY() + 2,
+                this.getZ(),
+                30,
+                3, 3, 3,
+                0.02
+        );
+    }
+
+    public void createExplosionSound(ServerWorld serverWorld) {
+        serverWorld.playSound(
+                null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST, SoundCategory.HOSTILE, 1.0F,
+                this.random.nextFloat() * 0.4F + 0.8F
+        );
+    }
+
+    public void createWalkingParticle() {
+
+
+        // Wind Explode
+        //for (int i = 0; i < 1; i++) {
+        //    this.getWorld().addParticle(
+        //            ParticleTypes.FLASH,
+        //            this.getParticleX(0.5),
+        //            this.getRandomBodyY() + 0.25,
+        //            this.getParticleZ(0.5),
+        //            (this.random.nextDouble() - 0.5) * 0.2,
+        //            -this.random.nextDouble() * 0.1,
+        //            (this.random.nextDouble() - 0.5) * 0.2
+        //    );
+        //}
+
+        //for (int i = 0; i < 1; i++) {
+        //    this.getWorld().addParticle(
+        //            ParticleTypes.INFESTED,
+        //            this.getParticleX(0.5),
+        //            this.getRandomBodyY() + 0.25,
+        //            this.getParticleZ(0.5),
+        //            (this.random.nextDouble() - 0.5) * 0.2,
+        //            -this.random.nextDouble() * 0.1,
+        //            (this.random.nextDouble() - 0.5) * 0.2
+        //    );
+        //}
+
+        // interesting
+        //for (int i = 0; i < 1; i++) {
+        //    this.getWorld().addParticle(
+        //            ParticleTypes.SNEEZE,
+        //            this.getParticleX(0.5),
+        //            this.getRandomBodyY() + 0.25,
+        //            this.getParticleZ(0.5),
+        //            (this.random.nextDouble() - 0.5) * 0.2,
+        //            -this.random.nextDouble() * 0.1,
+        //            (this.random.nextDouble() - 0.5) * 0.2
+        //    );
+        //}
+
+        // rotation does not matter for some reason...
+        if (this.random.nextInt(100) > 75) {
+            this.getWorld().addParticle(
+                    ParticleTypes.WHITE_ASH,
+                    this.getParticleX(0.5),
+                    this.getRandomBodyY() + 0.25,
+                    this.getParticleZ(0.5),
+                    -(this.random.nextDouble() - 0.5) * 0.001,
+                    -this.random.nextDouble() * 0.1,
+                    -(this.random.nextDouble() - 0.5) * 0.001
+            );
+        }
+    }
+
+    @Override
+    public void tickMovement() {
+        if (this.getWorld().isClient) {
+            createWalkingParticle();
+        }
+
+        super.tickMovement();
     }
 
 }

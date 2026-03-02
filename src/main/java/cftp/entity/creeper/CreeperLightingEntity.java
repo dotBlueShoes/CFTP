@@ -14,6 +14,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -109,6 +110,31 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
 
             SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
+    }
+
+    public void createWalkingParticle() {
+        if (this.random.nextInt(100) > 90) {
+            for (int i = 0; i < 1; i++) {
+                this.getWorld().addParticle(
+                        ParticleTypes.INFESTED,
+                        this.getParticleX(0.5),
+                        this.getRandomBodyY() + 0.25,
+                        this.getParticleZ(0.5),
+                        (this.random.nextDouble() - 0.5) * 0.01,
+                        -this.random.nextDouble() * 0.01,
+                        (this.random.nextDouble() - 0.5) * 0.01
+                );
+            }
+        }
+    }
+
+    @Override
+    public void tickMovement() {
+        if (this.getWorld().isClient) {
+            createWalkingParticle();
+        }
+
+        super.tickMovement();
     }
 
 }

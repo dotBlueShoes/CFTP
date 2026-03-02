@@ -15,6 +15,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class CreeperDarkEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 18;
+    protected int ExplosionDiameter = 12;
     protected int DARKNESS_EFFECT_TICKS_EASY = 20 * 30;     // = 0m 30s
     protected int DARKNESS_EFFECT_TICKS_NORMAL = 20 * 45;   // = 0m 45s
     protected int DARKNESS_EFFECT_TICKS_HARD = 20 * 60;     // = 1m 00s
@@ -161,12 +162,46 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
             }
 
             this.playExplosionSound(serverWorld);
+            this.createExplosionParticles(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
 
             SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
+    }
+
+    public void createExplosionParticles(ServerWorld serverWorld) {
+        serverWorld.spawnParticles(
+                ParticleTypes.POOF,
+                this.getX(),
+                this.getY() + 1,
+                this.getZ(),
+                30,
+                4, 2, 4,
+                0.02
+        );
+    }
+
+    public void createWalkingParticle() {
+        this.getWorld().addParticle(
+                ParticleTypes.ASH,
+                this.getParticleX(0.5),
+                this.getRandomBodyY() + 0.25,
+                this.getParticleZ(0.5),
+                (this.random.nextDouble() - 0.5) * 2.0,
+                -this.random.nextDouble(),
+                (this.random.nextDouble() - 0.5) * 2.0
+        );
+    }
+
+    @Override
+    public void tickMovement() {
+        if (this.getWorld().isClient) {
+            createWalkingParticle();
+        }
+
+        super.tickMovement();
     }
 
 }

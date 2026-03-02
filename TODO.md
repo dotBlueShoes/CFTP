@@ -1,5 +1,27 @@
 ## Chapter 1. Creeps.
 
+
+finish creepers
+: water, earth, fire, wind, lighting -> plains
+: + spawn conditions, re-balance, 
+
+: water, earth, fire, wind, lightning, ender, giant, ghost, flip -> plains
+: swamp, fire, ghost, brewer -> swamp
+: cookie, ender, brewer, dark -> jungle
+: sand, wind, dark, fire  -> desert
+: snow, wind, flip, giant -> snowy
+
+: ocenaid, ender -> beach
+: amethyst, dark, dirt, ender -> caves
+: fire, sculk, friendly, earth -> special underground biomes
+: nether, lava, ghost -> nether
+
+: piggy, amalgam, golden, harvest -> special
+
+### Creeper Spectre
+- Spawns with a small chance from ghost creeper death but only in nether (when overcharged it's 100% to spawn, 25% it's going to be overcharged too)
+
+
 ### Creeper Stone (block)
 1. When mined or set a flame using flint_and_steel or fireball it releases a creeper-like spirit (particle/s).
 2. Either applies a timed or forever debuff making wilder creepers to spawn in the world.
@@ -96,7 +118,9 @@
 3. Missing custom explode sound. -> water-splash
 
 ### Dirt Creeper 
-1. could create suspicious_dirt/coarse_dirt 
+1. it fills an area with dirt but does not destroy
+2. it does however change sand/gravel into suspicious variants
+3. also teleports all entities in range 0/1/2 blocks down
 
 ### Bridger Creeper
 1. missing logic.
@@ -123,12 +147,6 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 > or creeper_fuse + gunpowder + tnt -> gunpowder_creeper
 > or fuse + clock + tnt -> timed_tnt
 > or simply fuse can replace one gunpowder in tnt recipe
-
-### Amalgam Creeper
-### Oceanid Creeper
-### Harvest Creeper
-### Amethyst Creeper
-### Brewer Creeper
 
 /// change yellow and blue mushrooms to candle-like blocks (more than one mushroom inside one block)
 /// grapes ? make leaves not only drop sticks/apple but also something more? -> birch catkins
@@ -162,8 +180,13 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 
 ### Wind Creeper
 
-1. Should have a different explosion sound. (windy...)
-2. Slight retexture (something distinct like wings?)
+1. Make it not work on creative players.
+2. Spawning condition.
+
+### Dark Creeper
+
+1. Make it not work on creative players.
+2. Spawning condition.
 
 ### Golden Creeper
 
@@ -183,8 +206,7 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 1. Make him go after other hostile mobs not only explode close range.
 2. Make him tamable like wolves and cats.
 3. Make his explosion exclude the player the creeper belongs to.
-4. Maybe his model should be smaller ?
-5. definitely should only spawn at mushroom island in caves.
+4. definitely should only spawn at mushroom island in caves.
 
 ### Ghost Creeper
 
@@ -195,17 +217,11 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 
 1. Has a texture similar to the XP block.
 2. Creates those XP blocks with a chance of generating skulkers, etc.
-
-### Dark Creeper
-1. Needs a retexture (missing detail)
-2. Needs a walking particle. (let it drop dark-like matter.)
-3. Explosion range is too big.
-4. Maybe rename to shadow creeper.
+3. Should have an animated texture.
 
 ### Earth Creeper
 
-1. Needs a retexture (more contrast or missing detail)
-2. Normal and Hard should also apply slowness effect.
+1. Normal and Hard should also apply slowness effect.
 
 ### Nether Creeper
 

@@ -13,7 +13,10 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -99,6 +102,44 @@ public class CreeperBallisticEntity extends CreeperElementalEntity {
 
             SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
+    }
+
+    //public void createWalkingParticle() {
+    //    this.getWorld().addParticle(
+    //            ParticleTypes.GUST,
+    //            this.getParticleX(0.5),
+    //            this.getRandomBodyY() + 0.25,
+    //            this.getParticleZ(0.5),
+    //            (this.random.nextDouble() - 0.5) * 2.0,
+    //            -this.random.nextDouble(),
+    //            (this.random.nextDouble() - 0.5) * 2.0
+    //    );
+    //}
+
+    @Override
+    public void tickMovement() {
+
+        if (this.random.nextInt(256) > 252) {
+            if (this.getWorld() instanceof ServerWorld serverWorld) {
+                serverWorld.spawnParticles(
+                        ParticleTypes.GUST,
+                        this.getParticleX(0.5),
+                        this.getRandomBodyY() + 0.25,
+                        this.getParticleZ(0.5),
+                        1,
+                        0.5, 0.5, 0.5,
+                        0.02
+                );
+
+                serverWorld.playSound(
+                        null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.ENCHANT_THORNS_HIT,
+                        SoundCategory.HOSTILE
+                );
+            }
+        }
+
+        super.tickMovement();
     }
 
 }

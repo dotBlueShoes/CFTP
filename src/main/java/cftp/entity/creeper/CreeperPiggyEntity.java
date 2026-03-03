@@ -13,6 +13,8 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -153,6 +155,15 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
 
             SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
+    }
+
+    @Override
+    protected void playExplosionSound(World world) {
+        world.playSound(
+                null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.ENTITY_BREEZE_WIND_BURST, SoundCategory.HOSTILE,
+                0.9F, 0.5f
+        );
     }
 
 }

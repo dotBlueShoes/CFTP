@@ -1,11 +1,14 @@
 package cftp.utility;
 
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.registries.CFTPEntities;
 import cftp.registries.CFTPItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -60,6 +63,38 @@ public class CreeperMath {
             CFTPItems.CREEPER_OCEANID_SPAWN_EGG,
             CFTPItems.CREEPER_SAND_SPAWN_EGG,
             CFTPItems.CREEPER_SCULK_SPAWN_EGG,
+    };
+
+    final public static EntityType<? extends HostileEntity>[] CREEPERS = new EntityType[]{
+            EntityType.CREEPER,
+            CFTPEntities.CREEPER_COOKIE,
+            CFTPEntities.CREEPER_DIRT,
+            CFTPEntities.CREEPER_EARTH,
+            CFTPEntities.CREEPER_ENDER,
+            CFTPEntities.CREEPER_FIRE,
+            CFTPEntities.CREEPER_GHOST,
+            CFTPEntities.CREEPER_LAVA,
+            CFTPEntities.CREEPER_LIGHTING,
+            CFTPEntities.CREEPER_NETHER,
+            CFTPEntities.CREEPER_WATER,
+            CFTPEntities.CREEPER_WIND,
+            CFTPEntities.CREEPER_FLIP,
+            CFTPEntities.CREEPER_FRIENDLY,
+            CFTPEntities.CREEPER_SNOW,
+            CFTPEntities.CREEPER_SWAMP,
+            CFTPEntities.CREEPER_DARK,
+            CFTPEntities.CREEPER_BALLISTIC,
+            CFTPEntities.CREEPER_GOLDEN,
+            CFTPEntities.CREEPER_BRIDGER,
+            CFTPEntities.CREEPER_PIGGY,
+            CFTPEntities.CREEPER_AMALGAM,
+            CFTPEntities.CREEPER_AMETHYST,
+            CFTPEntities.CREEPER_BREWER,
+            CFTPEntities.CREEPER_GIANT,
+            CFTPEntities.CREEPER_HARVEST,
+            CFTPEntities.CREEPER_OCEANID,
+            CFTPEntities.CREEPER_SAND,
+            CFTPEntities.CREEPER_SCULK,
     };
 
     public enum CREEPER_TYPE {

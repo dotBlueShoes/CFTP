@@ -6,18 +6,29 @@ import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
+
+import java.util.List;
 
 public class CreeperDirtEntity extends CreeperElementalEntity {
 
@@ -43,6 +54,29 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
         return CreeperMath.CREEPER_TYPE.DIRT.getType();
     }
 
+    private void fillDirt(ServerWorld serverWorld, int diameter, int radius, float x, float y, float z) {
+        for (int iy = 0; iy < diameter; ++iy) {
+            for (int ix = 0; ix < diameter; ++ix) {
+                for (int iz = 0; iz < diameter; ++iz) {
+                    if (Shapes.isSphere(ix, iy, iz, radius)) {
+                        BlockPos blockPos = BlockPos.ofFloored(
+                                x + ix - radius,
+                                y + iy - radius,
+                                z + iz - radius
+                        );
+
+                        BlockState state = serverWorld.getBlockState(blockPos);
+                        Block block = state.getBlock();
+
+                        if (block == Blocks.AIR) {
+                            serverWorld.setBlockState(blockPos, Blocks.DIRT.getDefaultState(), Block.NOTIFY_ALL);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
@@ -53,83 +87,73 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
 
             // For the case of extending the difficulty enum. We provide a default.
             float diameter = this.ExplosionDiameter;
-            int dropExplosionItemChance;
             int ghostCreeperChance;
+            int bury;
 
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
+                    bury = 0;
                 } break;
                 case NORMAL: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.5f * chargedPower;
+                    diameter *= 1.25f * chargedPower;
+                    bury = 1;
                 } break;
                 case HARD:
                 default: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 2.0f * chargedPower;
+                    diameter *= 1.75f * chargedPower;
+                    bury = 2;
                 } break;
             }
 
             final int iDiameter = (int) diameter;
             final int radius = iDiameter / 2;
 
-            // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl explosion = new ExplosionImpl(
-                    serverWorld, null, null,
-                    null, null, 1, false,
-                    Explosion.DestructionType.DESTROY
-            );
+            {
+                Box box = new Box(
+                        this.getX() - radius,
+                        this.getY() - radius,
+                        this.getZ() - radius,
+                        this.getX() + radius,
+                        this.getY() + radius,
+                        this.getZ() + radius
+                );
 
-            var seed = (int)this.getX() + (int)this.getY() + (int)this.getZ();
+                List<Entity> entities = serverWorld.getOtherEntities(
+                        this,
+                        box,
+                        entity -> entity instanceof LivingEntity living && living.isAlive()
+                );
 
-            for (int y = 0; y < iDiameter; ++y) {
-                for (int x = 0; x < iDiameter; ++x) {
-                    for (int z = 0; z < iDiameter; ++z) {
-                        if (Shapes.isSphere(x, y, z, radius)) {
-                            BlockPos blockPos = BlockPos.ofFloored(
-                                    this.getX() + x - radius,
-                                    this.getY() + y - radius,
-                                    this.getZ() + z - radius
-                            );
+                int maxIterations = Math.min(entities.size(), 3);
 
-                            BlockState state = serverWorld.getBlockState(blockPos);
-                            Block block = state.getBlock();
+                for (int i = 0; i < maxIterations; ++i) {
+                    LivingEntity entity = (LivingEntity)entities.get(i);
 
-                            var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
+                    { // Bury
+                        BlockPos a = new BlockPos((int) entity.getX(), (int) entity.getY() - 1, (int) entity.getZ());
+                        BlockPos b = new BlockPos((int) entity.getX(), (int) entity.getY() - 2, (int) entity.getZ());
 
-                            serverWorld.setBlockState(blockPos, Blocks.DIRT.getDefaultState(), Block.NOTIFY_ALL);
-
-                            // So that specific blocks won't drop.
-                            if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
-
-                                ItemStack itemStack;
-
-                                // TODO. This prob. can be done better.
-                                if (block.equals(Blocks.GRASS_BLOCK)) {
-                                    block = Blocks.DIRT;
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                } else if (block.equals(Blocks.SHORT_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else if (block.equals(Blocks.TALL_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else {
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                }
-
-                                Block.dropStack(serverWorld, blockPos, itemStack);
-                            }
-
+                        if (serverWorld.getBlockState(a).getBlock() != Blocks.BEDROCK && serverWorld.getBlockState(b).getBlock() != Blocks.BEDROCK) {
+                            entity.refreshPositionAndAngles(entity.getX(), entity.getY() - bury, entity.getZ(), this.getYaw(), this.getPitch());
                         }
                     }
+
+                    fillDirt(serverWorld, iDiameter, radius, (int) entity.getX(), (int) entity.getY() + 1, (int) entity.getZ());
+
+                    serverWorld.playSound(
+                            null, this.getX(), this.getY(), this.getZ(),
+                            SoundEvents.BLOCK_MUDDY_MANGROVE_ROOTS_BREAK, SoundCategory.HOSTILE,
+                            2.2F, 0.3f
+                    );
                 }
             }
 
+            this.spawnExplosionParticles(serverWorld);
             this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
@@ -137,6 +161,47 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
 
             SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
+    }
+
+    @Override
+    protected void playExplosionSound(World world) {
+        world.playSound(
+                null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.ENTITY_BREEZE_WIND_BURST, SoundCategory.HOSTILE,
+                0.9F, 0.5f
+        );
+    }
+
+    private void spawnExplosionParticles (ServerWorld serverWorld) {
+        serverWorld.spawnParticles(
+                ParticleTypes.POOF,
+                this.getX(),
+                this.getY() + 1,
+                this.getZ(),
+                10,
+                0, 1, 0,
+                0.02
+        );
+    }
+
+    @Override
+    public void tickMovement() {
+
+        if (this.random.nextInt(256) > 240) {
+            if (this.getWorld().isClient) {
+                this.getWorld().addParticle(
+                        ParticleTypes.SCRAPE,
+                        this.getParticleX(0.5),
+                        this.getRandomBodyY(),
+                        this.getParticleZ(0.5),
+                        (random.nextDouble() - 0.5) * 2.0,
+                        -random.nextDouble(),
+                        (random.nextDouble() - 0.5) * 2.0
+                );
+            }
+        }
+
+        super.tickMovement();
     }
 
 }

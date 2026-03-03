@@ -1,9 +1,7 @@
 package cftp.entity.base;
 
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.SpiderEntityRenderer;
 import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;
 import net.minecraft.client.render.entity.model.CreeperEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
@@ -11,12 +9,16 @@ import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.Nullable;
 
-public abstract class CreeperElementalRenderer<T extends CreeperElementalEntity> extends MobEntityRenderer<T, CreeperEntityRenderState, CreeperEntityModel> {
+public abstract class CreeperElementalEntityRenderer<T extends CreeperElementalEntity> extends MobEntityRenderer<T, CreeperEntityRenderState, CreeperEntityModel> {
 
-    public CreeperElementalRenderer(EntityRendererFactory.Context context) {
-        super(context, new CreeperEntityModel(context.getPart(EntityModelLayers.CREEPER)), 0.5F);
+    public CreeperElementalEntityRenderer(EntityRendererFactory.Context context, float shadowRadius) {
+        super(context, new CreeperEntityModel(context.getPart(EntityModelLayers.CREEPER)), shadowRadius);
+        this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
+    }
+
+    public CreeperElementalEntityRenderer(EntityRendererFactory.Context context) {
+        super(context, new CreeperEntityModel(context.getPart(EntityModelLayers.CREEPER)), 0.5f);
         this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
     }
 

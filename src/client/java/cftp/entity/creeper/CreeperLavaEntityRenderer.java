@@ -1,17 +1,17 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
-import cftp.entity.base.CreeperElementalRenderer;
+import cftp.entity.base.CreeperElementalEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class CreeperCookieRenderer extends CreeperElementalRenderer<CreeperCookieEntity> {
+public class CreeperLavaEntityRenderer extends CreeperElementalEntityRenderer<CreeperLavaEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_cookie.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper_lava.png";
 
-    public CreeperCookieRenderer(EntityRendererFactory.Context context) {
+    public CreeperLavaEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
     }
 
@@ -22,7 +22,8 @@ public class CreeperCookieRenderer extends CreeperElementalRenderer<CreeperCooki
 
     @Override
     protected void scale(CreeperEntityRenderState state, MatrixStack matrices) {
-        matrices.scale(0.95f, 0.95f, 0.95f);
+        matrices.scale(1.05f, 1.05f, 1.05f);
         super.scale(state, matrices);
     }
+
 }

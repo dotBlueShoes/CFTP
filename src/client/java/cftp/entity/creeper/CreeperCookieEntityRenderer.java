@@ -1,17 +1,17 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
-import cftp.entity.base.CreeperElementalRenderer;
+import cftp.entity.base.CreeperElementalEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class CreeperWindRenderer extends CreeperElementalRenderer<CreeperWindEntity> {
+public class CreeperCookieEntityRenderer extends CreeperElementalEntityRenderer<CreeperCookieEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_wind.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper_cookie.png";
 
-    public CreeperWindRenderer(EntityRendererFactory.Context context) {
+    public CreeperCookieEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
     }
 
@@ -22,8 +22,7 @@ public class CreeperWindRenderer extends CreeperElementalRenderer<CreeperWindEnt
 
     @Override
     protected void scale(CreeperEntityRenderState state, MatrixStack matrices) {
-        matrices.scale(0.95f, 1.0f, 0.95f);
+        matrices.scale(0.95f, 0.95f, 0.95f);
         super.scale(state, matrices);
     }
-
 }

@@ -117,10 +117,8 @@ finish creepers
 2. Missing proper spawn condition -> could only spawn certain moon-phase.
 3. Missing custom explode sound. -> water-splash
 
-### Dirt Creeper 
-1. it fills an area with dirt but does not destroy
-2. it does however change sand/gravel into suspicious variants
-3. also teleports all entities in range 0/1/2 blocks down
+### Dirt Creeper
+1. it does however change sand/gravel into suspicious variants
 
 ### Bridger Creeper
 1. missing logic.

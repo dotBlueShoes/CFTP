@@ -1,16 +1,16 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
-import cftp.entity.base.CreeperElementalRenderer;
+import cftp.entity.base.CreeperElementalEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.util.Identifier;
 
-public class CreeperFireRenderer extends CreeperElementalRenderer<CreeperFireEntity> {
+public class CreeperAmethystEntityRenderer extends CreeperElementalEntityRenderer<CreeperAmethystEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_fire.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper_amethyst.png";
 
-    public CreeperFireRenderer(EntityRendererFactory.Context context) {
+    public CreeperAmethystEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
     }
 

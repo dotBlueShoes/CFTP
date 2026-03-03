@@ -11,6 +11,9 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
@@ -18,6 +21,7 @@ import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -28,7 +32,16 @@ import static cftp.utility.CreeperMath.CREEPER_EGGS;
 
 public class CreeperGhostEntity extends CreeperElementalEntity {
 
+    private static final TrackedData<Integer> INVISIBLE_AGE_PROPERTY = DataTracker.registerData(CreeperGhostEntity.class, TrackedDataHandlerRegistry.INTEGER);
+
+    public static final int MAX_INVISIBLE_AGE = 35;
+
+    public int invisibleAge = 0;
     public int parentType = 0;
+
+    public static final int EASY_INV_CHANCE = 2;    // never
+    public static final int NORMAL_INV_CHANCE = 1;  // 1/2
+    public static final int HARD_INV_CHANCE = 0;    // always
 
     public CreeperGhostEntity(
             EntityType<? extends CreeperGhostEntity> entityType,
@@ -47,6 +60,12 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
         // This makes the ghost creeper not scary at all.
         //  should be a config setting. Make Ghost Creepers Easy.
         //.add(EntityAttributes.MOVEMENT_SPEED, 0.20f)
+    }
+
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(INVISIBLE_AGE_PROPERTY, 0);
     }
 
     @Override
@@ -90,6 +109,76 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
             itemEntity.setToDefaultPickupDelay();
             serverWorld.spawnEntity(itemEntity);
         }
+    }
+
+    public void createInvisibleParticles(ServerWorld serverWorld) {
+        serverWorld.spawnParticles(
+                ParticleTypes.POOF,
+                this.getX(),
+                this.getY() + 1,
+                this.getZ(),
+                15,
+                1, 1, 1,
+                0.02
+        );
+    }
+
+    public int getInvisibleAge() {
+        return this.dataTracker.get(INVISIBLE_AGE_PROPERTY);
+    }
+
+    public void setInvisibleAge(int value) {
+        this.dataTracker.set(INVISIBLE_AGE_PROPERTY, value);
+    }
+
+    public int getInvChance () {
+        final Difficulty difficulty = this.getWorld().getDifficulty();
+        int chance;
+
+        switch (difficulty) {
+            case PEACEFUL:
+            case EASY: {
+                chance = EASY_INV_CHANCE;
+            } break;
+            case NORMAL: {
+                chance = NORMAL_INV_CHANCE;
+            } break;
+            case HARD:
+            default: {
+                chance = HARD_INV_CHANCE;
+            } break;
+        }
+
+        return chance;
+    }
+
+    @Override
+    public void tickMovement() {
+
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            if (this.random.nextInt(256) > 254) {
+                if (this.random.nextInt(2) >= getInvChance()) {
+                    createInvisibleParticles(serverWorld);
+                    this.setInvisibleAge(MAX_INVISIBLE_AGE);
+
+                    invisibleAge = MAX_INVISIBLE_AGE;
+                }
+            } else {
+                --invisibleAge;
+
+                // We want to only once sync with dataTracker
+                //  not every tick. I believe that would be heavy for server.
+
+                if (invisibleAge == 0) {
+                    createInvisibleParticles(serverWorld);
+                    this.setInvisibleAge(0);
+                } else if (invisibleAge < 0) {
+                    invisibleAge = -1;
+                }
+            }
+        }
+
+        super.tickMovement();
     }
 
 }

@@ -135,7 +135,7 @@ public class CreeperWindEntity extends CreeperElementalEntity {
             }
 
             this.createExplosionParticles(serverWorld);
-            this.createExplosionSound(serverWorld);
+            this.playExplosionSound(serverWorld);
 
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
@@ -157,11 +157,12 @@ public class CreeperWindEntity extends CreeperElementalEntity {
         );
     }
 
-    public void createExplosionSound(ServerWorld serverWorld) {
-        serverWorld.playSound(
+    @Override
+    protected void playExplosionSound(World world) {
+        world.playSound(
                 null, this.getX(), this.getY(), this.getZ(),
-                SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST, SoundCategory.HOSTILE, 1.0F,
-                this.random.nextFloat() * 0.4F + 0.8F
+                SoundEvents.ENTITY_WIND_CHARGE_WIND_BURST, SoundCategory.HOSTILE,
+                1.1F, this.random.nextFloat() * 0.4F + 0.8F
         );
     }
 

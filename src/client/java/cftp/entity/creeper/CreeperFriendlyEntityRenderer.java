@@ -1,18 +1,18 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
-import cftp.entity.base.CreeperElementalRenderer;
+import cftp.entity.base.CreeperElementalEntityRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class CreeperFriendlyRenderer extends CreeperElementalRenderer<CreeperFriendlyEntity> {
+public class CreeperFriendlyEntityRenderer extends CreeperElementalEntityRenderer<CreeperFriendlyEntity> {
 
     private static final String TEXTURE_PATH = "textures/entity/creeper_friendly.png";
 
-    public CreeperFriendlyRenderer(EntityRendererFactory.Context context) {
+    public CreeperFriendlyEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
     }
 

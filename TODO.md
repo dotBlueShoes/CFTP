@@ -119,16 +119,18 @@ finish creepers
 
 ### Dirt Creeper
 1. it does however change sand/gravel into suspicious variants
+2. Spawning condition.
 
 ### Bridger Creeper
 1. missing logic.
-2. should spawn quite often but maybe not always (moon-phase or action locked).
+2. Spawning condition - should spawn quite often but maybe not always (moon-phase or action locked).
 3. it also needs a simple retexture (find old creeper texture).
 
 ---
 
 ### Creeper Giant
 
+1. Spawning condition.
 Twice the size. Twice/Thrice the health. Regenerates health.
 Twice the fuse time. Twice the explosion radius! But also slightly slower.
 Player has to slowly and safely kill it or skip it.
@@ -171,25 +173,24 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 
 1. Eyes on a different layer.
 2. Should have an AI to teleport sometimes + water avoiding.
+3. Spawning condition.
 
 ### Piggy Creeper
 
-1. Should have a different explosion sound. (rewarding)
+1. Spawning condition.
 
 ### Wind Creeper
 
-1. Make it not work on creative players.
-2. Spawning condition.
+1. Spawning condition.
 
 ### Dark Creeper
 
-1. Make it not work on creative players.
-2. Spawning condition.
+1. Spawning condition.
 
 ### Golden Creeper
 
-1. Should have a different explosion sound. (rewarding)
-2. Should give fewer hearts and spawn in groups of 1 always.
+1. Should give fewer hearts and spawn in groups of 1 always.
+2. Spawning condition.
 
 ### Creeper Cookie
 
@@ -197,38 +198,42 @@ Spawns in Caves or during night in overworld only. Has a very small chance of sp
 2. Make him drop random amount of cookies. Amount depends on difficulty setting.
 3. Ensure the drop works for both explosion and kill.
 4. Think of a good place where should this entity spawn.
-5. Spawns too much (should be jungle-like only biomes).
+5. Spawning condition - Spawns too much (should be jungle-like only biomes).
 
 ### Creeper Friendly
 
 1. Make him go after other hostile mobs not only explode close range.
 2. Make him tamable like wolves and cats.
 3. Make his explosion exclude the player the creeper belongs to.
-4. definitely should only spawn at mushroom island in caves.
+4. Spawning condition - definitely should only spawn at mushroom island in caves.
 
 ### Ghost Creeper
 
 1. Something different should drop. not a ghost creeper spawn egg. Think about it.
 2. Should just as piglin have a chance to spawn through nether portal.
+3. On hard there's a chance upon death to create a spectre creeper instead.
+4. Spawning condition.
 
 ### Deep Dark Creeper
 
 1. Has a texture similar to the XP block.
 2. Creates those XP blocks with a chance of generating skulkers, etc.
 3. Should have an animated texture.
+4. Spawning condition.
 
 ### Earth Creeper
 
-1. Normal and Hard should also apply slowness effect.
+1. Spawning condition.
 
 ### Nether Creeper
 
 1. Needs a retexture (more contrast or missing detail)
-2. Should just as piglin have a chance to spawn through nether portal.
+2. Spawning condition - spawns too much. Should just as piglin have a chance to spawn through nether portal.
 
 ### Water Creeper
 
 1. On hard difficulty also summons a 0-2 fishes.
+2. Spawning condition.
 
 ### Earth Charge
 

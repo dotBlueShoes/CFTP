@@ -112,10 +112,12 @@ public class CreeperBallisticAttackGoal extends Goal {
         tnt.refreshPositionAndAngles(this.mob.getX(), this.mob.getY(), this.mob.getZ(), 0.0f, 0.0f);
 
         // Set fuse duration (default is 80 ticks = 4 seconds)
-        tnt.setFuse(80);
+        tnt.setFuse(60);
+
+        final float boost = 2.4f;
 
         // get player position;
-        Vec3d velocity = new Vec3d(x, y, z);
+        Vec3d velocity = new Vec3d(x * boost, y, z * boost);
 
         // Apply velocity
         tnt.setVelocity(velocity);

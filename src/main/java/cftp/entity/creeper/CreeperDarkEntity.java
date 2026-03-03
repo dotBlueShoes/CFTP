@@ -21,6 +21,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
@@ -30,9 +31,9 @@ import java.util.List;
 public class CreeperDarkEntity extends CreeperElementalEntity {
 
     protected int ExplosionDiameter = 12;
-    protected int DARKNESS_EFFECT_TICKS_EASY = 20 * 30;     // = 0m 30s
-    protected int DARKNESS_EFFECT_TICKS_NORMAL = 20 * 45;   // = 0m 45s
-    protected int DARKNESS_EFFECT_TICKS_HARD = 20 * 60;     // = 1m 00s
+    protected int DARKNESS_EFFECT_TICKS_EASY = 20 * 15;     // = 0m 15s
+    protected int DARKNESS_EFFECT_TICKS_NORMAL = 20 * 30;   // = 0m 30s
+    protected int DARKNESS_EFFECT_TICKS_HARD = 20 * 45;     // = 0m 45s
 
     public CreeperDarkEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -113,14 +114,16 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
                 List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
 
                 for (ServerPlayerEntity player : players) {
-                    player.addStatusEffect(new StatusEffectInstance(
-                            StatusEffects.DARKNESS,
-                            darknessEffectTicks,
-                            4,   // amplifier (0 == level I)
-                            true,        // ambient (optional)
-                            true,        // showParticles (set false to hide)
-                            true         // showIcon
-                    ));
+                    if (player.interactionManager.getGameMode() != GameMode.CREATIVE) {
+                        player.addStatusEffect(new StatusEffectInstance(
+                                StatusEffects.DARKNESS,
+                                darknessEffectTicks,
+                                4,   // amplifier (0 == level I)
+                                true,        // ambient (optional)
+                                true,        // showParticles (set false to hide)
+                                true         // showIcon
+                        ));
+                    }
                 }
             }
 

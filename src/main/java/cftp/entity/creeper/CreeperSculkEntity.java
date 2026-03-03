@@ -6,6 +6,7 @@ import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.SculkSpreadManager;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -15,6 +16,7 @@ import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
@@ -47,6 +49,14 @@ public class CreeperSculkEntity extends CreeperElementalEntity {
     @Override // TODO
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
+
+            SculkSpreadManager spreadManager = SculkSpreadManager.create();
+
+            //SculkSpreadManager.create().spread();
+            //Blocks.SCULK_CATALYST
+
+            spreadManager.spread(BlockPos.ofFloored(this.getPos().offset(Direction.UP, 0.5)), 1);
+
             this.dead = true;
             this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();

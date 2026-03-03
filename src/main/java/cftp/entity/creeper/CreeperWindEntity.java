@@ -35,6 +35,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.AdvancedExplosionBehavior;
 import net.minecraft.world.explosion.Explosion;
@@ -129,6 +130,13 @@ public class CreeperWindEntity extends CreeperElementalEntity {
                 );
 
                 for (Entity entity : entities) {
+
+                    if (entity instanceof ServerPlayerEntity player) {
+                        if (player.interactionManager.getGameMode() == GameMode.CREATIVE) {
+                            break;
+                        }
+                    }
+
                     entity.addVelocity(0.0, chargedPower, 0.0);
                     entity.velocityModified = true;
                 }

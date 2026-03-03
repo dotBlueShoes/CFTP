@@ -10,17 +10,28 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
 
+import java.util.List;
+
 public class CreeperEarthEntity extends CreeperElementalEntity {
+
+    public final int SLOWNESS_EFFECT_TICKS_EASY = 0;        // 0m 00s
+    public final int SLOWNESS_EFFECT_TICKS_NORM = 20 * 15;  // 0m 15s
+    public final int SLOWNESS_EFFECT_TICKS_HARD = 20 * 30;  // 0m 30s
 
     protected int ExplosionDiameter = 5;
 
@@ -53,23 +64,27 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
             float diameter = this.ExplosionDiameter;
 
             int dropExplosionItemChance;
+            int slownessEffectTicks;
             int ghostCreeperChance;
 
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
                     dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                    slownessEffectTicks = SLOWNESS_EFFECT_TICKS_EASY * (int) chargedPower;
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
                 } break;
                 case NORMAL: {
                     dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    slownessEffectTicks = SLOWNESS_EFFECT_TICKS_NORM * (int) chargedPower;
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.5f * chargedPower;
                 } break;
                 case HARD:
                 default: {
                     dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    slownessEffectTicks = SLOWNESS_EFFECT_TICKS_HARD * (int) chargedPower;
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 2.0f * chargedPower;
                 } break;
@@ -87,7 +102,7 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
 
             var seed = (int)this.getX() + (int)this.getY() + (int)this.getZ();
 
-            for (int y = 0; y < iDiameter; ++y) {
+            for (int y = 0; y < iDiameter; ++y) { // gen
                 for (int x = 0; x < iDiameter; ++x) {
                     for (int z = 0; z < iDiameter; ++z) {
                         if (Shapes.isSphere(x, y, z, radius)) {
@@ -126,6 +141,34 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
                             }
 
                         }
+                    }
+                }
+            }
+
+            { // The SLOWNESS effect is being applied in BOX rather in SPHERE. That's OK.
+                double slownessRadius = radius - 1;
+
+                Box box = new Box(
+                        this.getX() - slownessRadius,
+                        this.getY() - slownessRadius,
+                        this.getZ() - slownessRadius,
+                        this.getX() + slownessRadius,
+                        this.getY() + slownessRadius,
+                        this.getZ() + slownessRadius
+                );
+
+                List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
+
+                for (ServerPlayerEntity player : players) {
+                    if (player.interactionManager.getGameMode() != GameMode.CREATIVE) {
+                        player.addStatusEffect(new StatusEffectInstance(
+                                StatusEffects.SLOWNESS,
+                                slownessEffectTicks,
+                                1,   // amplifier (0 == level I)
+                                true,        // ambient (optional)
+                                true,        // showParticles (set false to hide)
+                                true         // showIcon
+                        ));
                     }
                 }
             }

@@ -51,7 +51,7 @@ finish creepers
 8. Missing sand fall particle walking effect.
 9. Missing custom explode sound. -> (No sound?)
 
-### Creeper Oceanid
+### Creeper Oceanid (maybe instead block up movement for a duration of time)
 1. Missing explode logic. -> water, fishes/water-animal, oceanic-greenery. on hard also gives mining fatigue for short duration of time.
 2. Missing proper spawn condition. -> could only spawn certain moon-phase.
 3. Missing random size.

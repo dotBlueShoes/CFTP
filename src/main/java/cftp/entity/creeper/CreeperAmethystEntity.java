@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -60,6 +62,17 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
     public void tickMovement() {
         if (this.getWorld().isClient) {
             CreeperMath.createWaterWalkingParticle(this);
+        }
+
+        if (this.random.nextInt(256) > 252) {
+            if (this.getWorld() instanceof ServerWorld serverWorld) {
+                serverWorld.playSound(
+                        null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.BLOCK_POINTED_DRIPSTONE_DRIP_WATER,
+                        SoundCategory.HOSTILE,
+                        1.3f, 0.45f
+                );
+            }
         }
 
         super.tickMovement();

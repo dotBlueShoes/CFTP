@@ -104,18 +104,6 @@ public class CreeperBallisticEntity extends CreeperElementalEntity {
         }
     }
 
-    //public void createWalkingParticle() {
-    //    this.getWorld().addParticle(
-    //            ParticleTypes.GUST,
-    //            this.getParticleX(0.5),
-    //            this.getRandomBodyY() + 0.25,
-    //            this.getParticleZ(0.5),
-    //            (this.random.nextDouble() - 0.5) * 2.0,
-    //            -this.random.nextDouble(),
-    //            (this.random.nextDouble() - 0.5) * 2.0
-    //    );
-    //}
-
     @Override
     public void tickMovement() {
 
@@ -133,8 +121,9 @@ public class CreeperBallisticEntity extends CreeperElementalEntity {
 
                 serverWorld.playSound(
                         null, this.getX(), this.getY(), this.getZ(),
-                        SoundEvents.ENCHANT_THORNS_HIT,
-                        SoundCategory.HOSTILE
+                        SoundEvents.BLOCK_AZALEA_LEAVES_STEP,
+                        SoundCategory.HOSTILE,
+                        0.8f, 0.5f
                 );
             }
         }

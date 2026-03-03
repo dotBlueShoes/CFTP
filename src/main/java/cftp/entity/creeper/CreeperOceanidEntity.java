@@ -13,6 +13,8 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -59,6 +61,17 @@ public class CreeperOceanidEntity extends CreeperElementalEntity {
     public void tickMovement() {
         if (this.getWorld().isClient) {
             CreeperMath.createWaterWalkingParticle(this);
+        }
+
+        if (this.random.nextInt(256) > 248) {
+            if (this.getWorld() instanceof ServerWorld serverWorld) {
+                serverWorld.playSound(
+                        null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.BLOCK_POINTED_DRIPSTONE_DRIP_WATER,
+                        SoundCategory.HOSTILE,
+                        1.2f, 0.5f
+                );
+            }
         }
 
         super.tickMovement();

@@ -2,8 +2,10 @@ package cftp.entity.creeper;
 
 import cftp.CFTP;
 import cftp.entity.base.CreeperElementalRenderer;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class CreeperGoldenRenderer extends CreeperElementalRenderer<CreeperGoldenEntity> {
@@ -19,4 +21,8 @@ public class CreeperGoldenRenderer extends CreeperElementalRenderer<CreeperGolde
         return Identifier.of(CFTP.MOD_ID, TEXTURE_PATH);
     }
 
+    @Override
+    public void render(CreeperEntityRenderState livingEntityRenderState, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+        super.render(livingEntityRenderState, matrixStack, vertexConsumerProvider, 0xF000F0);
+    }
 }

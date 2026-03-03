@@ -21,8 +21,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
@@ -298,6 +301,54 @@ public class CreeperFireEntity extends CreeperElementalEntity {
     @Override
     public boolean isOnFire() {
         return true;
+    }
+
+    //public static void createFireWalkingParticle(CreeperElementalEntity creeper) {
+    //    Random random = creeper.getRandom();
+    //    //creeper.getWorld().addParticle(
+    //    //        ParticleTypes.SCRAPE,
+    //    //        creeper.getParticleX(0.5),
+    //    //        creeper.getRandomBodyY(),
+    //    //        creeper.getParticleZ(0.5),
+    //    //        (random.nextDouble() - 0.5) * 2.0,
+    //    //        -random.nextDouble(),
+    //    //        (random.nextDouble() - 0.5) * 2.0
+    //    //);
+    //}
+    //serverWorld.playSound(
+    //        null, this.getX(), this.getY(), this.getZ(),
+    //SoundEvents.ENTITY_CREAKING_ATTACK,
+    //SoundCategory.HOSTILE,
+    //        0.1f, 0.4f
+    //        );
+
+    @Override
+    public void tickMovement() {
+
+        if (this.random.nextInt(256) > 252) {
+            if (this.getWorld().isClient) {
+                this.getWorld().addParticle(
+                        ParticleTypes.DRIPPING_LAVA,
+                        this.getParticleX(0.5),
+                        this.getRandomBodyY(),
+                        this.getParticleZ(0.5),
+                        (random.nextDouble() - 0.5) * 2.0,
+                        -random.nextDouble(),
+                        (random.nextDouble() - 0.5) * 2.0
+                );
+            }
+
+            if (this.getWorld() instanceof ServerWorld serverWorld) {
+                serverWorld.playSound(
+                        null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.BLOCK_FIRE_AMBIENT,
+                        SoundCategory.HOSTILE,
+                        0.8f, 1.2f
+                );
+            }
+        }
+
+        super.tickMovement();
     }
 
 }

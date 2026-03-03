@@ -15,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -164,27 +166,47 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
         return true;
     }
 
-    public void createWalkingParticle() {
-
-        Random random = this.random;
-
-        if (random.nextInt(10) > 6) {
-            this.getWorld().addParticle(
-                    ParticleTypes.FALLING_LAVA,
-                    this.getParticleX(0.50),
-                    this.getRandomBodyY(),
-                    this.getParticleZ(0.50),
-                    (random.nextDouble() - 0.5),
-                    -random.nextDouble() / 2.0,
-                    (random.nextDouble() - 0.5)
-            );
-        }
-    }
+    //public void createWalkingParticle() {
+    //
+    //    Random random = this.random;
+    //
+    //    if (random.nextInt(10) > 6) {
+    //        this.getWorld().addParticle(
+    //                ParticleTypes.FALLING_LAVA,
+    //                this.getParticleX(0.50),
+    //                this.getRandomBodyY(),
+    //                this.getParticleZ(0.50),
+    //                (random.nextDouble() - 0.5),
+    //                -random.nextDouble() / 2.0,
+    //                (random.nextDouble() - 0.5)
+    //        );
+    //    }
+    //}
 
     @Override
     public void tickMovement() {
-        if (this.getWorld().isClient) {
-            createWalkingParticle();
+
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            if (this.random.nextInt(256) > 252) {
+                serverWorld.playSound(
+                        null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.BLOCK_FIRE_AMBIENT,
+                        SoundCategory.HOSTILE,
+                        0.9f, 1.3f
+                );
+            }
+        } else {
+            if (this.random.nextInt(256) > 128) {
+                this.getWorld().addParticle(
+                        ParticleTypes.FALLING_LAVA,
+                        this.getParticleX(0.7),
+                        this.getRandomBodyY(),
+                        this.getParticleZ(0.7),
+                        (random.nextDouble() - 0.5) * 2.0,
+                        -random.nextDouble(),
+                        (random.nextDouble() - 0.5) * 2.0
+                );
+            }
         }
 
         super.tickMovement();

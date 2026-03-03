@@ -12,7 +12,10 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -53,6 +56,33 @@ public class CreeperGiantEntity extends CreeperElementalEntity {
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
         }
+    }
+
+    @Override
+    public void tickMovement() {
+
+        if (this.random.nextInt(256) > 252) {
+            if (this.getWorld() instanceof ServerWorld serverWorld) {
+                serverWorld.spawnParticles(
+                        ParticleTypes.SPIT,
+                        this.getParticleX(0.5),
+                        this.getRandomBodyY() + 0.25,
+                        this.getParticleZ(0.5),
+                        1,
+                        0.5, 0.5, 0.5,
+                        0.02
+                );
+
+                serverWorld.playSound(
+                        null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.ENTITY_VILLAGER_NO,
+                        SoundCategory.HOSTILE,
+                        0.8f, 0.4f
+                );
+            }
+        }
+
+        super.tickMovement();
     }
 
 }

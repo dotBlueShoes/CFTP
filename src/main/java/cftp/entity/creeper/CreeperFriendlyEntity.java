@@ -83,52 +83,53 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity {
         this.targetSelector.add(2, new RevengeGoal(this));
     }
 
-    @Override
-    protected void explode() {
-        if (this.getWorld() instanceof ServerWorld serverWorld) {
-            this.dead = true;
-
-            final Difficulty difficulty = this.getWorld().getDifficulty();
-
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.ExplosionDiameter;
-
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    diameter *= chargedPower;
-                } break;
-                case NORMAL: {
-                    diameter *= 1.25f * chargedPower;
-                } break;
-                case HARD:
-                default: {
-                    diameter *= 1.50f * chargedPower;
-                } break;
-            }
-
-            serverWorld.createExplosion(
-                    this,
-                    Explosion.createDamageSource(serverWorld, this),
-                    CreeperMath.noDestroyExplosionBehaviour,
-                    this.getX(),
-                    this.getY(),
-                    this.getZ(),
-                    diameter,
-                    false,
-                    World.ExplosionSourceType.MOB,
-                    ParticleTypes.EXPLOSION,
-                    ParticleTypes.EXPLOSION_EMITTER,
-                    SoundEvents.ENTITY_GENERIC_EXPLODE
-            );
-
-            // Deal 7 damage to itself.
-            this.damage(serverWorld, Explosion.createDamageSource(serverWorld, this), 6);
-
-            this.playExplosionSound(serverWorld);
-            this.spawnEffectsCloud();
-        }
-    }
+    // discard?? , SpawnGhostCreeper(serverWorld, ghostCreeperChance); ???
+    //@Override
+    //protected void explode() {
+    //    if (this.getWorld() instanceof ServerWorld serverWorld) {
+    //        this.dead = true;
+    //
+    //        final Difficulty difficulty = this.getWorld().getDifficulty();
+    //
+    //        final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+    //        float diameter = this.ExplosionDiameter;
+    //
+    //        switch (difficulty) {
+    //            case PEACEFUL:
+    //            case EASY: {
+    //                diameter *= chargedPower;
+    //            } break;
+    //            case NORMAL: {
+    //                diameter *= 1.25f * chargedPower;
+    //            } break;
+    //            case HARD:
+    //            default: {
+    //                diameter *= 1.50f * chargedPower;
+    //            } break;
+    //        }
+    //
+    //        serverWorld.createExplosion(
+    //                this,
+    //                Explosion.createDamageSource(serverWorld, this),
+    //                CreeperMath.noDestroyExplosionBehaviour,
+    //                this.getX(),
+    //                this.getY(),
+    //                this.getZ(),
+    //                diameter,
+    //                false,
+    //                World.ExplosionSourceType.MOB,
+    //                ParticleTypes.EXPLOSION,
+    //                ParticleTypes.EXPLOSION_EMITTER,
+    //                SoundEvents.ENTITY_GENERIC_EXPLODE
+    //        );
+    //
+    //        // Deal 7 damage to itself.
+    //        this.damage(serverWorld, Explosion.createDamageSource(serverWorld, this), 6);
+    //
+    //        this.playExplosionSound(serverWorld);
+    //        this.spawnEffectsCloud();
+    //    }
+    //}
 
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {

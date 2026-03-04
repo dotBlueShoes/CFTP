@@ -62,18 +62,18 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
                 } break;
                 case NORMAL: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.25f * chargedPower;
                 } break;
                 case HARD:
                 default: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 1.5f * chargedPower;
                 } break;
@@ -83,55 +83,80 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
                 final int iDiameter = (int) diameter;
                 final int radius = iDiameter / 2;
 
+                // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
+                final ExplosionImpl dummyExplosion = new ExplosionImpl(
+                        serverWorld, null, null,
+                        null, null, 1, false,
+                        Explosion.DestructionType.DESTROY
+                );
+
                 for (int y = 0; y < iDiameter; ++y) { // gen
                     for (int x = 0; x < iDiameter; ++x) {
                         for (int z = 0; z < iDiameter; ++z) {
+
                             int distance = (int) Shapes.sphereDistance(x, y, z, radius);
+                            BlockPos blockPos = BlockPos.ofFloored(
+                                    this.getX() + x - radius,
+                                    this.getY() + y - radius,
+                                    this.getZ() + z - radius
+                            );
 
-                            if (distance < radius - 3) {
-                                BlockPos blockPos = BlockPos.ofFloored(
-                                        this.getX() + x - radius,
-                                        this.getY() + y - radius,
-                                        this.getZ() + z - radius
-                                );
+                            BlockState state = serverWorld.getBlockState(blockPos);
+                            float resistance = state.getBlock().getBlastResistance();
 
-                                serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                            if (distance < radius - 3 && resistance < 100) {
 
-                            } else if (distance < radius - 2) {
-                                BlockPos blockPos = BlockPos.ofFloored(
-                                        this.getX() + x - radius,
-                                        this.getY() + y - radius,
-                                        this.getZ() + z - radius
-                                );
+                                CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                    if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                        Block.dropStack(serverWorld, blockPos, itemStack);
+                                    }
+                                });
 
+                            } else if (distance < (radius - 2) && resistance < 100) {
                                 if (this.random.nextInt(10) < 7) {
-                                    serverWorld.setBlockState(blockPos, Blocks.AMETHYST_BLOCK.getDefaultState(), Block.NOTIFY_ALL);
+
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.AMETHYST_BLOCK.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+
                                 } else {
-                                    serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+
                                 }
-
-                            } else if (distance < radius - 1) {
-                                BlockPos blockPos = BlockPos.ofFloored(
-                                        this.getX() + x - radius,
-                                        this.getY() + y - radius,
-                                        this.getZ() + z - radius
-                                );
-
+                            } else if (distance < (radius - 1) && resistance < 100) {
                                 if (this.random.nextInt(10) < 7) {
-                                    serverWorld.setBlockState(blockPos, Blocks.CALCITE.getDefaultState(), Block.NOTIFY_ALL);
+
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.CALCITE.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+
                                 } else {
-                                    serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+
                                 }
-
-                            } else if (distance < radius) {
-                                BlockPos blockPos = BlockPos.ofFloored(
-                                        this.getX() + x - radius,
-                                        this.getY() + y - radius,
-                                        this.getZ() + z - radius
-                                );
-
+                            } else if (distance < radius && resistance < 100) {
                                 if (this.random.nextInt(10) < 8) {
-                                    serverWorld.setBlockState(blockPos, Blocks.SMOOTH_BASALT.getDefaultState(), Block.NOTIFY_ALL);
+
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.SMOOTH_BASALT.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+
                                 }
                             }
                         }

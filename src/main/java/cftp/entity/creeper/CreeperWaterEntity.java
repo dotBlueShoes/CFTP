@@ -65,18 +65,18 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
                 } break;
                 case NORMAL: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.25f * chargedPower;
                 } break;
                 case HARD:
                 default: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 1.50f * chargedPower;
                 } break;
@@ -86,13 +86,11 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
             final int radius = iDiameter / 2;
 
             // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl explosion = new ExplosionImpl(
+            final ExplosionImpl dummyExplosion = new ExplosionImpl(
                     serverWorld, null, null,
                     null, null, 1, false,
                     Explosion.DestructionType.DESTROY
             );
-
-            var seed = (int)this.getX() + (int)this.getY() + (int)this.getZ();
 
             for (int y = 0; y < iDiameter; ++y) {
                 for (int x = 0; x < iDiameter; ++x) {
@@ -106,50 +104,39 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                             );
 
                             BlockState state = serverWorld.getBlockState(blockPos);
+                            float resistance = state.getBlock().getBlastResistance();
                             Block block = state.getBlock();
 
-                            var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-
-                            //BlockState state = serverWorld.getBlockState(blockPos);
-
                             if (state.contains(Properties.WATERLOGGED)) {
-
                                 BlockState waterloggedState = state.with(Properties.WATERLOGGED, true);
-                                serverWorld.setBlockState(blockPos, waterloggedState, 3);
+
+                                if (resistance < 100) {
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, waterloggedState, blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+                                }
 
                                 // Also schedule water fluid tick for proper fluid behavior
                                 //serverWorld.getFluidTickScheduler().schedule(blockPos, Fluids.WATER, Fluids.WATER.getTickRate(serverWorld));
-
                             } else if (block == Blocks.LAVA) {
-
-                                serverWorld.setBlockState(blockPos, Blocks.OBSIDIAN.getDefaultState(), Block.NOTIFY_ALL);
-
-                            } else {
-
-                                serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
-
-                                // So that specific blocks won't drop.
-                                if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
-
-                                    ItemStack itemStack;
-
-                                    // TODO. This prob. can be done better.
-                                    if (block.equals(Blocks.GRASS_BLOCK)) {
-                                        block = Blocks.DIRT;
-                                        itemStack = new ItemStack(block.asItem(), 1);
-                                    } else if (block.equals(Blocks.SHORT_GRASS)) {
-                                        itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                    } else if (block.equals(Blocks.TALL_GRASS)) {
-                                        itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                    } else {
-                                        itemStack = new ItemStack(block.asItem(), 1);
-                                    }
-
-                                    Block.dropStack(serverWorld, blockPos, itemStack);
+                                if (resistance < 100) {
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.OBSIDIAN.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
                                 }
-
+                            } else {
+                                if (resistance < 100) {
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+                                }
                             }
-
                         }
                     }
                 }

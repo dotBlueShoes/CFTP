@@ -111,6 +111,46 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
         }
     }
 
+    @Override
+    protected void explode() {
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            this.dead = true;
+
+            final Difficulty difficulty = this.getWorld().getDifficulty();
+            float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+            float diameter = this.explosionDiameter;
+            int ghostCreeperChance;
+
+            switch (difficulty) {
+                case PEACEFUL:
+                case EASY: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    diameter *= chargedPower;
+                } break;
+                case NORMAL: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    diameter *= 1.5f * chargedPower;
+                } break;
+                case HARD:
+                default: {
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                    diameter *= 2.0f * chargedPower;
+                } break;
+            }
+
+            serverWorld.createExplosion(
+                    this, this.getX(), this.getY(), this.getZ(),
+                    diameter, World.ExplosionSourceType.MOB
+            );
+
+            this.spawnEffectsCloud();
+            this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
+            this.discard();
+
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+        }
+    }
+
     public void createInvisibleParticles(ServerWorld serverWorld) {
         serverWorld.spawnParticles(
                 ParticleTypes.POOF,

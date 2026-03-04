@@ -364,7 +364,7 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
             final Difficulty difficulty = serverWorld.getDifficulty();
 
             int chargedAmount = this.isCharged() ? 3 : 1;
-            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+            int ghostCreeperChance;
 
             // Create teleport particles at creeper position.
             createTeleportParticles(serverWorld, this.getX(), this.getY(), this.getZ());
@@ -376,6 +376,8 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
                     for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
                         getNonHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
                     }
+
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
 
                 }
 

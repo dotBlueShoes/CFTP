@@ -60,22 +60,24 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
 
             // For the case of extending the difficulty enum. We provide a default.
             float diameter = this.ExplosionDiameter;
-            int dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
-            int ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+            int dropExplosionItemChance;
+            int ghostCreeperChance;
 
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
                 } break;
                 case NORMAL: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.25f * chargedPower;
                 } break;
                 case HARD:
                 default: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 1.50f * chargedPower;
                 } break;
@@ -85,7 +87,7 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
             final int radius = iDiameter / 2;
 
             // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl explosion = new ExplosionImpl(
+            final ExplosionImpl dummyExplosion = new ExplosionImpl(
                     serverWorld, null, null,
                     null, null, 1, false,
                     Explosion.DestructionType.DESTROY
@@ -105,43 +107,29 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
                             );
 
                             BlockState state = serverWorld.getBlockState(blockPos);
+                            float resistance = state.getBlock().getBlastResistance();
                             Block block = state.getBlock();
 
                             var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
                             var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.LAVA_BLOCKS.length;
 
-                            /// Vaporize water ? - Nah. just delete all.
-                            ///if (state.contains(Properties.WATERLOGGED)) {
-                            ///    BlockState waterloggedState = state.with(Properties.WATERLOGGED, false);
-                            ///    serverWorld.setBlockState(blockPos, waterloggedState, 3);
-                            ///}
-
                             if (block == Blocks.WATER) {
-                                serverWorld.setBlockState(blockPos, Blocks.OBSIDIAN.getDefaultState(), Block.NOTIFY_ALL);
-                            } else {
-                                serverWorld.setBlockState(blockPos, CreeperMath.LAVA_BLOCKS[index], Block.NOTIFY_ALL);
-                            }
-
-                            // So that specific blocks won't drop.
-                            if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
-
-                                ItemStack itemStack;
-
-                                // TODO. This prob. can be done better.
-                                if (block.equals(Blocks.GRASS_BLOCK)) {
-                                    block = Blocks.DIRT;
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                } else if (block.equals(Blocks.SHORT_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else if (block.equals(Blocks.TALL_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else {
-                                    itemStack = new ItemStack(block.asItem(), 1);
+                                if (resistance < 100) {
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.OBSIDIAN.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
                                 }
-
-                                Block.dropStack(serverWorld, blockPos, itemStack);
+                            } else {
+                                if (resistance < 100) {
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.LAVA_BLOCKS[index], blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+                                }
                             }
-
                         }
                     }
                 }

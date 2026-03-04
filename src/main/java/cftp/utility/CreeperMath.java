@@ -6,9 +6,11 @@ import cftp.registries.CFTPItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -21,6 +23,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -30,6 +33,7 @@ import net.minecraft.world.explosion.ExplosionBehavior;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 public class CreeperMath {
 
@@ -256,6 +260,30 @@ public class CreeperMath {
     //    // Return an empty list. No null checking just size checking.
     //    return new ArrayList<>();
     //}
+
+    public static void onGeneralReplace(ServerWorld world, Explosion dummyExplosion, BlockState oldState, BlockState newState, BlockPos pos, BiConsumer<ItemStack, BlockPos> stackMerger) {
+        if (dummyExplosion.getDestructionType() != Explosion.DestructionType.TRIGGER_BLOCK) {
+            Block block = oldState.getBlock();
+            boolean bl = dummyExplosion.getCausingEntity() instanceof PlayerEntity;
+            if (!oldState.isAir() && block.shouldDropItemsOnExplosion(dummyExplosion)) {
+                BlockEntity blockEntity = oldState.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+                LootWorldContext.Builder builder = new LootWorldContext.Builder(world)
+                        .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
+                        .add(LootContextParameters.TOOL, ItemStack.EMPTY)
+                        .addOptional(LootContextParameters.BLOCK_ENTITY, blockEntity)
+                        .addOptional(LootContextParameters.THIS_ENTITY, dummyExplosion.getEntity());
+                if (dummyExplosion.getDestructionType() == Explosion.DestructionType.DESTROY_WITH_DECAY) {
+                    builder.add(LootContextParameters.EXPLOSION_RADIUS, dummyExplosion.getPower());
+                }
+
+                oldState.onStacksDropped(world, pos, ItemStack.EMPTY, bl);
+                oldState.getDroppedStacks(builder).forEach(stack -> stackMerger.accept(stack, pos));
+            }
+
+            world.setBlockState(pos, newState, Block.NOTIFY_ALL);
+            block.onDestroyedByExplosion(world, pos, dummyExplosion);
+        }
+    }
 
     //public enum CREEPERS {
     //    COOKIE      (CreeperCookieEntity.class)     ,

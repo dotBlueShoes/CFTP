@@ -91,6 +91,13 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
             final int iDiameter = (int) diameter;
             final int radius = iDiameter / 2;
 
+            // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
+            final ExplosionImpl dummyExplosion = new ExplosionImpl(
+                    serverWorld, null, null,
+                    null, null, 1, false,
+                    Explosion.DestructionType.DESTROY
+            );
+
             { // The absorption effect is being applied in BOX rather in SPHERE. That's OK.
                 double absorptionRadius = 5;
 
@@ -139,11 +146,17 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
                             Block block = state.getBlock();
 
                             if (block == Blocks.STONE) {
-                                serverWorld.setBlockState(blockPos, Blocks.GOLD_ORE.getDefaultState(), Block.NOTIFY_ALL);
+                                CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                    Block.dropStack(serverWorld, blockPos, itemStack);
+                                });
                             } else if (block == Blocks.DEEPSLATE) {
-                                serverWorld.setBlockState(blockPos, Blocks.DEEPSLATE_GOLD_ORE.getDefaultState(), Block.NOTIFY_ALL);
+                                CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.DEEPSLATE_GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                    Block.dropStack(serverWorld, blockPos, itemStack);
+                                });
                             } else if (block == Blocks.NETHERRACK) {
-                                serverWorld.setBlockState(blockPos, Blocks.NETHER_GOLD_ORE.getDefaultState(), Block.NOTIFY_ALL);
+                                CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.NETHER_GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                    Block.dropStack(serverWorld, blockPos, itemStack);
+                                });
                             }
 
                         }

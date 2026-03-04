@@ -58,18 +58,18 @@ public class CreeperNetherEntity extends CreeperElementalEntity {
             switch (difficulty) {
                 case PEACEFUL:
                 case EASY: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                     diameter *= chargedPower;
                 } break;
                 case NORMAL: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                     diameter *= 1.5f * chargedPower;
                 } break;
                 case HARD:
                 default: {
-                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                     ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                     diameter *= 2.0f * chargedPower;
                 } break;
@@ -79,7 +79,7 @@ public class CreeperNetherEntity extends CreeperElementalEntity {
             final int radius = iDiameter / 2;
 
             // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl explosion = new ExplosionImpl(
+            final ExplosionImpl dummyExplosion = new ExplosionImpl(
                     serverWorld, null, null,
                     null, null, 1, false,
                     Explosion.DestructionType.DESTROY
@@ -98,33 +98,18 @@ public class CreeperNetherEntity extends CreeperElementalEntity {
                             );
 
                             BlockState state = serverWorld.getBlockState(blockPos);
-                            Block block = state.getBlock();
+                            float resistance = state.getBlock().getBlastResistance();
 
                             var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
                             var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.NETHER_BLOCKS.length;
 
-                            serverWorld.setBlockState(blockPos, CreeperMath.NETHER_BLOCKS[index], Block.NOTIFY_ALL);
-
-                            // So that specific blocks won't drop and with a chance of not dropping at all.
-                            if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
-
-                                ItemStack itemStack;
-
-                                // TODO. This prob. can be done better.
-                                if (block.equals(Blocks.GRASS_BLOCK)) {
-                                    block = Blocks.DIRT;
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                } else if (block.equals(Blocks.SHORT_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else if (block.equals(Blocks.TALL_GRASS)) {
-                                    itemStack = new ItemStack(Items.WHEAT_SEEDS, 1);
-                                } else {
-                                    itemStack = new ItemStack(block.asItem(), 1);
-                                }
-
-                                Block.dropStack(serverWorld, blockPos, itemStack);
+                            if (resistance < 100) {
+                                CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.NETHER_BLOCKS[index], blockPos, (itemStack, pos) -> {
+                                    if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                        Block.dropStack(serverWorld, blockPos, itemStack);
+                                    }
+                                });
                             }
-
                         }
                     }
                 }

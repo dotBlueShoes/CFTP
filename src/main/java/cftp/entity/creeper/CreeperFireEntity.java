@@ -28,6 +28,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
+import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperFireEntity extends CreeperElementalEntity {
 
@@ -114,23 +116,26 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
 
                 float diameter = this.ExplosionDiameter;
-
+                int dropExplosionItemChance;
                 int ghostCreeperChance;
 
                 switch (difficulty) {
                     case PEACEFUL:
                     case EASY: {
-                        diameter *= chargedPower;
+                        dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        diameter *= chargedPower;
                     }
                     break;
                     case NORMAL: {
+                        dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         diameter *= 1.5f * chargedPower;
                     }
                     break;
                     case HARD:
                     default: {
+                        dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         diameter *= 2.0f * chargedPower;
                     }
@@ -139,6 +144,13 @@ public class CreeperFireEntity extends CreeperElementalEntity {
 
                 final int iDiameter = (int) diameter;
                 final int radius = iDiameter / 2;
+
+                // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
+                final ExplosionImpl dummyExplosion = new ExplosionImpl(
+                        serverWorld, null, null,
+                        null, null, 1, false,
+                        Explosion.DestructionType.DESTROY
+                );
 
                 for (int y = 0; y < diameter; ++y) {
                     for (int x = 0; x < diameter; ++x) {
@@ -181,25 +193,32 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                                     case 1 << 3:    // Change FLOWERS-like to AIR.
                                     case 1 << 5:    // Change SAPLINGS-like to AIR.
                                     case 1 << 6: {  // Change CROPS-like to AIR.
-                                        serverWorld.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
+                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.AIR.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                            if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                                Block.dropStack(serverWorld, blockPos, itemStack);
+                                            }
+                                        });
                                         createExplosionParticlesA(serverWorld, blockPos);
                                     }
                                     break;
 
                                     case 1 << 1: { // Change ICE-like to WATER.
-                                        serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        });
                                         createExplosionParticlesB(serverWorld, blockPos);
                                     }
                                     break;
 
                                     case 1 << 4: { // Change SAND-like to GLASS
-                                        serverWorld.setBlockState(blockPos, Blocks.GLASS.getDefaultState(), Block.NOTIFY_ALL);
+                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.GLASS.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        });
                                         createExplosionParticlesA(serverWorld, blockPos);
                                     }
                                     break;
 
                                     case 1 << 7: { // Change DIRT(GRASS)-like to DIRT
-                                        serverWorld.setBlockState(blockPos, Blocks.DIRT.getDefaultState(), Block.NOTIFY_ALL);
+                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.DIRT.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        });
                                         createExplosionParticlesA(serverWorld, blockPos);
                                     }
 
@@ -217,79 +236,12 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                     }
                 }
 
-                //AbstractFireBlock.canPlaceAt(world, blockPos2, context.getHorizontalPlayerFacing())) {
-                //				world.playSound(playerEntity, blockPos2, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
-                //				BlockState blockState2 = AbstractFireBlock.getState(world, blockPos2);
-                //				world.setBlockState(blockPos2, blockState2, Block.NOTIFY_ALL_AND_REDRAW);
-                //				world.emitGameEvent(playerEntity, GameEvent.BLOCK_PLACE, blockPos);
-
-                // world.playSound(playerEntity, blockPos2, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
-
-                // !this.isFlammable(blockState) && !blockState.isSideSolidFullSquare(world, blockPos, Direction.UP))
-                // entity.serverDamage(world.getDamageSources().inFire(), this.damage);
-                //		super.onEntityCollision(state, world, pos, entity);
-
-                //serverWorld.createExplosion(
-                //        this, this.getX(), this.getY(), this.getZ(),
-                //        1, World.ExplosionSourceType.MOB
-                //);
-
-                //BlockPos blockPos = BlockPos.ofFloored(m, n, o);
-                //BlockState blockState = this.world.getBlockState(blockPos);
-                //FluidState fluidState = this.world.getFluidState(blockPos);
-                //if (!this.world.isInBuildLimit(blockPos)) {
-                //    break;
-                //}
-                //
-                //Optional<Float> optional = this.behavior.getBlastResistance(this, this.world, blockPos, blockState, fluidState);
-                //if (optional.isPresent()) {
-                //    h -= (optional.get() + 0.3F) * 0.3F;
-                //}
-                //
-                //if (h > 0.0F && this.behavior.canDestroyBlock(this, this.world, blockPos, blockState, h)) {
-                //    set.add(blockPos);
-                //}
-
-                // List<ExplosionImpl.DroppedItem> list = new ArrayList();
-                //		Util.shuffle(positions, this.world.random);
-                //
-                //		for (BlockPos blockPos : positions) {
-                //			this.world.getBlockState(blockPos).onExploded(this.world, blockPos, this, (item, pos) -> addDroppedItem(list, item, pos));
-                //		}
-                //
-                //		for (ExplosionImpl.DroppedItem droppedItem : list) {
-                //			Block.dropStack(this.world, droppedItem.pos, droppedItem.item);
-                //		}
-
-                // if (!state.isAir() && explosion.getDestructionType() != Explosion.DestructionType.TRIGGER_BLOCK) {
-                //			Block block = state.getBlock();
-                //			boolean bl = explosion.getCausingEntity() instanceof PlayerEntity;
-                //			if (block.shouldDropItemsOnExplosion(explosion)) {
-                //				BlockEntity blockEntity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
-                //				LootWorldContext.Builder builder = new LootWorldContext.Builder(world)
-                //					.add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
-                //					.add(LootContextParameters.TOOL, ItemStack.EMPTY)
-                //					.addOptional(LootContextParameters.BLOCK_ENTITY, blockEntity)
-                //					.addOptional(LootContextParameters.THIS_ENTITY, explosion.getEntity());
-                //				if (explosion.getDestructionType() == Explosion.DestructionType.DESTROY_WITH_DECAY) {
-                //					builder.add(LootContextParameters.EXPLOSION_RADIUS, explosion.getPower());
-                //				}
-                //
-                //				state.onStacksDropped(world, pos, ItemStack.EMPTY, bl);
-                //				state.getDroppedStacks(builder).forEach(stack -> stackMerger.accept(stack, pos));
-                //			}
-                //
-                //			world.setBlockState(pos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
-                //			block.onDestroyedByExplosion(world, pos, explosion);
-                //		}
-
                 this.playExplosionSound(serverWorld);
                 SpawnGhostCreeper(serverWorld, ghostCreeperChance);
             }
 
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
         }
     }
 
@@ -302,25 +254,6 @@ public class CreeperFireEntity extends CreeperElementalEntity {
     public boolean isOnFire() {
         return true;
     }
-
-    //public static void createFireWalkingParticle(CreeperElementalEntity creeper) {
-    //    Random random = creeper.getRandom();
-    //    //creeper.getWorld().addParticle(
-    //    //        ParticleTypes.SCRAPE,
-    //    //        creeper.getParticleX(0.5),
-    //    //        creeper.getRandomBodyY(),
-    //    //        creeper.getParticleZ(0.5),
-    //    //        (random.nextDouble() - 0.5) * 2.0,
-    //    //        -random.nextDouble(),
-    //    //        (random.nextDouble() - 0.5) * 2.0
-    //    //);
-    //}
-    //serverWorld.playSound(
-    //        null, this.getX(), this.getY(), this.getZ(),
-    //SoundEvents.ENTITY_CREAKING_ATTACK,
-    //SoundCategory.HOSTILE,
-    //        0.1f, 0.4f
-    //        );
 
     @Override
     public void tickMovement() {

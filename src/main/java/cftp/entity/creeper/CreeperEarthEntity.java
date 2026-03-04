@@ -94,7 +94,7 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
             final int radius = iDiameter / 2;
 
             // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl explosion = new ExplosionImpl(
+            final ExplosionImpl dummyExplosion = new ExplosionImpl(
                     serverWorld, null, null,
                     null, null, 1, false,
                     Explosion.DestructionType.DESTROY
@@ -121,7 +121,7 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
                             serverWorld.setBlockState(blockPos, CreeperMath.EARTH_BLOCKS[index], Block.NOTIFY_ALL);
 
                             // So that specific blocks won't drop and with a chance of not dropping at all.
-                            if (block.shouldDropItemsOnExplosion(explosion) && pseudoRandom <= dropExplosionItemChance) {
+                            if (block.shouldDropItemsOnExplosion(dummyExplosion) && pseudoRandom <= dropExplosionItemChance) {
 
                                 ItemStack itemStack;
 

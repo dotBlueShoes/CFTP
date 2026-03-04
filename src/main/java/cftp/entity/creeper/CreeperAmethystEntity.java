@@ -25,7 +25,7 @@ import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperAmethystEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 5;
+    protected int ExplosionDiameter = 7;
 
     public CreeperAmethystEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
@@ -51,10 +51,100 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
+
+            final Difficulty difficulty = this.getWorld().getDifficulty();
+            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+            float diameter = this.ExplosionDiameter;
+
+            int dropExplosionItemChance;
+            int ghostCreeperChance;
+
+            switch (difficulty) {
+                case PEACEFUL:
+                case EASY: {
+                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    diameter *= chargedPower;
+                } break;
+                case NORMAL: {
+                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                    diameter *= 1.25f * chargedPower;
+                } break;
+                case HARD:
+                default: {
+                    dropExplosionItemChance = (int)(255 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                    diameter *= 1.5f * chargedPower;
+                } break;
+            }
+
+            {
+                final int iDiameter = (int) diameter;
+                final int radius = iDiameter / 2;
+
+                for (int y = 0; y < iDiameter; ++y) { // gen
+                    for (int x = 0; x < iDiameter; ++x) {
+                        for (int z = 0; z < iDiameter; ++z) {
+                            int distance = (int) Shapes.sphereDistance(x, y, z, radius);
+
+                            if (distance < radius - 3) {
+                                BlockPos blockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() + y - radius,
+                                        this.getZ() + z - radius
+                                );
+
+                                serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+
+                            } else if (distance < radius - 2) {
+                                BlockPos blockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() + y - radius,
+                                        this.getZ() + z - radius
+                                );
+
+                                if (this.random.nextInt(10) < 7) {
+                                    serverWorld.setBlockState(blockPos, Blocks.AMETHYST_BLOCK.getDefaultState(), Block.NOTIFY_ALL);
+                                } else {
+                                    serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                                }
+
+                            } else if (distance < radius - 1) {
+                                BlockPos blockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() + y - radius,
+                                        this.getZ() + z - radius
+                                );
+
+                                if (this.random.nextInt(10) < 7) {
+                                    serverWorld.setBlockState(blockPos, Blocks.CALCITE.getDefaultState(), Block.NOTIFY_ALL);
+                                } else {
+                                    serverWorld.setBlockState(blockPos, Blocks.WATER.getDefaultState(), Block.NOTIFY_ALL);
+                                }
+
+                            } else if (distance < radius) {
+                                BlockPos blockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() + y - radius,
+                                        this.getZ() + z - radius
+                                );
+
+                                if (this.random.nextInt(10) < 8) {
+                                    serverWorld.setBlockState(blockPos, Blocks.SMOOTH_BASALT.getDefaultState(), Block.NOTIFY_ALL);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
+
+            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

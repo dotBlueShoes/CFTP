@@ -50,9 +50,9 @@ public class CreeperElementalEntity extends HostileEntity {
     protected int explosionDiameter = 3;
 
 
-    public static final float DROP_EXPLOSION_ITEM_CHANCE_EASY   = 1.00f;
-    public static final float DROP_EXPLOSION_ITEM_CHANCE_NORMAL = 0.75f;
-    public static final float DROP_EXPLOSION_ITEM_CHANCE_HARD   = 0.50f;
+    public static final float DROP_EXPLOSION_ITEM_CHANCE_EASY   = 1.000f;
+    public static final float DROP_EXPLOSION_ITEM_CHANCE_NORMAL = 0.875f;
+    public static final float DROP_EXPLOSION_ITEM_CHANCE_HARD   = 0.750f;
 
     public static final float GHOST_CREEPER_KILL_CHANCE_EASY   = 0.00f;
     public static final float GHOST_CREEPER_KILL_CHANCE_NORMAL = 0.25f;

@@ -224,33 +224,38 @@ public class CreeperMath {
         }
     };
 
-    public static List<ItemStack> GetBlockLootTable(ServerWorld serverWorld, Entity entity, Block block) {
-        var blockState = block.getDefaultState();
-
-        Optional<RegistryKey<LootTable>> registryKey = block.getLootTableKey();
-
-        if (registryKey.isPresent()) {
-
-            Optional<LootTable> optional = serverWorld.getServer()
-                    .getReloadableRegistries()
-                    .createRegistryLookup()
-                    .getOptionalEntry(registryKey.get())
-                    .map(RegistryEntry::value);
-
-            LootWorldContext lootWorldContext = new LootWorldContext.Builder(serverWorld)
-                    .add(LootContextParameters.ORIGIN, entity.getPos())
-                    .add(LootContextParameters.THIS_ENTITY, entity)
-                    .add(LootContextParameters.BLOCK_STATE, blockState)
-                    .build(LootContextTypes.BLOCK_USE);
-
-            if (optional.isPresent()) {
-                return optional.get().generateLoot(lootWorldContext);
-            }
-        }
-
-        // Return an empty list. No null checking just size checking.
-        return new ArrayList<>();
-    }
+    // ! Vanilla does it better and theres a little more to it !
+    // This might lag. -> tho I am being told it shouldn't really.
+    // todo:
+    //  1. Consider multiple explosions at the very same time. Maybe some null checking
+    //   and extra registering so that we know a block only breaks once for sure.
+    //  2. Maybe i can cull blocks of said type. - Tho it would behave differently from a normal creeper then.
+    //public static List<ItemStack> getBlockLootTable(ServerWorld serverWorld, Entity entity, Block block) {
+    //    var blockState = block.getDefaultState();
+    //
+    //    Optional<RegistryKey<LootTable>> registryKey = block.getLootTableKey();
+    //
+    //    if (registryKey.isPresent()) {
+    //        Optional<LootTable> optional = serverWorld.getServer()
+    //                .getReloadableRegistries()
+    //                .createRegistryLookup()
+    //                .getOptionalEntry(registryKey.get())
+    //                .map(RegistryEntry::value);
+    //
+    //        LootWorldContext lootWorldContext = new LootWorldContext.Builder(serverWorld)
+    //                .add(LootContextParameters.ORIGIN, entity.getPos())
+    //                .add(LootContextParameters.THIS_ENTITY, entity)
+    //                .add(LootContextParameters.BLOCK_STATE, blockState)
+    //                .build(LootContextTypes.BLOCK_USE);
+    //
+    //        if (optional.isPresent()) {
+    //            return optional.get().generateLoot(lootWorldContext);
+    //        }
+    //    }
+    //
+    //    // Return an empty list. No null checking just size checking.
+    //    return new ArrayList<>();
+    //}
 
     //public enum CREEPERS {
     //    COOKIE      (CreeperCookieEntity.class)     ,

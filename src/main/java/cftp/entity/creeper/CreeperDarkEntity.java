@@ -93,7 +93,7 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
             final int radius = iDiameter / 2;
 
             // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl explosion = new ExplosionImpl(
+            final ExplosionImpl dummyExplosion = new ExplosionImpl(
                     serverWorld, null, null,
                     null, null, 1, false,
                     Explosion.DestructionType.KEEP
@@ -127,7 +127,6 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
                 }
             }
 
-
             // Destroy ALL light blocks
             for (int y = 0; y < iDiameter; ++y) {
                 for (int x = 0; x < iDiameter; ++x) {
@@ -141,22 +140,15 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
                             );
 
                             BlockState state = serverWorld.getBlockState(blockPos);
-                            Block block = state.getBlock();
+
+                            float resistance = state.getBlock().getBlastResistance();
                             int emittedLight = state.getLuminance();
 
-                            if (block.shouldDropItemsOnExplosion(explosion) && emittedLight > 0) {
-
-                                serverWorld.setBlockState(blockPos, Blocks.AIR.getDefaultState(), Block.NOTIFY_ALL);
-
-                                // This might lag. -> tho I am being told it shouldn't really.
-                                // todo:
-                                //  1. Consider multiple explosions at the very same time. Maybe some null checking
-                                //   and extra registering so that we know a block only breaks once for sure.
-                                //  2. Maybe i can cull blocks of said type. - Tho it would behave differently from a normal creeper then.
-                                var drops = CreeperMath.GetBlockLootTable(serverWorld, this, block);
-                                for (ItemStack drop : drops) {
-                                    Block.dropStack(serverWorld, blockPos, drop);
-                                }
+                            if (resistance < 100 && emittedLight > 0) {
+                                state.onExploded(serverWorld, blockPos, dummyExplosion, (itemStack, pos) -> {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                );
                             }
 
                         }

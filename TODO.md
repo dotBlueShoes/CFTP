@@ -1,5 +1,6 @@
 ## Chapter 1. Creeps.
 
+1. REPLACE ALL BLOCK DESTRUCTION and Items destruction with what's in sculk creeper! 
 
 finish creepers
 : water, earth, fire, wind, lighting -> plains
@@ -18,6 +19,10 @@ finish creepers
 
 : piggy, amalgam, golden, harvest -> special
 
+herobrine_creeper - teleports player to the nether
+raw_creeper_fish - explodes when put into an oven which has coal, but 
+used in recipe with sheers gives safe_raw_creeper_fish - can be used in trading
+
 ### Creeper Spectre
 - Spawns with a small chance from ghost creeper death but only in nether (when overcharged it's 100% to spawn, 25% it's going to be overcharged too)
 
@@ -32,12 +37,9 @@ finish creepers
 1. It might work to simply shift pixels on creeper's textures. - creeper texture
 
 ### Creeper Sculk
-1. Missing explode logic. -> a normal creeper explosion with additional sculk application around that explosion.
-2. Missing texture.
 3. Missing proper spawn condition.
 4. Missing random size.
 5. Missing distinguish stats.
-6. Missing charged behavior.
 7. Missing loot-table.
 
 ### Creeper Sand 
@@ -92,14 +94,13 @@ finish creepers
 8. Missing custom explode sound. -> like potion splash sound (but no glass, but puff)
 
 ### Creeper Amethyst
-1. Missing explode logic. -> it's explosion will create a smaller amethyst geode that has water inside and walls are 2 blocks thick.
-2. Missing proper spawn condition. -> could only spawn certain moon-phase.
-3. Missing random size.
-4. Missing distinguish stats. 
-5. Missing charged behavior. -> Instead now creates a normal size geode. 
-6. Missing loot-table. 
-7. Missing Amethyst sparkle walking effect.
-8. Missing custom explode sound. -> like experience sound
+1. Missing proper spawn condition. -> could only spawn certain moon-phase.
+2. Missing random size.
+3. Missing distinguish stats. 
+4. Missing charged behavior. -> Instead now creates a normal size geode. 
+5. Missing loot-table. 
+6. Missing Amethyst sparkle walking effect.
+7. Missing custom explode sound. -> like experience sound
 
 ### Creeper Amalgam
 1. Missing explode logic. -> Explodes into easy/normal/hard <-> 2/3/4 random creepers.
@@ -113,7 +114,7 @@ finish creepers
 9. Missing custom explode sound.
 
 ### Water Creeper 
-1. Now sets the player water-breathing to easy/normal/hard <-> nope/5/0.
+1. Now sets the player water-breathing to easy/normal/hard <-> 10/5/0.
 2. Missing proper spawn condition -> could only spawn certain moon-phase.
 3. Missing custom explode sound. -> water-splash
 

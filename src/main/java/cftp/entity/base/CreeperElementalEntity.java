@@ -63,8 +63,8 @@ public class CreeperElementalEntity extends HostileEntity {
     protected int currentFuseTime;
     protected int headsDropped;
 
-    protected int fuseTime = 25;
     protected int explosionDiameter = 3;
+    protected int fuseTime = 25;
 
     public static final int ITEM_EXPLOSION_DAMAGE = 10;
 

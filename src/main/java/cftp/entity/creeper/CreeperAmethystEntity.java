@@ -210,6 +210,15 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
     }
 
     @Override
+    protected void playExplosionSound(World world) {
+        world.playSound(
+                null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.ENTITY_PLAYER_SPLASH_HIGH_SPEED, SoundCategory.HOSTILE,
+                2.0F, 0.4F
+        );
+    }
+
+    @Override
     public void tickMovement() {
         if (this.getWorld().isClient) {
             CreeperMath.createWaterWalkingParticle(this);

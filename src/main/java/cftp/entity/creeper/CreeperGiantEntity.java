@@ -47,16 +47,16 @@ public class CreeperGiantEntity extends CreeperElementalEntity {
         return CreeperMath.CREEPER_TYPE.GIANT.getType();
     }
 
-    @Override // TODO
-    protected void explode() {
-        if (this.getWorld() instanceof ServerWorld serverWorld) {
-            this.dead = true;
-            this.playExplosionSound(serverWorld);
-            this.spawnEffectsCloud();
-            this.onRemoval(serverWorld, RemovalReason.KILLED);
-            this.discard();
-        }
-    }
+    //@Override // TODO
+    //protected void explode() {
+    //    if (this.getWorld() instanceof ServerWorld serverWorld) {
+    //        this.dead = true;
+    //        this.playExplosionSound(serverWorld);
+    //        this.spawnEffectsCloud();
+    //        this.onRemoval(serverWorld, RemovalReason.KILLED);
+    //        this.discard();
+    //    }
+    //}
 
     @Override
     public void tickMovement() {

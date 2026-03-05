@@ -49,93 +49,100 @@ public class CreeperFlipEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
 
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.ExplosionDiameter;
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                float diameter = this.ExplosionDiameter;
 
-            int ghostCreeperChance;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    diameter *= chargedPower;
-                } break;
-                case NORMAL: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.25f * chargedPower;
-                } break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 1.5f * chargedPower;
-                } break;
-            }
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        diameter *= chargedPower;
+                    }
+                    break;
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        diameter *= 1.25f * chargedPower;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        diameter *= 1.5f * chargedPower;
+                    }
+                    break;
+                }
 
-            final int iDiameter = (int) diameter;
-            final int radius = iDiameter / 2;
+                final int iDiameter = (int) diameter;
+                final int radius = iDiameter / 2;
 
-            for (int y = 0; y < radius; ++y) {
-                for (int x = 0; x < iDiameter; ++x) {
-                    for (int z = 0; z < iDiameter; ++z) {
-                        if (Shapes.isSphere(x, y, z, radius)) {
+                for (int y = 0; y < radius; ++y) {
+                    for (int x = 0; x < iDiameter; ++x) {
+                        for (int z = 0; z < iDiameter; ++z) {
+                            if (Shapes.isSphere(x, y, z, radius)) {
 
-                            // selected
-                            BlockPos sblockPos = BlockPos.ofFloored(
-                                    this.getX() + x - radius,
-                                    this.getY() + y - radius,
-                                    this.getZ() + z - radius
-                            );
+                                // selected
+                                BlockPos sblockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() + y - radius,
+                                        this.getZ() + z - radius
+                                );
 
-                            // mirrored
-                            BlockPos mBlockPos = BlockPos.ofFloored(
-                                    this.getX() + x - radius,
-                                    this.getY() - (y - radius) - 1,
-                                    this.getZ() + z - radius
-                            );
+                                // mirrored
+                                BlockPos mBlockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() - (y - radius) - 1,
+                                        this.getZ() + z - radius
+                                );
 
-                            BlockState sState = serverWorld.getBlockState(sblockPos);
-                            var sBlock = sState.getBlock();
+                                BlockState sState = serverWorld.getBlockState(sblockPos);
+                                var sBlock = sState.getBlock();
 
-                            BlockState mState = serverWorld.getBlockState(mBlockPos);
-                            var mBlock = mState.getBlock();
+                                BlockState mState = serverWorld.getBlockState(mBlockPos);
+                                var mBlock = mState.getBlock();
 
-                            float sBlastResistance = sBlock.getBlastResistance();
-                            float mBlastResistance = mBlock.getBlastResistance();
+                                float sBlastResistance = sBlock.getBlastResistance();
+                                float mBlastResistance = mBlock.getBlastResistance();
 
-                            // Swap only if both selected and mirrored blocks are not so blastResistant.
-                            if (sBlastResistance < 600 && mBlastResistance < 600) {
-                                serverWorld.setBlockState(sblockPos, mState, Block.NOTIFY_ALL);
-                                serverWorld.setBlockState(mBlockPos, sState, Block.NOTIFY_ALL);
+                                // Swap only if both selected and mirrored blocks are not so blastResistant.
+                                if (sBlastResistance < 600 && mBlastResistance < 600) {
+                                    serverWorld.setBlockState(sblockPos, mState, Block.NOTIFY_ALL);
+                                    serverWorld.setBlockState(mBlockPos, sState, Block.NOTIFY_ALL);
+                                }
+
                             }
-
                         }
                     }
                 }
+
+                serverWorld.createExplosion( // deals dmg
+                        this,
+                        Explosion.createDamageSource(serverWorld, this),
+                        CreeperMath.noDestroyExplosionBehaviour,
+                        this.getX(),
+                        this.getY() - 2,
+                        this.getZ(),
+                        diameter,
+                        false,
+                        World.ExplosionSourceType.MOB,
+                        ParticleTypes.EXPLOSION,
+                        ParticleTypes.EXPLOSION_EMITTER,
+                        SoundEvents.ENTITY_GENERIC_EXPLODE
+                );
+
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            serverWorld.createExplosion(
-                    this,
-                    Explosion.createDamageSource(serverWorld, this),
-                    CreeperMath.noDestroyExplosionBehaviour,
-                    this.getX(),
-                    this.getY() - 2,
-                    this.getZ(),
-                    diameter,
-                    false,
-                    World.ExplosionSourceType.MOB,
-                    ParticleTypes.EXPLOSION,
-                    ParticleTypes.EXPLOSION_EMITTER,
-                    SoundEvents.ENTITY_GENERIC_EXPLODE
-            );
-
-            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

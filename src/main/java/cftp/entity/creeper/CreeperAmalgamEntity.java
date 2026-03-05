@@ -94,85 +94,89 @@ public class CreeperAmalgamEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final RegistryKey<World> dimension = serverWorld.getRegistryKey();
-            final Difficulty difficulty = serverWorld.getDifficulty();
+            if (!isDefused()) {
+                final RegistryKey<World> dimension = serverWorld.getRegistryKey();
+                final Difficulty difficulty = serverWorld.getDifficulty();
 
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.ExplosionDiameter ;
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                float diameter = this.ExplosionDiameter;
 
-            int ghostCreeperChance;
-            int count;
+                int ghostCreeperChance;
+                int count;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    count = 1 + random.nextInt(2); // 1-2
-                    diameter *= chargedPower;
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        count = 1 + random.nextInt(2); // 1-2
+                        diameter *= chargedPower;
+                    }
+                    break;
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        count = 2 + random.nextInt(3); // 2-4
+                        diameter *= 1.25f * chargedPower;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        count = 3 + random.nextInt(3); // 3-5
+                        diameter *= 1.50f * chargedPower;
+                    }
+                    break;
                 }
-                break;
-                case NORMAL: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    count = 2 + random.nextInt(3); // 2-4
-                    diameter *= 1.25f * chargedPower;
+
+                // TODO
+                //  1. Instead x, y, z should be random so each entity spawns in a random position.
+
+                final int iDiameter = (int) diameter;
+                final int randomCallsCount = 10;
+
+                // Try `randomCallsCount` times to summon the creeper at random positions.
+                for (int i = randomCallsCount; i > 0 && count > 0; --i) {
+                    int y = random.nextInt(3);
+                    int x = random.nextInt(iDiameter);
+                    int z = random.nextInt(iDiameter);
+
+                    BlockPos blockPos = BlockPos.ofFloored(
+                            this.getX() + x - 4,
+                            this.getY() + y - 1,
+                            this.getZ() + z - 4
+                    );
+
+                    BlockState state = serverWorld.getBlockState(blockPos);
+                    boolean isValid = state.getCollisionShape(serverWorld, blockPos).isEmpty();
+
+                    if (isValid) {
+                        --count;
+                        SpawnCreeper(serverWorld, dimension, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
+                    }
+
                 }
-                break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    count = 3 + random.nextInt(3); // 3-5
-                    diameter *= 1.50f * chargedPower;
+
+                // If the above failed to summon all count instead summon them in the position of the creeper.
+                for (int i = count; i > 0; --i) {
+
+                    // Ensure they do not spawn in wall (because their collision shape is different from a creeper)
+                    BlockPos blockPosition = BlockPos.ofFloored(
+                            this.getX(),
+                            this.getY(),
+                            this.getZ()
+                    );
+
+                    SpawnCreeper(serverWorld, dimension, blockPosition.getX() + 0.5f, blockPosition.getY(), blockPosition.getZ() + 0.5f);
                 }
-                break;
+
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            // TODO
-            //  1. Instead x, y, z should be random so each entity spawns in a random position.
-
-            final int iDiameter = (int) diameter;
-            final int randomCallsCount = 10;
-
-            // Try `randomCallsCount` times to summon the creeper at random positions.
-            for (int i = randomCallsCount; i > 0 && count > 0; --i) {
-                int y = random.nextInt(3);
-                int x = random.nextInt(iDiameter);
-                int z = random.nextInt(iDiameter);
-
-                BlockPos blockPos = BlockPos.ofFloored(
-                        this.getX() + x - 4,
-                        this.getY() + y - 1,
-                        this.getZ() + z - 4
-                );
-
-                BlockState state = serverWorld.getBlockState(blockPos);
-                boolean isValid = state.getCollisionShape(serverWorld, blockPos).isEmpty();
-
-                if (isValid) {
-                    --count;
-                    SpawnCreeper(serverWorld, dimension, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
-                }
-
-            }
-
-            // If the above failed to summon all count instead summon them in the position of the creeper.
-            for (int i = count; i > 0; --i) {
-
-                // Ensure they do not spawn in wall (because their collision shape is different from a creeper)
-                BlockPos blockPosition = BlockPos.ofFloored(
-                        this.getX(),
-                        this.getY(),
-                        this.getZ()
-                );
-
-                SpawnCreeper(serverWorld, dimension, blockPosition.getX() + 0.5f, blockPosition.getY() , blockPosition.getZ() + 0.5f);
-            }
-
-            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

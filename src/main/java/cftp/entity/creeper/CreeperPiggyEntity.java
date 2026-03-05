@@ -72,88 +72,92 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final RegistryKey<World> dimension = serverWorld.getRegistryKey();
-            final Difficulty difficulty = serverWorld.getDifficulty();
+            if (!isDefused()) {
+                final RegistryKey<World> dimension = serverWorld.getRegistryKey();
+                final Difficulty difficulty = serverWorld.getDifficulty();
 
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.ExplosionDiameter ;
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                float diameter = this.ExplosionDiameter;
 
-            int ghostCreeperChance;
-            int pigsCount;
+                int ghostCreeperChance;
+                int pigsCount;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    pigsCount = 1 + random.nextInt(2); // 1-2
-                    diameter *= chargedPower;
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        pigsCount = 1 + random.nextInt(2); // 1-2
+                        diameter *= chargedPower;
+                    }
+                    break;
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        pigsCount = 1 + random.nextInt(3); // 1-3
+                        diameter *= 1.25f * chargedPower;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        pigsCount = 2 + random.nextInt(3); // 2-4
+                        diameter *= 1.50f * chargedPower;
+                    }
+                    break;
                 }
-                break;
-                case NORMAL: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    pigsCount = 1 + random.nextInt(3); // 1-3
-                    diameter *= 1.25f * chargedPower;
+
+                // TODO
+                //  1. Instead x, y, z should be random so each entity spawns in a random position.
+                //  2. If it's nether it could spawn zombie_pig_men ?
+
+                final int iDiameter = (int) diameter;
+                final int randomCallsCount = 10;
+
+                // Try `randomCallsCount` times to summon the pig at random positions.
+                for (int i = randomCallsCount; i > 0 && pigsCount > 0; --i) {
+                    int y = random.nextInt(3);
+                    int x = random.nextInt(iDiameter);
+                    int z = random.nextInt(iDiameter);
+
+                    BlockPos blockPos = BlockPos.ofFloored(
+                            this.getX() + x - 4,
+                            this.getY() + y - 1,
+                            this.getZ() + z - 4
+                    );
+
+                    BlockState state = serverWorld.getBlockState(blockPos);
+                    boolean isValid = state.getCollisionShape(serverWorld, blockPos).isEmpty();
+
+                    if (isValid) {
+                        --pigsCount;
+                        SpawnPig(serverWorld, dimension, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
+                    }
+
                 }
-                break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    pigsCount = 2 + random.nextInt(3); // 2-4
-                    diameter *= 1.50f * chargedPower;
+
+                // If the above failed to summon all pigsCount instead summon them in the position of the creeper.
+                for (int i = pigsCount; i > 0; --i) {
+
+                    // CFTP.LOGGER.info("call");
+
+                    // Ensure they do not spawn in wall (because their collision shape is different from a creeper)
+                    BlockPos blockPosition = BlockPos.ofFloored(
+                            this.getX(),
+                            this.getY(),
+                            this.getZ()
+                    );
+
+                    SpawnPig(serverWorld, dimension, blockPosition.getX() + 0.5f, blockPosition.getY(), blockPosition.getZ() + 0.5f);
                 }
-                break;
+
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            // TODO
-            //  1. Instead x, y, z should be random so each entity spawns in a random position.
-            //  2. If it's nether it could spawn zombie_pig_men ?
-
-            final int iDiameter = (int) diameter;
-            final int randomCallsCount = 10;
-
-            // Try `randomCallsCount` times to summon the pig at random positions.
-            for (int i = randomCallsCount; i > 0 && pigsCount > 0; --i) {
-                int y = random.nextInt(3);
-                int x = random.nextInt(iDiameter);
-                int z = random.nextInt(iDiameter);
-
-                BlockPos blockPos = BlockPos.ofFloored(
-                        this.getX() + x - 4,
-                        this.getY() + y - 1,
-                        this.getZ() + z - 4
-                );
-
-                BlockState state = serverWorld.getBlockState(blockPos);
-                boolean isValid = state.getCollisionShape(serverWorld, blockPos).isEmpty();
-
-                if (isValid) {
-                    --pigsCount;
-                    SpawnPig(serverWorld, dimension, blockPos.getX() + 0.5, blockPos.getY() + 0.5, blockPos.getZ() + 0.5);
-                }
-
-            }
-
-            // If the above failed to summon all pigsCount instead summon them in the position of the creeper.
-            for (int i = pigsCount; i > 0; --i) {
-
-                // CFTP.LOGGER.info("call");
-
-                // Ensure they do not spawn in wall (because their collision shape is different from a creeper)
-                BlockPos blockPosition = BlockPos.ofFloored(
-                        this.getX(),
-                        this.getY(),
-                        this.getZ()
-                );
-
-                SpawnPig(serverWorld, dimension, blockPosition.getX() + 0.5f, blockPosition.getY() , blockPosition.getZ() + 0.5f);
-            }
-
-            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

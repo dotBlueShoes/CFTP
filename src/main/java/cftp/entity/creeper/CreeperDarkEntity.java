@@ -58,111 +58,115 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
 
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.ExplosionDiameter;
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                float diameter = this.ExplosionDiameter;
 
-            int darknessEffectTicks;
-            int ghostCreeperChance;
+                int darknessEffectTicks;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_EASY * (int) chargedPower;
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    diameter *= chargedPower;
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        darknessEffectTicks = DARKNESS_EFFECT_TICKS_EASY * (int) chargedPower;
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        diameter *= chargedPower;
+                    }
+                    break;
+                    case NORMAL: {
+                        darknessEffectTicks = DARKNESS_EFFECT_TICKS_NORMAL * (int) chargedPower;
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        diameter *= 1.25f * chargedPower;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        darknessEffectTicks = DARKNESS_EFFECT_TICKS_HARD * (int) chargedPower;
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        diameter *= 1.50f * chargedPower;
+                    }
+                    break;
                 }
-                break;
-                case NORMAL: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_NORMAL * (int) chargedPower;
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.25f * chargedPower;
-                }
-                break;
-                case HARD:
-                default: {
-                    darknessEffectTicks = DARKNESS_EFFECT_TICKS_HARD * (int) chargedPower;
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 1.50f * chargedPower;
-                }
-                break;
-            }
 
-            final int iDiameter = (int) diameter;
-            final int radius = iDiameter / 2;
+                final int iDiameter = (int) diameter;
+                final int radius = iDiameter / 2;
 
-            // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl dummyExplosion = new ExplosionImpl(
-                    serverWorld, null, null,
-                    null, null, 1, false,
-                    Explosion.DestructionType.KEEP
-            );
-
-            { // The DARKNESS effect is being applied in BOX rather in SPHERE. That's OK.
-                double darknessRadius = radius - 3;
-
-                Box box = new Box(
-                        this.getX() - darknessRadius,
-                        this.getY() - darknessRadius,
-                        this.getZ() - darknessRadius,
-                        this.getX() + darknessRadius,
-                        this.getY() + darknessRadius,
-                        this.getZ() + darknessRadius
+                // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
+                final ExplosionImpl dummyExplosion = new ExplosionImpl(
+                        serverWorld, null, null,
+                        null, null, 1, false,
+                        Explosion.DestructionType.KEEP
                 );
 
-                List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
+                { // The DARKNESS effect is being applied in BOX rather in SPHERE. That's OK.
+                    double darknessRadius = radius - 3;
 
-                for (ServerPlayerEntity player : players) {
-                    if (player.interactionManager.getGameMode() != GameMode.CREATIVE) {
-                        player.addStatusEffect(new StatusEffectInstance(
-                                StatusEffects.DARKNESS,
-                                darknessEffectTicks,
-                                4,   // amplifier (0 == level I)
-                                true,        // ambient (optional)
-                                true,        // showParticles (set false to hide)
-                                true         // showIcon
-                        ));
-                    }
-                }
-            }
+                    Box box = new Box(
+                            this.getX() - darknessRadius,
+                            this.getY() - darknessRadius,
+                            this.getZ() - darknessRadius,
+                            this.getX() + darknessRadius,
+                            this.getY() + darknessRadius,
+                            this.getZ() + darknessRadius
+                    );
 
-            // Destroy ALL light blocks
-            for (int y = 0; y < iDiameter; ++y) {
-                for (int x = 0; x < iDiameter; ++x) {
-                    for (int z = 0; z < iDiameter; ++z) {
-                        if (Shapes.isSphere(x, y, z, radius)) {
+                    List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
 
-                            BlockPos blockPos = BlockPos.ofFloored(
-                                    this.getX() + x - radius,
-                                    this.getY() + y - radius,
-                                    this.getZ() + z - radius
-                            );
-
-                            BlockState state = serverWorld.getBlockState(blockPos);
-
-                            float resistance = state.getBlock().getBlastResistance();
-                            int emittedLight = state.getLuminance();
-
-                            if (resistance < 100 && emittedLight > 0) {
-                                state.onExploded(serverWorld, blockPos, dummyExplosion, (itemStack, pos) -> {
-                                            Block.dropStack(serverWorld, blockPos, itemStack);
-                                        }
-                                );
-                            }
-
+                    for (ServerPlayerEntity player : players) {
+                        if (player.interactionManager.getGameMode() != GameMode.CREATIVE) {
+                            player.addStatusEffect(new StatusEffectInstance(
+                                    StatusEffects.DARKNESS,
+                                    darknessEffectTicks,
+                                    4,   // amplifier (0 == level I)
+                                    true,        // ambient (optional)
+                                    true,        // showParticles (set false to hide)
+                                    true         // showIcon
+                            ));
                         }
                     }
                 }
+
+                // Destroy ALL light blocks
+                for (int y = 0; y < iDiameter; ++y) {
+                    for (int x = 0; x < iDiameter; ++x) {
+                        for (int z = 0; z < iDiameter; ++z) {
+                            if (Shapes.isSphere(x, y, z, radius)) {
+
+                                BlockPos blockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() + y - radius,
+                                        this.getZ() + z - radius
+                                );
+
+                                BlockState state = serverWorld.getBlockState(blockPos);
+
+                                float resistance = state.getBlock().getBlastResistance();
+                                int emittedLight = state.getLuminance();
+
+                                if (resistance < 100 && emittedLight > 0) {
+                                    state.onExploded(serverWorld, blockPos, dummyExplosion, (itemStack, pos) -> {
+                                                Block.dropStack(serverWorld, blockPos, itemStack);
+                                            }
+                                    );
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                this.playExplosionSound(serverWorld);
+                this.createExplosionParticles(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            this.playExplosionSound(serverWorld);
-            this.createExplosionParticles(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

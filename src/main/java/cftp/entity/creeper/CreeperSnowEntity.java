@@ -47,81 +47,88 @@ public class CreeperSnowEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
 
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.ExplosionDiameter;
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                float diameter = this.ExplosionDiameter;
 
-            int dropExplosionItemChance;
-            int ghostCreeperChance;
+                int dropExplosionItemChance;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    diameter *= chargedPower;
-                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                } break;
-                case NORMAL: {
-                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.5f * chargedPower;
-                } break;
-                case HARD:
-                default: {
-                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 2.0f * chargedPower;
-                } break;
-            }
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        diameter *= chargedPower;
+                        dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    }
+                    break;
+                    case NORMAL: {
+                        dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        diameter *= 1.5f * chargedPower;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        diameter *= 2.0f * chargedPower;
+                    }
+                    break;
+                }
 
-            final int iDiameter = (int) diameter;
-            final int radius = iDiameter / 2;
+                final int iDiameter = (int) diameter;
+                final int radius = iDiameter / 2;
 
-            // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl dummyExplosion = new ExplosionImpl(
-                    serverWorld, null, null,
-                    null, null, 1, false,
-                    Explosion.DestructionType.DESTROY
-            );
+                // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
+                final ExplosionImpl dummyExplosion = new ExplosionImpl(
+                        serverWorld, null, null,
+                        null, null, 1, false,
+                        Explosion.DestructionType.DESTROY
+                );
 
-            var seed = (int)this.getX() + (int)this.getY() + (int)this.getZ();
+                var seed = (int) this.getX() + (int) this.getY() + (int) this.getZ();
 
-            for (int y = 0; y < iDiameter; ++y) {
-                for (int x = 0; x < iDiameter; ++x) {
-                    for (int z = 0; z < iDiameter; ++z) {
-                        if (Shapes.isSphere(x, y, z, radius)) {
-                            BlockPos blockPos = BlockPos.ofFloored(
-                                    this.getX() + x - radius,
-                                    this.getY() + y - radius,
-                                    this.getZ() + z - radius
-                            );
+                for (int y = 0; y < iDiameter; ++y) {
+                    for (int x = 0; x < iDiameter; ++x) {
+                        for (int z = 0; z < iDiameter; ++z) {
+                            if (Shapes.isSphere(x, y, z, radius)) {
+                                BlockPos blockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() + y - radius,
+                                        this.getZ() + z - radius
+                                );
 
-                            BlockState state = serverWorld.getBlockState(blockPos);
-                            float resistance = state.getBlock().getBlastResistance();
+                                BlockState state = serverWorld.getBlockState(blockPos);
+                                float resistance = state.getBlock().getBlastResistance();
 
-                            var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                            var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.SNOW_BLOCKS.length;
+                                var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
+                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.SNOW_BLOCKS.length;
 
-                            if (resistance < 100) {
-                                CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.SNOW_BLOCKS[index], blockPos, (itemStack, pos) -> {
-                                    if (this.random.nextInt(100) < dropExplosionItemChance) {
-                                        Block.dropStack(serverWorld, blockPos, itemStack);
-                                    }
-                                });
+                                if (resistance < 100) {
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.SNOW_BLOCKS[index], blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+                                }
+
                             }
-
                         }
                     }
                 }
+
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

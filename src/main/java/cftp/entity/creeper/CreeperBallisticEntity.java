@@ -62,45 +62,49 @@ public class CreeperBallisticEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
+            if (!this.isTouchingWater() && !isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
 
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.ExplosionDiameter ;
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                float diameter = this.ExplosionDiameter;
 
-            int ghostCreeperChance;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    diameter *= chargedPower;
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        diameter *= chargedPower;
+                    }
+                    break;
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        diameter *= 1.25f * chargedPower;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        diameter *= 1.50f * chargedPower;
+                    }
+                    break;
                 }
-                break;
-                case NORMAL: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.25f * chargedPower;
-                }
-                break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 1.50f * chargedPower;
-                }
-                break;
+
+                serverWorld.createExplosion(
+                        this, this.getX(), this.getY(), this.getZ(),
+                        diameter,
+                        World.ExplosionSourceType.MOB
+                );
+
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            serverWorld.createExplosion(
-                    this, this.getX(), this.getY(), this.getZ(),
-                    diameter,
-                    World.ExplosionSourceType.MOB
-            );
-
-            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

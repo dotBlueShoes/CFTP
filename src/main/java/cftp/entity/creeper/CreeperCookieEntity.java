@@ -58,47 +58,53 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
     @Override
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
-            int chargedAmount = this.isCharged() ? 2 : 1;
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
+                int chargedAmount = this.isCharged() ? 2 : 1;
 
-            int ghostCreeperChance;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    }
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                    }
+                    break;
                 }
-                case NORMAL: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                } break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                } break;
+
+                { // Generate cookies as the explosion.
+                    ItemEntity itemEntity = new ItemEntity(
+                            serverWorld, this.getX(), this.getY(), this.getZ(),
+                            new ItemStack(Items.COOKIE, 5 * chargedAmount)
+                    );
+
+                    itemEntity.setVelocity(
+                            itemEntity.getVelocity().multiply(2.0, 2.0, 2.0)
+                    );
+
+                    itemEntity.setToDefaultPickupDelay();
+                    serverWorld.spawnEntity(itemEntity);
+                }
+
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            { // Generate cookies as the explosion.
-                ItemEntity itemEntity = new ItemEntity(
-                        serverWorld, this.getX(), this.getY(), this.getZ(),
-                        new ItemStack(Items.COOKIE, 5 * chargedAmount)
-                );
-
-                itemEntity.setVelocity(
-                        itemEntity.getVelocity().multiply(2.0, 2.0, 2.0)
-                );
-
-                itemEntity.setToDefaultPickupDelay();
-                serverWorld.spawnEntity(itemEntity);
-            }
-
-            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

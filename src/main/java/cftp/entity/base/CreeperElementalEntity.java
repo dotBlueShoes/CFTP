@@ -1,8 +1,10 @@
 package cftp.entity.base;
 
 import cftp.CFTP;
+import cftp.entity.creeper.CreeperGoldenEntity;
 import cftp.registries.CFTPEntities;
 import cftp.goals.CreeperElementalIgniteGoal;
+import cftp.registries.CFTPItems;
 import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
 import net.minecraft.entity.*;
@@ -21,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -29,6 +32,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
@@ -41,14 +45,7 @@ public class CreeperElementalEntity extends HostileEntity {
     protected static final TrackedData<Integer> FUSE_SPEED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.INTEGER);
     protected static final TrackedData<Boolean> CHARGED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final TrackedData<Boolean> IGNITED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
-    protected int lastFuseTime;
-    protected int currentFuseTime;
-    protected int headsDropped;
-
-    protected int fuseTime = 25;
-    protected int explosionDiameter = 3;
-
+    protected static final TrackedData<Boolean> DEFUSED = DataTracker.registerData(CreeperElementalEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
     public static final float DROP_EXPLOSION_ITEM_CHANCE_EASY   = 1.000f;
     public static final float DROP_EXPLOSION_ITEM_CHANCE_NORMAL = 0.875f;
@@ -61,6 +58,15 @@ public class CreeperElementalEntity extends HostileEntity {
     public static final float GHOST_CREEPER_EXPLODE_CHANCE_EASY   = 0.000f;
     public static final float GHOST_CREEPER_EXPLODE_CHANCE_NORMAL = 0.125f;
     public static final float GHOST_CREEPER_EXPLODE_CHANCE_HARD   = 0.250f;
+
+    protected int lastFuseTime;
+    protected int currentFuseTime;
+    protected int headsDropped;
+
+    protected int fuseTime = 25;
+    protected int explosionDiameter = 3;
+
+    public static final int ITEM_EXPLOSION_DAMAGE = 10;
 
     public CreeperElementalEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -106,6 +112,7 @@ public class CreeperElementalEntity extends HostileEntity {
         builder.add(FUSE_SPEED, -1);
         builder.add(CHARGED, false);
         builder.add(IGNITED, false);
+        builder.add(DEFUSED, false);
     }
 
     @Override
@@ -118,12 +125,15 @@ public class CreeperElementalEntity extends HostileEntity {
         nbt.putShort("Fuse", (short)this.fuseTime);
         nbt.putByte("ExplosionDiameter", (byte)this.explosionDiameter);
         nbt.putBoolean("ignited", this.isIgnited());
+        nbt.putBoolean("defused", this.isDefused());
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(CHARGED, nbt.getBoolean("powered"));
+        this.dataTracker.set(DEFUSED, nbt.getBoolean("defused"));
+
         if (nbt.contains("Fuse", NbtElement.NUMBER_TYPE)) {
             this.fuseTime = nbt.getShort("Fuse");
         }
@@ -141,6 +151,10 @@ public class CreeperElementalEntity extends HostileEntity {
     public void tick() {
         if (this.isAlive()) {
             this.lastFuseTime = this.currentFuseTime;
+
+            //if (this.isDefused()) {
+            //    this.setFuseSpeed(fuseTime);
+            //} else
             if (this.isIgnited()) {
                 this.setFuseSpeed(1);
             }
@@ -221,62 +235,160 @@ public class CreeperElementalEntity extends HostileEntity {
 
     @Override
     protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (itemStack.isIn(ItemTags.CREEPER_IGNITERS)) {
-            SoundEvent soundEvent = itemStack.isOf(Items.FIRE_CHARGE) ? SoundEvents.ITEM_FIRECHARGE_USE : SoundEvents.ITEM_FLINTANDSTEEL_USE;
-            this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(), soundEvent, this.getSoundCategory(), 1.0F, this.random.nextFloat() * 0.4F + 0.8F);
-            if (!this.getWorld().isClient) {
-                this.ignite();
-                if (!itemStack.isDamageable()) {
-                    itemStack.decrement(1);
-                } else {
-                    itemStack.damage(1, player, getSlotForHand(hand));
+        ItemStack stack = player.getStackInHand(hand);
+
+
+            if (stack.isIn(ItemTags.CREEPER_IGNITERS) && !isDefused()) {
+                SoundEvent sound = stack.isOf(Items.FIRE_CHARGE) ? SoundEvents.ITEM_FIRECHARGE_USE : SoundEvents.ITEM_FLINTANDSTEEL_USE;
+
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(),
+                        sound, this.getSoundCategory(),
+                        1.0F, this.random.nextFloat() * 0.4F + 0.8F
+                );
+
+                if (this.getWorld() instanceof ServerWorld) {
+                    this.ignite();
+
+                    if (!stack.isDamageable()) {
+                        stack.decrement(1);
+                    } else {
+                        stack.damage(1, player, getSlotForHand(hand));
+                    }
                 }
+
+                return ActionResult.SUCCESS;
+            } else if (stack.isOf(Items.SHEARS) && !isDefused()) {
+
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.NEUTRAL,
+                        1.4F,  0.8F
+                );
+
+                if (this.getWorld() instanceof ServerWorld world) {
+                    this.defuse(true);
+
+                    if (!stack.isDamageable()) {
+                        stack.decrement(32); // 8 uses
+                    } else {
+                        stack.damage(32, player, getSlotForHand(hand));
+                    }
+
+                    { // Generate fuse at the ground.
+                        ItemEntity itemEntity = new ItemEntity(
+                                world, this.getX(), this.getY(), this.getZ(),
+                                new ItemStack(CFTPItems.CREEPER_FUSE, 1)
+                        );
+
+                        itemEntity.setVelocity(
+                                itemEntity.getVelocity().multiply(1.0f, 1.2f, 1.0f)
+                        );
+
+                        itemEntity.setToDefaultPickupDelay();
+                        world.spawnEntity(itemEntity);
+                    }
+
+                } else {
+                    for (int i = 0; i < 5; ++i) {
+                        this.getWorld().addParticle(
+                                ParticleTypes.SCRAPE,
+                                this.getParticleX(0.5),
+                                this.getRandomBodyY(),
+                                this.getParticleZ(0.5),
+                                (random.nextDouble() - 0.5) * 0.9,
+                                -random.nextDouble(),
+                                (random.nextDouble() - 0.5) * 0.9
+                        );
+                    }
+                }
+
+                return ActionResult.SUCCESS;
+            } else if (stack.isOf(Items.ENCHANTED_GOLDEN_APPLE)) {
+
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE, SoundCategory.NEUTRAL,
+                        0.5F, this.random.nextFloat() * 0.4F + 0.4F
+                );
+
+                if (this.getWorld() instanceof ServerWorld world) {
+                    this.changeIntoGoldenCreeper(world);
+
+                    if (!stack.isDamageable()) {
+                        stack.decrement(1);
+                    } else {
+                        stack.damage(1, player, getSlotForHand(hand));
+                    }
+                } else {
+                    for (int i = 0; i < 5; ++i) {
+                        this.getWorld().addParticle(
+                                ParticleTypes.POOF,
+                                this.getParticleX(0.5),
+                                this.getRandomBodyY(),
+                                this.getParticleZ(0.5),
+                                0,
+                                -random.nextDouble(),
+                                0
+                        );
+                    }
+                }
+
+                return ActionResult.SUCCESS;
             }
 
-            return ActionResult.SUCCESS;
-        } else {
-            return super.interactMob(player, hand);
-        }
+        return super.interactMob(player, hand);
     }
 
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
-            float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.explosionDiameter;
-            int ghostCreeperChance;
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
+                float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                float diameter = this.explosionDiameter;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    diameter *= chargedPower;
-                } break;
-                case NORMAL: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.5f * chargedPower;
-                } break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 2.0f * chargedPower;
-                } break;
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        diameter *= chargedPower;
+                    }
+                    break;
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        diameter *= 1.5f * chargedPower;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        diameter *= 2.0f * chargedPower;
+                    }
+                    break;
+                }
+
+                serverWorld.createExplosion(
+                        this, this.getX(), this.getY(), this.getZ(),
+                        diameter, World.ExplosionSourceType.MOB
+                );
+
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
-
-            serverWorld.createExplosion(
-                    this, this.getX(), this.getY(), this.getZ(),
-                    diameter, World.ExplosionSourceType.MOB
-            );
 
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
+    }
+
+    protected void playDefusedExplosionSound(World world) {
+        world.playSound(
+                null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.ENCHANT_THORNS_HIT, SoundCategory.HOSTILE,
+                1.4F, 0.5F
+        );
     }
 
     protected void spawnEffectsCloud() {
@@ -321,12 +433,20 @@ public class CreeperElementalEntity extends HostileEntity {
         );
     }
 
+    public boolean isDefused() {
+        return this.dataTracker.get(DEFUSED);
+    }
+
+    public void defuse(boolean value) {
+        this.dataTracker.set(DEFUSED, value);
+    }
+
     public boolean isIgnited() {
         return this.dataTracker.get(IGNITED);
     }
 
     public void ignite() {
-        this.dataTracker.set(IGNITED, true);
+        if (!isDefused()) this.dataTracker.set(IGNITED, true);
     }
 
     public boolean shouldDropHead() {
@@ -391,5 +511,37 @@ public class CreeperElementalEntity extends HostileEntity {
             SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
 
+    }
+
+    public void changeIntoGoldenCreeper (ServerWorld world) {
+        CreeperGoldenEntity entity = CFTPEntities.CREEPER_GOLDEN.create(world, SpawnReason.CONVERSION);
+
+        if (entity != null) {
+            entity.setHeadYaw(this.getHeadYaw());
+            entity.bodyYaw = this.bodyYaw;
+
+            entity.refreshPositionAndAngles(
+                    this.getX(),
+                    this.getY(),
+                    this.getZ(),
+                    this.getYaw(),
+                    this.getPitch()
+            );
+
+            { // Copy data.
+                entity.setHealth(this.getHealth());
+                entity.setCustomName(this.getCustomName());
+                entity.setCustomNameVisible(this.isCustomNameVisible());
+                entity.defuse(this.isDefused());
+            }
+
+            // Make it not despawnable.
+            entity.setPersistent();
+
+            world.spawnEntity(entity);
+
+            // Remove old entity.
+            this.discard();
+        }
     }
 }

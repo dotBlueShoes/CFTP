@@ -11,9 +11,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
@@ -24,12 +26,15 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
+
+import java.util.List;
 
 public class CreeperFireEntity extends CreeperElementalEntity {
 
@@ -110,7 +115,7 @@ public class CreeperFireEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            if (!this.isTouchingWater()) {
+            if (!this.isTouchingWater() && !isDefused()) {
 
                 final Difficulty difficulty = this.getWorld().getDifficulty();
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
@@ -151,6 +156,27 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                         null, null, 1, false,
                         Explosion.DestructionType.DESTROY
                 );
+
+                final DamageSource damageSource = serverWorld.getDamageSources().explosion(dummyExplosion);
+
+                { // Destroy some items on the ground.
+                    Box box = new Box(
+                            this.getX() - radius,
+                            this.getY() - radius,
+                            this.getZ() - radius,
+                            this.getX() + radius,
+                            this.getY() + radius,
+                            this.getZ() + radius
+                    );
+
+                    List<ItemEntity> items = serverWorld.getEntitiesByClass(
+                            ItemEntity.class, box,entity -> true
+                    );
+
+                    for (ItemEntity item : items) {
+                        item.damage(serverWorld, damageSource, ITEM_EXPLOSION_DAMAGE);
+                    }
+                }
 
                 for (int y = 0; y < diameter; ++y) {
                     for (int x = 0; x < diameter; ++x) {
@@ -238,6 +264,8 @@ public class CreeperFireEntity extends CreeperElementalEntity {
 
                 this.playExplosionSound(serverWorld);
                 SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
             this.onRemoval(serverWorld, RemovalReason.KILLED);

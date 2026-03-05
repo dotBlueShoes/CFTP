@@ -82,84 +82,93 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
 
-            // For the case of extending the difficulty enum. We provide a default.
-            float diameter = this.ExplosionDiameter;
-            int ghostCreeperChance;
-            int bury;
+                // For the case of extending the difficulty enum. We provide a default.
+                float diameter = this.ExplosionDiameter;
+                int ghostCreeperChance;
+                int bury;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    diameter *= chargedPower;
-                    bury = 0;
-                } break;
-                case NORMAL: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.25f * chargedPower;
-                    bury = 1;
-                } break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 1.75f * chargedPower;
-                    bury = 2;
-                } break;
-            }
-
-            final int iDiameter = (int) diameter;
-            final int radius = iDiameter / 2;
-
-            {
-                Box box = new Box(
-                        this.getX() - radius,
-                        this.getY() - radius,
-                        this.getZ() - radius,
-                        this.getX() + radius,
-                        this.getY() + radius,
-                        this.getZ() + radius
-                );
-
-                List<Entity> entities = serverWorld.getOtherEntities(
-                        this,
-                        box,
-                        entity -> entity instanceof LivingEntity living && living.isAlive()
-                );
-
-                int maxIterations = Math.min(entities.size(), 3);
-
-                for (int i = 0; i < maxIterations; ++i) {
-                    LivingEntity entity = (LivingEntity)entities.get(i);
-
-                    { // Bury
-                        BlockPos a = new BlockPos((int) entity.getX(), (int) entity.getY() - 1, (int) entity.getZ());
-                        BlockPos b = new BlockPos((int) entity.getX(), (int) entity.getY() - 2, (int) entity.getZ());
-
-                        if (serverWorld.getBlockState(a).getBlock() != Blocks.BEDROCK && serverWorld.getBlockState(b).getBlock() != Blocks.BEDROCK) {
-                            entity.refreshPositionAndAngles(entity.getX(), entity.getY() - bury, entity.getZ(), this.getYaw(), this.getPitch());
-                        }
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        diameter *= chargedPower;
+                        bury = 0;
                     }
-
-                    fillDirt(serverWorld, iDiameter, radius, (int) entity.getX(), (int) entity.getY() + 1, (int) entity.getZ());
-
-                    serverWorld.playSound(
-                            null, this.getX(), this.getY(), this.getZ(),
-                            SoundEvents.BLOCK_MUDDY_MANGROVE_ROOTS_BREAK, SoundCategory.HOSTILE,
-                            2.2F, 0.3f
-                    );
+                    break;
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        diameter *= 1.25f * chargedPower;
+                        bury = 1;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        diameter *= 1.75f * chargedPower;
+                        bury = 2;
+                    }
+                    break;
                 }
+
+                final int iDiameter = (int) diameter;
+                final int radius = iDiameter / 2;
+
+                {
+                    Box box = new Box(
+                            this.getX() - radius,
+                            this.getY() - radius,
+                            this.getZ() - radius,
+                            this.getX() + radius,
+                            this.getY() + radius,
+                            this.getZ() + radius
+                    );
+
+                    List<Entity> entities = serverWorld.getOtherEntities(
+                            this,
+                            box,
+                            entity -> entity instanceof LivingEntity living && living.isAlive()
+                    );
+
+                    int maxIterations = Math.min(entities.size(), 3);
+
+                    for (int i = 0; i < maxIterations; ++i) {
+                        LivingEntity entity = (LivingEntity) entities.get(i);
+
+                        { // Bury
+                            BlockPos a = new BlockPos((int) entity.getX(), (int) entity.getY() - 1, (int) entity.getZ());
+                            BlockPos b = new BlockPos((int) entity.getX(), (int) entity.getY() - 2, (int) entity.getZ());
+
+                            if (serverWorld.getBlockState(a).getBlock() != Blocks.BEDROCK && serverWorld.getBlockState(b).getBlock() != Blocks.BEDROCK) {
+                                entity.refreshPositionAndAngles(entity.getX(), entity.getY() - bury, entity.getZ(), this.getYaw(), this.getPitch());
+                            }
+                        }
+
+                        fillDirt(serverWorld, iDiameter, radius, (int) entity.getX(), (int) entity.getY() + 1, (int) entity.getZ());
+
+                        serverWorld.playSound(
+                                null, this.getX(), this.getY(), this.getZ(),
+                                SoundEvents.BLOCK_MUDDY_MANGROVE_ROOTS_BREAK, SoundCategory.HOSTILE,
+                                2.2F, 0.3f
+                        );
+                    }
+                }
+
+                this.spawnExplosionParticles(serverWorld);
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            this.spawnExplosionParticles(serverWorld);
-            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
 
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+
         }
     }
 

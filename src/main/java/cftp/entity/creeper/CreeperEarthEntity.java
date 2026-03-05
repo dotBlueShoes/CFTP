@@ -8,8 +8,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
@@ -58,112 +60,139 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
 
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            float diameter = this.ExplosionDiameter;
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                float diameter = this.ExplosionDiameter;
 
-            int dropExplosionItemChance;
-            int slownessEffectTicks;
-            int ghostCreeperChance;
+                int dropExplosionItemChance;
+                int slownessEffectTicks;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
-                    slownessEffectTicks = SLOWNESS_EFFECT_TICKS_EASY * (int) chargedPower;
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    diameter *= chargedPower;
-                } break;
-                case NORMAL: {
-                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
-                    slownessEffectTicks = SLOWNESS_EFFECT_TICKS_NORM * (int) chargedPower;
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    diameter *= 1.5f * chargedPower;
-                } break;
-                case HARD:
-                default: {
-                    dropExplosionItemChance = (int)(100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
-                    slownessEffectTicks = SLOWNESS_EFFECT_TICKS_HARD * (int) chargedPower;
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    diameter *= 2.0f * chargedPower;
-                } break;
-            }
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
+                        slownessEffectTicks = SLOWNESS_EFFECT_TICKS_EASY * (int) chargedPower;
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        diameter *= chargedPower;
+                    }
+                    break;
+                    case NORMAL: {
+                        dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
+                        slownessEffectTicks = SLOWNESS_EFFECT_TICKS_NORM * (int) chargedPower;
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        diameter *= 1.5f * chargedPower;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
+                        slownessEffectTicks = SLOWNESS_EFFECT_TICKS_HARD * (int) chargedPower;
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        diameter *= 2.0f * chargedPower;
+                    }
+                    break;
+                }
 
-            final int iDiameter = (int) diameter;
-            final int radius = iDiameter / 2;
+                final int iDiameter = (int) diameter;
+                final int radius = iDiameter / 2;
 
-            // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
-            final ExplosionImpl dummyExplosion = new ExplosionImpl(
-                    serverWorld, null, null,
-                    null, null, 1, false,
-                    Explosion.DestructionType.DESTROY
-            );
+                // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
+                final ExplosionImpl dummyExplosion = new ExplosionImpl(
+                        serverWorld, null, null,
+                        null, null, 1, false,
+                        Explosion.DestructionType.DESTROY
+                );
 
-            var seed = (int)this.getX() + (int)this.getY() + (int)this.getZ();
+                var seed = (int) this.getX() + (int) this.getY() + (int) this.getZ();
+                final DamageSource damageSource = serverWorld.getDamageSources().explosion(dummyExplosion);
 
-            for (int y = 0; y < iDiameter; ++y) { // gen
-                for (int x = 0; x < iDiameter; ++x) {
-                    for (int z = 0; z < iDiameter; ++z) {
-                        if (Shapes.isSphere(x, y, z, radius)) {
-                            BlockPos blockPos = BlockPos.ofFloored(
-                                    this.getX() + x - radius,
-                                    this.getY() + y - radius,
-                                    this.getZ() + z - radius
-                            );
+                { // Destroy some items on the ground.
+                    Box box = new Box(
+                            this.getX() - radius,
+                            this.getY() - radius,
+                            this.getZ() - radius,
+                            this.getX() + radius,
+                            this.getY() + radius,
+                            this.getZ() + radius
+                    );
 
-                            BlockState state = serverWorld.getBlockState(blockPos);
-                            float resistance = state.getBlock().getBlastResistance();
+                    List<ItemEntity> items = serverWorld.getEntitiesByClass(
+                            ItemEntity.class, box, entity -> true
+                    );
 
-                            var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                            var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.EARTH_BLOCKS.length;
+                    for (ItemEntity item : items) {
+                        item.damage(serverWorld, damageSource, ITEM_EXPLOSION_DAMAGE);
+                    }
+                }
 
-                            if (resistance < 100) {
-                                CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.EARTH_BLOCKS[index], blockPos, (itemStack, pos) -> {
-                                    if (this.random.nextInt(100) < dropExplosionItemChance) {
-                                        Block.dropStack(serverWorld, blockPos, itemStack);
-                                    }
-                                });
+                for (int y = 0; y < iDiameter; ++y) { // gen
+                    for (int x = 0; x < iDiameter; ++x) {
+                        for (int z = 0; z < iDiameter; ++z) {
+                            if (Shapes.isSphere(x, y, z, radius)) {
+                                BlockPos blockPos = BlockPos.ofFloored(
+                                        this.getX() + x - radius,
+                                        this.getY() + y - radius,
+                                        this.getZ() + z - radius
+                                );
+
+                                BlockState state = serverWorld.getBlockState(blockPos);
+                                float resistance = state.getBlock().getBlastResistance();
+
+                                var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
+                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.EARTH_BLOCKS.length;
+
+                                if (resistance < 100) {
+                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.EARTH_BLOCKS[index], blockPos, (itemStack, pos) -> {
+                                        if (this.random.nextInt(100) < dropExplosionItemChance) {
+                                            Block.dropStack(serverWorld, blockPos, itemStack);
+                                        }
+                                    });
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            { // The SLOWNESS effect is being applied in BOX rather in SPHERE. That's OK.
-                double slownessRadius = radius - 1;
+                { // The SLOWNESS effect is being applied in BOX rather in SPHERE. That's OK.
+                    double slownessRadius = radius - 1;
 
-                Box box = new Box(
-                        this.getX() - slownessRadius,
-                        this.getY() - slownessRadius,
-                        this.getZ() - slownessRadius,
-                        this.getX() + slownessRadius,
-                        this.getY() + slownessRadius,
-                        this.getZ() + slownessRadius
-                );
+                    Box box = new Box(
+                            this.getX() - slownessRadius,
+                            this.getY() - slownessRadius,
+                            this.getZ() - slownessRadius,
+                            this.getX() + slownessRadius,
+                            this.getY() + slownessRadius,
+                            this.getZ() + slownessRadius
+                    );
 
-                List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
+                    List<ServerPlayerEntity> players = serverWorld.getPlayers(p -> p.getBoundingBox().intersects(box));
 
-                for (ServerPlayerEntity player : players) {
-                    if (player.interactionManager.getGameMode() != GameMode.CREATIVE) {
-                        player.addStatusEffect(new StatusEffectInstance(
-                                StatusEffects.SLOWNESS,
-                                slownessEffectTicks,
-                                1,   // amplifier (0 == level I)
-                                true,        // ambient (optional)
-                                true,        // showParticles (set false to hide)
-                                true         // showIcon
-                        ));
+                    for (ServerPlayerEntity player : players) {
+                        if (player.interactionManager.getGameMode() != GameMode.CREATIVE) {
+                            player.addStatusEffect(new StatusEffectInstance(
+                                    StatusEffects.SLOWNESS,
+                                    slownessEffectTicks,
+                                    1,   // amplifier (0 == level I)
+                                    true,        // ambient (optional)
+                                    true,        // showParticles (set false to hide)
+                                    true         // showIcon
+                            ));
+                        }
                     }
                 }
+
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
             }
 
-            this.playExplosionSound(serverWorld);
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

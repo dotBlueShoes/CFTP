@@ -87,69 +87,72 @@ public class CreeperWindEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
 
-            final float power = 3.27f;
+                final float power = 3.27f;
 
-            float chargedPower = this.isCharged() ? power * 1.5f : power;
-            float radius;
+                float chargedPower = this.isCharged() ? power * 1.5f : power;
+                float radius;
 
-            int ghostCreeperChance;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    chargedPower *= 0.68f;
-                    radius = 4;
-                }
-                case NORMAL: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    chargedPower *= 0.75f;
-                    radius = 5;
-                }
-                break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                    radius = 6;
-                }
-                break;
-            }
-
-            { // air-explosion
-                Box radiusBox = new Box(
-                        this.getX() - radius, this.getY() - radius, this.getZ() - radius,
-                        this.getX() + radius, this.getY() + radius, this.getZ() + radius
-                );
-
-                List<Entity> entities = serverWorld.getOtherEntities(
-                        this,
-                        radiusBox,
-                        Entity::isAlive
-                );
-
-                for (Entity entity : entities) {
-
-                    if (entity instanceof ServerPlayerEntity player) {
-                        if (player.interactionManager.getGameMode() == GameMode.CREATIVE) {
-                            break;
-                        }
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                        chargedPower *= 0.68f;
+                        radius = 4;
                     }
-
-                    entity.addVelocity(0.0, chargedPower, 0.0);
-                    entity.velocityModified = true;
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                        chargedPower *= 0.75f;
+                        radius = 5;
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        radius = 6;
+                    }
+                    break;
                 }
-            }
 
-            this.createExplosionParticles(serverWorld);
-            this.playExplosionSound(serverWorld);
+                { // air-explosion
+                    Box radiusBox = new Box(
+                            this.getX() - radius, this.getY() - radius, this.getZ() - radius,
+                            this.getX() + radius, this.getY() + radius, this.getZ() + radius
+                    );
+
+                    List<Entity> entities = serverWorld.getOtherEntities(
+                            this,
+                            radiusBox,
+                            Entity::isAlive
+                    );
+
+                    for (Entity entity : entities) {
+
+                        if (entity instanceof ServerPlayerEntity player) {
+                            if (player.interactionManager.getGameMode() == GameMode.CREATIVE) {
+                                break;
+                            }
+                        }
+
+                        entity.addVelocity(0.0, chargedPower, 0.0);
+                        entity.velocityModified = true;
+                    }
+                }
+
+                this.createExplosionParticles(serverWorld);
+                this.playExplosionSound(serverWorld);
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
+            }
 
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

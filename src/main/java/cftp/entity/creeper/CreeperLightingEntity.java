@@ -70,45 +70,51 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             this.dead = true;
 
-            final Difficulty difficulty = this.getWorld().getDifficulty();
-            final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-            int ghostCreeperChance;
+            if (!isDefused()) {
+                final Difficulty difficulty = this.getWorld().getDifficulty();
+                final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+                int ghostCreeperChance;
 
-            switch (difficulty) {
-                case PEACEFUL:
-                case EASY: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                }
-                case NORMAL: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                } break;
-                case HARD:
-                default: {
-                    ghostCreeperChance = (int)(255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                } break;
-            }
-
-            { // Lighting Bolt
-
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(serverWorld, SpawnReason.EVENT);
-                if (lightningEntity != null) {
-                    lightningEntity.refreshPositionAfterTeleport(this.getX(), this.getY(), this.getZ());
-                    lightningEntity.setCosmetic(true);
-                    serverWorld.spawnEntity(lightningEntity);
+                switch (difficulty) {
+                    case PEACEFUL:
+                    case EASY: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
+                    }
+                    case NORMAL: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
+                    }
+                    break;
+                    case HARD:
+                    default: {
+                        ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                    }
+                    break;
                 }
 
-            }
+                { // Lighting Bolt
 
-            serverWorld.createExplosion(
-                    this, this.getX(), this.getY(), this.getZ(),
-                    ExplosionDiameter * chargedPower, World.ExplosionSourceType.MOB
-            );
+                    LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(serverWorld, SpawnReason.EVENT);
+                    if (lightningEntity != null) {
+                        lightningEntity.refreshPositionAfterTeleport(this.getX(), this.getY(), this.getZ());
+                        lightningEntity.setCosmetic(true);
+                        serverWorld.spawnEntity(lightningEntity);
+                    }
+
+                }
+
+                serverWorld.createExplosion(
+                        this, this.getX(), this.getY(), this.getZ(),
+                        ExplosionDiameter * chargedPower, World.ExplosionSourceType.MOB
+                );
+
+                SpawnGhostCreeper(serverWorld, ghostCreeperChance);
+            } else {
+                this.playDefusedExplosionSound(serverWorld);
+            }
 
             this.spawnEffectsCloud();
             this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
             this.discard();
-
-            SpawnGhostCreeper(serverWorld, ghostCreeperChance);
         }
     }
 

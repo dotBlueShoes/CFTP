@@ -19,7 +19,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 3.0,
                 "min": 0.0
               },
               "function": "minecraft:set_count"
@@ -27,7 +27,7 @@
             {
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 3.0,
                 "min": 0.0
               },
               "enchantment": "minecraft:looting",
@@ -43,7 +43,7 @@
       "conditions": [
         {
           "condition": "minecraft:random_chance",
-          "chance": 0.5
+          "chance": 0.8
         }
       ],
       "entries": [
@@ -55,7 +55,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 3.0,
                 "min": 0.0
               },
               "function": "minecraft:set_count"
@@ -63,7 +63,7 @@
             {
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 3.0,
                 "min": 0.0
               },
               "enchantment": "minecraft:looting",
@@ -94,5 +94,5 @@
       "rolls": 1.0
     }
   ],
-  "random_sequence": "minecraft:entities/creeper_swamp"
+  "random_sequence": "minecraft:entities/creeper_amalgam"
 }

@@ -17,6 +17,36 @@ import net.minecraft.world.biome.BiomeKeys;
 
 public class CFTPEntitySpawns {
 
+    // 28
+    // Lighting Creeper
+    // Cookie Creeper
+    // Ender Creeper
+    // Water Creeper
+    // Earth Creeper
+    // Fire Creeper
+    // Dirt Creeper
+    // Lava Creeper
+    // Wind Creeper
+    // Ghost Creeper
+    // Nether Creeper
+    // Flip Creeper
+    // Friendly Creeper
+    // Snow Creeper
+    // Swamp Creeper
+    // Dark Creeper
+    // Ballistic Creeper
+    // Golden Creeper
+    // Bridger Creeper
+    // Piggy Creeper
+    // Amalgam Creeper
+    // Amethyst Creeper
+    // Brewer Creeper
+    // Giant Creeper
+    // Harvest Creeper
+    // Oceanid Creeper
+    // Sand Creeper
+    // Sculk Creeper
+
     public static boolean canSpawnIgnoreLightLevel(
             EntityType<? extends LivingEntity> type,
             WorldAccess world,

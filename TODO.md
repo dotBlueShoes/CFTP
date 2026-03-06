@@ -27,11 +27,11 @@ used in recipe with sheers gives safe_raw_creeper_fish - can be used in trading
 - Spawns with a small chance from ghost creeper death but only in nether (when overcharged it's 100% to spawn, 25% it's going to be overcharged too)
 
 
-### Creeper Stone (block)
-1. When mined or set a flame using flint_and_steel or fireball it releases a creeper-like spirit (particle/s).
-2. Either applies a timed or forever debuff making wilder creepers to spawn in the world.
-3. Needs a retexture (Cracked and/or light up sometimes by itself (so the user knows something's wrong), maybe make noise like "tssss" when it is being mined.)
-4. It also drops a normal stone.
+// nope // ### Creeper Stone (block)
+// nope // 1. When mined or set a flame using flint_and_steel or fireball it releases a creeper-like spirit (particle/s).
+// nope // 2. Either applies a timed or forever debuff making wilder creepers to spawn in the world.
+// nope // 3. Needs a retexture (Cracked and/or light up sometimes by itself (so the user knows something's wrong), maybe make noise like "tssss" when it is being mined.)
+// nope // 4. It also drops a normal stone.
 
 ### Retexture ideas
 1. It might work to simply shift pixels on creeper's textures. - creeper texture

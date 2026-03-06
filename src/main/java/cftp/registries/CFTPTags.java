@@ -14,7 +14,7 @@ public class CFTPTags {
     public static final TagKey<Block> FERTILIZED_DIRTS =
             TagKey.of(RegistryKeys.BLOCK, Identifier.of("cftp", "fertilized_dirts"));
 
-    public static final TagKey<Item> Charges =
+    public static final TagKey<Item> CHARGES =
             TagKey.of(RegistryKeys.ITEM, Identifier.of("cftp", "charges"));
 
 }

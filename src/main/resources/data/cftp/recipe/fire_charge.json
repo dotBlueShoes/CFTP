@@ -4,7 +4,7 @@
   "group": "charge",
   "ingredients": [
     "cftp:elemental_powder",
-    "cftp:saw_dust"
+    "minecraft:gunpowder"
   ],
   "result": {
     "count": 1,

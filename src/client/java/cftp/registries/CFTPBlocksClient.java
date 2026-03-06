@@ -6,8 +6,6 @@ import net.minecraft.client.render.RenderLayer;
 public class CFTPBlocksClient {
 
     public static void register() {
-        BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.SULPHUR_CLOUD, RenderLayer.getTranslucent());
-
         BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.YELLOW_MUSHROOM, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(CFTPBlocks.BLUE_MUSHROOM, RenderLayer.getCutout());
 

@@ -24,20 +24,15 @@ public class CFTPItemGroups {
                                 entries.add(CFTPItems.ELEMENTAL_POWDER);
                                 entries.add(CFTPItems.EARTH_CHARGE);
                                 entries.add(CFTPItems.WATER_CHARGE);
-                                entries.add(CFTPItems.SAW_DUST);
                                 entries.add(CFTPItems.COIN_COPPER);
                                 entries.add(CFTPItems.COIN_IRON);
                                 entries.add(CFTPItems.COIN_GOLD);
                                 entries.add(CFTPItems.COPPER_ROD);
                                 entries.add(CFTPItems.ELEMENTAL_INGOT);
                                 entries.add(CFTPItems.CREEPER_FUSE);
-                                entries.add(CFTPItems.SULPHUR);
-                                //entries.add(CFTPItems.SULPHUR_DUST_BUCKET);
                                 entries.add(CFTPItems.CREEPER_FISH);
-                                entries.add(CFTPItems.CATKINS);
                                 entries.add(CFTPItems.ENRICHED_MUSHROOM_STEW);
                                 //
-                                entries.add(CFTPBlocks.SAW_DUST_BLOCK);
                                 entries.add(CFTPBlocks.YELLOW_MUSHROOM);
                                 entries.add(CFTPBlocks.BLUE_MUSHROOM);
                                 entries.add(CFTPBlocks.YELLOW_MUSHROOM_BLOCK);
@@ -45,14 +40,6 @@ public class CFTPItemGroups {
                                 entries.add(CFTPBlocks.YELLOW_COBWEB);
                                 entries.add(CFTPBlocks.BLUE_COBWEB);
                                 entries.add(CFTPBlocks.ELEMENTAL_BLOCK);
-                                entries.add(CFTPBlocks.SULPHUR_ORE);
-                                entries.add(CFTPBlocks.DEEPSLATE_SULPHUR_ORE);
-                                entries.add(CFTPBlocks.NETHER_SULPHUR_ORE);
-                                entries.add(CFTPBlocks.SULPHUR_CLOUD);
-                                entries.add(CFTPBlocks.FIERY_BLOCK);
-                                entries.add(CFTPBlocks.SOUL_FIERY_BLOCK);
-                                entries.add(CFTPBlocks.ENGRAVED_CREEPER_STONE);
-                                entries.add(CFTPBlocks.ENGRAVED_CREEPER_STONE_ACTIVATED);
                                 //
                                 entries.add(CFTPItems.CREEPER_COOKIE_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_DIRT_SPAWN_EGG);

@@ -1,9 +1,7 @@
 package cftp.registries;
 
-import cftp.entity.FieryProjectileEntityRenderer;
 import cftp.entity.HorseFieryRenderer;
 import cftp.entity.SlendermanRenderer;
-import cftp.entity.SurphurCloudEntityRenderer;
 import cftp.entity.charge.*;
 import cftp.entity.creeper.*;
 import cftp.entity.spider.SpiderBlueRenderer;
@@ -57,8 +55,6 @@ public class CFTPEntitiesClient {
 
         EntityRendererRegistry.register(CFTPEntities.WATER_CHARGE, WaterChargeEntityRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.EARTH_CHARGE, EarthChargeEntityRenderer::new);
-        EntityRendererRegistry.register(CFTPEntities.SULPHUR_CLOUD, SurphurCloudEntityRenderer::new);
-        EntityRendererRegistry.register(CFTPEntities.FIERY_PROJECTILE, FieryProjectileEntityRenderer::new);
     }
 
 }

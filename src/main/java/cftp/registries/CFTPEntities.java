@@ -74,8 +74,6 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_dirt")))
     );
 
-    //StriderEntity
-
     public static final EntityType<CreeperEarthEntity> CREEPER_EARTH = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "creeper_earth")),
@@ -314,50 +312,6 @@ public class CFTPEntities {
                     .trackingTickInterval(10)
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "earth_charge")))
     );
-
-    //public static final EntityType<TntEntity> TNT = EntityType.register(
-    //        "tnt",
-    //        EntityType.Builder.create(TntEntity::new, SpawnGroup.MISC)
-    //                .dropsNothing()
-    //                .makeFireImmune()
-    //                .dimensions(0.98f, 0.98f)
-    //                .eyeHeight(0.15f)
-    //                .maxTrackingRange(10)
-    //                .trackingTickInterval(10)
-    //);
-
-    public static final EntityType<SulphurEntity> SULPHUR_CLOUD = Registry.register(
-            Registries.ENTITY_TYPE,
-            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "sulphur_cloud")),
-            EntityType.Builder.<SulphurEntity>create(SulphurEntity::new, SpawnGroup.MISC)
-                    .dropsNothing()
-                    .dimensions(0.98f, 0.98F)
-                    .eyeHeight(0.15f)
-                    .maxTrackingRange(10)
-                    .trackingTickInterval(10)
-                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "sulphur_cloud")))
-    );
-
-    public static final EntityType<FieryBlockEntity> FIERY_PROJECTILE = Registry.register(
-            Registries.ENTITY_TYPE,
-            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "fiery_projectile")),
-            EntityType.Builder.<FieryBlockEntity>create(FieryBlockEntity::new, SpawnGroup.MISC)
-                    .dropsNothing()
-                    .dimensions(0.98f, 0.98F)
-                    .eyeHeight(0.15f)
-                    .maxTrackingRange(10)
-                    .trackingTickInterval(10)
-                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "fiery_projectile")))
-    );
-
-    //public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
-    //        Registries.ENTITY_TYPE,
-    //        Identifier.of(CFTP.MOD_ID, "packed_snowball"),
-    //        FabricEntityTypeBuilder.<WaterChargeEntity>create(SpawnGroup.MISC, WaterChargeEntity::new)
-    //                .dimensions(EntityDimensions.fixed(0.25F, 0.25F)) // dimensions in Minecraft units of the projectile
-    //                .trackRangeBlocks(4).trackedUpdateRate(10) // necessary for all thrown projectiles (as it prevents it from breaking, lol)
-    //                .build() // VERY IMPORTANT DONT DELETE FOR THE LOVE OF GOD PSLSSSSSS
-    //);
 
     public static void register(){
         FabricDefaultAttributeRegistry.register(CREEPER_LIGHTING, CreeperLightingEntity.createAttributes());

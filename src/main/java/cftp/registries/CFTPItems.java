@@ -25,10 +25,6 @@ public class CFTPItems {
             new ElementalPowderItem.Settings()
     );
 
-    public static final Item SAW_DUST = register("saw_dust", Item::new,
-            new Item.Settings()
-    );
-
     public static final Item EARTH_CHARGE = register("earth_charge", EarthChargeItem::new,
             new Item.Settings()
                     .useCooldown(0.5F)
@@ -70,20 +66,7 @@ public class CFTPItems {
             new Item.Settings()
     );
 
-    public static final Item SULPHUR = register("sulphur", Item::new,
-            new Item.Settings()
-    );
-
-    public static final Item SULPHUR_DUST_BUCKET = register("sulphur_dust_bucket",
-            (Item.Settings settings) -> new PowderSnowBucketItem(CFTPBlocks.SULPHUR_CLOUD, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, (Item.Settings)settings),
-            new Item.Settings().maxCount(1).useItemPrefixedTranslationKey()
-    );
-
     public static final Item CREEPER_FISH = register("creeper_fish", Item::new,
-            new Item.Settings()
-    );
-
-    public static final Item CATKINS = register("catkins", Item::new,
             new Item.Settings()
     );
 
@@ -279,20 +262,6 @@ public class CFTPItems {
             new Item.Settings()
     );
 
-    //public static final Item CREEPER_COOKIE_SPAWN_EGG = Registry.register(
-    //        Registries.ITEM,
-    //        new Identifier("cftp", "creeper_cookie_spawn_egg"),
-    //        new SpawnEggItem(
-    //                CFTPEntities.CREEPER_COOKIE, // Your EntityType
-    //                0x00FF00, // Primary egg color
-    //                0xAA0000, // Secondary egg color
-    //                new Item.Settings()
-    //        )
-    //);
-
-    //public static final Item FIRE_CHARGE = register("fire_charge", FireChargeItem::new);
-    //public static final Item WIND_CHARGE = register("wind_charge", WindChargeItem::new, new Item.Settings().useCooldown(0.5F));
-
     public static Item register(String path, Function<Item.Settings, Item> factory, Item.Settings settings) {
         final RegistryKey<Item> registryKey = RegistryKey.of(
                 RegistryKeys.ITEM,
@@ -302,16 +271,9 @@ public class CFTPItems {
         return net.minecraft.item.Items.register(registryKey, factory, settings);
     }
 
-    // HACK. Java is weird. We need to call a method even if empty. To make the unreferenced variables
-    //  we made compile from this file-class.
+    // HACK! Java is weird. We need to call a method even if empty.
+    //  To make the unreferenced variables we made compile from this file-class.
     public static void register() {
-        FuelRegistryEvents.BUILD.register((builder, context) -> {
-            // We can add multiple items at once in this lambda.
-            builder.add(SAW_DUST, 100); // 0.5 item
-        });
     }
-
-    //public static final Item BOW = register("bow", BowItem::new, new Item.Settings().maxDamage(384).enchantable(1));
-    //public static final Item ARROW = register("arrow", ArrowItem::new);
 
 }

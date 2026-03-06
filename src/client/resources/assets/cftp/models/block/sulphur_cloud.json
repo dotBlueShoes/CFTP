@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "cftp:block/sulphur_cloud"
-  },
-  "render_type": "translucent",
-  "ambientocclusion": false
-}

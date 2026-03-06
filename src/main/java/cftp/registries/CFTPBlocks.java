@@ -2,9 +2,7 @@ package cftp.registries;
 
 import cftp.CFTP;
 import cftp.blocks.*;
-import cftp.blocks.FieryBlock;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.minecraft.block.*;
 import net.minecraft.block.MushroomBlock;
 import net.minecraft.block.enums.NoteBlockInstrument;
@@ -17,46 +15,12 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.util.ColorCode;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.intprovider.ConstantIntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.TreeConfiguredFeatures;
 
 import java.util.function.Function;
 
 public class CFTPBlocks {
-
-
-    // + Elemental Lamp
-
-
-    // 1. add SAW_DUST_WIRE (once burnt it is destroyed, it does not have an on/off state instead a particle emitter travels through)
-    //Blocks
-    //public static final Block REDSTONE_WIRE = register(
-    //        "redstone_wire", RedstoneWireBlock::new, AbstractBlock.Settings.create().noCollision().breakInstantly().pistonBehavior(PistonBehavior.DESTROY)
-    //);
-    // 2. Find Flame particle. It will travel through as signal.
-    // 3. A Lock has to be defined. MAX_SAWDUST_SIGNALS -> 20. Which would mean that at the same time there can be at max
-    //  20 signals burning inside a world or server and not more. a 4 connection makes 1 signal split into 4...
-
-    public static final Block SAW_DUST_BLOCK = registerBlock(
-            settings -> new SparkBlock(new ColorCode(-8356741), settings),
-            "saw_dust_block",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.DIRT_BROWN)
-                    .strength(0.5F)
-                    .sounds(BlockSoundGroup.GRAVEL)
-                    .burnable()
-                    //.nonOpaque()
-                    //.noCollision()
-                    //.allowsSpawning(Blocks::never)
-                    //.solidBlock(Blocks::never)
-                    //.suffocates(Blocks::always)
-                    //.blockVision(Blocks::always)
-    );
 
     public static final Block YELLOW_MUSHROOM_BLOCK = registerBlock(
             MushroomBlock::new,
@@ -143,122 +107,6 @@ public class CFTPBlocks {
                     .strength(3.0F)
     );
 
-    public static final Block SULPHUR_ORE = registerBlock(
-            settings -> new SulphurBlock(UniformIntProvider.create(0, 3), settings),
-            "sulphur_ore",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.STONE_GRAY)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .sounds(BlockSoundGroup.STONE)
-                    .requiresTool()
-                    .strength(3.0F)
-    );
-
-    public static final Block DEEPSLATE_SULPHUR_ORE = registerBlock(
-            settings -> new SulphurBlock(ConstantIntProvider.create(0), settings),
-            "deepslate_sulphur_ore",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.DEEPSLATE_GRAY)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .sounds(BlockSoundGroup.DEEPSLATE)
-                    .requiresTool()
-                    .strength(3.0F)
-    );
-
-    public static final Block NETHER_SULPHUR_ORE = registerBlock(
-            settings -> new SulphurBlock(UniformIntProvider.create(0, 2), settings),
-            "nether_sulphur_ore",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.DARK_RED)
-                    .instrument(NoteBlockInstrument.BASEDRUM)
-                    .sounds(BlockSoundGroup.NETHER_ORE)
-                    .requiresTool()
-                    .strength(3.0F)
-    );
-
-    public static final Block FIERY_BLOCK = registerBlock(
-            FieryBlock::new,
-            "fiery_block",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.RED)
-                    .strength(0.5F)
-                    .sounds(BlockSoundGroup.GRAVEL)
-                    .allowsSpawning((state, world, pos, entityType) -> entityType.isFireImmune())
-                    .luminance(state -> 15)
-                    .emissiveLighting(Blocks::always)
-    );
-
-    public static final Block SOUL_FIERY_BLOCK = registerBlock(
-            SoulOre::new,
-            "soul_fiery_block",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.BLUE)
-                    .strength(0.5F)
-                    .sounds(BlockSoundGroup.SOUL_SAND)
-                    .allowsSpawning((state, world, pos, entityType) -> entityType.isFireImmune())
-                    .emissiveLighting(Blocks::always)
-                    .ticksRandomly()
-    );
-
-    //AbstractFireBlock
-
-    // 1. NON-AIR VERSION
-    public static final Block SULPHUR_CLOUD = registerBlock(
-            SulphurCloud::new,
-            "sulphur_cloud",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.CLEAR)
-                    .sounds(BlockSoundGroup.SUSPICIOUS_SAND)
-                    .requiresTool()
-                    .nonOpaque()
-                    .noCollision()
-                    .strength(-1.0f, 1.0f)
-                    .dropsNothing()
-                    .allowsSpawning(Blocks::never)  // not sure
-                    .burnable()
-                    //.solidBlock(Blocks::never)      // not sure
-                    .replaceable()                  // maybe it shouldn't be
-    );
-
-    public static final Block ENGRAVED_CREEPER_STONE = registerBlock(
-            EngravedBlock::new,
-            "engraved_creeper_stone",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.STONE_GRAY)
-                    .sounds(BlockSoundGroup.STONE)
-                    .requiresTool()
-                    .strength(1.0f, 1.0f) // check stone
-                    .allowsSpawning(Blocks::always)
-    );
-
-    public static final Block ENGRAVED_CREEPER_STONE_ACTIVATED = registerBlock(
-            EngravedBlock::new,
-            "engraved_creeper_stone_activated",
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.STONE_GRAY)
-                    .sounds(BlockSoundGroup.STONE)
-                    .requiresTool()
-                    .strength(1.0f, 1.0f) // check stone
-                    .allowsSpawning(Blocks::always)
-                    //.luminance(state -> 1)
-                    //.emissiveLighting(Blocks::always)
-    );
-
-
-
-    // 2. AIR VERSION (it seems the .air blocks the possibility of being destroyed via tnt)
-    //public static final Block SULPHUR_CLOUD = registerBlock(
-    //        AirSulphurCloud::new,
-    //        //SulphurCloud::new,
-    //        "sulphur_cloud",
-    //        AbstractBlock.Settings.create()
-    //                //.replaceable()
-    //                .noCollision()
-    //                //.nonOpaque()
-    //                .dropsNothing()
-    //                .air()
-    //);
-
     private static <T extends Block> T registerBlock(
             Function<AbstractBlock.Settings, T> blockFactory,
             String name,
@@ -287,10 +135,6 @@ public class CFTPBlocks {
 
     public static void register() {
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
-                entries -> entries.add(SAW_DUST_BLOCK)
-        );
-
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
                 entries -> entries.add(YELLOW_MUSHROOM)
         );
@@ -318,49 +162,6 @@ public class CFTPBlocks {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(
                 entries -> entries.add(ELEMENTAL_BLOCK)
         );
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-                entries -> entries.add(SULPHUR_ORE)
-        );
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-                entries -> entries.add(DEEPSLATE_SULPHUR_ORE)
-        );
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-                entries -> entries.add(NETHER_SULPHUR_ORE)
-        );
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-                entries -> entries.add(FIERY_BLOCK)
-        );
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-                entries -> entries.add(SOUL_FIERY_BLOCK)
-        );
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-                entries -> entries.add(ENGRAVED_CREEPER_STONE)
-        );
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-                entries -> entries.add(ENGRAVED_CREEPER_STONE_ACTIVATED)
-        );
-
-        //ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(
-        //        entries -> entries.add(SULPHUR_CLOUD)
-        //);
-
-        // Hay block values.
-        FlammableBlockRegistry.getDefaultInstance().add(SAW_DUST_BLOCK, 60, 20);
-        // TNT block values.
-        FlammableBlockRegistry.getDefaultInstance().add(SULPHUR_CLOUD, 15, 100);
-
-        // Weird. Webs and mushrooms do not burn in this game.
-        //FlammableBlockRegistry.getDefaultInstance().add(YELLOW_COBWEB,          5, 5);
-        //FlammableBlockRegistry.getDefaultInstance().add(BLUE_COBWEB,            5, 5);
-        //FlammableBlockRegistry.getDefaultInstance().add(YELLOW_MUSHROOM_BLOCK,  5, 5);
-        //FlammableBlockRegistry.getDefaultInstance().add(BLUE_MUSHROOM_BLOCK,    5, 5);
 
     }
 

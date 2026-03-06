@@ -131,7 +131,7 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
             );
 
             if (this.getWorld() instanceof ServerWorld) {
-                this.ignite();
+                this.ignite(true);
 
                 if (!stack.isDamageable()) {
                     stack.decrement(1);
@@ -143,7 +143,8 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
             return ActionResult.SUCCESS;
         }
 
-        return ActionResult.FAIL;
+        //return ActionResult.FAIL;
+        return ActionResult.PASS;
     }
 
     @Override

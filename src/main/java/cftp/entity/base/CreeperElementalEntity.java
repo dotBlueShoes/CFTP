@@ -143,7 +143,7 @@ public class CreeperElementalEntity extends HostileEntity {
         }
 
         if (nbt.getBoolean("ignited")) {
-            this.ignite();
+            this.ignite(true);
         }
     }
 
@@ -247,7 +247,7 @@ public class CreeperElementalEntity extends HostileEntity {
                 );
 
                 if (this.getWorld() instanceof ServerWorld) {
-                    this.ignite();
+                    this.ignite(true);
 
                     if (!stack.isDamageable()) {
                         stack.decrement(1);
@@ -445,8 +445,8 @@ public class CreeperElementalEntity extends HostileEntity {
         return this.dataTracker.get(IGNITED);
     }
 
-    public void ignite() {
-        if (!isDefused()) this.dataTracker.set(IGNITED, true);
+    public void ignite(boolean value) {
+        if (!isDefused()) this.dataTracker.set(IGNITED, value);
     }
 
     public boolean shouldDropHead() {

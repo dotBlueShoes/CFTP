@@ -2,7 +2,10 @@ package cftp.entity.creeper;
 
 import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.goals.CreeperAttackWithOwnerGoal;
 import cftp.goals.CreeperElementalIgniteGoal;
+import cftp.goals.CreeperFollowOwnerGoal;
+import cftp.goals.CreeperTrackOwnerAttackerGoal;
 import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
@@ -10,11 +13,11 @@ import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Tameable;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.LandPathNodeMaker;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -30,11 +33,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.ServerConfigHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -183,6 +189,8 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
         // // Maybe instead make it attack other creepers?
         // this.goalSelector.add(4, new MeleeAttackGoal(this, 1.0));
         //
+        this.goalSelector.add(4, new CreeperFollowOwnerGoal(this, 1.0, 10.0F, 2.0F));
+        //
         this.goalSelector.add(5, new WanderAroundFarGoal(this, 0.8));
         //
         this.goalSelector.add(6, new LookAtEntityGoal(this, CreeperElementalEntity.class, 8.0F));
@@ -190,10 +198,12 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
         //
         this.goalSelector.add(6, new LookAroundGoal(this));
         //
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, CreeperElementalEntity.class, true));
-        this.targetSelector.add(1, new ActiveTargetGoal<>(this, CreeperEntity.class, true));
+        this.targetSelector.add(1, new CreeperTrackOwnerAttackerGoal(this));
+        this.targetSelector.add(2, new CreeperAttackWithOwnerGoal(this));
+        //this.targetSelector.add(1, new ActiveTargetGoal<>(this, CreeperElementalEntity.class, true));
+        //this.targetSelector.add(1, new ActiveTargetGoal<>(this, CreeperEntity.class, true));
         //
-        this.targetSelector.add(2, new RevengeGoal(this));
+        this.targetSelector.add(3, new RevengeGoal(this));
     }
 
     // discard?? , SpawnGhostCreeper(serverWorld, ghostCreeperChance); ???
@@ -201,7 +211,13 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
     @Override
     protected void explode() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
-            this.dead = true;
+
+            { // Reset ALL so it can re-explode properly with time.
+                this.ignite(false);
+                this.fuseTime = 25;
+                this.currentFuseTime = this.fuseTime;
+                this.lastFuseTime = this.fuseTime;
+            }
 
             //if (getExplodes() > 0) {
             if (!isDefused()) {
@@ -247,6 +263,7 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
                 this.playExplosionSound(serverWorld);
                 this.spawnEffectsCloud();
             } else {
+                this.dead = true;
                 this.playDefusedExplosionSound(serverWorld);
                 this.spawnEffectsCloud();
                 this.onRemoval(serverWorld, RemovalReason.KILLED);
@@ -259,14 +276,14 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
 
     @Override
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
+        ItemStack stack = player.getStackInHand(hand);
         World world = this.getWorld();
 
         if (isTame()) {
             CFTP.LOGGER.info("tamed!");
-            if (itemStack.getItem() == Items.GUNPOWDER && this.getHealth() < this.getMaxHealth()) {
+            if (stack.getItem() == Items.GUNPOWDER && this.getHealth() < this.getMaxHealth()) {
                 if (world instanceof ServerWorld serverWorld) {
-                    itemStack.decrementUnlessCreative(1, player);
+                    stack.decrementUnlessCreative(1, player);
 
                     // Heal the entity with 5 hearts
                     this.heal(5);
@@ -282,16 +299,81 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
                             0.0, 0.0, 0.0
                     );
                 }
+
+                return ActionResult.SUCCESS;
+            } else if (stack.isIn(ItemTags.CREEPER_IGNITERS) && !isDefused()) {
+                SoundEvent sound = stack.isOf(Items.FIRE_CHARGE) ? SoundEvents.ITEM_FIRECHARGE_USE : SoundEvents.ITEM_FLINTANDSTEEL_USE;
+
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(),
+                        sound, this.getSoundCategory(),
+                        1.0F, this.random.nextFloat() * 0.4F + 0.8F
+                );
+
+                if (this.getWorld() instanceof ServerWorld) {
+                    this.ignite(true);
+
+                    if (!stack.isDamageable()) {
+                        stack.decrement(1);
+                    } else {
+                        stack.damage(1, player, getSlotForHand(hand));
+                    }
+                }
+
+                return ActionResult.SUCCESS;
             }
         } else {
-            if (!this.getWorld().isClient && itemStack.getItem() == Items.GUNPOWDER) {
-                itemStack.decrementUnlessCreative(1, player);
+            if (!this.getWorld().isClient && stack.getItem() == Items.GUNPOWDER) {
+                stack.decrementUnlessCreative(1, player);
                 this.tryTame(player);
                 return ActionResult.SUCCESS_SERVER;
+            } else if (stack.isIn(ItemTags.CREEPER_IGNITERS) && !isDefused()) {
+                SoundEvent sound = stack.isOf(Items.FIRE_CHARGE) ? SoundEvents.ITEM_FIRECHARGE_USE : SoundEvents.ITEM_FLINTANDSTEEL_USE;
+
+                this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(),
+                        sound, this.getSoundCategory(),
+                        1.0F, this.random.nextFloat() * 0.4F + 0.8F
+                );
+
+                if (this.getWorld() instanceof ServerWorld) {
+                    this.ignite(true);
+
+                    if (!stack.isDamageable()) {
+                        stack.decrement(1);
+                    } else {
+                        stack.damage(1, player, getSlotForHand(hand));
+                    }
+                }
+
+                return ActionResult.SUCCESS;
             }
         }
 
-        return ActionResult.SUCCESS;
+        return ActionResult.PASS;
+    }
+
+    protected void showEmoteParticle(boolean positive) {
+        ParticleEffect particleEffect = ParticleTypes.HEART;
+        if (!positive) {
+            particleEffect = ParticleTypes.SMOKE;
+        }
+
+        for (int i = 0; i < 7; i++) {
+            double d = this.random.nextGaussian() * 0.02;
+            double e = this.random.nextGaussian() * 0.02;
+            double f = this.random.nextGaussian() * 0.02;
+            this.getWorld().addParticle(particleEffect, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
+        }
+    }
+
+    @Override
+    public void handleStatus(byte status) {
+        if (status == EntityStatuses.ADD_POSITIVE_PLAYER_REACTION_PARTICLES) {
+            this.showEmoteParticle(true);
+        } else if (status == EntityStatuses.ADD_NEGATIVE_PLAYER_REACTION_PARTICLES) {
+            this.showEmoteParticle(false);
+        } else {
+            super.handleStatus(status);
+        }
     }
 
     private void tryTame(PlayerEntity player) {
@@ -310,6 +392,68 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
         } else {
             this.getWorld().sendEntityStatus(this, EntityStatuses.ADD_NEGATIVE_PLAYER_REACTION_PARTICLES);
         }
+    }
+
+    public final boolean cannotFollowOwner() {
+        return this.hasVehicle() || this.mightBeLeashed() || this.getOwner() != null && this.getOwner().isSpectator();
+    }
+
+    public void tryTeleportToOwner() {
+        LivingEntity livingEntity = this.getOwner();
+        if (livingEntity != null) {
+            this.tryTeleportNear(livingEntity.getBlockPos());
+        }
+    }
+
+    public boolean shouldTryTeleportToOwner() {
+        LivingEntity livingEntity = this.getOwner();
+        return livingEntity != null && this.squaredDistanceTo(this.getOwner()) >= 144.0;
+    }
+
+    private void tryTeleportNear(BlockPos pos) {
+        for (int i = 0; i < 10; i++) {
+            int j = this.random.nextBetween(-3, 3);
+            int k = this.random.nextBetween(-3, 3);
+            if (Math.abs(j) >= 2 || Math.abs(k) >= 2) {
+                int l = this.random.nextBetween(-1, 1);
+                if (this.tryTeleportTo(pos.getX() + j, pos.getY() + l, pos.getZ() + k)) {
+                    return;
+                }
+            }
+        }
+    }
+
+    private boolean tryTeleportTo(int x, int y, int z) {
+        if (!this.canTeleportTo(new BlockPos(x, y, z))) {
+            return false;
+        } else {
+            this.refreshPositionAndAngles(x + 0.5, y, z + 0.5, this.getYaw(), this.getPitch());
+            this.navigation.stop();
+            return true;
+        }
+    }
+
+    private boolean canTeleportTo(BlockPos pos) {
+        PathNodeType pathNodeType = LandPathNodeMaker.getLandNodeType(this, pos);
+        if (pathNodeType != PathNodeType.WALKABLE) {
+            return false;
+        } else {
+            BlockState blockState = this.getWorld().getBlockState(pos.down());
+            if (!this.canTeleportOntoLeaves() && blockState.getBlock() instanceof LeavesBlock) {
+                return false;
+            } else {
+                BlockPos blockPos = pos.subtract(this.getBlockPos());
+                return this.getWorld().isSpaceEmpty(this, this.getBoundingBox().offset(blockPos));
+            }
+        }
+    }
+
+    protected boolean canTeleportOntoLeaves() {
+        return false;
+    }
+
+    public boolean canAttackWithOwner(LivingEntity target, LivingEntity owner) {
+        return true;
     }
 
     //public boolean bondWithPlayer(PlayerEntity player) {

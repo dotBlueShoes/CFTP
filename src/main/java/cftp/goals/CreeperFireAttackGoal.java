@@ -1,5 +1,7 @@
 package cftp.goals;
 
+import cftp.entity.base.CreeperElementalEntity;
+import cftp.entity.creeper.CreeperBallisticEntity;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -59,6 +61,7 @@ public class CreeperFireAttackGoal extends Goal {
 
     @Override
     public boolean shouldContinue() {
+        CreeperElementalEntity creeper = (CreeperElementalEntity)this.mob;
         LivingEntity livingEntity = this.mob.getTarget();
 
         if (livingEntity == null) return false;
@@ -67,7 +70,7 @@ public class CreeperFireAttackGoal extends Goal {
         // TODO
         // 1. Make it so that the fire is only being placed on hard mode setting.
 
-        { // Making the ground on fire.
+        if (!creeper.isDefused()){ // Making the ground on fire.
             BlockPos blockPos = BlockPos.ofFloored(
                     this.mob.getX(),
                     this.mob.getY(),

@@ -3,6 +3,9 @@ package cftp.goals;
 import java.util.EnumSet;
 
 import cftp.CFTP;
+import cftp.entity.base.CreeperElementalEntity;
+import cftp.entity.creeper.CreeperBallisticEntity;
+import cftp.entity.creeper.CreeperBridgerEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.TntEntity;
@@ -139,9 +142,10 @@ public class CreeperBallisticAttackGoal extends Goal {
 
     @Override
     public void tick() {
+        CreeperElementalEntity creeper = (CreeperElementalEntity)this.mob;
         LivingEntity livingEntity = this.mob.getTarget();
 
-        if (livingEntity != null) {
+        if (livingEntity != null && !creeper.isDefused()) {
 
             this.mob.getLookControl().lookAt(livingEntity, 30.0F, 30.0F);
             this.updateCountdownTicks = Math.max(this.updateCountdownTicks - 1, 0);

@@ -3,6 +3,7 @@ package cftp.entity.creeper;
 import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
+import cftp.registries.CFTPItems;
 import cftp.utility.CreeperMath;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -22,7 +23,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
@@ -109,6 +116,34 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
             itemEntity.setToDefaultPickupDelay();
             serverWorld.spawnEntity(itemEntity);
         }
+    }
+
+    @Override
+    protected ActionResult interactMob(PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getStackInHand(hand);
+
+        if (stack.isIn(ItemTags.CREEPER_IGNITERS) && !isDefused()) {
+            SoundEvent sound = stack.isOf(Items.FIRE_CHARGE) ? SoundEvents.ITEM_FIRECHARGE_USE : SoundEvents.ITEM_FLINTANDSTEEL_USE;
+
+            this.getWorld().playSound(player, this.getX(), this.getY(), this.getZ(),
+                    sound, this.getSoundCategory(),
+                    1.0F, this.random.nextFloat() * 0.4F + 0.8F
+            );
+
+            if (this.getWorld() instanceof ServerWorld) {
+                this.ignite();
+
+                if (!stack.isDamageable()) {
+                    stack.decrement(1);
+                } else {
+                    stack.damage(1, player, getSlotForHand(hand));
+                }
+            }
+
+            return ActionResult.SUCCESS;
+        }
+
+        return ActionResult.FAIL;
     }
 
     @Override

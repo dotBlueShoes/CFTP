@@ -7,7 +7,7 @@ finish creepers
 : + spawn conditions, re-balance, 
 
 : water, earth, fire, wind, lightning, ender, giant, ghost, flip -> plains
-: swamp, fire, ghost, brewer -> swamp
+
 : cookie, ender, brewer, dark -> jungle
 : sand, wind, dark, fire  -> desert
 : snow, wind, flip, giant -> snowy

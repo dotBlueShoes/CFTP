@@ -67,6 +67,8 @@ public class CreeperMath {
             CFTPItems.CREEPER_OCEANID_SPAWN_EGG,
             CFTPItems.CREEPER_SAND_SPAWN_EGG,
             CFTPItems.CREEPER_SCULK_SPAWN_EGG,
+            CFTPItems.CREEPER_SPECTRE_SPAWN_EGG,
+            CFTPItems.CREEPER_HEROBRINE_SPAWN_EGG,
     };
 
     final public static EntityType<? extends HostileEntity>[] CREEPERS = new EntityType[]{
@@ -99,6 +101,8 @@ public class CreeperMath {
             CFTPEntities.CREEPER_OCEANID,
             CFTPEntities.CREEPER_SAND,
             CFTPEntities.CREEPER_SCULK,
+            CFTPEntities.CREEPER_SPECTRE,
+            CFTPEntities.CREEPER_HEROBRINE,
     };
 
     public enum CREEPER_TYPE {
@@ -131,6 +135,8 @@ public class CreeperMath {
         OCEANID     (26),
         SAND        (27),
         SCULK       (28),
+        SPECTRE     (29),
+        HEROBRINE   (30)
         ;
 
         private final int type;

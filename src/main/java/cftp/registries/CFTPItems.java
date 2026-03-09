@@ -238,6 +238,18 @@ public class CFTPItems {
             new Item.Settings()
     );
 
+    public static final Item CREEPER_SPECTRE_SPAWN_EGG = register(
+            "creeper_spectre_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_SPECTRE, settings),
+            new Item.Settings()
+    );
+
+    public static final Item CREEPER_HEROBRINE_SPAWN_EGG = register(
+            "creeper_herobrine_spawn_egg",
+            settings -> new SpawnEggItem(CFTPEntities.CREEPER_HEROBRINE, settings),
+            new Item.Settings()
+    );
+
     public static final Item SPIDER_YELLOW_SPAWN_EGG = register(
             "spider_yellow_spawn_egg",
             settings -> new SpawnEggItem(CFTPEntities.SPIDER_YELLOW, settings),

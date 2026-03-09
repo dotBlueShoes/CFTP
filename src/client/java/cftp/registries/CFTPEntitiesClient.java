@@ -39,7 +39,8 @@ public class CFTPEntitiesClient {
         EntityRendererRegistry.register(CFTPEntities.CREEPER_OCEANID, CreeperOceanidEntityRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_SAND, CreeperSandEntityRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_SCULK, CreeperSculkEntityRenderer::new);
-
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_SPECTRE, CreeperSpectreEntityRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.CREEPER_HEROBRINE, CreeperHerobrineEntityRenderer::new);
 
         EntityRendererRegistry.register(CFTPEntities.SPIDER_YELLOW, SpiderYellowRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.SPIDER_BLUE, SpiderBlueRenderer::new);

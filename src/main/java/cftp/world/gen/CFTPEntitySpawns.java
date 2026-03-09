@@ -312,7 +312,7 @@ public class CFTPEntitySpawns {
         /// };
 
 
-        final int CREEPER_GROUP_WEIGHT = 14;
+        final int CREEPER_GROUP_WEIGHT = 30;//14;
         final int CREEPER_GROUP_MIN = 1;
         final int CREEPER_GROUP_MAX = 3;
 

@@ -1,5 +1,11 @@
 ## Chapter 1. Creeps.
 
+- update spectre creeper sprite (transparency)
+- fix spectre creeper model
+- herobrine creeper model
+- herobrine creeper logic
+- giant creeper logic
+
 - configVersion validation
 - isSpawnInLightButEasier
 - isUponDeathEnabled

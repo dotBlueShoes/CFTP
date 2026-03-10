@@ -30,6 +30,8 @@
   "entity.cftp.creeper_oceanid": "Oceanid Creeper",
   "entity.cftp.creeper_sand": "Sand Creeper",
   "entity.cftp.creeper_sculk": "Sculk Creeper",
+  "entity.cftp.creeper_spectre": "Spectre Creeper",
+  "entity.cftp.creeper_herobrine": "Herobrine Creeper",
 
   "entity.cftp.spider_yellow": "Yellow Spider",
   "entity.cftp.spider_blue": "Blue Spider",
@@ -65,6 +67,8 @@
   "item.cftp.creeper_oceanid_spawn_egg": "Oceanid Creeper Spawn Egg",
   "item.cftp.creeper_sand_spawn_egg": "Sand Creeper Spawn Egg",
   "item.cftp.creeper_sculk_spawn_egg": "Sculk Creeper Spawn Egg",
+  "item.cftp.creeper_spectre_spawn_egg": "Spectre Creeper Spawn Egg",
+  "item.cftp.creeper_herobrine_spawn_egg": "Herobrine Creeper Spawn Egg",
 
   "item.cftp.spider_yellow_spawn_egg": "Yellow Spider Spawn Egg",
   "item.cftp.spider_blue_spawn_egg": "Blue Spider Spawn Egg",

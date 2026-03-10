@@ -291,6 +291,22 @@ public class CreeperMath {
         }
     }
 
+    public static void onGeneralReplace(ServerWorld world, BlockState oldState, BlockState newState, BlockPos pos, BiConsumer<ItemStack, BlockPos> stackMerger) {
+        if (!oldState.isAir()) {
+            BlockEntity blockEntity = oldState.hasBlockEntity() ? world.getBlockEntity(pos) : null;
+
+            LootWorldContext.Builder builder = new LootWorldContext.Builder(world)
+                    .add(LootContextParameters.ORIGIN, Vec3d.ofCenter(pos))
+                    .add(LootContextParameters.TOOL, ItemStack.EMPTY)
+                    .addOptional(LootContextParameters.BLOCK_ENTITY, blockEntity);
+
+            oldState.onStacksDropped(world, pos, ItemStack.EMPTY, false);
+            oldState.getDroppedStacks(builder).forEach(stack -> stackMerger.accept(stack, pos));
+        }
+
+        world.setBlockState(pos, newState, Block.NOTIFY_ALL);
+    }
+
     //public enum CREEPERS {
     //    COOKIE      (CreeperCookieEntity.class)     ,
     //    DIRT        (CreeperDirtEntity.class)       ,

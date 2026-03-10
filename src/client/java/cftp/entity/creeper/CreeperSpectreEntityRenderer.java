@@ -1,10 +1,13 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.entity.base.CreeperElementalEntityRenderState;
 import cftp.entity.base.CreeperElementalEntityRenderer;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Nullable;
 
 public class CreeperSpectreEntityRenderer extends CreeperElementalEntityRenderer<CreeperSpectreEntity> {
 
@@ -12,6 +15,16 @@ public class CreeperSpectreEntityRenderer extends CreeperElementalEntityRenderer
 
     public CreeperSpectreEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
+    }
+
+    //public CreeperGhostRenderer(EntityRendererFactory.Context context) {
+    //    super(context, new CreeperElementalEntityModel(context.getPart(CFTPClient.ELEMENTAL_CREEPER)), 0.0F);
+    //    //todo this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
+    //}
+
+    @Override
+    protected @Nullable RenderLayer getRenderLayer(CreeperEntityRenderState state, boolean showBody, boolean translucent, boolean showOutline) {
+        return RenderLayer.getEntityTranslucent(this.getTexture(state));
     }
 
     @Override

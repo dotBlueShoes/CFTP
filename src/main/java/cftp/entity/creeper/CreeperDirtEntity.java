@@ -118,7 +118,16 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
                 final int iDiameter = (int) diameter;
                 final int radius = iDiameter / 2;
 
-                {
+                { // inplace root-dirt at explosion position.
+                    BlockPos blockPos = this.getBlockPos();
+                    BlockState state = serverWorld.getBlockState(blockPos);
+
+                    CreeperMath.onGeneralReplace(serverWorld, state, Blocks.ROOTED_DIRT.getDefaultState(), blockPos, (itemStack, pos) -> {
+                        Block.dropStack(serverWorld, pos, itemStack);
+                    });
+                }
+
+                { // dirt around entities
                     Box box = new Box(
                             this.getX() - radius,
                             this.getY() - radius,

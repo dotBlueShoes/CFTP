@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.Shapes;
@@ -35,7 +36,8 @@ import java.util.List;
 
 public class CreeperWaterEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 5;
+    protected float power = CFTPData.creeperWater.power;
+
     protected int WATER_BREATHING_EFFECT_TICKS_EASY = 20 * 10;  // = 0m 10s
     protected int WATER_BREATHING_EFFECT_TICKS_NORM = 20 * 05;  // = 0m 05s
     protected int WATER_BREATHING_EFFECT_TICKS_HARD = 20 * 00;  // = 0m 00s
@@ -49,10 +51,10 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperWater.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperWater.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperWater.followRange);
     }
 
     @Override
@@ -73,7 +75,7 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                 chargedPower *= this.isTouchingWater() ? 1.50F : 1.00F;
 
                 // For the case of extending the difficulty enum. We provide a default.
-                float diameter = this.ExplosionDiameter;
+                float diameter = this.power;
                 int dropExplosionItemChance;
                 int ghostCreeperChance;
                 int effectTicks;

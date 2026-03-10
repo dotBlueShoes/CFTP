@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.utility.CreeperMath;
@@ -19,6 +20,9 @@ import net.minecraft.world.World;
 
 public class CreeperCookieEntity extends CreeperElementalEntity {
 
+    // todo. do something with it actually.
+    protected float power = CFTPData.creeperCookie.power;
+
     public CreeperCookieEntity(
             EntityType<? extends CreeperCookieEntity> entityType,
             World world
@@ -28,10 +32,10 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperCookie.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperCookie.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 0)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperCookie.followRange);
     }
 
     @Override

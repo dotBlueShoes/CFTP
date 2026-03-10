@@ -1,6 +1,7 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.registries.CFTPItems;
@@ -39,6 +40,8 @@ import static cftp.utility.CreeperMath.CREEPER_EGGS;
 
 public class CreeperGhostEntity extends CreeperElementalEntity {
 
+    protected float power = CFTPData.creeperGhost.power;
+
     private static final TrackedData<Integer> INVISIBLE_AGE_PROPERTY = DataTracker.registerData(CreeperGhostEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public static final int MAX_INVISIBLE_AGE = 35;
@@ -59,14 +62,10 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 14)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.30f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperGhost.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperGhost.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
-
-        // This makes the ghost creeper not scary at all.
-        //  should be a config setting. Make Ghost Creepers Easy.
-        //.add(EntityAttributes.MOVEMENT_SPEED, 0.20f)
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperGhost.followRange);
     }
 
     @Override
@@ -155,7 +154,7 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
             if (!this.isTouchingWater() && !isDefused()) {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
                 float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-                float diameter = this.explosionDiameter;
+                float diameter = this.power;
                 int ghostCreeperChance;
 
                 switch (difficulty) {

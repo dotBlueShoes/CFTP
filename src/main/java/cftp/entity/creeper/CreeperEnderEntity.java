@@ -1,6 +1,7 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import net.minecraft.block.BlockState;
@@ -33,6 +34,9 @@ import net.minecraft.world.World;
 
 public class CreeperEnderEntity extends CreeperElementalEntity {
 
+    // todo. do something with that value actually.
+    protected float power = CFTPData.creeperEnder.power;
+
     public CreeperEnderEntity(
             EntityType<? extends CreeperEnderEntity> entityType,
             World world
@@ -43,10 +47,10 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
     public static DefaultAttributeContainer.Builder createAttributes() {
         //return HostileEntity.createHostileAttributes().add(EntityAttributes.MOVEMENT_SPEED, 0.25);
         return HostileEntity.createHostileAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperEnder.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperEnder.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 0)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperEnder.followRange);
 
     }
 

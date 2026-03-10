@@ -1,6 +1,7 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
@@ -34,8 +35,9 @@ import java.util.List;
 
 public class CreeperGoldenEntity extends CreeperElementalEntity {
 
+    protected float power = CFTPData.creeperGolden.power;
+
     final int MAX_ABSORPTION = 40;
-    protected int ExplosionDiameter = 3;
 
     public CreeperGoldenEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -43,10 +45,10 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
-                .add(EntityAttributes.ATTACK_DAMAGE, 0)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperGolden.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperGolden.movementSpeed)
+                .add(EntityAttributes.ATTACK_DAMAGE, 1)
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperGolden.followRange);
     }
 
     @Override
@@ -63,7 +65,7 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
 
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-                float diameter = this.ExplosionDiameter;
+                float diameter = this.power;
 
                 int ghostCreeperChance;
                 int absorptionGive;

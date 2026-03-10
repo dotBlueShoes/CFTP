@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.utility.CreeperMath;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 public class CreeperLightingEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 2;
+    protected float power = CFTPData.creeperLighting.power;
 
     // TODO
     // 1. For lighting creeper implement own "ExplosionImpl" class.
@@ -40,10 +41,10 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.45f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperLighting.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperLighting.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 10)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperLighting.followRange);
     }
 
     @Override
@@ -104,7 +105,7 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
 
                 serverWorld.createExplosion(
                         this, this.getX(), this.getY(), this.getZ(),
-                        ExplosionDiameter * chargedPower, World.ExplosionSourceType.MOB
+                        power * chargedPower, World.ExplosionSourceType.MOB
                 );
 
                 SpawnGhostCreeper(serverWorld, ghostCreeperChance);

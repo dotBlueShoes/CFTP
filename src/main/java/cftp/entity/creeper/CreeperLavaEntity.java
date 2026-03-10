@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
@@ -27,7 +28,7 @@ import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperLavaEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 5;
+    protected float power = CFTPData.creeperLava.power;
 
     public CreeperLavaEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
@@ -38,10 +39,10 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperLava.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperLava.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperLava.followRange);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
 
                 // For the case of extending the difficulty enum. We provide a default.
-                float diameter = this.ExplosionDiameter;
+                float diameter = this.power;
                 int dropExplosionItemChance;
                 int ghostCreeperChance;
 

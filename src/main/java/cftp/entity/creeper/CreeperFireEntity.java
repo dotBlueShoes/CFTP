@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.goals.CreeperFireAttackGoal;
@@ -38,7 +39,7 @@ import java.util.List;
 
 public class CreeperFireEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 9;
+    protected float power = CFTPData.creeperFire.power;
 
     public CreeperFireEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
@@ -49,10 +50,10 @@ public class CreeperFireEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperFire.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperFire.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperFire.followRange);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
 
-                float diameter = this.ExplosionDiameter;
+                float diameter = this.power;
                 int dropExplosionItemChance;
                 int ghostCreeperChance;
 

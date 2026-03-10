@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.Shapes;
@@ -25,7 +26,7 @@ import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperGiantEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 5;
+    protected float power = CFTPData.creeperGiant.power;
 
     public CreeperGiantEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
@@ -36,10 +37,10 @@ public class CreeperGiantEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperGiant.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperGiant.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperGiant.followRange);
     }
 
     @Override

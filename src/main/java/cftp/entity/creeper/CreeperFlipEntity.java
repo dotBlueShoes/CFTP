@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
@@ -24,7 +25,7 @@ import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperFlipEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 6;
+    protected float power = CFTPData.creeperFlip.power;
 
     public CreeperFlipEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -32,10 +33,10 @@ public class CreeperFlipEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperFlip.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperFlip.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 0)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperFlip.followRange);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class CreeperFlipEntity extends CreeperElementalEntity {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
 
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-                float diameter = this.ExplosionDiameter;
+                float diameter = this.power;
 
                 int ghostCreeperChance;
 

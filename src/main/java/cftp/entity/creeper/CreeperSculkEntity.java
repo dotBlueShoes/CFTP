@@ -1,6 +1,7 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
@@ -39,11 +40,11 @@ import java.util.function.BiConsumer;
 
 public class CreeperSculkEntity extends CreeperElementalEntity {
 
+    protected float power = CFTPData.creeperSculk.power;
+
     public final int EFFECT_TICKS_EASY = 20 * 4;   // 0m 04s
     public final int EFFECT_TICKS_NORM = 20 * 7;   // 0m 07s
     public final int EFFECT_TICKS_HARD = 20 * 10;  // 0m 10s
-
-    protected int ExplosionDiameter = 8;
 
     public CreeperSculkEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
@@ -54,10 +55,10 @@ public class CreeperSculkEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperSculk.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperSculk.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperSculk.followRange);
     }
 
     @Override
@@ -73,7 +74,7 @@ public class CreeperSculkEntity extends CreeperElementalEntity {
             if (!isDefused()) {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-                float diameter = this.ExplosionDiameter;
+                float diameter = this.power;
 
                 int dropExplosionItemChance;
                 int ghostCreeperChance;

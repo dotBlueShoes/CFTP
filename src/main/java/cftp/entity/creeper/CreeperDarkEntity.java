@@ -1,6 +1,7 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.Shapes;
@@ -30,7 +31,8 @@ import java.util.List;
 
 public class CreeperDarkEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 12;
+    protected float power = CFTPData.creeperDark.power;
+
     protected int DARKNESS_EFFECT_TICKS_EASY = 20 * 15;     // = 0m 15s
     protected int DARKNESS_EFFECT_TICKS_NORMAL = 20 * 30;   // = 0m 30s
     protected int DARKNESS_EFFECT_TICKS_HARD = 20 * 45;     // = 0m 45s
@@ -41,10 +43,10 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperDark.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperDark.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 0)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperDark.followRange);
     }
 
     @Override
@@ -62,7 +64,7 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
 
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-                float diameter = this.ExplosionDiameter;
+                float diameter = this.power;
 
                 int darknessEffectTicks;
                 int ghostCreeperChance;

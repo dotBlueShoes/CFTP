@@ -1,6 +1,60 @@
 ## Chapter 1. Creeps.
 
-1. REPLACE ALL BLOCK DESTRUCTION and Items destruction with what's in sculk creeper! 
+- configVersion validation
+- isSpawnInLightButEasier
+- isUponDeathEnabled
+- isShearAndGildResistant
+- isCreeperShearingEnabled
+- isCreeperRefusingEnabled
+- isCreeperGildingEnabled
+- make sure everywhere "this.power" is used inside each creeper logic ! (theres at least 2 that dont - cookie, ender)
+
+// 28.
+"Lighting Creeper",	// done // ?
+"Cookie Creeper",		// done // 3-6 cookies
+"Ender Creeper",		// done // 1 ender eye
+"Water Creeper",		// done // 1 water charge
+"Earth Creeper",		// done // 1 earth charge
+"Fire Creeper",		// done // 1 fire charge
+"Dirt Creeper",		// done // 4-12 dirt blocks
+"Lava Creeper",		// done // 2-3 fire charges // maybe call it lava charge? and create lava at place ??
+"Wind Creeper",		// done // 1 wind charge
+"Ghost Creeper",		// done // ghost egg (done)
+"Nether Creeper",		// done // 4-12 netherrack
+"Flip Creeper",		// done // ?
+"Friendly Creeper",	// done // (none)
+"Snow Creeper",		// done // 4-12 snow_blocks
+"Swamp Creeper",		// done // 1 water/fire/earth charge
+"Dark Creeper",		// done // ?
+"Ballistic Creeper",	// done // 1 tnt
+"Golden Creeper",		// done // 4-12 gold ingots
+"Bridger Creeper",	// done // ?
+"Piggy Creeper",		// done // 4-12 porkchops
+"Amalgam Creeper",	// done // more gunpowder more elemental powder (done)
+"Amethyst Creeper",	// done // 1-4 amethyst
+"Brewer Creeper",		// done // ?
+"Giant Creeper",		// done // ?
+"Harvest Creeper",	// done // ?
+"Oceanid Creeper",	// done // 1-4 coral block
+"Sand Creeper",		// done // 4-12 sand blocks
+"Sculk Creeper",		// done // ?
+"Herobrine Creeper",  //		// 1-4 diamond or 4-16 iron
+
+
+- change creepers weight											//
+- rename amethyst to geode creeper									//
+- make dirt creeper spawn one dirt block at it's position			//
+- see why ghost creeper is not effected by wind creeper explosion	//
+- see why mobs do this weird head thing when in survival			//
+- make sculk creeper sprite animated								//
+- see if lighting creeper is fast enough and low health				//
+- give dirt a chance for rooted_dirt								//
+- giant creeper														//
+- herobrine creeper													// (maybe also gives drinkable )
+- earth_charge creates rooted_dirt block at collision point			//
+- redo fire_charge so it can be thrown								//
+- make all creepers also drop 3rd item that is their element		// (looting adds chance so it's : 25%, 33%, 66%, 75%)
+--------------------------------------------------------
 
 finish creepers
 : water, earth, fire, wind, lighting -> plains

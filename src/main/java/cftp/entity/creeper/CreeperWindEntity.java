@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 
@@ -48,6 +49,8 @@ import java.util.function.Function;
 
 public class CreeperWindEntity extends CreeperElementalEntity {
 
+    protected float power = CFTPData.creeperWind.power;
+
     public CreeperWindEntity(
             EntityType<? extends CreeperElementalEntity> entityType,
             World world
@@ -57,10 +60,10 @@ public class CreeperWindEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
-                .add(EntityAttributes.ATTACK_DAMAGE, 10)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperWind.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperWind.movementSpeed)
+                .add(EntityAttributes.ATTACK_DAMAGE, 1)
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperWind.followRange);
     }
 
     @Override
@@ -89,8 +92,6 @@ public class CreeperWindEntity extends CreeperElementalEntity {
 
             if (!isDefused()) {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
-
-                final float power = 3.27f;
 
                 float chargedPower = this.isCharged() ? power * 1.5f : power;
                 float radius;

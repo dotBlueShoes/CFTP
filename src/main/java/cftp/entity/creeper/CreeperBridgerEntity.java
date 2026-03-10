@@ -1,5 +1,6 @@
 package cftp.entity.creeper;
 
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperBallisticAttackGoal;
 import cftp.goals.CreeperElementalIgniteGoal;
@@ -18,7 +19,7 @@ import net.minecraft.world.World;
 
 public class CreeperBridgerEntity extends CreeperElementalEntity {
 
-    protected int ExplosionDiameter = 5;
+    protected float power = CFTPData.creeperBridger.power;
 
     public CreeperBridgerEntity(EntityType<? extends CreeperElementalEntity> entityType, World world) {
         super(entityType, world);
@@ -26,10 +27,10 @@ public class CreeperBridgerEntity extends CreeperElementalEntity {
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperBridger.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperBridger.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 0)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperBridger.followRange);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class CreeperBridgerEntity extends CreeperElementalEntity {
     //        final Difficulty difficulty = this.getWorld().getDifficulty();
     //
     //        final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-    //        float diameter = this.ExplosionDiameter ;
+    //        float diameter = this.power ;
     //
     //        int ghostCreeperChance;
     //

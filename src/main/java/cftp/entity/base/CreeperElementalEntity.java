@@ -63,7 +63,7 @@ public class CreeperElementalEntity extends HostileEntity {
     protected int currentFuseTime;
     protected int headsDropped;
 
-    protected int explosionDiameter = 3;
+    protected float power = 3;
     protected int fuseTime = 25;
 
     public static final int ITEM_EXPLOSION_DAMAGE = 10;
@@ -123,7 +123,7 @@ public class CreeperElementalEntity extends HostileEntity {
         }
 
         nbt.putShort("Fuse", (short)this.fuseTime);
-        nbt.putByte("ExplosionDiameter", (byte)this.explosionDiameter);
+        nbt.putByte("ExplosionDiameter", (byte)this.power);
         nbt.putBoolean("ignited", this.isIgnited());
         nbt.putBoolean("defused", this.isDefused());
     }
@@ -139,7 +139,7 @@ public class CreeperElementalEntity extends HostileEntity {
         }
 
         if (nbt.contains("ExplosionDiameter", NbtElement.NUMBER_TYPE)) {
-            this.explosionDiameter = nbt.getByte("ExplosionDiameter");
+            this.power = nbt.getByte("ExplosionDiameter");
         }
 
         if (nbt.getBoolean("ignited")) {
@@ -344,7 +344,7 @@ public class CreeperElementalEntity extends HostileEntity {
             if (!isDefused()) {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
                 float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-                float diameter = this.explosionDiameter;
+                float diameter = this.power;
                 int ghostCreeperChance;
 
                 switch (difficulty) {

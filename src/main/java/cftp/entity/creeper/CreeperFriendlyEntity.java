@@ -1,6 +1,7 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperAttackWithOwnerGoal;
 import cftp.goals.CreeperElementalIgniteGoal;
@@ -58,6 +59,8 @@ import java.util.UUID;
 
 public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tameable {
 
+    protected float power = CFTPData.creeperFriendly.power;
+
     // NOT NEEDED - just deal dmg to itself.
     //private static final TrackedData<Integer> EXPLODES = DataTracker.registerData(CreeperFriendlyEntity.class, TrackedDataHandlerRegistry.INTEGER);
     protected static final TrackedData<Optional<UUID>> OWNER_UUID = DataTracker.registerData(CreeperFriendlyEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
@@ -69,8 +72,6 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
     private static final int ANGRY_FLAG     = 32;
     private static final int EATING_FLAG    = 64;
 
-    protected int ExplosionDiameter = 3;
-
     @Nullable
     private UUID ownerUuid;
 
@@ -80,10 +81,10 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
 
     public static DefaultAttributeContainer.Builder createAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.MAX_HEALTH, 20)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.25f)
+                .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperFriendly.health)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperFriendly.movementSpeed)
                 .add(EntityAttributes.ATTACK_DAMAGE, 0)
-                .add(EntityAttributes.FOLLOW_RANGE, 20);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperFriendly.followRange);
     }
 
     @Override
@@ -224,7 +225,7 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
                 final Difficulty difficulty = this.getWorld().getDifficulty();
 
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
-                float diameter = this.ExplosionDiameter;
+                float diameter = this.power;
 
                 switch (difficulty) {
                     case PEACEFUL:

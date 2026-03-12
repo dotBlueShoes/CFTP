@@ -143,37 +143,6 @@ public class CFTPEntitySpawns {
         //        BiomeKeys.END_BARRENS
         //};
 
-        //final RegistryKey<?>[] BIOMES_LIGHTING  = {BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_SAVANNA};
-        //final RegistryKey<?>[] BIOMES_COOKIE    = {BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE};
-        //final RegistryKey<?>[] BIOMES_ENDER     = {BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE, BiomeKeys.THE_END, BiomeKeys.END_HIGHLANDS, BiomeKeys.END_MIDLANDS, BiomeKeys.SMALL_END_ISLANDS, BiomeKeys.END_BARRENS, BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST};
-        //final RegistryKey<?>[] BIOMES_WATER     = {BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS};
-        //final RegistryKey<?>[] BIOMES_EARTH     = {BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS};
-        //final RegistryKey<?>[] BIOMES_FIRE      = {BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS};
-        //final RegistryKey<?>[] BIOMES_DIRT      = {BiomeKeys.DRIPSTONE_CAVES};
-        //final RegistryKey<?>[] BIOMES_LAVA      = {BiomeKeys.NETHER_WASTES, BiomeKeys.BASALT_DELTAS};
-        //final RegistryKey<?>[] BIOMES_WIND      = {BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS};
-        //final RegistryKey<?>[] BIOMES_GHOST     = {BiomeKeys.SWAMP, BiomeKeys.SOUL_SAND_VALLEY};
-        //final RegistryKey<?>[] BIOMES_NETHER    = {BiomeKeys.NETHER_WASTES, BiomeKeys.BASALT_DELTAS, BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST};
-        //final RegistryKey<?>[] BIOMES_FLIP      = {BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST};
-        //final RegistryKey<?>[] BIOMES_FRIENDLY  = {BiomeKeys.MUSHROOM_FIELDS};
-        //final RegistryKey<?>[] BIOMES_SNOW      = {BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA, BiomeKeys.ICE_SPIKES, BiomeKeys.FROZEN_OCEAN, BiomeKeys.DEEP_FROZEN_OCEAN, BiomeKeys.SNOWY_SLOPES, BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_RIVER};
-        //final RegistryKey<?>[] BIOMES_SWAMP     = {BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP};
-        //final RegistryKey<?>[] BIOMES_DARK      = {BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS};
-        //final RegistryKey<?>[] BIOMES_BALLISTIC = {BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.DARK_FOREST};
-        //final RegistryKey<?>[] BIOMES_AMETHYST  = {BiomeKeys.LUSH_CAVES};
-        //final RegistryKey<?>[] BIOMES_SCULK     = {BiomeKeys.DEEP_DARK};
-        //final RegistryKey<?>[] BIOMES_AMALGAM   = {BiomeKeys.MEADOW};
-        //final RegistryKey<?>[] BIOMES_BREWER     = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_BRIDGER    = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_GIANT      = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_GOLDEN     = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_HARVEST    = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_HEROBRINE  = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_OCEANID    = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_PIGGY      = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_SAND       = ALL_BIOMES;
-        //final RegistryKey<?>[] BIOMES_SPECTRE    = ALL_BIOMES;
-
         final int CREEPER_GROUP_MIN = 1;
         final int CREEPER_GROUP_MAX = 3;
 

@@ -48,21 +48,10 @@ public class CreeperGiantEntity extends CreeperElementalEntity {
         return CreeperMath.CREEPER_TYPE.GIANT.getType();
     }
 
-    //@Override // TODO
-    //protected void explode() {
-    //    if (this.getWorld() instanceof ServerWorld serverWorld) {
-    //        this.dead = true;
-    //        this.playExplosionSound(serverWorld);
-    //        this.spawnEffectsCloud();
-    //        this.onRemoval(serverWorld, RemovalReason.KILLED);
-    //        this.discard();
-    //    }
-    //}
-
     @Override
     public void tickMovement() {
 
-        if (this.random.nextInt(256) > 252) {
+        if (this.random.nextInt(256) > 248) {
             if (this.getWorld() instanceof ServerWorld serverWorld) {
                 serverWorld.spawnParticles(
                         ParticleTypes.SPIT,
@@ -78,7 +67,7 @@ public class CreeperGiantEntity extends CreeperElementalEntity {
                         null, this.getX(), this.getY(), this.getZ(),
                         SoundEvents.ENTITY_VILLAGER_NO,
                         SoundCategory.HOSTILE,
-                        0.8f, 0.4f
+                        0.9f, 0.4f
                 );
             }
         }

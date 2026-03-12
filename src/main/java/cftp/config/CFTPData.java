@@ -154,7 +154,7 @@ public class CFTPData {
         String[] biomesFlip         = biomes(BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST);
         String[] biomesFriendly     = biomes(BiomeKeys.MUSHROOM_FIELDS);
         String[] biomesGhost        = biomes(BiomeKeys.SWAMP, BiomeKeys.SOUL_SAND_VALLEY);
-        String[] biomesGiant        = {};
+        String[] biomesGiant        = biomes(BiomeKeys.PLAINS);
         String[] biomesGolden       = {};
         String[] biomesHarvest      = {};
         String[] biomesHerobrine    = {};
@@ -178,17 +178,17 @@ public class CFTPData {
         isCreeperGildingEnabled = true;
 
         creeperAmalgam = new CreeperData(
-                new SpawnCondition(30, biomesAmalgam),
+                new SpawnCondition(20, biomesAmalgam),
                 5f, 20, 0.25f, 20
         );
 
         creeperAmethyst = new CreeperData(
-                new SpawnCondition(30, biomesAmethyst),
+                new SpawnCondition(25, biomesAmethyst),
                 7f, 20, 0.25f, 20
         );
 
         creeperBallistic = new CreeperData(
-                new SpawnCondition(30, biomesBallistic),
+                new SpawnCondition(20, biomesBallistic),
                 5f, 20, 0.25f, 20
         );
 
@@ -203,18 +203,18 @@ public class CFTPData {
         );
 
         creeperCookie = new CreeperData(
-                new SpawnCondition(30, biomesCookie),
+                new SpawnCondition(25, biomesCookie),
                 5f, 20, 0.25f, 20
         );
 
         creeperDark = new CreeperDarkData(
-                new SpawnCondition(30, biomesDark),
+                new SpawnCondition(35, biomesDark),
                 12f, 20, 0.25f, 20,
                 false
         );
 
         creeperDirt = new CreeperData(
-                new SpawnCondition(30, biomesDirt),
+                new SpawnCondition(25, biomesDirt),
                 5f, 20, 0.25f, 20
         );
 
@@ -234,12 +234,12 @@ public class CFTPData {
         );
 
         creeperFlip = new CreeperData(
-                new SpawnCondition(30, biomesFlip),
+                new SpawnCondition(25, biomesFlip),
                 6f, 20, 0.25f, 20
         );
 
         creeperFriendly = new CreeperData(
-                new SpawnCondition(30, biomesFriendly),
+                new SpawnCondition(25, biomesFriendly),
                 3f, 20, 0.25f, 20
         );
 
@@ -250,8 +250,8 @@ public class CFTPData {
         );
 
         creeperGiant = new CreeperData(
-                new SpawnCondition(0, biomesGiant),
-                5f, 20, 0.25f, 20
+                new SpawnCondition(20, biomesGiant),
+                11f, 40, 0.19f, 15
         );
 
         creeperGolden = new CreeperData(

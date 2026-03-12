@@ -26,6 +26,11 @@ public class CFTPConfig {
 
         JsonObject json = gson.fromJson(Files.readString(path), JsonObject.class);
 
+        if (json == null) {
+            CFTP.LOGGER.info("Config file is empty! Delete it and restart minecraft!");
+            throw new IOException();
+        }
+
         for (Field field : clazz.getDeclaredFields()) {
             if (!java.lang.reflect.Modifier.isStatic(field.getModifiers()))
                 continue;

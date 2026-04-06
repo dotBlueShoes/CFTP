@@ -234,6 +234,15 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
         return chance;
     }
 
+    private void createPoofSound(ServerWorld serverWorld) {
+        serverWorld.playSound(
+                null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.ENTITY_BREEZE_WIND_BURST,
+                SoundCategory.HOSTILE,
+                0.2f, 0.4f
+        );
+    }
+
     @Override
     public void tickMovement() {
 
@@ -242,8 +251,8 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
                 if (this.random.nextInt(2) >= getInvChance()) {
                     createInvisibleParticles(serverWorld);
                     this.setInvisibleAge(MAX_INVISIBLE_AGE);
-
                     invisibleAge = MAX_INVISIBLE_AGE;
+                    createPoofSound(serverWorld);
                 }
             } else {
                 --invisibleAge;
@@ -254,6 +263,7 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
                 if (invisibleAge == 0) {
                     createInvisibleParticles(serverWorld);
                     this.setInvisibleAge(0);
+                    createPoofSound(serverWorld);
                 } else if (invisibleAge < 0) {
                     invisibleAge = -1;
                 }

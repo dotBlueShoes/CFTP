@@ -8,7 +8,6 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -19,7 +18,7 @@ public class CreeperGhostRenderer extends MobEntityRenderer<CreeperGhostEntity, 
     private static final String TEXTURE_PATH = "textures/entity/creeper_ghost.png";
 
     public CreeperGhostRenderer(EntityRendererFactory.Context context) {
-        super(context, new CreeperElementalEntityModel(context.getPart(CFTPClient.ELEMENTAL_CREEPER)), 0.0F);
+        super(context, new CreeperElementalEntityModel(context.getPart(CFTPClient.GHOST_CREEPER)), 0.0F);
         //todo this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
     }
 

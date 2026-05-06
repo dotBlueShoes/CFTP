@@ -1,38 +1,41 @@
 package cftp;
 
 import cftp.entity.base.CreeperElementalEntityModel;
+import cftp.entity.base.CreeperSpectreEntityModel;
+import cftp.entity.base.HerobrineEntityModel;
 import cftp.registries.CFTPBlocksClient;
 import cftp.registries.CFTPEntitiesClient;
-import cftp.registries.CFTPBlocks;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.IdentifiedLayer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.*;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.model.Dilation;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
-import org.joml.Matrix4f;
-import org.lwjgl.opengl.GL11;
-
-import java.util.Map;
-import java.util.Set;
 
 public class CFTPClient implements ClientModInitializer {
 
     private static final Identifier NOISE_LAYER_ID  = Identifier.of("cftp", "noise_overlay");
     private static final Identifier NOISE_TEXTURE   = Identifier.of("cftp", "textures/noise.png");
 
-    public static final EntityModelLayer ELEMENTAL_CREEPER =
+    public static final EntityModelLayer GHOST_CREEPER =
             new EntityModelLayer(
-                    Identifier.of("cftp", "creeper_elemental"),
+                    Identifier.of("cftp", "creeper_model_ghost"),
+                    "main"
+            );
+
+    public static final EntityModelLayer SPECTRE_CREEPER =
+            new EntityModelLayer(
+                    Identifier.of("cftp", "creeper_model_spectre"),
+                    "main"
+            );
+
+    public static final EntityModelLayer HEROBRINE_CREEPER =
+            new EntityModelLayer(
+                    Identifier.of("cftp", "creeper_model_herobrine"),
                     "main"
             );
 
@@ -44,8 +47,18 @@ public class CFTPClient implements ClientModInitializer {
 		CFTP.LOGGER.info("Hello Fabric Client!");
 
         EntityModelLayerRegistry.registerModelLayer(
-                ELEMENTAL_CREEPER,
+                GHOST_CREEPER,
                 CreeperElementalEntityModel::getTexturedModelData
+        );
+
+        EntityModelLayerRegistry.registerModelLayer(
+                SPECTRE_CREEPER,
+                CreeperSpectreEntityModel::getTexturedModelData
+        );
+
+        EntityModelLayerRegistry.registerModelLayer(
+                HEROBRINE_CREEPER,
+                HerobrineEntityModel::getTexturedModelData
         );
 
         //String version = GL11.glGetString(GL11.GL_VERSION);

@@ -22,7 +22,7 @@ public class CreeperAmalgamEntityRenderer extends CreeperElementalEntityRenderer
 
     @Override
     protected void scale(CreeperEntityRenderState state, MatrixStack matrices) {
-        matrices.scale(1.1f, 1.1f, 1.1f);
+        matrices.scale(1.04f, 1.04f, 1.04f);
         super.scale(state, matrices);
     }
 

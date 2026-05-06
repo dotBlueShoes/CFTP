@@ -22,7 +22,7 @@ public class CreeperCookieEntityRenderer extends CreeperElementalEntityRenderer<
 
     @Override
     protected void scale(CreeperEntityRenderState state, MatrixStack matrices) {
-        matrices.scale(0.95f, 0.95f, 0.95f);
+        matrices.scale(0.96f, 0.96f, 0.96f);
         super.scale(state, matrices);
     }
 }

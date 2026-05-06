@@ -1,19 +1,14 @@
 ## Chapter 1. Creeps.
 
-- update spectre creeper sprite (transparency)
-- fix spectre creeper model
-- herobrine creeper model
-- herobrine creeper logic
-- giant creeper logic
-
-- configVersion validation
-- isSpawnInLightButEasier
-- isUponDeathEnabled
-- isShearAndGildResistant
-- isCreeperShearingEnabled
-- isCreeperRefusingEnabled
-- isCreeperGildingEnabled
-- make sure everywhere "this.power" is used inside each creeper logic ! (theres at least 2 that dont - cookie, ender)
+- configVersion validation:
+: isTextureAnimated
+: isSpawnInLightButEasier
+: isUponDeathEnabled
+: isShearAndGildResistant
+: isCreeperShearingEnabled
+: isCreeperRefusingEnabled
+: isCreeperGildingEnabled
+- make sure everywhere "this.power" is used inside each creeper logic ! (there's at least 2 that don't - cookie, ender)
 
 // 28.
 "Lighting Creeper",	// done // ?
@@ -79,28 +74,31 @@ finish creepers
 
 : piggy, amalgam, golden, harvest -> special
 
-herobrine_creeper - teleports player to the nether
-raw_creeper_fish - explodes when put into an oven which has coal, but 
-used in recipe with sheers gives safe_raw_creeper_fish - can be used in trading
+
+- raw_creeper_fish - explodes when put into an oven which has coal, but 
+used in recipe with sheers gives safe_raw_creeper_fish - can be used in trading or just the fuse and powder
+
+- gravestone chest (stone like chest - it spawn when teleported with herobrine (whed player dies the items stored in chest will apear in players inventory))
+- lava creeper leaves lava last stage that disapears after a short time
+- water/oceanid/geode/swamp creeper leave last stage water that disapears after a short time
+
+### Creeper Herobrine
+- missing explode logic. (teleports player to the nether)
+- could spawn up to 4 dirt creepers as ability aside explosion.
 
 ### Creeper Spectre
 - Spawns with a small chance from ghost creeper death but only in nether (when overcharged it's 100% to spawn, 25% it's going to be overcharged too)
 
-
-// nope // ### Creeper Stone (block)
-// nope // 1. When mined or set a flame using flint_and_steel or fireball it releases a creeper-like spirit (particle/s).
-// nope // 2. Either applies a timed or forever debuff making wilder creepers to spawn in the world.
-// nope // 3. Needs a retexture (Cracked and/or light up sometimes by itself (so the user knows something's wrong), maybe make noise like "tssss" when it is being mined.)
-// nope // 4. It also drops a normal stone.
-
-### Retexture ideas
-1. It might work to simply shift pixels on creeper's textures. - creeper texture
+### Creeper Lighting
+- More spawn during storms.
+- Their texture unconditionally lights up as if they were about to explode for no reason.
 
 ### Creeper Sculk
-3. Missing proper spawn condition.
-4. Missing random size.
-5. Missing distinguish stats.
-7. Missing loot-table.
+1. Missing proper spawn condition.
+2. Missing random size.
+3. Missing distinguish stats.
+4. Missing loot-table.
+5. Leaves a sculk vain as he walks.
 
 ### Creeper Sand 
 1. Missing explode logic. -> could make a fun use of sand-like blocks replace blocks under said sand with primed-tnt/lava/air/monsters, or like make all blocks except bedrock in a chunk be affected by gravity.
@@ -131,7 +129,8 @@ used in recipe with sheers gives safe_raw_creeper_fish - can be used in trading
 4. Missing distinguish stats.
 5. Missing charged behavior.
 6. Missing loot-table.
-7. Missing custom explode sound. -> (like harvest/plant/grass-cut)
+7. Missing custom explode sound. -> (like harvest/plant/grass-cut).
+8. Grows plants/grass-like as he walks.
 
 ### Creeper Giant
 1. Missing explode logic. -> could make a bigger explosion and or summon normal creepers.
@@ -172,15 +171,31 @@ used in recipe with sheers gives safe_raw_creeper_fish - can be used in trading
 7. Missing loot-table.
 8. Missing custom explode particle.
 9. Missing custom explode sound.
+10. if not sheared will explode no matter what because he is unstable
 
 ### Water Creeper 
 1. Now sets the player water-breathing to easy/normal/hard <-> 10/5/0.
 2. Missing proper spawn condition -> could only spawn certain moon-phase.
-3. Missing custom explode sound. -> water-splash
+3. Missing custom explode sound. -> water-splash.
+4. Much more water creepers spawn during rain.
+5. Turn into snow creeper when in cold biomes anc vice versa.
+
+### Snow Creeper
+1. Turn into water creeper when in hot biomes anc vice versa.
+2. Leaves snow layer like fire creeper does with fire.
+3. instead of creating a ball shape upon explosion it now creates a spike like shape
+
+### Nether creeper
+1. Retexture - head is shroomlight or glowstone?
+2. Has a crimson and warped variant (makes shearing him harder (requires 2 clicks))
+
+### Earth Creeper
+1. Retexture - stone or grass as legs.
 
 ### Dirt Creeper
-1. it does however change sand/gravel into suspicious variants
+1. It does however change sand/gravel into suspicious variants, water into clay/mud, lava into soulsand/netherrack?
 2. Spawning condition.
+3. retexture - whites as 20% opacity
 
 ### Bridger Creeper
 1. missing logic.

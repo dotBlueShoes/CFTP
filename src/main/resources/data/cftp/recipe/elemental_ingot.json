@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:copper_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:copper_ingot",
+    "minecraft:nether_star",
+    "minecraft:crying_obsidian",
+    "minecraft:crying_obsidian",
+    "minecraft:crying_obsidian",
+    "minecraft:crying_obsidian"
+  ],
+  "result": {
+    "count": 1,
+    "id": "cftp:elemental_ingot"
+  }
+}

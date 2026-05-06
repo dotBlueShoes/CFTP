@@ -4,9 +4,7 @@ import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.Shapes;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -244,12 +242,29 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
 
     @Override
     public void tickMovement() {
-        if (this.getWorld().isClient) {
-            CreeperMath.createWaterWalkingParticle(this);
-        }
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            if (this.random.nextInt(256) > 252) {
+                Block block = serverWorld.getBlockState(this.getBlockPos()).getBlock();
 
-        if (this.random.nextInt(256) > 252) {
-            if (this.getWorld() instanceof ServerWorld serverWorld) {
+                if (block == Blocks.AIR) {
+                    BlockState state = Blocks.WATER.getDefaultState().with(FluidBlock.LEVEL, 6);
+                    serverWorld.setBlockState(this.getBlockPos(), state, Block.NOTIFY_ALL_AND_REDRAW);
+                } else if (block == Blocks.CAULDRON) {
+                    BlockState state = Blocks.WATER_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, 1);
+                    serverWorld.setBlockState(this.getBlockPos(), state, Block.NOTIFY_ALL_AND_REDRAW);
+                } else if (block == Blocks.WATER_CAULDRON) {
+                    BlockState state = serverWorld.getBlockState(this.getBlockPos());
+                    int currentLevel = state.get(LeveledCauldronBlock.LEVEL);
+
+                    if (currentLevel < 3) { // max level is 3
+                        serverWorld.setBlockState(
+                                this.getBlockPos(),
+                                state.with(LeveledCauldronBlock.LEVEL, ++currentLevel),
+                                Block.NOTIFY_ALL_AND_REDRAW
+                        );
+                    }
+                }
+
                 serverWorld.playSound(
                         null, this.getX(), this.getY(), this.getZ(),
                         SoundEvents.BLOCK_POINTED_DRIPSTONE_DRIP_WATER,
@@ -257,6 +272,8 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                         1.2f, 0.4f
                 );
             }
+        } else {
+            CreeperMath.createWaterWalkingParticle(this);
         }
 
         super.tickMovement();

@@ -1,13 +1,12 @@
 package cftp.entity.creeper;
 
+import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.utility.CreeperMath;
 import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.*;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -15,6 +14,8 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -131,6 +132,47 @@ public class CreeperSnowEntity extends CreeperElementalEntity {
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
         }
+    }
+
+    @Override
+    public void tickMovement() {
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            if (this.random.nextInt(256) > 252) {
+
+                Block block = serverWorld.getBlockState(this.getBlockPos()).getBlock();
+
+                if (block == Blocks.AIR) {
+                    BlockState state = Blocks.SNOW.getDefaultState();
+                    serverWorld.setBlockState(this.getBlockPos(), state, Block.NOTIFY_ALL_AND_REDRAW);
+                } else if (block == Blocks.CAULDRON) {
+                    BlockState state = Blocks.POWDER_SNOW_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, 1);
+                    serverWorld.setBlockState(this.getBlockPos(), state, Block.NOTIFY_ALL_AND_REDRAW);
+                } else if (block == Blocks.POWDER_SNOW_CAULDRON) {
+                    BlockState state = serverWorld.getBlockState(this.getBlockPos());
+                    int currentLevel = state.get(LeveledCauldronBlock.LEVEL);
+                    CFTP.LOGGER.info("Level: {}", currentLevel);
+
+                    if (currentLevel < 3) { // max level is 3
+                        serverWorld.setBlockState(
+                                this.getBlockPos(),
+                                state.with(LeveledCauldronBlock.LEVEL, ++currentLevel),
+                                Block.NOTIFY_ALL_AND_REDRAW
+                        );
+                    }
+                }
+
+
+
+                serverWorld.playSound(
+                        null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.BLOCK_SNOW_FALL,
+                        SoundCategory.HOSTILE,
+                        0.8f, 1.1f
+                );
+            }
+        }
+
+        super.tickMovement();
     }
 
 }

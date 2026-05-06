@@ -139,6 +139,31 @@ public class ElementalPowderItem extends Item {
                 }
 
                 return ActionResult.SUCCESS;
+            } else if (block == Blocks.OBSIDIAN) {
+                ItemStack usingItem = context.getStack();
+                usingItem.decrement(1);
+
+                serverWorld.setBlockState(position, Blocks.CRYING_OBSIDIAN.getDefaultState(), Block.NOTIFY_ALL_AND_REDRAW);
+
+                { // particles
+                    serverWorld.spawnParticles(ParticleTypes.GLOW,
+                            position.getX() + 0.5, position.getY() + 0.9, position.getZ() + 0.5,
+                            7,
+                            0.5f, 0.5f, 0.5f,
+                            0.1f
+                    );
+                }
+
+                { // sound
+                    serverWorld.playSound(
+                            null, position,
+                            SoundEvents.BLOCK_CALCITE_HIT,
+                            SoundCategory.PLAYERS,
+                            1.2F, 0.4F
+                    );
+                }
+
+                return ActionResult.SUCCESS;
             }
 
         }

@@ -140,8 +140,10 @@ public class CreeperSnowEntity extends CreeperElementalEntity {
             if (this.random.nextInt(256) > 252) {
 
                 Block block = serverWorld.getBlockState(this.getBlockPos()).getBlock();
+                BlockPos underPos = this.getBlockPos().down();
+                Block blockUnder = serverWorld.getBlockState(underPos).getBlock();
 
-                if (block == Blocks.AIR) {
+                if (block == Blocks.AIR && blockUnder != Blocks.AIR) {
                     BlockState state = Blocks.SNOW.getDefaultState();
                     serverWorld.setBlockState(this.getBlockPos(), state, Block.NOTIFY_ALL_AND_REDRAW);
                 } else if (block == Blocks.CAULDRON) {

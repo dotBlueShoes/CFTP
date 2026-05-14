@@ -236,4 +236,30 @@ public class CreeperSculkEntity extends CreeperElementalEntity {
         );
     }
 
+    @Override
+    public void tickMovement() {
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            if (this.random.nextInt(256) > 252) {
+
+                Block block = serverWorld.getBlockState(this.getBlockPos()).getBlock();
+                BlockPos underPos = this.getBlockPos().down();
+                Block blockUnder = serverWorld.getBlockState(underPos).getBlock();
+
+                if (block == Blocks.AIR && blockUnder != Blocks.AIR) {
+                    BlockState state = Blocks.SCULK_VEIN.getDefaultState().with(Properties.DOWN, true);;
+                    serverWorld.setBlockState(this.getBlockPos(), state, Block.NOTIFY_ALL_AND_REDRAW);
+                }
+
+                serverWorld.playSound(
+                        null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.BLOCK_SNOW_FALL,
+                        SoundCategory.HOSTILE,
+                        0.8f, 1.1f
+                );
+            }
+        }
+
+        super.tickMovement();
+    }
+
 }

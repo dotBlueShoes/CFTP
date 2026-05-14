@@ -244,9 +244,12 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
     public void tickMovement() {
         if (this.getWorld() instanceof ServerWorld serverWorld) {
             if (this.random.nextInt(256) > 252) {
-                Block block = serverWorld.getBlockState(this.getBlockPos()).getBlock();
 
-                if (block == Blocks.AIR) {
+                Block block = serverWorld.getBlockState(this.getBlockPos()).getBlock();
+                BlockPos underPos = this.getBlockPos().down();
+                Block blockUnder = serverWorld.getBlockState(underPos).getBlock();
+
+                if (block == Blocks.AIR && blockUnder != Blocks.AIR) {
                     BlockState state = Blocks.WATER.getDefaultState().with(FluidBlock.LEVEL, 6);
                     serverWorld.setBlockState(this.getBlockPos(), state, Block.NOTIFY_ALL_AND_REDRAW);
                 } else if (block == Blocks.CAULDRON) {

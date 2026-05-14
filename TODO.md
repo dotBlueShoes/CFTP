@@ -1,5 +1,8 @@
 ## Chapter 1. Creeps.
 
+
+- fix ender creeper in nether teleporting to nether roof!
+
 - configVersion validation:
 : isTextureAnimated
 : isSpawnInLightButEasier
@@ -98,7 +101,6 @@ used in recipe with sheers gives safe_raw_creeper_fish - can be used in trading 
 2. Missing random size.
 3. Missing distinguish stats.
 4. Missing loot-table.
-5. Leaves a sculk vain as he walks.
 
 ### Creeper Sand 
 1. Missing explode logic. -> could make a fun use of sand-like blocks replace blocks under said sand with primed-tnt/lava/air/monsters, or like make all blocks except bedrock in a chunk be affected by gravity.

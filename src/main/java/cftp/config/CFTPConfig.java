@@ -9,8 +9,10 @@ import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 public class CFTPConfig {
 
@@ -57,13 +59,14 @@ public class CFTPConfig {
             json.add(field.getName(), gson.toJsonTree(value));
         }
 
-        Files.writeString(path, gson.toJson(json));
+        //Files.writeString(path, gson.toJson(json));
+        Files.writeString(path, gson.toJson(json), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
     public static void create() {
         try {
             Files.createDirectories(path.getParent());
-            Files.createFile(path);
+            //Files.createFile(path);
 
             CFTPData.initializeDefault();
             save(path, CFTPData.class);
@@ -72,9 +75,9 @@ public class CFTPConfig {
         }
     }
 
-    public static void createOrAndLoad() {
+    public static void createOrAndLoad(boolean recreate) {
 
-        if (Files.notExists(path)) {
+        if (Files.notExists(path) || recreate) {
             create();
         }
 

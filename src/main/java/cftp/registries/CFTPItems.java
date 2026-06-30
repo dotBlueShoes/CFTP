@@ -1,10 +1,7 @@
 package cftp.registries;
 
 import cftp.CFTP;
-import cftp.items.EarthChargeItem;
-import cftp.items.ElementalPowderItem;
-import cftp.items.Wand;
-import cftp.items.WaterChargeItem;
+import cftp.items.*;
 import net.fabricmc.fabric.api.registry.FuelRegistryEvents;
 import net.minecraft.item.*;
 import net.minecraft.registry.RegistryKey;
@@ -58,8 +55,8 @@ public class CFTPItems {
             new Wand.Settings()
     );
 
-    public static final Item ELEMENTAL_INGOT = register("elemental_ingot", Item::new,
-            new Item.Settings()
+    public static final Item ELEMENTAL_INGOT = register("elemental_ingot", GlintItem::new,
+            new GlintItem.Settings()
     );
 
     public static final Item CREEPER_FUSE = register("creeper_fuse", Item::new,

@@ -22,7 +22,7 @@ public class CreeperEnderEntityRenderer extends CreeperElementalEntityRenderer<C
 
     @Override
     protected void scale(CreeperEntityRenderState state, MatrixStack matrices) {
-        matrices.scale(1.0f, 1.075f, 1.0f);
+        matrices.scale(1.075f, 1.075f, 1.075f);
         super.scale(state, matrices);
     }
 

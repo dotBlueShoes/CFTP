@@ -204,18 +204,18 @@ public class CFTPData {
 
         creeperCookie = new CreeperData(
                 new SpawnCondition(25, biomesCookie),
-                5f, 20, 0.25f, 20
+                5f, 13, 0.25f, 20
         );
 
         creeperDark = new CreeperDarkData(
                 new SpawnCondition(35, biomesDark),
-                12f, 20, 0.25f, 20,
+                12f, 14, 0.25f, 20,
                 false
         );
 
         creeperDirt = new CreeperData(
                 new SpawnCondition(25, biomesDirt),
-                5f, 20, 0.25f, 20
+                8f, 20, 0.25f, 20
         );
 
         creeperEarth = new CreeperData(
@@ -240,7 +240,7 @@ public class CFTPData {
 
         creeperFriendly = new CreeperData(
                 new SpawnCondition(25, biomesFriendly),
-                3f, 20, 0.25f, 20
+                3f, 14, 0.25f, 20
         );
 
         creeperGhost = new CreeperGhostData(
@@ -251,12 +251,12 @@ public class CFTPData {
 
         creeperGiant = new CreeperData(
                 new SpawnCondition(20, biomesGiant),
-                11f, 40, 0.19f, 15
+                11f, 32, 0.19f, 15
         );
 
         creeperGolden = new CreeperData(
                 new SpawnCondition(0, biomesGolden),
-                3f, 20, 0.25f, 20
+                3f, 24, 0.25f, 20
         );
 
         creeperHarvest = new CreeperData(
@@ -271,7 +271,7 @@ public class CFTPData {
 
         creeperLava = new CreeperData(
                 new SpawnCondition(30, biomesLava),
-                5f, 20, 0.25f, 20
+                5f, 24, 0.25f, 20
         );
 
         creeperLighting = new CreeperData(
@@ -281,7 +281,7 @@ public class CFTPData {
 
         creeperNether = new CreeperData(
                 new SpawnCondition(30, biomesNether),
-                5f, 20, 0.25f, 20
+                5f, 26, 0.25f, 26
         );
 
         creeperOceanid = new CreeperData(
@@ -295,7 +295,7 @@ public class CFTPData {
 
         creeperSand = new CreeperData(
                 new SpawnCondition(0, biomesSand),
-                5f, 20, 0.25f, 20
+                5f, 12, 0.25f, 16
         );
 
         creeperSculk = new CreeperData(
@@ -310,22 +310,22 @@ public class CFTPData {
 
         creeperSpectre = new CreeperData(
                 new SpawnCondition(0, biomesSpectre),
-                5f, 20, 0.25f, 20
+                5f, 14, 0.25f, 12
         );
 
         creeperSwamp = new CreeperData(
                 new SpawnCondition(30, biomesSwamp),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 16
         );
 
         creeperWater = new CreeperData(
                 new SpawnCondition(30, biomesWater),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 16
         );
 
         creeperWind = new CreeperData(
                 new SpawnCondition(30, biomesWind),
-                3.27f, 20, 0.25f, 20
+                3.27f, 20, 0.25f, 16
         );
     }
 

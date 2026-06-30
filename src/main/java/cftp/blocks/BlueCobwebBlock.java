@@ -1,9 +1,6 @@
 package cftp.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CobwebBlock;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
@@ -15,6 +12,9 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class BlueCobwebBlock extends CobwebBlock {
+
+    //CryingObsidianBlock
+    //Blocks
 
     static final VoxelShape[] COLLISION_SHAPES = {
             Block.createCuboidShape(2, 0, 0, 14, 16, 16), // X

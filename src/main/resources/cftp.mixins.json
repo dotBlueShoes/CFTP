@@ -3,9 +3,11 @@
   "package": "cftp.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BlocksMixin",
     "BlockStateMixin",
     "CFTPMixin",
     "FireBlockAccessor",
+    "ItemsMixin",
     "SpawnHelperMixin"
   ],
   "injectors": {

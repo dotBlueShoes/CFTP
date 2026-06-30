@@ -2,6 +2,7 @@ package cftp.registries;
 
 import cftp.CFTP;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
@@ -17,29 +18,32 @@ public class CFTPItemGroups {
             Registries.ITEM_GROUP,
             Identifier.of(CFTP.MOD_ID, "coin_copper"),
             FabricItemGroup.builder()
-                    .icon(() -> new ItemStack(CFTPItems.COIN_COPPER))
+                    .icon(() -> new ItemStack(CFTPItems.ELEMENTAL_POWDER))
                     .displayName(Text.translatable(ITEM_GROUP_ITEMS))
                     .entries(
                             (displayContext, entries) -> {
                                 entries.add(CFTPItems.ELEMENTAL_POWDER);
                                 entries.add(CFTPItems.EARTH_CHARGE);
                                 entries.add(CFTPItems.WATER_CHARGE);
-                                entries.add(CFTPItems.COIN_COPPER);
-                                entries.add(CFTPItems.COIN_IRON);
-                                entries.add(CFTPItems.COIN_GOLD);
+                                //entries.add(CFTPItems.COIN_COPPER);
+                                //entries.add(CFTPItems.COIN_IRON);
+                                //entries.add(CFTPItems.COIN_GOLD);
                                 entries.add(CFTPItems.COPPER_ROD);
                                 entries.add(CFTPItems.ELEMENTAL_INGOT);
                                 entries.add(CFTPItems.CREEPER_FUSE);
                                 entries.add(CFTPItems.CREEPER_FISH);
                                 entries.add(CFTPItems.ENRICHED_MUSHROOM_STEW);
                                 //
-                                entries.add(CFTPBlocks.YELLOW_MUSHROOM);
-                                entries.add(CFTPBlocks.BLUE_MUSHROOM);
-                                entries.add(CFTPBlocks.YELLOW_MUSHROOM_BLOCK);
-                                entries.add(CFTPBlocks.BLUE_MUSHROOM_BLOCK);
-                                entries.add(CFTPBlocks.YELLOW_COBWEB);
-                                entries.add(CFTPBlocks.BLUE_COBWEB);
-                                entries.add(CFTPBlocks.ELEMENTAL_BLOCK);
+                                //entries.add(new ItemStack(CFTPBlocks.YELLOW_MUSHROOM.asItem(), 1));
+                                //entries.add(CFTPBlocks.BLUE_MUSHROOM);
+                                //entries.add(CFTPBlocks.YELLOW_MUSHROOM_BLOCK);
+                                //entries.add(CFTPBlocks.BLUE_MUSHROOM_BLOCK);
+                                //entries.add(CFTPBlocks.YELLOW_COBWEB);
+                                //entries.add(CFTPBlocks.BLUE_COBWEB);
+                                 ////
+                                //entries.add(CFTPBlocks.ELEMENTAL_BLOCK);
+                                //
+                                //entries.add(Blocks.OBSIDIAN);
                                 //
                                 entries.add(CFTPItems.CREEPER_COOKIE_SPAWN_EGG);
                                 entries.add(CFTPItems.CREEPER_DIRT_SPAWN_EGG);

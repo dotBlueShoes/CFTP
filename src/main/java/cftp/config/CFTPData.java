@@ -1,8 +1,7 @@
 package cftp.config;
 
+import cftp.CFTP;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 
@@ -46,6 +45,32 @@ public class CFTPData {
         }
     }
 
+    public static class JohnData {
+
+        public SpawnCondition hardcodedSpawnCondition;
+        public int health;
+        public float movementSpeed;
+        public int followRange;
+        public int attackDamage;
+        public int armor;
+
+        public JohnData(
+                SpawnCondition hardcodedSpawnCondition,
+                int health,
+                float movementSpeed,
+                int followRange,
+                int attackDamage,
+                int armor
+        ) {
+            this.hardcodedSpawnCondition = hardcodedSpawnCondition;
+            this.health = health;
+            this.movementSpeed = movementSpeed;
+            this.followRange = followRange;
+            this.attackDamage = attackDamage;
+            this.armor = armor;
+        }
+    }
+
     public static class CreeperDarkData extends CreeperData {
 
         public boolean isSpawnInLightButEasier;
@@ -83,11 +108,17 @@ public class CFTPData {
         }
     }
 
-    public static String configVersion;
+    public static int configVersion;
 
     public static boolean isCreeperShearingEnabled;
     public static boolean isCreeperRefusingEnabled;
     public static boolean isCreeperGildingEnabled;
+
+    public static int elementalCreeperGroupSpawnMin;
+    public static int elementalCreeperGroupSpawnMax;
+
+    public static int johnGroupSpawnMin;
+    public static int johnGroupSpawnMax;
 
     public static CreeperData creeperAmalgam;
     public static CreeperData creeperAmethyst;
@@ -120,22 +151,13 @@ public class CFTPData {
     public static CreeperData creeperWater;
     public static CreeperData creeperWind;
 
+    public static JohnData john;
+
     @SafeVarargs
     private static String[] biomes(RegistryKey<Biome>... keys) {
         return Arrays.stream(keys)
                 .map(k -> k.getValue().toString())
                 .toArray(String[]::new);
-    }
-
-    public static RegistryKey<Biome>[] parseBiomes(String[] biomeStrings) {
-        RegistryKey<Biome>[] result = new RegistryKey[biomeStrings.length];
-
-        for (int i = 0; i < biomeStrings.length; i++) {
-            Identifier id = Identifier.of(biomeStrings[i]);
-            result[i] = RegistryKey.of(RegistryKeys.BIOME, id);
-        }
-
-        return result;
     }
 
     public static void initializeDefault() {
@@ -170,12 +192,19 @@ public class CFTPData {
         String[] biomesSwamp        = biomes(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP);
         String[] biomesWater        = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS);
         String[] biomesWind         = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS);
+        String[] biomesJohn         = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.ICE_SPIKES, BiomeKeys.DESERT, BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys.DARK_FOREST, BiomeKeys.PALE_GARDEN, BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA, BiomeKeys.SNOWY_TAIGA, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS, BiomeKeys.MEADOW, BiomeKeys.CHERRY_GROVE, BiomeKeys.GROVE, BiomeKeys.SNOWY_SLOPES, BiomeKeys.FROZEN_PEAKS, BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.RIVER, BiomeKeys.FROZEN_RIVER, BiomeKeys.BEACH, BiomeKeys.SNOWY_BEACH, BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.DEEP_LUKEWARM_OCEAN, BiomeKeys.OCEAN, BiomeKeys.DEEP_OCEAN, BiomeKeys.COLD_OCEAN, BiomeKeys.DEEP_COLD_OCEAN, BiomeKeys.FROZEN_OCEAN, BiomeKeys.DEEP_FROZEN_OCEAN, BiomeKeys.MUSHROOM_FIELDS, BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.LUSH_CAVES, BiomeKeys.DEEP_DARK, BiomeKeys.NETHER_WASTES, BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST, BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.BASALT_DELTAS, BiomeKeys.THE_END, BiomeKeys.END_HIGHLANDS, BiomeKeys.END_MIDLANDS, BiomeKeys.SMALL_END_ISLANDS, BiomeKeys.END_BARRENS);
 
-        configVersion = "1";
+        configVersion = CFTP.currentConfigVersion;
 
         isCreeperShearingEnabled = true;
         isCreeperRefusingEnabled = false;
         isCreeperGildingEnabled = true;
+
+        int elementalCreeperGroupSpawnMin = 1;
+        int elementalCreeperGroupSpawnMax = 3;
+
+        int johnGroupSpawnMin = 2;
+        int johnGroupSpawnMax = 3;
 
         creeperAmalgam = new CreeperData(
                 new SpawnCondition(20, biomesAmalgam),
@@ -327,10 +356,11 @@ public class CFTPData {
                 new SpawnCondition(30, biomesWind),
                 3.27f, 20, 0.25f, 16
         );
-    }
 
-    public static void checkConfigVersion() {
-        //todo
+        john = new JohnData(
+                new SpawnCondition(30, biomesJohn),
+                20, 0.37f, 30, 4, 2
+        );
     }
 
 }

@@ -10,17 +10,16 @@ import net.fabricmc.loader.api.FabricLoader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
+import java.nio.file.*;
 
 public class CFTPConfig {
 
     private static final Path configDir = FabricLoader.getInstance().getConfigDir();
-    private static final Path path = configDir.resolve("cftp/config.json");
+    private static final Path configPath = configDir.resolve("cftp/config.json");
+    private static final Path outtedPath = configDir.resolve("cftp/old_config.json");
 
-    public static void validate() {
-        CFTPData.checkConfigVersion();
+    public static boolean isNotValid() {
+        return CFTPData.configVersion != CFTP.currentConfigVersion; // checkConfigVersion
     }
 
     public static void load(Path path, Class<?> clazz) throws IOException, IllegalAccessException {
@@ -65,29 +64,39 @@ public class CFTPConfig {
 
     public static void create() {
         try {
-            Files.createDirectories(path.getParent());
-            //Files.createFile(path);
+            Files.createDirectories(configPath.getParent());
 
             CFTPData.initializeDefault();
-            save(path, CFTPData.class);
+            save(configPath, CFTPData.class);
         } catch (IOException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void copy() {
+        try {
+            Files.copy(configPath, outtedPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public static void createOrAndLoad(boolean recreate) {
 
-        if (Files.notExists(path) || recreate) {
+        if (Files.notExists(configPath) || recreate) {
+            CFTP.LOGGER.warn("Config was not found. Creating a config file.");
             create();
         }
 
         try {
-            load(path, CFTPData.class);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+            load(configPath, CFTPData.class);
+        } catch (Exception ignored) {}
 
-        validate();
+        if (isNotValid()) {
+            CFTP.LOGGER.warn("Config file was invalid. New config file created instead. Old file renamed to old_...!");
+            copy();
+            create();
+        }
 
     }
 

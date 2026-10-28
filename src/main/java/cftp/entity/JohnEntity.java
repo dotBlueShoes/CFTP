@@ -1,5 +1,6 @@
 package cftp.entity;
 
+import cftp.config.CFTPData;
 import cftp.registries.CFTPSoundEvents;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -150,19 +151,12 @@ public class JohnEntity extends HostileEntity {
     //    this.playSound(this.getStepSound(), 0.15f, 1.0f);
     //}
 
-    // TODO!
     public static DefaultAttributeContainer.Builder createAttributes() {
-        //return MobEntity.createMobAttributes()
-        //        .add(EntityAttributes.MAX_HEALTH, CFTPData.creeperHerobrine.health)
-        //        .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.creeperHerobrine.movementSpeed)
-        //        .add(EntityAttributes.ATTACK_DAMAGE, 1)
-        //        .add(EntityAttributes.FOLLOW_RANGE, CFTPData.creeperHerobrine.followRange);
-
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.FOLLOW_RANGE, 35.0)
-                .add(EntityAttributes.MOVEMENT_SPEED, 0.33f)
-                .add(EntityAttributes.ATTACK_DAMAGE, 4.0)
-                .add(EntityAttributes.ARMOR, 2.0);
+                .add(EntityAttributes.FOLLOW_RANGE, CFTPData.john.followRange)
+                .add(EntityAttributes.MOVEMENT_SPEED, CFTPData.john.movementSpeed)
+                .add(EntityAttributes.ATTACK_DAMAGE, CFTPData.john.attackDamage)
+                .add(EntityAttributes.ARMOR, CFTPData.john.armor);
     }
 
 }

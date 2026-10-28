@@ -3,6 +3,10 @@ package cftp.entity.john;
 import cftp.CFTP;
 import cftp.entity.JohnEntity;
 import cftp.registries.CFTPModelLayers;
+import cftp.registries.CFTPStatusEffects;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -15,6 +19,19 @@ public class JohnEntityRenderer extends MobEntityRenderer<JohnEntity, JohnEntity
 
     public JohnEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new JohnEntityModel(context.getPart(CFTPModelLayers.JOHN)), SHADOW_SIZE);
+    }
+
+    @Override
+    public void render(JohnEntityRenderState livingEntityRenderState, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+
+        if (player == null) {
+            super.render(livingEntityRenderState, matrixStack, vertexConsumerProvider, i);
+        } else {
+            if (player.hasStatusEffect(CFTPStatusEffects.JOHN_STATUS_EFFECT)) {
+                super.render(livingEntityRenderState, matrixStack, vertexConsumerProvider, i);
+            }
+        }
     }
 
     @Override

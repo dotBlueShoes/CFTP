@@ -1,10 +1,8 @@
 package cftp.entity.creeper;
 
-import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
-import cftp.utility.PseudoRandom;
+import cftp.utility.CreeperHelper;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -14,9 +12,6 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -53,7 +48,7 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.GOLDEN.getType();
+        return CreeperHelper.CREEPER_TYPE.GOLDEN.getType();
     }
 
     @Override
@@ -173,15 +168,15 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
                                 Block block = state.getBlock();
 
                                 if (block == Blocks.STONE) {
-                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                    CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
                                         Block.dropStack(serverWorld, blockPos, itemStack);
                                     });
                                 } else if (block == Blocks.DEEPSLATE) {
-                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.DEEPSLATE_GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                    CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.DEEPSLATE_GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
                                         Block.dropStack(serverWorld, blockPos, itemStack);
                                     });
                                 } else if (block == Blocks.NETHERRACK) {
-                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.NETHER_GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                    CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.NETHER_GOLD_ORE.getDefaultState(), blockPos, (itemStack, pos) -> {
                                         Block.dropStack(serverWorld, blockPos, itemStack);
                                     });
                                 }

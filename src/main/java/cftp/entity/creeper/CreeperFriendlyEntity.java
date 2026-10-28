@@ -7,13 +7,8 @@ import cftp.goals.CreeperAttackWithOwnerGoal;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.goals.CreeperFollowOwnerGoal;
 import cftp.goals.CreeperTrackOwnerAttackerGoal;
-import cftp.utility.CreeperMath;
-import cftp.utility.PseudoRandom;
-import cftp.utility.Shapes;
-import net.minecraft.advancement.criterion.Criteria;
-import net.minecraft.block.Block;
+import cftp.utility.CreeperHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -21,8 +16,6 @@ import net.minecraft.entity.ai.pathing.LandPathNodeMaker;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -33,12 +26,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.ServerConfigHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -46,12 +37,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionBehavior;
-import net.minecraft.world.explosion.ExplosionImpl;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -89,7 +77,7 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.FRIENDLY.getType();
+        return CreeperHelper.CREEPER_TYPE.FRIENDLY.getType();
     }
 
     @Override
@@ -247,7 +235,7 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
                 serverWorld.createExplosion(
                         this,
                         Explosion.createDamageSource(serverWorld, this),
-                        CreeperMath.noDestroyExplosionBehaviour,
+                        CreeperHelper.noDestroyExplosionBehaviour,
                         this.getX(),
                         this.getY(),
                         this.getZ(),

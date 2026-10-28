@@ -2,20 +2,17 @@ package cftp.entity.creeper;
 
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -44,7 +41,7 @@ public class CreeperNetherEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.NETHER.getType();
+        return CreeperHelper.CREEPER_TYPE.NETHER.getType();
     }
 
     @Override
@@ -131,10 +128,10 @@ public class CreeperNetherEntity extends CreeperElementalEntity {
                                 float resistance = state.getBlock().getBlastResistance();
 
                                 var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.NETHER_BLOCKS.length;
+                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperHelper.NETHER_BLOCKS.length;
 
                                 if (resistance < 100) {
-                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.NETHER_BLOCKS[index], blockPos, (itemStack, pos) -> {
+                                    CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperHelper.NETHER_BLOCKS[index], blockPos, (itemStack, pos) -> {
                                         if (this.random.nextInt(100) < dropExplosionItemChance) {
                                             Block.dropStack(serverWorld, blockPos, itemStack);
                                         }

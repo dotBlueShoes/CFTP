@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 public class CreeperGiantEntityRenderer extends CreeperElementalEntityRenderer<CreeperGiantEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_giant.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper/giant.png";
 
     public CreeperGiantEntityRenderer(EntityRendererFactory.Context context) {
         super(context, 0.7f);

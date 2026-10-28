@@ -2,24 +2,12 @@ package cftp.entity.creeper;
 
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
-import cftp.utility.Shapes;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import cftp.utility.CreeperHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperSandEntity extends CreeperElementalEntity {
 
@@ -42,7 +30,7 @@ public class CreeperSandEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.SAND.getType();
+        return CreeperHelper.CREEPER_TYPE.SAND.getType();
     }
 
     //@Override // TODO

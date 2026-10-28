@@ -1,0 +1,14 @@
+{
+  "entity.john.ambient": {
+    "subtitle": "sounds.cftp.entity.john.ambient",
+    "sounds": [ "cftp:john/0", "cftp:john/1", "cftp:john/2" ]
+  },
+  "entity.john.hurt": {
+    "subtitle": "sounds.cftp.entity.john.hurt",
+    "sounds": [ "cftp:john/1" ]
+  },
+  "entity.john.death": {
+    "subtitle": "sounds.cftp.entity.john.death",
+    "sounds": [ "cftp:john/2"]
+  }
+}

@@ -2,12 +2,12 @@ package cftp.entity.creeper;
 
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.registries.CFTPParticles;
+import cftp.utility.CreeperHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -34,7 +34,7 @@ public class CreeperSpectreEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.SPECTRE.getType();
+        return CreeperHelper.CREEPER_TYPE.SPECTRE.getType();
     }
 
     //@Override // TODO
@@ -48,26 +48,56 @@ public class CreeperSpectreEntity extends CreeperElementalEntity {
     //    }
     //}
 
+    //@Override
+    //public void tickMovement() {
+//
+    //    if (this.random.nextInt(256) > 252) {
+    //        if (this.getWorld() instanceof ServerWorld serverWorld) {
+    //            serverWorld.spawnParticles(
+    //                    ParticleTypes.SPIT,
+    //                    this.getParticleX(0.5),
+    //                    this.getRandomBodyY() + 0.25,
+    //                    this.getParticleZ(0.5),
+    //                    1,
+    //                    0.5, 0.5, 0.5,
+    //                    0.02
+    //            );
+//
+    //            serverWorld.playSound(
+    //                    null, this.getX(), this.getY(), this.getZ(),
+    //                    SoundEvents.ENTITY_VILLAGER_NO,
+    //                    SoundCategory.HOSTILE,
+    //                    0.8f, 0.4f
+    //            );
+    //        }
+    //    }
+//
+    //    super.tickMovement();
+    //}
+
+
     @Override
     public void tickMovement() {
 
-        if (this.random.nextInt(256) > 252) {
-            if (this.getWorld() instanceof ServerWorld serverWorld) {
-                serverWorld.spawnParticles(
-                        ParticleTypes.SPIT,
-                        this.getParticleX(0.5),
-                        this.getRandomBodyY() + 0.25,
-                        this.getParticleZ(0.5),
-                        1,
-                        0.5, 0.5, 0.5,
-                        0.02
-                );
-
+        if (this.getWorld() instanceof ServerWorld serverWorld) {
+            if (this.random.nextInt(256) > 252) {
                 serverWorld.playSound(
                         null, this.getX(), this.getY(), this.getZ(),
-                        SoundEvents.ENTITY_VILLAGER_NO,
+                        SoundEvents.BLOCK_FIRE_AMBIENT,
                         SoundCategory.HOSTILE,
-                        0.8f, 0.4f
+                        0.9f, 1.3f
+                );
+            }
+        } else {
+            if (this.random.nextInt(256) > 128) {
+                this.getWorld().addParticle(
+                        CFTPParticles.DRIPPING_BLOOD_PARTICLE,
+                        this.getParticleX(0.7),
+                        this.getRandomBodyY(),
+                        this.getParticleZ(0.7),
+                        (random.nextDouble() - 0.5) * 2.0,
+                        -random.nextDouble(),
+                        (random.nextDouble() - 0.5) * 2.0
                 );
             }
         }

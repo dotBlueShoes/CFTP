@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class CreeperHarvestEntityRenderer extends CreeperElementalEntityRenderer<CreeperHarvestEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_harvest.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper/harvest.png";
 
     public CreeperHarvestEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

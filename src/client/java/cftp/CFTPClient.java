@@ -1,10 +1,12 @@
 package cftp;
 
 import cftp.entity.base.CreeperElementalEntityModel;
-import cftp.entity.base.CreeperSpectreEntityModel;
-import cftp.entity.base.HerobrineEntityModel;
+import cftp.entity.creeper.model.CreeperSpectreEntityModel;
+import cftp.entity.herobrine.HerobrineEntityModel;
 import cftp.registries.CFTPBlocksClient;
 import cftp.registries.CFTPEntitiesClient;
+import cftp.registries.CFTPModelLayers;
+import cftp.registries.CFTPParticlesClient;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback;
@@ -21,24 +23,6 @@ public class CFTPClient implements ClientModInitializer {
     private static final Identifier NOISE_LAYER_ID  = Identifier.of("cftp", "noise_overlay");
     private static final Identifier NOISE_TEXTURE   = Identifier.of("cftp", "textures/noise.png");
 
-    public static final EntityModelLayer GHOST_CREEPER =
-            new EntityModelLayer(
-                    Identifier.of("cftp", "creeper_model_ghost"),
-                    "main"
-            );
-
-    public static final EntityModelLayer SPECTRE_CREEPER =
-            new EntityModelLayer(
-                    Identifier.of("cftp", "creeper_model_spectre"),
-                    "main"
-            );
-
-    public static final EntityModelLayer HEROBRINE_CREEPER =
-            new EntityModelLayer(
-                    Identifier.of("cftp", "creeper_model_herobrine"),
-                    "main"
-            );
-
     public static PostEffectProcessor noiseProcessor;
     public static ShaderProgram shader;
 
@@ -46,28 +30,15 @@ public class CFTPClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		CFTP.LOGGER.info("Hello Fabric Client!");
 
-        EntityModelLayerRegistry.registerModelLayer(
-                GHOST_CREEPER,
-                CreeperElementalEntityModel::getTexturedModelData
-        );
-
-        EntityModelLayerRegistry.registerModelLayer(
-                SPECTRE_CREEPER,
-                CreeperSpectreEntityModel::getTexturedModelData
-        );
-
-        EntityModelLayerRegistry.registerModelLayer(
-                HEROBRINE_CREEPER,
-                HerobrineEntityModel::getTexturedModelData
-        );
-
         //String version = GL11.glGetString(GL11.GL_VERSION);
         //String renderer = GL11.glGetString(GL11.GL_RENDERER);
         //String vendor = GL11.glGetString(GL11.GL_VENDOR);
         //CFTP.LOGGER.info("v: {}, r: {}, v:{}", version, renderer, vendor);
 
+        CFTPModelLayers.register();
 		CFTPEntitiesClient.register();
         CFTPBlocksClient.register();
+        CFTPParticlesClient.register();
 
         // OpenGL 3.2.0 for 1.21.4
         //HudRenderCallback.EVENT.register((matrices, tickDelta) -> {

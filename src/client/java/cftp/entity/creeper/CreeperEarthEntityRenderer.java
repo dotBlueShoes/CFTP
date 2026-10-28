@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class CreeperEarthEntityRenderer extends CreeperElementalEntityRenderer<CreeperEarthEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_earth.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper/earth.png";
 
     public CreeperEarthEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

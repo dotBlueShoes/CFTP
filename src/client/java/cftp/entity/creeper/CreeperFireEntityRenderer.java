@@ -11,9 +11,9 @@ import net.minecraft.util.Identifier;
 
 public class CreeperFireEntityRenderer extends CreeperElementalEntityRenderer<CreeperFireEntity> {
 
-    private static final String TEXTURE_PATH_2 = "textures/entity/creeper_fire_2.png";
-    private static final String TEXTURE_PATH_1 = "textures/entity/creeper_fire_1.png";
-    private static final String TEXTURE_PATH_0 = "textures/entity/creeper_fire_0.png";
+    private static final String TEXTURE_PATH_2 = "textures/entity/creeper/fire_2.png";
+    private static final String TEXTURE_PATH_1 = "textures/entity/creeper/fire_1.png";
+    private static final String TEXTURE_PATH_0 = "textures/entity/creeper/fire_0.png";
 
     private static final String[] TEXTURE_PATHS = {
             TEXTURE_PATH_0,

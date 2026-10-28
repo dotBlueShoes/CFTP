@@ -5,7 +5,8 @@ import cftp.entity.creeper.CreeperGoldenEntity;
 import cftp.registries.CFTPEntities;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.registries.CFTPItems;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
+import cftp.utility.JohnHelper;
 import cftp.utility.PseudoRandom;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
@@ -32,8 +33,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
@@ -88,6 +90,18 @@ public class CreeperElementalEntity extends HostileEntity {
         this.goalSelector.add(6, new LookAroundGoal(this));
         this.targetSelector.add(1, new ActiveTargetGoal<>(this, PlayerEntity.class, true));
         this.targetSelector.add(2, new RevengeGoal(this));
+    }
+
+    @Override
+    public @Nullable EntityData initialize(
+            ServerWorldAccess world,
+            LocalDifficulty difficulty,
+            SpawnReason spawnReason,
+            @Nullable EntityData entityData
+    ) {
+        EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
+        JohnHelper.applyJohnBasedOnDifficulty(this);
+        return data;
     }
 
     @Override
@@ -463,7 +477,7 @@ public class CreeperElementalEntity extends HostileEntity {
     }
 
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.VANILLA.getType();
+        return CreeperHelper.CREEPER_TYPE.VANILLA.getType();
     }
 
     protected void SpawnGhostCreeper (ServerWorld world, int ghostCreeperChance) {

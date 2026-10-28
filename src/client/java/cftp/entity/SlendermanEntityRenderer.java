@@ -1,27 +1,21 @@
 package cftp.entity;
 
-import cftp.CFTPClient;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.DefaultFramebufferSet;
 import net.minecraft.client.render.entity.BipedEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.feature.EndermanBlockFeatureRenderer;
-import net.minecraft.client.render.entity.feature.EndermanEyesFeatureRenderer;
 import net.minecraft.client.render.entity.model.EndermanEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelLayers;
 import net.minecraft.client.render.entity.state.EndermanEntityRenderState;
-import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 
-public class SlendermanRenderer extends MobEntityRenderer<SlendermanEntity, EndermanEntityRenderState, EndermanEntityModel<EndermanEntityRenderState>> {
+public class SlendermanEntityRenderer extends MobEntityRenderer<SlendermanEntity, EndermanEntityRenderState, EndermanEntityModel<EndermanEntityRenderState>> {
 
     private static final Identifier TEXTURE = Identifier.of("cftp", "textures/entity/slenderman/slenderman.png");
     private final Random random = Random.create();
 
-    public SlendermanRenderer(EntityRendererFactory.Context context) {
+    public SlendermanEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new EndermanEntityModel<>(context.getPart(EntityModelLayers.ENDERMAN)), 0.5F);
         //this.addFeature(new EndermanEyesFeatureRenderer(this));
         //this.addFeature(new EndermanBlockFeatureRenderer(this, context.getBlockRenderManager()));

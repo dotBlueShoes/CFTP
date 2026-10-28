@@ -5,7 +5,7 @@ import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
 import cftp.goals.CreeperFireAttackGoal;
 import cftp.registries.CFTPTags;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import cftp.utility.Shapes;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.Block;
@@ -29,7 +29,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
@@ -58,7 +57,7 @@ public class CreeperFireEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.FIRE.getType();
+        return CreeperHelper.CREEPER_TYPE.FIRE.getType();
     }
 
     @Override
@@ -220,7 +219,7 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                                     case 1 << 3:    // Change FLOWERS-like to AIR.
                                     case 1 << 5:    // Change SAPLINGS-like to AIR.
                                     case 1 << 6: {  // Change CROPS-like to AIR.
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.AIR.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.AIR.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -230,21 +229,21 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                                     break;
 
                                     case 1 << 1: { // Change ICE-like to WATER.
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
                                         });
                                         createExplosionParticlesB(serverWorld, blockPos);
                                     }
                                     break;
 
                                     case 1 << 4: { // Change SAND-like to GLASS
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.GLASS.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.GLASS.getDefaultState(), blockPos, (itemStack, pos) -> {
                                         });
                                         createExplosionParticlesA(serverWorld, blockPos);
                                     }
                                     break;
 
                                     case 1 << 7: { // Change DIRT(GRASS)-like to DIRT
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.DIRT.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.DIRT.getDefaultState(), blockPos, (itemStack, pos) -> {
                                         });
                                         createExplosionParticlesA(serverWorld, blockPos);
                                     }
@@ -269,6 +268,7 @@ public class CreeperFireEntity extends CreeperElementalEntity {
                 this.playDefusedExplosionSound(serverWorld);
             }
 
+            this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
         }

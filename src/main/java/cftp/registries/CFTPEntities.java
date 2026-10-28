@@ -305,6 +305,17 @@ public class CFTPEntities {
                     .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "horse_fiery")))
     );
 
+    public static final EntityType<JohnEntity> JOHN = Registry.register(
+            Registries.ENTITY_TYPE,
+            RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "john")),
+            EntityType.Builder.create(JohnEntity::new, SpawnGroup.MONSTER)
+                    .dimensions(0.6F, 1.7F)
+                    .build(RegistryKey.of(
+                            RegistryKeys.ENTITY_TYPE,
+                            Identifier.of(CFTP.MOD_ID, "john")
+                    ))
+    );
+
     public static final EntityType<WaterChargeEntity> WATER_CHARGE = Registry.register(
             Registries.ENTITY_TYPE,
             RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(CFTP.MOD_ID, "water_charge")),
@@ -360,6 +371,8 @@ public class CFTPEntities {
         FabricDefaultAttributeRegistry.register(CREEPER_SCULK, CreeperSculkEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_SPECTRE, CreeperSpectreEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(CREEPER_HEROBRINE, CreeperHerobrineEntity.createAttributes());
+        //
+        FabricDefaultAttributeRegistry.register(JOHN, JohnEntity.createAttributes());
         //
         FabricDefaultAttributeRegistry.register(SPIDER_YELLOW, SpiderYellowEntity.createAttributes());
         FabricDefaultAttributeRegistry.register(SPIDER_BLUE, SpiderBlueEntity.createAttributes());

@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 public class CreeperCookieEntityRenderer extends CreeperElementalEntityRenderer<CreeperCookieEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_cookie.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper/cookie.png";
 
     public CreeperCookieEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

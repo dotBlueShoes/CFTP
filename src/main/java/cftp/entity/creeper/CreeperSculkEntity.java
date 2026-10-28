@@ -1,13 +1,10 @@
 package cftp.entity.creeper;
 
-import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
-import cftp.utility.PseudoRandom;
+import cftp.utility.CreeperHelper;
 import cftp.utility.Shapes;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.SculkSpreadManager;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -17,7 +14,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -27,8 +23,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
@@ -36,7 +30,6 @@ import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 public class CreeperSculkEntity extends CreeperElementalEntity {
 
@@ -63,7 +56,7 @@ public class CreeperSculkEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.SCULK.getType();
+        return CreeperHelper.CREEPER_TYPE.SCULK.getType();
     }
 
     @Override // TODO

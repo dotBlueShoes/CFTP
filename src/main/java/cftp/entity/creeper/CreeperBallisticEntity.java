@@ -4,9 +4,8 @@ import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperBallisticAttackGoal;
 import cftp.goals.CreeperElementalIgniteGoal;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.TntEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -18,7 +17,6 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
@@ -40,7 +38,7 @@ public class CreeperBallisticEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.BALLISTIC.getType();
+        return CreeperHelper.CREEPER_TYPE.BALLISTIC.getType();
     }
 
     @Override

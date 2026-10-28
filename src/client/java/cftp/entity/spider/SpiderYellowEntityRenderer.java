@@ -8,16 +8,16 @@ import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-public class SpiderYellowRenderer extends SpiderEntityRenderer<SpiderYellowEntity> {
+public class SpiderYellowEntityRenderer extends SpiderEntityRenderer<SpiderYellowEntity> {
 
     private static final Identifier TEXTURE = Identifier.of("cftp", "textures/entity/spider_yellow.png");
     private static final float SCALE = 0.75f;
 
-    public SpiderYellowRenderer(EntityRendererFactory.Context context) {
+    public SpiderYellowEntityRenderer(EntityRendererFactory.Context context) {
         this(context, EntityModelLayers.SPIDER);
     }
 
-    public SpiderYellowRenderer(EntityRendererFactory.Context ctx, EntityModelLayer layer) {
+    public SpiderYellowEntityRenderer(EntityRendererFactory.Context ctx, EntityModelLayer layer) {
         super(ctx, layer);
     }
 

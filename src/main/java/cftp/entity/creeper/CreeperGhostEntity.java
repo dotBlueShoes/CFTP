@@ -1,25 +1,18 @@
 package cftp.entity.creeper;
 
-import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.goals.CreeperElementalIgniteGoal;
-import cftp.registries.CFTPItems;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -36,7 +29,7 @@ import net.minecraft.world.World;
 
 import java.util.Objects;
 
-import static cftp.utility.CreeperMath.CREEPER_EGGS;
+import static cftp.utility.CreeperHelper.CREEPER_EGGS;
 
 public class CreeperGhostEntity extends CreeperElementalEntity {
 
@@ -85,7 +78,7 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.GHOST.getType();
+        return CreeperHelper.CREEPER_TYPE.GHOST.getType();
     }
 
     @Override

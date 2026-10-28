@@ -2,28 +2,21 @@ package cftp.entity.creeper;
 
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 import net.minecraft.world.explosion.ExplosionImpl;
@@ -48,7 +41,7 @@ public class CreeperSwampEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.SWAMP.getType();
+        return CreeperHelper.CREEPER_TYPE.SWAMP.getType();
     }
 
 
@@ -135,10 +128,10 @@ public class CreeperSwampEntity extends CreeperElementalEntity {
                                 float resistance = state.getBlock().getBlastResistance();
 
                                 var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.SWAMP_BLOCKS.length;
+                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperHelper.SWAMP_BLOCKS.length;
 
                                 if (resistance < 100) {
-                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.SWAMP_BLOCKS[index], blockPos, (itemStack, pos) -> {
+                                    CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperHelper.SWAMP_BLOCKS[index], blockPos, (itemStack, pos) -> {
                                         if (this.random.nextInt(100) < dropExplosionItemChance) {
                                             Block.dropStack(serverWorld, blockPos, itemStack);
                                         }

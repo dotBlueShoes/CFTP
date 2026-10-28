@@ -3,7 +3,7 @@ package cftp.entity.creeper;
 import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
 import net.minecraft.block.*;
@@ -11,8 +11,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -40,7 +38,7 @@ public class CreeperSnowEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.SNOW.getType();
+        return CreeperHelper.CREEPER_TYPE.SNOW.getType();
     }
 
 
@@ -107,10 +105,10 @@ public class CreeperSnowEntity extends CreeperElementalEntity {
                                 float resistance = state.getBlock().getBlastResistance();
 
                                 var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.SNOW_BLOCKS.length;
+                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperHelper.SNOW_BLOCKS.length;
 
                                 if (resistance < 100) {
-                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.SNOW_BLOCKS[index], blockPos, (itemStack, pos) -> {
+                                    CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperHelper.SNOW_BLOCKS[index], blockPos, (itemStack, pos) -> {
                                         if (this.random.nextInt(100) < dropExplosionItemChance) {
                                             Block.dropStack(serverWorld, blockPos, itemStack);
                                         }

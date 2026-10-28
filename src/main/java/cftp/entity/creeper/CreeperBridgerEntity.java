@@ -4,7 +4,7 @@ import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperBallisticAttackGoal;
 import cftp.goals.CreeperElementalIgniteGoal;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -13,8 +13,6 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 
 public class CreeperBridgerEntity extends CreeperElementalEntity {
@@ -35,7 +33,7 @@ public class CreeperBridgerEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.BRIDGER.getType();
+        return CreeperHelper.CREEPER_TYPE.BRIDGER.getType();
     }
 
     @Override

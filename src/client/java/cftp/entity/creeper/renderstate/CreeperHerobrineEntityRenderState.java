@@ -1,4 +1,4 @@
-package cftp.entity.base;
+package cftp.entity.creeper.renderstate;
 
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
 

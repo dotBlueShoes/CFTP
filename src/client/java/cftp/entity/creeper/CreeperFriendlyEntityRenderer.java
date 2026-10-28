@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 public class CreeperFriendlyEntityRenderer extends CreeperElementalEntityRenderer<CreeperFriendlyEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_friendly.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper/friendly.png";
 
     public CreeperFriendlyEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

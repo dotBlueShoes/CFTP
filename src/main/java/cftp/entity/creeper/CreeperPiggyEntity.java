@@ -3,7 +3,7 @@ package cftp.entity.creeper;
 import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -38,7 +38,7 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.PIGGY.getType();
+        return CreeperHelper.CREEPER_TYPE.PIGGY.getType();
     }
 
     void SpawnPig (ServerWorld world, RegistryKey<World> dimension, double x, double y, double z) {

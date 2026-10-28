@@ -3,31 +3,22 @@ package cftp.entity.creeper;
 import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.registries.CFTPEntities;
-import cftp.utility.CreeperMath;
-import cftp.utility.Shapes;
-import net.minecraft.block.Block;
+import cftp.utility.CreeperHelper;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
-import net.minecraft.world.explosion.ExplosionImpl;
 
 public class CreeperAmalgamEntity extends CreeperElementalEntity {
 
@@ -50,13 +41,13 @@ public class CreeperAmalgamEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.AMALGAM.getType();
+        return CreeperHelper.CREEPER_TYPE.AMALGAM.getType();
     }
 
     void SpawnCreeper (ServerWorld world, RegistryKey<World> dimension, double x, double y, double z) {
 
-        int iCreeper = this.random.nextInt(CreeperMath.CREEPERS.length);
-        var entity = CreeperMath.CREEPERS[iCreeper].create(world, SpawnReason.MOB_SUMMONED);
+        int iCreeper = this.random.nextInt(CreeperHelper.CREEPERS.length);
+        var entity = CreeperHelper.CREEPERS[iCreeper].create(world, SpawnReason.MOB_SUMMONED);
 
         EntityData entityData = null;
 

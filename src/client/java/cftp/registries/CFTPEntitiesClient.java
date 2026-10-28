@@ -1,11 +1,12 @@
 package cftp.registries;
 
-import cftp.entity.HorseFieryRenderer;
-import cftp.entity.SlendermanRenderer;
+import cftp.entity.HorseFieryEntityRenderer;
+import cftp.entity.SlendermanEntityRenderer;
 import cftp.entity.charge.*;
 import cftp.entity.creeper.*;
+import cftp.entity.john.JohnEntityRenderer;
 import cftp.entity.spider.SpiderBlueRenderer;
-import cftp.entity.spider.SpiderYellowRenderer;
+import cftp.entity.spider.SpiderYellowEntityRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 
 public class CFTPEntitiesClient {
@@ -42,11 +43,13 @@ public class CFTPEntitiesClient {
         EntityRendererRegistry.register(CFTPEntities.CREEPER_SPECTRE, CreeperSpectreEntityRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.CREEPER_HEROBRINE, CreeperHerobrineEntityRenderer::new);
 
-        EntityRendererRegistry.register(CFTPEntities.SPIDER_YELLOW, SpiderYellowRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.SPIDER_YELLOW, SpiderYellowEntityRenderer::new);
         EntityRendererRegistry.register(CFTPEntities.SPIDER_BLUE, SpiderBlueRenderer::new);
-        EntityRendererRegistry.register(CFTPEntities.SLENDERMAN, SlendermanRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.SLENDERMAN, SlendermanEntityRenderer::new);
 
-        EntityRendererRegistry.register(CFTPEntities.HORSE_FIERY, HorseFieryRenderer::new);
+        EntityRendererRegistry.register(CFTPEntities.HORSE_FIERY, HorseFieryEntityRenderer::new);
+
+        EntityRendererRegistry.register(CFTPEntities.JOHN, JohnEntityRenderer::new);
 
         // "Wind Charge" is referenced in:
         // WindChargeEntityRenderer

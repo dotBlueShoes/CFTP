@@ -2,13 +2,17 @@ package cftp;
 
 import cftp.blocks.ObsidianBlock;
 import cftp.config.CFTPConfig;
-import cftp.config.CFTPData;
 import cftp.registries.CFTPEntities;
 import cftp.registries.*;
+import cftp.utility.JohnHelper;
 import cftp.world.gen.CFTPEntitySpawns;
 import net.fabricmc.api.ModInitializer;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -40,8 +44,11 @@ public class CFTP implements ModInitializer {
 
         //Registries.REGISTRIES.freeze()
 
+        CFTPSoundEvents.register();
 		CFTPItems.register();
 		CFTPBlocks.register();
+        CFTPParticles.register();
+        CFTPStatusEffects.register();
 		CFTPItemGroups.register();
 		CFTPEntities.register();
 		CFTPEntitySpawns.register();
@@ -65,5 +72,65 @@ public class CFTP implements ModInitializer {
             System.out.println("OBSIDIAN itemBlock: " + Registries.ITEM.get(Identifier.of("minecraft", "obsidian")));
         }
 
+
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(
+                (targetEntity, source, baseDamageTaken, damageTaken, blocked) -> {
+
+                    // Check if we're executing on Server only.
+                    if (!(targetEntity instanceof LivingEntity livingTarget)) {
+                        return;
+                    }
+
+                    Entity attacker = source.getAttacker();
+                    if (attacker instanceof LivingEntity livingAttacker) {
+                        StatusEffectInstance johnEffect = livingAttacker
+                                .getStatusEffect(CFTPStatusEffects.JOHN_STATUS_EFFECT);
+
+                        if (johnEffect != null) {
+                            JohnHelper.applyJohnBasedOnDifficulty(livingTarget);
+                        }
+                    }
+                }
+        );
+
 	}
 }
+
+//(entity, source, baseDamageTaken, damageTaken, blocked) -> {
+//    // Only run on the server.
+//    if (!(entity instanceof LivingEntity victim)) {
+//        return;
+//    }
+//
+//    // Does the victim have our custom effect?
+//    if (!victim.hasStatusEffect(ModEffects.SHARED_EFFECT)) {
+//        return;
+//    }
+//
+//    // Find the attacker.
+//    Entity attacker = source.getAttacker();
+//
+//    if (!(attacker instanceof LivingEntity livingAttacker)) {
+//        return;
+//    }
+//
+//    // Get the effect instance from the victim.
+//    StatusEffectInstance effect =
+//            victim.getStatusEffect(ModEffects.SHARED_EFFECT);
+//
+//    if (effect == null) {
+//        return;
+//    }
+//
+//    // Apply the same effect to the attacker.
+//    livingAttacker.addStatusEffect(
+//            new StatusEffectInstance(
+//                    ModEffects.SHARED_EFFECT,
+//                    effect.getDuration(),
+//                    effect.getAmplifier(),
+//                    effect.isAmbient(),
+//                    effect.shouldShowParticles(),
+//                    effect.shouldShowIcon()
+//            )
+//    );
+//}

@@ -2,11 +2,9 @@ package cftp.entity.creeper;
 
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.Portal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -25,7 +23,6 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.PortalManager;
 
 import java.util.List;
 
@@ -50,7 +47,7 @@ public class CreeperHerobrineEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.HEROBRINE.getType();
+        return CreeperHelper.CREEPER_TYPE.HEROBRINE.getType();
     }
 
     @Override // TODO

@@ -1,6 +1,8 @@
-package cftp.entity.base;
+package cftp.entity.herobrine;
 
 import java.util.List;
+
+import cftp.entity.creeper.renderstate.CreeperHerobrineEntityRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
@@ -116,7 +118,6 @@ public class HerobrineEntityModel extends BipedEntityModel<CreeperHerobrineEntit
         } else {
             modelPart.rotate(matrices);
         }
-
     }
 
     public ModelPart getRandomPart(Random random) {

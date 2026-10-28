@@ -2,7 +2,7 @@ package cftp.entity.creeper;
 
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import cftp.utility.PseudoRandom;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
@@ -12,15 +12,11 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
@@ -47,7 +43,7 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.LAVA.getType();
+        return CreeperHelper.CREEPER_TYPE.LAVA.getType();
     }
 
     @Override
@@ -116,11 +112,11 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
                                 Block block = state.getBlock();
 
                                 var pseudoRandom = (Math.abs(seed + (x * iDiameter * iDiameter) + (y * iDiameter) + z)) % 256;
-                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperMath.LAVA_BLOCKS.length;
+                                var index = PseudoRandom.UNIFORM_PERMUTATION[pseudoRandom] % CreeperHelper.LAVA_BLOCKS.length;
 
                                 if (block == Blocks.WATER) {
                                     if (resistance < 100) {
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.OBSIDIAN.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.OBSIDIAN.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -128,7 +124,7 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
                                     }
                                 } else {
                                     if (resistance < 100) {
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperMath.LAVA_BLOCKS[index], blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, CreeperHelper.LAVA_BLOCKS[index], blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }

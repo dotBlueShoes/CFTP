@@ -2,7 +2,7 @@ package cftp.entity.creeper;
 
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,13 +13,9 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
@@ -50,7 +46,7 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.AMETHYST.getType();
+        return CreeperHelper.CREEPER_TYPE.AMETHYST.getType();
     }
 
     @Override // TODO
@@ -140,7 +136,7 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
 
                                 if (distance < radius - 3 && resistance < 100) {
 
-                                    CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                    CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
                                         if (this.random.nextInt(100) < dropExplosionItemChance) {
                                             Block.dropStack(serverWorld, blockPos, itemStack);
                                         }
@@ -149,7 +145,7 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
                                 } else if (distance < (radius - 2) && resistance < 100) {
                                     if (this.random.nextInt(10) < 7) {
 
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.AMETHYST_BLOCK.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.AMETHYST_BLOCK.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -157,7 +153,7 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
 
                                     } else {
 
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -167,7 +163,7 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
                                 } else if (distance < (radius - 1) && resistance < 100) {
                                     if (this.random.nextInt(10) < 7) {
 
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.CALCITE.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.CALCITE.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -175,7 +171,7 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
 
                                     } else {
 
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -185,7 +181,7 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
                                 } else if (distance < radius && resistance < 100) {
                                     if (this.random.nextInt(10) < 8) {
 
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.SMOOTH_BASALT.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.SMOOTH_BASALT.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -222,7 +218,7 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
     @Override
     public void tickMovement() {
         if (this.getWorld().isClient) {
-            CreeperMath.createWaterWalkingParticle(this);
+            CreeperHelper.createWaterWalkingParticle(this);
         }
 
         if (this.random.nextInt(256) > 252) {

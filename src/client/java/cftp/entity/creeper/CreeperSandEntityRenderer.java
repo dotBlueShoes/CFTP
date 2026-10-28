@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class CreeperSandEntityRenderer extends CreeperElementalEntityRenderer<CreeperSandEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_sand.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper/sand.png";
 
     public CreeperSandEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

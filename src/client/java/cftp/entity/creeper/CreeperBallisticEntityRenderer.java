@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 
 public class CreeperBallisticEntityRenderer extends CreeperElementalEntityRenderer<CreeperBallisticEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_ballistic.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper/ballistic.png";
 
     public CreeperBallisticEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

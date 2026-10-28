@@ -1,6 +1,8 @@
 {
   "itemgroup.cftp.cftp_items":  "CreaturesFromThePast Items",
 
+  "effect.cftp.john": "John",
+
   "entity.cftp.creeper_lighting": "Lighting Creeper",
   "entity.cftp.creeper_cookie": "Cookie Creeper",
   "entity.cftp.creeper_ender": "Ender Creeper",

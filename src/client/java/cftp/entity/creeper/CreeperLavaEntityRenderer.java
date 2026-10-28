@@ -10,10 +10,9 @@ import net.minecraft.util.Identifier;
 
 public class CreeperLavaEntityRenderer extends CreeperElementalEntityRenderer<CreeperLavaEntity> {
 
-    //private static final String TEXTURE_PATH = "textures/entity/creeper_lava.png";
-    private static final String TEXTURE_PATH_2 = "textures/entity/creeper_lava_2.png";
-    private static final String TEXTURE_PATH_1 = "textures/entity/creeper_lava_1.png";
-    private static final String TEXTURE_PATH_0 = "textures/entity/creeper_lava_0.png";
+    private static final String TEXTURE_PATH_2 = "textures/entity/creeper/lava_2.png";
+    private static final String TEXTURE_PATH_1 = "textures/entity/creeper/lava_1.png";
+    private static final String TEXTURE_PATH_0 = "textures/entity/creeper/lava_0.png";
 
     private static final String[] TEXTURE_PATHS = {
             TEXTURE_PATH_0,

@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 public class CreeperGoldenEntityRenderer extends CreeperElementalEntityRenderer<CreeperGoldenEntity> {
 
-    private static final String TEXTURE_PATH = "textures/entity/creeper_golden.png";
+    private static final String TEXTURE_PATH = "textures/entity/creeper/golden.png";
 
     public CreeperGoldenEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

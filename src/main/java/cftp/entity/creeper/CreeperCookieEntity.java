@@ -3,7 +3,7 @@ package cftp.entity.creeper;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -40,7 +40,7 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.COOKIE.getType();
+        return CreeperHelper.CREEPER_TYPE.COOKIE.getType();
     }
 
     /// Called whenever an entity spawns.

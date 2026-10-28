@@ -1,10 +1,9 @@
-package cftp.entity.base;
+package cftp.entity.creeper.model;
 
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
-import net.minecraft.util.math.MathHelper;
 
 public class CreeperSpectreEntityModel extends EntityModel<CreeperEntityRenderState> {
 

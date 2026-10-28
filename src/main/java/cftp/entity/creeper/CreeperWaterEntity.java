@@ -2,21 +2,15 @@ package cftp.entity.creeper;
 
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
-import cftp.utility.CreeperMath;
+import cftp.utility.CreeperHelper;
 import cftp.utility.Shapes;
 import net.minecraft.block.*;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -57,7 +51,7 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
 
     @Override
     protected int getElementalCreeperType() {
-        return CreeperMath.CREEPER_TYPE.WATER.getType();
+        return CreeperHelper.CREEPER_TYPE.WATER.getType();
     }
 
     @Override
@@ -163,7 +157,7 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                                     BlockState waterloggedState = state.with(Properties.WATERLOGGED, true);
 
                                     if (resistance < 100) {
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, waterloggedState, blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, waterloggedState, blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -174,7 +168,7 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                                     //serverWorld.getFluidTickScheduler().schedule(blockPos, Fluids.WATER, Fluids.WATER.getTickRate(serverWorld));
                                 } else if (block == Blocks.LAVA) {
                                     if (resistance < 100) {
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.OBSIDIAN.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.OBSIDIAN.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -182,7 +176,7 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                                     }
                                 } else {
                                     if (resistance < 100) {
-                                        CreeperMath.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
+                                        CreeperHelper.onGeneralReplace(serverWorld, dummyExplosion, state, Blocks.WATER.getDefaultState(), blockPos, (itemStack, pos) -> {
                                             if (this.random.nextInt(100) < dropExplosionItemChance) {
                                                 Block.dropStack(serverWorld, blockPos, itemStack);
                                             }
@@ -276,7 +270,7 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                 );
             }
         } else {
-            CreeperMath.createWaterWalkingParticle(this);
+            CreeperHelper.createWaterWalkingParticle(this);
         }
 
         super.tickMovement();

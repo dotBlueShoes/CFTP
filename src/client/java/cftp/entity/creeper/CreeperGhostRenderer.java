@@ -1,10 +1,9 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
-import cftp.CFTPClient;
 import cftp.entity.base.CreeperElementalEntityModel;
 import cftp.entity.base.CreeperElementalEntityRenderState;
-import cftp.registries.CFTPModelLayers;
+import cftp.registries.CFTPModelLayersClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -19,7 +18,7 @@ public class CreeperGhostRenderer extends MobEntityRenderer<CreeperGhostEntity, 
     private static final String TEXTURE_PATH = "textures/entity/creeper/ghost.png";
 
     public CreeperGhostRenderer(EntityRendererFactory.Context context) {
-        super(context, new CreeperElementalEntityModel(context.getPart(CFTPModelLayers.GHOST_CREEPER)), 0.0F);
+        super(context, new CreeperElementalEntityModel(context.getPart(CFTPModelLayersClient.GHOST_CREEPER)), 0.0F);
         //todo this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
     }
 

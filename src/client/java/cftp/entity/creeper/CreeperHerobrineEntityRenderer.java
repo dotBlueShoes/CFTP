@@ -1,10 +1,9 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
-import cftp.CFTPClient;
 import cftp.entity.creeper.renderstate.CreeperHerobrineEntityRenderState;
 import cftp.entity.herobrine.HerobrineEntityModel;
-import cftp.registries.CFTPModelLayers;
+import cftp.registries.CFTPModelLayersClient;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
@@ -15,7 +14,7 @@ public class CreeperHerobrineEntityRenderer extends MobEntityRenderer<CreeperHer
 
     public CreeperHerobrineEntityRenderer(EntityRendererFactory.Context context) {
         // slim ? EntityModelLayers.PLAYER_SLIM : EntityModelLayers.PLAYER), slim
-        super(context, new HerobrineEntityModel(context.getPart(CFTPModelLayers.HEROBRINE_CREEPER), false), 0.5F);
+        super(context, new HerobrineEntityModel(context.getPart(CFTPModelLayersClient.HEROBRINE_CREEPER), false), 0.5F);
         //super(context, new HerobrineEntityModel(context.getPart(EntityModelLayers.PLAYER), false), 0.5F);
         //ZombieEntityRenderer extends ZombieBaseEntityRenderer<ZombieEntity, ZombieEntityRenderState, ZombieEntityModel<ZombieEntityRenderState>>
     }

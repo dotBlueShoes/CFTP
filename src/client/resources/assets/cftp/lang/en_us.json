@@ -3,6 +3,7 @@
 
   "effect.cftp.john": "John",
   "effect.cftp.conductive": "Conductive",
+  "effect.cftp.burying": "Burying",
 
   "entity.cftp.creeper_lighting": "Lighting Creeper",
   "entity.cftp.creeper_cookie": "Cookie Creeper",

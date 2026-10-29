@@ -110,6 +110,7 @@ public class CFTPData {
 
     public static int configVersion;
 
+    public static boolean isVanillaCreeperRemoved;
     public static boolean isCreeperShearingEnabled;
     public static boolean isCreeperRefusingEnabled;
     public static boolean isCreeperGildingEnabled;
@@ -196,9 +197,10 @@ public class CFTPData {
 
         configVersion = CFTP.currentConfigVersion;
 
-        isCreeperShearingEnabled = true;
-        isCreeperRefusingEnabled = false;
-        isCreeperGildingEnabled = true;
+        isVanillaCreeperRemoved = true;
+        isCreeperShearingEnabled = true;  // removing the fuse
+        isCreeperRefusingEnabled = false; // giving a fuse back
+        isCreeperGildingEnabled = true;   // giving an apple
 
         int elementalCreeperGroupSpawnMin = 1;
         int elementalCreeperGroupSpawnMax = 3;
@@ -218,7 +220,7 @@ public class CFTPData {
 
         creeperBallistic = new CreeperData(
                 new SpawnCondition(20, biomesBallistic),
-                5f, 20, 0.25f, 20
+                2.5f, 20, 0.25f, 20
         );
 
         creeperBrewer = new CreeperData(
@@ -233,7 +235,7 @@ public class CFTPData {
 
         creeperCookie = new CreeperData(
                 new SpawnCondition(25, biomesCookie),
-                5f, 13, 0.25f, 20
+                2f, 13, 0.25f, 20
         );
 
         creeperDark = new CreeperDarkData(

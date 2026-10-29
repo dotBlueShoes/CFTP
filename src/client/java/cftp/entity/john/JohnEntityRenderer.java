@@ -2,7 +2,7 @@ package cftp.entity.john;
 
 import cftp.CFTP;
 import cftp.entity.JohnEntity;
-import cftp.registries.CFTPModelLayers;
+import cftp.registries.CFTPModelLayersClient;
 import cftp.registries.CFTPStatusEffects;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -18,7 +18,7 @@ public class JohnEntityRenderer extends MobEntityRenderer<JohnEntity, JohnEntity
     private static final float SHADOW_SIZE = 0.25f;
 
     public JohnEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new JohnEntityModel(context.getPart(CFTPModelLayers.JOHN)), SHADOW_SIZE);
+        super(context, new JohnEntityModel(context.getPart(CFTPModelLayersClient.JOHN)), SHADOW_SIZE);
     }
 
     @Override

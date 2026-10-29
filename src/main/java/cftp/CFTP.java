@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class CFTP implements ModInitializer {
 
 	public static final String MOD_ID = "cftp";
-    public static final int currentConfigVersion = 2;
+    public static final int currentConfigVersion = 3;
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 

@@ -69,27 +69,29 @@ public class CreeperCookieEntity extends CreeperElementalEntity {
                 int chargedAmount = this.isCharged() ? 2 : 1;
 
                 int ghostCreeperChance;
+                int sumAmount;
 
                 switch (difficulty) {
                     case PEACEFUL:
                     case EASY: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    }
+                        sumAmount = (int)(3.1 * chargedAmount * this.power);
+                    } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    }
-                    break;
+                        sumAmount = (int)(2.7 * chargedAmount * this.power);
+                    }break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        sumAmount = (int)(2.5 * chargedAmount * this.power);
                     }
-                    break;
                 }
 
                 { // Generate cookies as the explosion.
                     ItemEntity itemEntity = new ItemEntity(
                             serverWorld, this.getX(), this.getY(), this.getZ(),
-                            new ItemStack(Items.COOKIE, 5 * chargedAmount)
+                            new ItemStack(Items.COOKIE, sumAmount)
                     );
 
                     itemEntity.setVelocity(

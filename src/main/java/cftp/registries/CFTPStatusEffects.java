@@ -1,8 +1,7 @@
 package cftp.registries;
 
 import cftp.CFTP;
-import cftp.statuseffects.ConductiveStatusEffect;
-import cftp.statuseffects.JohnStatusEffect;
+import cftp.statuseffects.*;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
@@ -22,6 +21,11 @@ public class CFTPStatusEffects {
                             +0.10f,
                             EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
                     )
+    );
+
+
+    public static final RegistryEntry<StatusEffect> BURYING_STATUS_EFFECT = register(
+            "burying", new BuryingStatusEffect(StatusEffectCategory.NEUTRAL, 0x36ebeb)
     );
 
 

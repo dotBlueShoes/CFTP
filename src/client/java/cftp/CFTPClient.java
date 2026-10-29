@@ -1,21 +1,16 @@
 package cftp;
 
-import cftp.entity.base.CreeperElementalEntityModel;
-import cftp.entity.creeper.model.CreeperSpectreEntityModel;
-import cftp.entity.herobrine.HerobrineEntityModel;
 import cftp.registries.CFTPBlocksClient;
 import cftp.registries.CFTPEntitiesClient;
-import cftp.registries.CFTPModelLayers;
+import cftp.registries.CFTPModelLayersClient;
 import cftp.registries.CFTPParticlesClient;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.IdentifiedLayer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.*;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.util.Identifier;
 
 public class CFTPClient implements ClientModInitializer {
@@ -35,7 +30,7 @@ public class CFTPClient implements ClientModInitializer {
         //String vendor = GL11.glGetString(GL11.GL_VENDOR);
         //CFTP.LOGGER.info("v: {}, r: {}, v:{}", version, renderer, vendor);
 
-        CFTPModelLayers.register();
+        CFTPModelLayersClient.register();
 		CFTPEntitiesClient.register();
         CFTPBlocksClient.register();
         CFTPParticlesClient.register();

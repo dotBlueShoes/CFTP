@@ -1,6 +1,56 @@
 ## Chapter 1. Creeps.
 
+
+8. harvest creeper
+- creates pumpkin on grass / long grass (/ tree saplings even?)
+- creates berry bushes in cold biomes
+- creates sugar cane in sand if water supported
+- creates bee nests on trees rare (bees become angry from the getgo)
+- makes fields grow
+- makes dirt -> grass, netherrack -> either myc or other kind
+  : but it has to have a counter power that makes it hard to automate
+  : maybe as it detonates slowly it deals dmg to entities around possibly turning them into crops listed before...
+  : the effect is being shown via particles that appear in an area of effect with each wave of damage.
+
+?. giant creeper might explode similar to harvest creeper in waves.
+
+2. dark creeper also removes lava -> changes into something else i guess (could be simply obsidian and cobble for flowing lava)
+
+3. ballistic creeper needs a different explosion sound.
+
+4. gold creeper needs particles for explosion (some extra indication is needed) (simple gold bars particles!)
+- negative effect: applies glow on player (other players see him).
+- also apply slow for small amount of time. 
+
+! bridger, brewer, giant, harvest, oceanid, sand, spectre - no logic
+ 
+5. sculk no explosion sound
+   : it should also do something extra like a debuff that each entity after n seconds make a sound that triggers shrikers (no matter what but can be nullified if thers wool between entity and shriker)
+   : apply dark hearts effect too for the duration of the debuff
+
+6. herobrine missing a lot of logic and particles or other screen effect (stone chest from which items can be taken but not placed can be implemented later)
+
+7. end creeper (patch bug) can teleport to nether roof which is a bug (check if last block top is bedrock check if block below is bedrock)
+
+9. sand creeper entities start to fall through blocks via a status effect?
+
+= 23 working creepers, 24 if with harvest
 - fix ender creeper in nether teleporting to nether roof!
+- (fuse simply replaces gunpowder in recipes)
+
+
+
+
+
+
+
+---
+
+
+
+
+
+
 
 - configVersion validation:
 : isTextureAnimated
@@ -10,7 +60,7 @@
 : isCreeperShearingEnabled
 : isCreeperRefusingEnabled
 : isCreeperGildingEnabled
-- make sure everywhere "this.power" is used inside each creeper logic ! (there's at least 2 that don't - cookie, ender)
+- (ender downwards!) make sure everywhere "this.power" is used inside each creeper logic ! (there's at least 2 that don't - cookie, ender)
 
 // 28.
 "Lighting Creeper",	// done // ?

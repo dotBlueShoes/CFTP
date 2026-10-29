@@ -1,9 +1,8 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
-import cftp.CFTPClient;
 import cftp.entity.creeper.model.CreeperSpectreEntityModel;
-import cftp.registries.CFTPModelLayers;
+import cftp.registries.CFTPModelLayersClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -16,7 +15,7 @@ public class CreeperSpectreEntityRenderer extends MobEntityRenderer<CreeperSpect
     private static final String TEXTURE_PATH = "textures/entity/creeper/spectre.png";
 
     public CreeperSpectreEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new CreeperSpectreEntityModel(context.getPart(CFTPModelLayers.SPECTRE_CREEPER)), 0.0F);
+        super(context, new CreeperSpectreEntityModel(context.getPart(CFTPModelLayersClient.SPECTRE_CREEPER)), 0.0F);
         //todo this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
     }
 

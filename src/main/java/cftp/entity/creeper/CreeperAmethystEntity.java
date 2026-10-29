@@ -71,21 +71,18 @@ public class CreeperAmethystEntity extends CreeperElementalEntity {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_EASY);
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         diameter *= 1.25f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         diameter *= 1.5f * chargedPower;
                     }
-                    break;
                 }
 
                 {

@@ -100,7 +100,11 @@ public class CreeperElementalEntity extends HostileEntity {
             @Nullable EntityData entityData
     ) {
         EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
-        JohnHelper.applyJohnBasedOnDifficulty(this);
+
+        if (random.nextInt(100) < 25) { // 25%
+            JohnHelper.applyJohnBasedOnDifficulty(this, null);
+        }
+
         return data;
     }
 

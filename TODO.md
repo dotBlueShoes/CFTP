@@ -1,6 +1,5 @@
 ## Chapter 1. Creeps.
 
-
 - fix ender creeper in nether teleporting to nether roof!
 
 - configVersion validation:

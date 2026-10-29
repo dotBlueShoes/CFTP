@@ -2,6 +2,7 @@
   "itemgroup.cftp.cftp_items":  "CreaturesFromThePast Items",
 
   "effect.cftp.john": "John",
+  "effect.cftp.conductive": "Conductive",
 
   "entity.cftp.creeper_lighting": "Lighting Creeper",
   "entity.cftp.creeper_cookie": "Cookie Creeper",

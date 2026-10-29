@@ -89,17 +89,17 @@ public class CreeperSpectreEntity extends CreeperElementalEntity {
                 );
             }
         } else {
-            if (this.random.nextInt(256) > 128) {
-                this.getWorld().addParticle(
-                        CFTPParticles.DRIPPING_BLOOD_PARTICLE,
-                        this.getParticleX(0.7),
-                        this.getRandomBodyY(),
-                        this.getParticleZ(0.7),
-                        (random.nextDouble() - 0.5) * 2.0,
-                        -random.nextDouble(),
-                        (random.nextDouble() - 0.5) * 2.0
-                );
-            }
+            //if (this.random.nextInt(256) > 128) {
+            //    this.getWorld().addParticle(
+            //            CFTPParticles.DRIPPING_BLOOD_PARTICLE,
+            //            this.getParticleX(0.7),
+            //            this.getRandomBodyY(),
+            //            this.getParticleZ(0.7),
+            //            (random.nextDouble() - 0.5) * 2.0,
+            //            -random.nextDouble(),
+            //            (random.nextDouble() - 0.5) * 2.0
+            //    );
+            //}
         }
 
         super.tickMovement();

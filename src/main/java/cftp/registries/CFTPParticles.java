@@ -24,6 +24,11 @@ public class CFTPParticles {
             FabricParticleTypes.simple(true)
     );
 
+    public static final SimpleParticleType ELECTRIC_PARTICLE = register(
+            "electric_particle",
+            FabricParticleTypes.simple(false)
+    );
+
     private static SimpleParticleType register(String name, SimpleParticleType particleType) {
         return Registry.register(Registries.PARTICLE_TYPE, Identifier.of(CFTP.MOD_ID, name), particleType);
     }

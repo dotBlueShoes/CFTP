@@ -1,6 +1,7 @@
 package cftp.registries;
 
 import cftp.CFTP;
+import cftp.statuseffects.ConductiveStatusEffect;
 import cftp.statuseffects.JohnStatusEffect;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -12,6 +13,17 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 
 public class CFTPStatusEffects {
+
+    public static final RegistryEntry<StatusEffect> CONDUCTIVE_STATUS_EFFECT = register(
+            "conductive", new ConductiveStatusEffect(StatusEffectCategory.NEUTRAL, 0x36ebeb)
+                    .addAttributeModifier(
+                            EntityAttributes.MOVEMENT_SPEED,
+                            Identifier.of(CFTP.MOD_ID, "conductive"),
+                            +0.10f,
+                            EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+                    )
+    );
+
 
     public static final RegistryEntry<StatusEffect> JOHN_STATUS_EFFECT = register(
             "john", new JohnStatusEffect(StatusEffectCategory.NEUTRAL, 0x36ebeb)

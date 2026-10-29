@@ -145,8 +145,9 @@ public class JohnEntityModel extends EntityModel<JohnEntityRenderState> implemen
         //float lArmSwing = 1;
         //float l = 1;
 
-        float g = state.limbFrequency;
-        CFTP.LOGGER.info("freq: {}", g);
+        // WORKS !
+        //float g = state.limbFrequency;
+        //CFTP.LOGGER.info("freq: {}", g);
 
         //this.leftArm.pitch = MathHelper.lerpAngleRadians(k, this.leftArm.pitch, 1.5707964f - 1.5707964f * l);
         //this.rightArm.pitch = MathHelper.lerp(j, this.rightArm.pitch, 1.5707964f - 1.5707964f * l);

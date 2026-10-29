@@ -274,7 +274,7 @@ public class CFTPData {
 
         creeperGhost = new CreeperGhostData(
                 new SpawnCondition(30, biomesGhost),
-                3f, 14, 0.25f, 20,
+                2f, 14, 0.25f, 15,
                 true, true
         );
 
@@ -295,7 +295,7 @@ public class CFTPData {
 
         creeperHerobrine = new CreeperData(
                 new SpawnCondition(0, biomesHerobrine),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 26
         );
 
         creeperLava = new CreeperData(
@@ -305,7 +305,7 @@ public class CFTPData {
 
         creeperLighting = new CreeperData(
                 new SpawnCondition(30, biomesLighting),
-                2f, 20, 0.45f, 20
+                1.5f, 20, 0.45f, 16
         );
 
         creeperNether = new CreeperData(

@@ -79,7 +79,7 @@ public class CFTP implements ModInitializer {
                                 .getStatusEffect(CFTPStatusEffects.JOHN_STATUS_EFFECT);
 
                         if (johnEffect != null) {
-                            JohnHelper.applyJohnBasedOnDifficulty(livingTarget);
+                            JohnHelper.applyJohnBasedOnDifficulty(livingTarget, livingAttacker);
                         }
                     }
                 }

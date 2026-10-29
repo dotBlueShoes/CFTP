@@ -3,22 +3,28 @@ package cftp.entity.creeper;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.goals.CreeperElementalIgniteGoal;
+import cftp.registries.CFTPParticles;
+import cftp.registries.CFTPStatusEffects;
+import cftp.statuseffects.ConductiveStatusEffect;
 import cftp.utility.CreeperHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.command.WeatherCommand;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class CreeperLightingEntity extends CreeperElementalEntity {
 
@@ -74,38 +80,83 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
             if (!isDefused()) {
                 final Difficulty difficulty = this.getWorld().getDifficulty();
                 final float chargedPower = this.isCharged() ? 2.0F : 1.0F;
+
                 int ghostCreeperChance;
+                int conductiveLevel;
+                float sumPower;
 
                 switch (difficulty) {
                     case PEACEFUL:
                     case EASY: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    }
+                        conductiveLevel = 0;
+
+                        serverWorld.setWeather(0, 20 * 15, true, false);
+                    } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    }
-                    break;
+                        conductiveLevel = 1;
+
+                        serverWorld.setWeather(0, 20 * 23, true, false);
+                    } break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
+                        conductiveLevel = 2;
+
+                        serverWorld.setWeather(0, 20 * 31, true, true);
                     }
-                    break;
                 }
 
-                { // Lighting Bolt
+                sumPower = power * chargedPower;
 
+                if (serverWorld.isSkyVisible(this.getBlockPos())) { // Lighting Bolt
                     LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(serverWorld, SpawnReason.EVENT);
                     if (lightningEntity != null) {
                         lightningEntity.refreshPositionAfterTeleport(this.getX(), this.getY(), this.getZ());
                         lightningEntity.setCosmetic(true);
                         serverWorld.spawnEntity(lightningEntity);
                     }
+                } else {
+                    sumPower *= 0.5f; // No lighting so the power also weakens greatly.
+                }
 
+                if (conductiveLevel != 0) { // apply Conductive Status Effect to all entities around.
+                    Box box = new Box(
+                            this.getX() - sumPower,
+                            this.getY() - sumPower,
+                            this.getZ() - sumPower,
+                            this.getX() + sumPower,
+                            this.getY() + sumPower,
+                            this.getZ() + sumPower
+                    );
+
+                    List<Entity> entities = serverWorld.getOtherEntities(
+                            this,
+                            box,
+                            entity -> entity instanceof LivingEntity living && living.isAlive()
+                    );
+
+                    for (Entity entity : entities) {
+                        int strikeTick = (this.random.nextInt(ConductiveStatusEffect.EFFECT_DURATION) + 1);
+                        LivingEntity target = (LivingEntity) entity;
+
+                        target.addStatusEffect(
+                                new StatusEffectInstance(
+                                        CFTPStatusEffects.CONDUCTIVE_STATUS_EFFECT,
+                                        ConductiveStatusEffect.EFFECT_DURATION + strikeTick,
+                                        conductiveLevel - 1,
+                                        true,
+                                        true,
+                                        true
+                                )
+                        );
+                    }
                 }
 
                 serverWorld.createExplosion(
                         this, this.getX(), this.getY(), this.getZ(),
-                        power * chargedPower, World.ExplosionSourceType.MOB
+                        sumPower, World.ExplosionSourceType.MOB
                 );
 
                 SpawnGhostCreeper(serverWorld, ghostCreeperChance);
@@ -123,13 +174,14 @@ public class CreeperLightingEntity extends CreeperElementalEntity {
         if (this.random.nextInt(100) > 90) {
             for (int i = 0; i < 1; i++) {
                 this.getWorld().addParticle(
-                        ParticleTypes.INFESTED,
+                        //ParticleTypes.INFESTED,
+                        CFTPParticles.ELECTRIC_PARTICLE,
                         this.getParticleX(0.5),
                         this.getRandomBodyY() + 0.25,
                         this.getParticleZ(0.5),
-                        (this.random.nextDouble() - 0.5) * 0.01,
-                        -this.random.nextDouble() * 0.01,
-                        (this.random.nextDouble() - 0.5) * 0.01
+                        0.0f,//(this.random.nextDouble() - 0.5) * 0.01,
+                        0.0f,//-this.random.nextDouble() * 0.001,
+                        0.0f//(this.random.nextDouble() - 0.5) * 0.01
                 );
             }
         }

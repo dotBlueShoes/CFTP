@@ -11,7 +11,7 @@ public class JohnHelper {
     public static final int EFFECT_DURATION_NORM = 20 * 300; // 5min
     public static final int EFFECT_DURATION_HARD = 20 * 600; // 10min
 
-    public static void applyJohnBasedOnDifficulty(LivingEntity target) {
+    public static void applyJohnBasedOnDifficulty(LivingEntity target, LivingEntity source) {
         final Difficulty difficulty = target.getWorld().getDifficulty();
         int duration;
 
@@ -37,7 +37,8 @@ public class JohnHelper {
                         true,
                         true,
                         true
-                )
+                ),
+                source
         );
     }
 

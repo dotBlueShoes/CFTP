@@ -8,6 +8,7 @@
     "BlockStateMixin",
     "CFTPMixin",
     "FireBlockAccessor",
+    "HostileEntityMixin",
     "ItemsMixin",
     "SpawnHelperMixin"
   ],

@@ -1,22 +1,18 @@
 package cftp.world.gen;
 
+import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.registries.CFTPEntities;
-import cftp.entity.HorseFieryEntity;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.biome.v1.ModificationPhase;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
 
 public class CFTPEntitySpawns {
 
@@ -132,16 +128,11 @@ public class CFTPEntitySpawns {
 
     public static void register() {
 
-        final int CREEPER_GROUP_MIN = CFTPData.elementalCreeperGroupSpawnMin;
-        final int CREEPER_GROUP_MAX = CFTPData.elementalCreeperGroupSpawnMax;
-        final int JOHN_GROUP_MIN = CFTPData.johnGroupSpawnMin;
-        final int JOHN_GROUP_MAX = CFTPData.johnGroupSpawnMax;
-
         if (CFTPData.creeperAmalgam.hardcodedSpawnCondition.spawnChance > 0) { // AMALGAM
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperAmalgam.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_AMALGAM,
-                    CFTPData.creeperAmalgam.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperAmalgam.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -156,7 +147,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperAmethyst.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_AMETHYST,
-                    CFTPData.creeperAmethyst.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperAmethyst.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -171,7 +162,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperBallistic.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_BALLISTIC,
-                    CFTPData.creeperBallistic.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperBallistic.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -186,7 +177,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperBrewer.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_BREWER,
-                    CFTPData.creeperBrewer.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperBrewer.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -201,7 +192,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperBridger.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_BRIDGER,
-                    CFTPData.creeperBridger.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperBridger.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -216,7 +207,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperCookie.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_COOKIE,
-                    CFTPData.creeperCookie.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperCookie.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -231,7 +222,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperDark.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_DARK,
-                    CFTPData.creeperDark.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperDark.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -246,7 +237,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperDirt.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_DIRT,
-                    CFTPData.creeperDirt.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperDirt.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -261,7 +252,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperEarth.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_EARTH,
-                    CFTPData.creeperEarth.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperEarth.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -276,7 +267,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperEnder.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_ENDER,
-                    CFTPData.creeperEnder.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperEnder.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -291,7 +282,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperFire.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_FIRE,
-                    CFTPData.creeperFire.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperFire.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -306,7 +297,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperFlip.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_FLIP,
-                    CFTPData.creeperFlip.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperFlip.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -321,7 +312,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperFriendly.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_FRIENDLY,
-                    CFTPData.creeperFriendly.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperFriendly.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -336,7 +327,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperGhost.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_GHOST,
-                    CFTPData.creeperGhost.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperGhost.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -351,7 +342,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperGiant.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_GIANT,
-                    CFTPData.creeperGiant.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperGiant.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -366,7 +357,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperGolden.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_GOLDEN,
-                    CFTPData.creeperGolden.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperGolden.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -381,7 +372,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperHarvest.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_HARVEST,
-                    CFTPData.creeperHarvest.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperHarvest.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -396,7 +387,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperHerobrine.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_HEROBRINE,
-                    CFTPData.creeperHerobrine.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperHerobrine.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -411,7 +402,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperLava.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_LAVA,
-                    CFTPData.creeperLava.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperLava.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -426,7 +417,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperLighting.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_LIGHTING,
-                    CFTPData.creeperLighting.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperLighting.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -441,7 +432,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperNether.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_NETHER,
-                    CFTPData.creeperNether.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperNether.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -456,7 +447,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperOceanid.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_OCEANID,
-                    CFTPData.creeperOceanid.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperOceanid.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -471,7 +462,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperPiggy.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_PIGGY,
-                    CFTPData.creeperPiggy.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperPiggy.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -486,7 +477,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperSand.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_SAND,
-                    CFTPData.creeperSand.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperSand.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -501,7 +492,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperSculk.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_SCULK,
-                    CFTPData.creeperSculk.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperSculk.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -516,7 +507,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperSnow.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_SNOW,
-                    CFTPData.creeperSnow.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperSnow.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -531,7 +522,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperSpectre.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_SPECTRE,
-                    CFTPData.creeperSpectre.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperSpectre.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -546,7 +537,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperSwamp.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_SWAMP,
-                    CFTPData.creeperSwamp.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperSwamp.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -561,7 +552,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperWater.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_WATER,
-                    CFTPData.creeperWater.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperWater.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -576,7 +567,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperWind.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.CREEPER_WIND,
-                    CFTPData.creeperWind.hardcodedSpawnCondition.spawnChance, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+                    CFTPData.creeperWind.hardcodedSpawnCondition.spawnChance, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -593,7 +584,7 @@ public class CFTPEntitySpawns {
             BiomeModifications.addSpawn(
                     BiomeSelectors.includeByKey(parseBiomes(CFTPData.creeperWind.hardcodedSpawnCondition.biomeList)),
                     SpawnGroup.MONSTER, CFTPEntities.JOHN,
-                    CFTPData.creeperWind.hardcodedSpawnCondition.spawnChance, JOHN_GROUP_MIN, JOHN_GROUP_MAX
+                    CFTPData.creeperWind.hardcodedSpawnCondition.spawnChance, CFTPData.johnGroupSpawnMin, CFTPData.johnGroupSpawnMax
             );
 
             SpawnRestriction.register(
@@ -602,6 +593,16 @@ public class CFTPEntitySpawns {
                     Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
                     HostileEntity::canSpawnIgnoreLightLevel
             );
+        }
+
+        if (CFTPData.isVanillaCreeperRemoved) {
+            BiomeModifications.create(Identifier.of(CFTP.MOD_ID, "remove_creeper_spawns"))
+                    .add(
+                            ModificationPhase.REMOVALS,
+                            BiomeSelectors.all(),
+                            context -> context.getSpawnSettings()
+                                    .removeSpawnsOfEntityType(EntityType.CREEPER)
+                    );
         }
 
         //final int ZOMBIE_GROUP_WEIGHT = 10;
@@ -628,7 +629,7 @@ public class CFTPEntitySpawns {
         //    BiomeModifications.addSpawn(
         //            BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_SWAMP),
         //            SpawnGroup.MONSTER, CFTPEntities.SPIDER_YELLOW,
-        //            CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+        //            CREEPER_GROUP_WEIGHT, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
         //    );
         //
         //    SpawnRestriction.register(
@@ -643,7 +644,7 @@ public class CFTPEntitySpawns {
         //    BiomeModifications.addSpawn(
         //            BiomeSelectors.includeByKey((RegistryKey<Biome>[]) OVERWORLD_JUNGLE),
         //            SpawnGroup.MONSTER, CFTPEntities.SPIDER_BLUE,
-        //            CREEPER_GROUP_WEIGHT, CREEPER_GROUP_MIN, CREEPER_GROUP_MAX
+        //            CREEPER_GROUP_WEIGHT, CFTPData.elementalCreeperGroupSpawnMin, CFTPData.elementalCreeperGroupSpawnMax
         //    );
         //
         //    SpawnRestriction.register(
@@ -694,7 +695,7 @@ public class CFTPEntitySpawns {
             //    // also remove golden and flip creepers from end
             //    // add a chance for thrower creeper
             //    // add an end_creeper variant -> a new end block would be cool like null-fluid or something
-            //    // -> a block that somewhat looks like end-portal but it's a block and its hard collect?
+            //    // -> a block that somewhat looks like end-portal, but it's a block and its hard collect?
             //    // also to many of them spawns there now.
             //
             //}

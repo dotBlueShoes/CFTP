@@ -101,13 +101,8 @@ public class CreeperElementalEntity extends HostileEntity {
     ) {
         EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
 
-        // There 1/5 that it will have blood status effect.
-        if (random.nextInt(100) < 25) { // 20%
-            JohnHelper.applyJohnBasedOnDifficulty(this, null);
-        }
-
         // There 1/20 that it will spawn with charged.
-        if (random.nextInt(100) < 25) { // 5%
+        if (random.nextInt(100) < 5) { // 5%
             this.dataTracker.set(CHARGED, true);
         }
 

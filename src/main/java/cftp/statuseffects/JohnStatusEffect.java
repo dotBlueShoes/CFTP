@@ -10,12 +10,6 @@ public class JohnStatusEffect extends StatusEffect {
         super(category, color, CFTPParticles.DRIPPING_BLOOD_PARTICLE);
     }
 
-    // happens every tick
-    //@Override
-    //public boolean applyUpdateEffect(ServerWorld world, LivingEntity entity, int amplifier) {
-    //    return super.applyUpdateEffect(world, entity, amplifier);
-    //}
-
     @Override
     public boolean canApplyUpdateEffect(int duration, int amplifier) {
         return true;

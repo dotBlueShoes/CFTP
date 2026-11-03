@@ -54,6 +54,18 @@ public class CFTPStatusEffects {
                     )
     );
 
+    public static final RegistryEntry<StatusEffect> MADNESS_STATUS_EFFECT = register(
+            "madness", new MadnessStatusEffect(StatusEffectCategory.NEUTRAL, 0x36ebeb)
+    );
+
+    public static final RegistryEntry<StatusEffect> HEROBRINE_STATUS_EFFECT = register(
+            "herobrine", new HerobrineStatusEffect(StatusEffectCategory.NEUTRAL, 0x36ebeb)
+    );
+
+    public static final RegistryEntry<StatusEffect> PANIC_STATUS_EFFECT = register(
+            "panic", new PanicStatusEffect(StatusEffectCategory.NEUTRAL, 0x36ebeb)
+    );
+
     private static RegistryEntry<StatusEffect> register(String name, StatusEffect statusEffect) {
         return Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(CFTP.MOD_ID, name), statusEffect);
     }

@@ -47,6 +47,8 @@ public class CFTP implements ModInitializer {
         CFTPFeatures.register();
         CFTPTrades.register();
 
+        CFTPPacketManagerServer.initialize();
+
         {
             Item obsidianItem = Registries.ITEM.get(Identifier.of("minecraft", "obsidian"));
             if (obsidianItem != Items.OBSIDIAN) {

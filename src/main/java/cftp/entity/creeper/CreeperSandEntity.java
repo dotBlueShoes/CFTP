@@ -1,16 +1,24 @@
 package cftp.entity.creeper;
 
+import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.packets.LoopingSoundPayload;
+import cftp.registries.CFTPParticles;
+import cftp.registries.CFTPSoundEvents;
 import cftp.registries.CFTPStatusEffects;
 import cftp.statuseffects.BuryingStatusEffect;
 import cftp.utility.CreeperHelper;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
@@ -73,7 +81,7 @@ public class CreeperSandEntity extends CreeperElementalEntity {
 
                 sumPower = power * chargedPower;
 
-                { // apply Conductive Status Effect to all entities around.
+                {
                     Box box = new Box(
                             this.getX() - sumPower,
                             this.getY() - sumPower,
@@ -89,19 +97,31 @@ public class CreeperSandEntity extends CreeperElementalEntity {
                             entity -> entity instanceof LivingEntity living && living.isAlive()
                     );
 
-                    for (Entity entity : entities) {
-                        LivingEntity target = (LivingEntity) entity;
+                    if (!entities.isEmpty()) {
+                        LoopingSoundPayload payload = new LoopingSoundPayload(this.getPos(), true);
 
-                        target.addStatusEffect(
-                                new StatusEffectInstance(
-                                        CFTPStatusEffects.BURYING_STATUS_EFFECT,
-                                        BuryingStatusEffect.DURATION + (BuryingStatusEffect.DURATION_PER_LEVEL * buryingLevel),
-                                        buryingLevel,
-                                        true,
-                                        true,
-                                        true
-                                )
-                        );
+                        for (Entity entity : entities) {
+                            LivingEntity target = (LivingEntity) entity;
+
+                            // Apply `Conductive Status Effect` to all entities around.
+                            target.addStatusEffect(
+                                    new StatusEffectInstance(
+                                            CFTPStatusEffects.BURYING_STATUS_EFFECT,
+                                            BuryingStatusEffect.DURATION +
+                                                    (BuryingStatusEffect.DURATION_PER_LEVEL * buryingLevel) +
+                                                    (int) (10 * sumPower),
+                                            buryingLevel,
+                                            true,
+                                            true,
+                                            true
+                                    )
+                            );
+
+                            // Send each serverPlayer packet to play the sound and create particles.
+                            if (entity instanceof ServerPlayerEntity player) {
+                                ServerPlayNetworking.send(player, payload);
+                            }
+                        }
                     }
                 }
 

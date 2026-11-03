@@ -1,7 +1,6 @@
 package cftp.registries;
 
-import cftp.particles.BloodLeakParticle;
-import cftp.particles.ElectricParticle;
+import cftp.particles.*;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 
 public class CFTPParticlesClient {
@@ -25,6 +24,16 @@ public class CFTPParticlesClient {
         ParticleFactoryRegistry.getInstance().register(
                 CFTPParticles.ELECTRIC_PARTICLE,
                 ElectricParticle.Factory::new
+        );
+
+        ParticleFactoryRegistry.getInstance().register(
+                CFTPParticles.GOLDENING_PARTICLE,
+                BrickParticle.FactoryGoldening::new
+        );
+
+        ParticleFactoryRegistry.getInstance().register(
+                CFTPParticles.BURYING_PARTICLE,
+                BrickParticle.FactoryBurying::new
         );
     }
 

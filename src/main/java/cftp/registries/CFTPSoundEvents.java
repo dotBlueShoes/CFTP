@@ -11,6 +11,8 @@ public class CFTPSoundEvents {
     public static final SoundEvent ENTITY_JOHN_AMBIENT = register("entity.john.ambient");
     public static final SoundEvent ENTITY_JOHN_HURT = register("entity.john.hurt");
     public static final SoundEvent ENTITY_JOHN_DEATH = register("entity.john.death");
+    
+    public static final SoundEvent STATUS_EFFECT_BURYING_LOOPING = register("status_effect.burying.looping");
 
     private static SoundEvent register(String name) {
         Identifier id = Identifier.of(CFTP.MOD_ID, name);

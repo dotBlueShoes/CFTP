@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.*;
 
 @Mixin(AbstractBlock.class)
-public abstract class BlockMixin {
+public abstract class AbstractBlockMixin {
 
     @Final
     @Shadow
@@ -40,7 +40,7 @@ public abstract class BlockMixin {
      */
     @Overwrite
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        CFTP.LOGGER.info("collision-b");
+        //CFTP.LOGGER.info("collision-b");
         Box newBox = getBlockBox(pos);
 
         if (entity.getBoundingBox().intersects(newBox)) {

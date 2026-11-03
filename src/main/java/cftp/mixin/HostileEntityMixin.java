@@ -32,7 +32,7 @@ public abstract class HostileEntityMixin extends PathAwareEntity
         EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
 
         // There 1/5 that it will have blood status effect.
-        if (this.random.nextInt(100) < 25) { // 20%
+        if (this.random.nextInt(100) < 20) { // 20%
             JohnHelper.applyJohnBasedOnDifficulty(this, null);
         }
 

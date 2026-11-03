@@ -35,6 +35,8 @@ public class CFTPClient implements ClientModInitializer {
         CFTPBlocksClient.register();
         CFTPParticlesClient.register();
 
+        CFTPPacketManagerClient.initialize();
+
         // OpenGL 3.2.0 for 1.21.4
         //HudRenderCallback.EVENT.register((matrices, tickDelta) -> {
         //    String version = GL11.glGetString(GL11.GL_VERSION);

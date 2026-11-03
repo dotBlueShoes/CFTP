@@ -10,5 +10,9 @@
   "entity.john.death": {
     "subtitle": "sounds.cftp.entity.john.death",
     "sounds": [ "cftp:john/2"]
+  },
+  "status_effect.burying.looping": {
+    "subtitle": "sounds.cftp.status_effect.burying.looping",
+    "sounds": [ "cftp:bury/looping"]
   }
 }

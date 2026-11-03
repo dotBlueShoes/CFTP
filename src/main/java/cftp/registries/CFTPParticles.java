@@ -29,6 +29,16 @@ public class CFTPParticles {
             FabricParticleTypes.simple(false)
     );
 
+    public static final SimpleParticleType GOLDENING_PARTICLE = register(
+            "goldening_particle",
+            FabricParticleTypes.simple(false)
+    );
+
+    public static final SimpleParticleType BURYING_PARTICLE = register(
+            "burying_particle",
+            FabricParticleTypes.simple(false)
+    );
+
     private static SimpleParticleType register(String name, SimpleParticleType particleType) {
         return Registry.register(Registries.PARTICLE_TYPE, Identifier.of(CFTP.MOD_ID, name), particleType);
     }

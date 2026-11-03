@@ -34,7 +34,7 @@ public class ConductiveStatusEffect extends StatusEffect {
         StatusEffectInstance instance = entity.getStatusEffect(CFTPStatusEffects.CONDUCTIVE_STATUS_EFFECT);
 
         // Detecting and taking action at very last tick and only when raining/thunder.
-        if (instance != null && instance.getDuration() <= 1 && serverWorld.isRaining()) {
+        if (serverWorld.isRaining() && instance != null && instance.getDuration() <= 1) {
             int level = instance.getAmplifier();
 
             if (serverWorld.isSkyVisible(entity.getBlockPos())) { // Lighting Bolt Strike

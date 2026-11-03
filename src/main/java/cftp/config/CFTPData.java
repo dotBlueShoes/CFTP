@@ -326,7 +326,7 @@ public class CFTPData {
 
         creeperSand = new CreeperData(
                 new SpawnCondition(10, biomesSand),
-                5f, 12, 0.25f, 16
+                8f, 12, 0.25f, 16
         );
 
         creeperSculk = new CreeperData(

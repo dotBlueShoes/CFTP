@@ -1,7 +1,10 @@
 package cftp.entity.creeper;
 
+import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.packets.LoopingSoundPayload;
+import cftp.registries.CFTPParticles;
 import cftp.utility.CreeperHelper;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
@@ -12,9 +15,12 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -90,6 +96,7 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
 
                 final int iDiameter = (int) diameter;
                 final int radius = iDiameter / 2;
+                float absorptionRadius = radius * 2;
 
                 // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.
                 final ExplosionImpl dummyExplosion = new ExplosionImpl(
@@ -99,8 +106,6 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
                 );
 
                 { // The absorption effect is being applied in BOX rather in SPHERE. That's OK.
-                    double absorptionRadius = 5;
-
                     Box box = new Box(
                             this.getX() - absorptionRadius,
                             this.getY() - absorptionRadius,
@@ -135,6 +140,10 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
                         if (player.getAbsorptionAmount() < absorptionGive) {
                             player.setAbsorptionAmount(absorptionGive);
                         }
+
+                        // As a negative side effect apply glowing and slowness
+                        player.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 20 * 15), this);
+                        player.addStatusEffect(new StatusEffectInstance(StatusEffects.GLOWING, 20 * 30), this);
 
                         //maxHealth.setBaseValue(6);
                         //CFTP.LOGGER.info("absorption: {}", player.getAbsorptionAmount());
@@ -186,17 +195,39 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
                     }
                 }
 
+                this.createGoldeningParticles(serverWorld, absorptionRadius);
                 this.playExplosionSound(serverWorld);
                 SpawnGhostCreeper(serverWorld, ghostCreeperChance);
             } else {
                 this.playDefusedExplosionSound(serverWorld);
             }
 
-            this.spawnEffectsCloud();
+            //this.spawnEffectsCloud();
             this.onRemoval(serverWorld, RemovalReason.KILLED);
             this.discard();
         }
     }
+
+    private void createGoldeningParticles(ServerWorld world, float radius) {
+        world.spawnParticles(CFTPParticles.GOLDENING_PARTICLE,
+                this.getX() + 0.5, this.getY() + 0.5, this.getZ() + 0.5,
+                (int)(24 * radius),
+                radius, 0.25f, radius,
+                1.00f
+        );
+    }
+
+
+    //@Override
+    //public void addDeathParticles() {
+    //    for (int i = 0; i < 20; ++i) {
+    //        double d = this.random.nextGaussian() * 0.02;
+    //        double e = this.random.nextGaussian() * 0.02;
+    //        double f = this.random.nextGaussian() * 0.02;
+    //        double g = 10.0;
+    //        this.getWorld().addParticle(ParticleTypes.POOF, this.getParticleX(1.0) - d * 10.0, this.getRandomBodyY() - e * 10.0, this.getParticleZ(1.0) - f * 10.0, d, e, f);
+    //    };
+    //}
 
     @Override
     protected void playExplosionSound(World world) {

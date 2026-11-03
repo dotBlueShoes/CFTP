@@ -378,17 +378,14 @@ public class CreeperEnderEntity extends CreeperElementalEntity {
                         }
 
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                    }
-
+                    } break;
                     case NORMAL: {
                         for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {
                             getNonHardDifficultyTeleport(serverWorld, serverPlayerEntity, chargedAmount);
                         }
 
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
-                    }
-                    break;
-
+                    } break;
                     case HARD:
                     default: {
                         for (ServerPlayerEntity serverPlayerEntity : serverWorld.getPlayers()) {

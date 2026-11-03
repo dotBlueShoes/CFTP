@@ -80,15 +80,13 @@ public class CreeperSculkEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         effectTicks = EFFECT_TICKS_EASY;
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         effectTicks = EFFECT_TICKS_NORM;
                         diameter *= 1.125f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
@@ -96,7 +94,6 @@ public class CreeperSculkEntity extends CreeperElementalEntity {
                         effectTicks = EFFECT_TICKS_HARD;
                         diameter *= 1.250f * chargedPower;
                     }
-                    break;
                 }
 
                 // We're creating a pseudo explosion just to verify the behaviour of blocks when destroyed.

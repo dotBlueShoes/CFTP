@@ -9,6 +9,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.ZombieEntityRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -26,12 +27,30 @@ public class JohnEntityRenderer extends MobEntityRenderer<JohnEntity, JohnEntity
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
 
         if (player == null) {
+            CFTP.LOGGER.warn("This should never happen! A");
             super.render(livingEntityRenderState, matrixStack, vertexConsumerProvider, i);
         } else {
             if (player.hasStatusEffect(CFTPStatusEffects.JOHN_STATUS_EFFECT)) {
                 super.render(livingEntityRenderState, matrixStack, vertexConsumerProvider, i);
             }
         }
+    }
+
+    @Override
+    protected float getShadowRadius(JohnEntityRenderState livingEntityRenderState) {
+        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+
+        if (player == null) {
+            CFTP.LOGGER.warn("This should never happen! B");
+            return super.getShadowRadius(livingEntityRenderState);
+        } else {
+            if (player.hasStatusEffect(CFTPStatusEffects.JOHN_STATUS_EFFECT)) {
+                return super.getShadowRadius(livingEntityRenderState);
+            } else {
+                return 0.0f;
+            }
+        }
+
     }
 
     @Override
@@ -45,12 +64,13 @@ public class JohnEntityRenderer extends MobEntityRenderer<JohnEntity, JohnEntity
         return TEXTURE;
     }
 
-    @Override
-    public void updateRenderState(JohnEntity entity, JohnEntityRenderState state, float tickDelta) {
-        super.updateRenderState(entity, state, tickDelta);
-        state.handSwingProgress = entity.getHandSwingProgress(tickDelta);
-        //creeperEntityRenderState.invisibility = creeperEntity.getInvisibleAge();
-    }
+    //@Override
+    //public void updateRenderState(JohnEntity entity, JohnEntityRenderState state, float tickDelta) {
+    //    super.updateRenderState(entity, state, tickDelta);
+    //
+    //    //state.handSwingProgress = entity.getHandSwingProgress(tickDelta);
+    //    //creeperEntityRenderState.invisibility = creeperEntity.getInvisibleAge();
+    //}
 
     @Override
     public JohnEntityRenderState createRenderState() {

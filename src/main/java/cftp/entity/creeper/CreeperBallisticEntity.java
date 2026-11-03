@@ -74,19 +74,16 @@ public class CreeperBallisticEntity extends CreeperElementalEntity {
                     case EASY: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         diameter *= 1.25f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         diameter *= 1.50f * chargedPower;
                     }
-                    break;
                 }
 
                 serverWorld.createExplosion(

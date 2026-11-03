@@ -83,19 +83,17 @@ public class CreeperWindEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         chargedPower *= 0.68f;
                         radius = 4;
-                    }
+                    } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         chargedPower *= 0.75f;
                         radius = 5;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         radius = 6;
                     }
-                    break;
                 }
 
                 { // air-explosion

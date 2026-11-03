@@ -219,17 +219,14 @@ public class CreeperFriendlyEntity extends CreeperElementalEntity implements Tam
                     case PEACEFUL:
                     case EASY: {
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         diameter *= 1.25f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         diameter *= 1.50f * chargedPower;
                     }
-                    break;
                 }
 
                 serverWorld.createExplosion(

@@ -65,17 +65,16 @@ public class CreeperHerobrineEntity extends CreeperElementalEntity {
                 case EASY: {
                     chargedPower *= 0.68f;
                     radius = 3;
-                }
+                } break;
                 case NORMAL: {
                     chargedPower *= 0.75f;
                     radius = 4;
-                }
-                break;
+                } break;
                 case HARD:
                 default: {
+                    chargedPower *= 0.89f;
                     radius = 5;
                 }
-                break;
             }
 
             // todo -> theres an offset teleport !!

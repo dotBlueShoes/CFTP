@@ -91,21 +91,18 @@ public class CreeperDirtEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         diameter *= chargedPower;
                         bury = 0;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         diameter *= 1.25f * chargedPower;
                         bury = 1;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         diameter *= 1.75f * chargedPower;
                         bury = 2;
                     }
-                    break;
                 }
 
                 final int iDiameter = (int) diameter;

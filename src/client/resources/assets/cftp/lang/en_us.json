@@ -6,9 +6,13 @@
   "sounds.cftp.entity.john.death":  "John Death Sound",
   "sounds.cftp.status_effect.burying.looping":  "Status Effect Burying Apply Looping",
 
-  "effect.cftp.john": "John",
   "effect.cftp.conductive": "Conductive",
   "effect.cftp.burying": "Burying",
+  "effect.cftp.panic": "Panicking",
+
+  "effect.cftp.john": "John's Curse",
+  "effect.cftp.madness": "Madness",
+  "effect.cftp.herobrine": "Herobrine Mark",
 
   "entity.cftp.creeper_lighting": "Lighting Creeper",
   "entity.cftp.creeper_cookie": "Cookie Creeper",

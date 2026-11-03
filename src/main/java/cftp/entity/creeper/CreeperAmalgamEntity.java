@@ -102,21 +102,18 @@ public class CreeperAmalgamEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         count = 1 + random.nextInt(2); // 1-2
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         count = 2 + random.nextInt(3); // 2-4
                         diameter *= 1.25f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         count = 3 + random.nextInt(3); // 3-5
                         diameter *= 1.50f * chargedPower;
                     }
-                    break;
                 }
 
                 // TODO

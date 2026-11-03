@@ -77,21 +77,18 @@ public class CreeperGoldenEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         diameter *= chargedPower;
                         absorptionGive = 10;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         diameter *= 1.25f * chargedPower;
                         absorptionGive = 20;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         diameter *= 1.50f * chargedPower;
                         absorptionGive = 40;
                     }
-                    break;
                 }
 
                 final int iDiameter = (int) diameter;

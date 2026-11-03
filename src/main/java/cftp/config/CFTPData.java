@@ -115,6 +115,10 @@ public class CFTPData {
     public static boolean isCreeperRefusingEnabled;
     public static boolean isCreeperGildingEnabled;
 
+    // As in n/1000 -> above and equal 1000 means always.
+    public static int elementalCreeperWithChargedRate;
+    public static int hostileEntityWithJohnRate;
+
     public static int elementalCreeperGroupSpawnMin;
     public static int elementalCreeperGroupSpawnMax;
 
@@ -165,34 +169,34 @@ public class CFTPData {
 
         String[] biomesAmalgam      = biomes(BiomeKeys.MEADOW);
         String[] biomesAmethyst     = biomes(BiomeKeys.LUSH_CAVES);
-        String[] biomesBallistic    = biomes(BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.DARK_FOREST);
+        String[] biomesBallistic    = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.DARK_FOREST, BiomeKeys.MEADOW);
         String[] biomesBrewer       = {};
         String[] biomesBridger      = {};
-        String[] biomesCookie       = biomes(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE);
+        String[] biomesCookie       = biomes(BiomeKeys.DESERT, BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE);
         String[] biomesDark         = biomes(BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS);
         String[] biomesDirt         = biomes(BiomeKeys.DRIPSTONE_CAVES);
-        String[] biomesEarth        = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS);
-        String[] biomesEnder        = biomes(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE, BiomeKeys.THE_END, BiomeKeys.END_HIGHLANDS, BiomeKeys.END_MIDLANDS, BiomeKeys.SMALL_END_ISLANDS, BiomeKeys.END_BARRENS, BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST);
+        String[] biomesEarth        = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.LUSH_CAVES);
+        String[] biomesEnder        = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE, BiomeKeys.THE_END, BiomeKeys.END_HIGHLANDS, BiomeKeys.END_MIDLANDS, BiomeKeys.SMALL_END_ISLANDS, BiomeKeys.END_BARRENS, BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST, BiomeKeys.MEADOW, BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.LUSH_CAVES, BiomeKeys.PALE_GARDEN);
         String[] biomesFire         = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS);
-        String[] biomesFlip         = biomes(BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST);
+        String[] biomesFlip         = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.DESERT, BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST, BiomeKeys.LUSH_CAVES);
         String[] biomesFriendly     = biomes(BiomeKeys.MUSHROOM_FIELDS);
-        String[] biomesGhost        = biomes(BiomeKeys.SWAMP, BiomeKeys.SOUL_SAND_VALLEY);
-        String[] biomesGiant        = biomes(BiomeKeys.PLAINS);
-        String[] biomesGolden       = {};
+        String[] biomesGhost        = biomes(BiomeKeys.SWAMP, BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.MEADOW);
+        String[] biomesGiant        = {};
+        String[] biomesGolden       = biomes(BiomeKeys.PALE_GARDEN);
         String[] biomesHarvest      = {};
         String[] biomesHerobrine    = {};
-        String[] biomesLava         = biomes(BiomeKeys.NETHER_WASTES, BiomeKeys.BASALT_DELTAS);
-        String[] biomesLighting     = biomes(BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_SAVANNA);
+        String[] biomesLava         = biomes(BiomeKeys.DESERT, BiomeKeys.NETHER_WASTES, BiomeKeys.BASALT_DELTAS);
+        String[] biomesLighting     = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_SAVANNA);
         String[] biomesNether       = biomes(BiomeKeys.NETHER_WASTES, BiomeKeys.BASALT_DELTAS, BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST);
         String[] biomesOceanid      = {};
         String[] biomesPiggy        = biomes(BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA, BiomeKeys.SNOWY_TAIGA);
-        String[] biomesSand         = {};
+        String[] biomesSand         = biomes(BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS);
         String[] biomesSculk        = biomes(BiomeKeys.DEEP_DARK);
         String[] biomesSnow         = biomes(BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA, BiomeKeys.ICE_SPIKES, BiomeKeys.FROZEN_OCEAN, BiomeKeys.DEEP_FROZEN_OCEAN, BiomeKeys.SNOWY_SLOPES, BiomeKeys.FROZEN_PEAKS, BiomeKeys.FROZEN_RIVER);
         String[] biomesSpectre      = {};
         String[] biomesSwamp        = biomes(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP);
-        String[] biomesWater        = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS);
-        String[] biomesWind         = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS);
+        String[] biomesWater        = biomes(BiomeKeys.PLAINS, BiomeKeys.RIVER, BiomeKeys.FROZEN_RIVER, BiomeKeys.MEADOW, BiomeKeys.LUSH_CAVES);
+        String[] biomesWind         = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.DESERT, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS, BiomeKeys.RIVER, BiomeKeys.FROZEN_RIVER, BiomeKeys.MEADOW);
         String[] biomesJohn         = biomes(BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.SNOWY_PLAINS, BiomeKeys.ICE_SPIKES, BiomeKeys.DESERT, BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys.DARK_FOREST, BiomeKeys.PALE_GARDEN, BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.TAIGA, BiomeKeys.SNOWY_TAIGA, BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE, BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS, BiomeKeys.MEADOW, BiomeKeys.CHERRY_GROVE, BiomeKeys.GROVE, BiomeKeys.SNOWY_SLOPES, BiomeKeys.FROZEN_PEAKS, BiomeKeys.JAGGED_PEAKS, BiomeKeys.STONY_PEAKS, BiomeKeys.RIVER, BiomeKeys.FROZEN_RIVER, BiomeKeys.BEACH, BiomeKeys.SNOWY_BEACH, BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.DEEP_LUKEWARM_OCEAN, BiomeKeys.OCEAN, BiomeKeys.DEEP_OCEAN, BiomeKeys.COLD_OCEAN, BiomeKeys.DEEP_COLD_OCEAN, BiomeKeys.FROZEN_OCEAN, BiomeKeys.DEEP_FROZEN_OCEAN, BiomeKeys.MUSHROOM_FIELDS, BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.LUSH_CAVES, BiomeKeys.DEEP_DARK, BiomeKeys.NETHER_WASTES, BiomeKeys.WARPED_FOREST, BiomeKeys.CRIMSON_FOREST, BiomeKeys.SOUL_SAND_VALLEY, BiomeKeys.BASALT_DELTAS, BiomeKeys.THE_END, BiomeKeys.END_HIGHLANDS, BiomeKeys.END_MIDLANDS, BiomeKeys.SMALL_END_ISLANDS, BiomeKeys.END_BARRENS);
 
         configVersion = CFTP.currentConfigVersion;
@@ -202,6 +206,9 @@ public class CFTPData {
         isCreeperRefusingEnabled = false; // giving a fuse back.
         isCreeperGildingEnabled = true;   // giving an apple.
 
+        elementalCreeperWithChargedRate = 25;
+        hostileEntityWithJohnRate = 100;
+
         elementalCreeperGroupSpawnMin = 2;
         elementalCreeperGroupSpawnMax = 3;
 
@@ -209,18 +216,18 @@ public class CFTPData {
         johnGroupSpawnMax = 3;
 
         creeperAmalgam = new CreeperData(
-                new SpawnCondition(20, biomesAmalgam),
-                5f, 20, 0.25f, 20
+                new SpawnCondition(30, biomesAmalgam),
+                5f, 13, 0.25f, 20
         );
 
         creeperAmethyst = new CreeperData(
-                new SpawnCondition(25, biomesAmethyst),
-                7f, 20, 0.25f, 20
+                new SpawnCondition(35, biomesAmethyst),
+                7f, 23, 0.25f, 20
         );
 
         creeperBallistic = new CreeperData(
-                new SpawnCondition(20, biomesBallistic),
-                2.5f, 20, 0.25f, 20
+                new SpawnCondition(25, biomesBallistic),
+                2.5f, 17, 0.25f, 20
         );
 
         creeperBrewer = new CreeperData(
@@ -234,55 +241,55 @@ public class CFTPData {
         );
 
         creeperCookie = new CreeperData(
-                new SpawnCondition(25, biomesCookie),
-                2f, 13, 0.25f, 20
+                new SpawnCondition(35, biomesCookie),
+                2f, 9, 0.25f, 20
         );
 
         creeperDark = new CreeperDarkData(
-                new SpawnCondition(30, biomesDark),
-                12f, 14, 0.25f, 20,
+                new SpawnCondition(40, biomesDark),
+                12f, 12, 0.25f, 20,
                 false
         );
 
         creeperDirt = new CreeperData(
-                new SpawnCondition(25, biomesDirt),
-                8f, 20, 0.25f, 20
+                new SpawnCondition(35, biomesDirt),
+                8f, 19, 0.25f, 20
         );
 
         creeperEarth = new CreeperData(
-                new SpawnCondition(30, biomesEarth),
-                5f, 20, 0.25f, 20
+                new SpawnCondition(40, biomesEarth),
+                5f, 21, 0.25f, 20
         );
 
         creeperEnder = new CreeperData(
-                new SpawnCondition(30, biomesEnder),
+                new SpawnCondition(40, biomesEnder),
                 5f, 20, 0.25f, 20
         );
 
         creeperFire = new CreeperData(
-                new SpawnCondition(30, biomesFire),
-                9f, 20, 0.25f, 20
+                new SpawnCondition(40, biomesFire),
+                9f, 18, 0.25f, 20
         );
 
         creeperFlip = new CreeperData(
                 new SpawnCondition(30, biomesFlip),
-                6f, 20, 0.25f, 20
+                6f, 18, 0.25f, 20
         );
 
         creeperFriendly = new CreeperData(
-                new SpawnCondition(20, biomesFriendly),
+                new SpawnCondition(30, biomesFriendly),
                 3f, 14, 0.25f, 20
         );
 
         creeperGhost = new CreeperGhostData(
-                new SpawnCondition(30, biomesGhost),
+                new SpawnCondition(35, biomesGhost),
                 2f, 14, 0.25f, 15,
                 true, true
         );
 
         creeperGiant = new CreeperData(
-                new SpawnCondition(0, biomesGiant),
-                11f, 32, 0.19f, 15
+                new SpawnCondition(10, biomesGiant),
+                11f, 40, 0.19f, 15
         );
 
         creeperGolden = new CreeperData(
@@ -297,21 +304,21 @@ public class CFTPData {
 
         creeperHerobrine = new CreeperData(
                 new SpawnCondition(0, biomesHerobrine),
-                5f, 20, 0.25f, 26
+                5f, 40, 0.25f, 26
         );
 
         creeperLava = new CreeperData(
-                new SpawnCondition(20, biomesLava),
+                new SpawnCondition(25, biomesLava),
                 5f, 24, 0.25f, 20
         );
 
         creeperLighting = new CreeperData(
-                new SpawnCondition(30, biomesLighting),
-                1.5f, 20, 0.45f, 16
+                new SpawnCondition(40, biomesLighting),
+                1.5f, 16, 0.45f, 16
         );
 
         creeperNether = new CreeperData(
-                new SpawnCondition(30, biomesNether),
+                new SpawnCondition(40, biomesNether),
                 5f, 26, 0.25f, 26
         );
 
@@ -320,22 +327,22 @@ public class CFTPData {
                 5f, 20, 0.25f, 20
         );
         creeperPiggy = new CreeperData(
-                new SpawnCondition(5, biomesPiggy),
+                new SpawnCondition(10, biomesPiggy),
                 5f, 20, 0.25f, 20
         );
 
         creeperSand = new CreeperData(
-                new SpawnCondition(10, biomesSand),
+                new SpawnCondition(40, biomesSand),
                 8f, 12, 0.25f, 16
         );
 
         creeperSculk = new CreeperData(
-                new SpawnCondition(25, biomesSculk),
+                new SpawnCondition(35, biomesSculk),
                 8f, 20, 0.25f, 20
         );
 
         creeperSnow = new CreeperData(
-                new SpawnCondition(25, biomesSnow),
+                new SpawnCondition(40, biomesSnow),
                 5f, 20, 0.25f, 20
         );
 
@@ -345,17 +352,17 @@ public class CFTPData {
         );
 
         creeperSwamp = new CreeperData(
-                new SpawnCondition(30, biomesSwamp),
+                new SpawnCondition(45, biomesSwamp),
                 5f, 20, 0.25f, 16
         );
 
         creeperWater = new CreeperData(
-                new SpawnCondition(30, biomesWater),
+                new SpawnCondition(35, biomesWater),
                 5f, 20, 0.25f, 16
         );
 
         creeperWind = new CreeperData(
-                new SpawnCondition(30, biomesWind),
+                new SpawnCondition(35, biomesWind),
                 3.27f, 20, 0.25f, 16
         );
 

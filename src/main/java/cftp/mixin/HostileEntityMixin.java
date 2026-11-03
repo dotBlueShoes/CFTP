@@ -1,6 +1,7 @@
 package cftp.mixin;
 
 
+import cftp.config.CFTPData;
 import cftp.utility.JohnHelper;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -31,8 +32,7 @@ public abstract class HostileEntityMixin extends PathAwareEntity
     ) {
         EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
 
-        // There 1/5 that it will have blood status effect.
-        if (this.random.nextInt(100) < 20) { // 20%
+        if (this.random.nextInt(1000) < CFTPData.hostileEntityWithJohnRate) {
             JohnHelper.applyJohnBasedOnDifficulty(this, null);
         }
 

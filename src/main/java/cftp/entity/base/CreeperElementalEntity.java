@@ -1,6 +1,7 @@
 package cftp.entity.base;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.creeper.CreeperGoldenEntity;
 import cftp.registries.CFTPEntities;
 import cftp.goals.CreeperElementalIgniteGoal;
@@ -101,8 +102,7 @@ public class CreeperElementalEntity extends HostileEntity {
     ) {
         EntityData data = super.initialize(world, difficulty, spawnReason, entityData);
 
-        // There 1/20 that it will spawn with charged.
-        if (random.nextInt(100) < 5) { // 5%
+        if (random.nextInt(1000) < CFTPData.elementalCreeperWithChargedRate) {
             this.dataTracker.set(CHARGED, true);
         }
 

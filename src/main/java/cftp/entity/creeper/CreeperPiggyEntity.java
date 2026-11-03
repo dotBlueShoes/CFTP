@@ -89,21 +89,18 @@ public class CreeperPiggyEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         pigsCount = 1 + random.nextInt(2); // 1-2
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         pigsCount = 1 + random.nextInt(3); // 1-3
                         diameter *= 1.25f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         pigsCount = 2 + random.nextInt(3); // 2-4
                         diameter *= 1.50f * chargedPower;
                     }
-                    break;
                 }
 
                 // TODO

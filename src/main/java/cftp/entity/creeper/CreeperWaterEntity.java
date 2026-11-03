@@ -79,15 +79,13 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         effectTicks = WATER_BREATHING_EFFECT_TICKS_EASY;
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         effectTicks = WATER_BREATHING_EFFECT_TICKS_NORM;
                         diameter *= 1.25f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
@@ -95,7 +93,6 @@ public class CreeperWaterEntity extends CreeperElementalEntity {
                         effectTicks = WATER_BREATHING_EFFECT_TICKS_HARD;
                         diameter *= 1.50f * chargedPower;
                     }
-                    break;
                 }
 
                 final int iDiameter = (int) diameter;

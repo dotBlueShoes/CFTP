@@ -75,15 +75,13 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
                         slownessEffectTicks = SLOWNESS_EFFECT_TICKS_EASY * (int) chargedPower;
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_NORMAL);
                         slownessEffectTicks = SLOWNESS_EFFECT_TICKS_NORM * (int) chargedPower;
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         diameter *= 1.5f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         dropExplosionItemChance = (int) (100 * DROP_EXPLOSION_ITEM_CHANCE_HARD);
@@ -91,7 +89,6 @@ public class CreeperEarthEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         diameter *= 2.0f * chargedPower;
                     }
-                    break;
                 }
 
                 final int iDiameter = (int) diameter;

@@ -71,21 +71,18 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
                         darknessEffectTicks = DARKNESS_EFFECT_TICKS_EASY * (int) chargedPower;
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
                         diameter *= chargedPower;
-                    }
-                    break;
+                    } break;
                     case NORMAL: {
                         darknessEffectTicks = DARKNESS_EFFECT_TICKS_NORMAL * (int) chargedPower;
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_NORMAL);
                         diameter *= 1.25f * chargedPower;
-                    }
-                    break;
+                    } break;
                     case HARD:
                     default: {
                         darknessEffectTicks = DARKNESS_EFFECT_TICKS_HARD * (int) chargedPower;
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         diameter *= 1.50f * chargedPower;
                     }
-                    break;
                 }
 
                 final int iDiameter = (int) diameter;

@@ -81,7 +81,6 @@ public class CreeperLavaEntity extends CreeperElementalEntity {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
                         diameter *= 1.50f * chargedPower;
                     }
-                    break;
                 }
 
                 final int iDiameter = (int) diameter;

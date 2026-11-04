@@ -11,6 +11,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.*;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.*;
+import net.minecraft.client.render.entity.CreeperEntityRenderer;
 import net.minecraft.util.Identifier;
 
 public class CFTPClient implements ClientModInitializer {
@@ -24,6 +25,8 @@ public class CFTPClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		CFTP.LOGGER.info("Hello Fabric Client!");
+
+        //CreeperEntityRenderer
 
         //String version = GL11.glGetString(GL11.GL_VERSION);
         //String renderer = GL11.glGetString(GL11.GL_RENDERER);

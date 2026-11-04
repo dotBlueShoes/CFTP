@@ -64,6 +64,7 @@ public class JohnEntityRenderer extends MobEntityRenderer<JohnEntity, JohnEntity
         return TEXTURE;
     }
 
+    // this is actually where state gets its information
     //@Override
     //public void updateRenderState(JohnEntity entity, JohnEntityRenderState state, float tickDelta) {
     //    super.updateRenderState(entity, state, tickDelta);

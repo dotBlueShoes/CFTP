@@ -263,7 +263,7 @@ public class CFTPData {
 
         creeperEnder = new CreeperData(
                 new SpawnCondition(40, biomesEnder),
-                5f, 20, 0.25f, 20
+                4f, 20, 0.25f, 20
         );
 
         creeperFire = new CreeperData(
@@ -289,7 +289,7 @@ public class CFTPData {
 
         creeperGiant = new CreeperData(
                 new SpawnCondition(10, biomesGiant),
-                11f, 40, 0.19f, 15
+                8f, 40, 0.19f, 12
         );
 
         creeperGolden = new CreeperData(

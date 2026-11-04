@@ -1,5 +1,6 @@
 package cftp.utility;
 
+import cftp.CFTP;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.registries.CFTPEntities;
 import cftp.registries.CFTPItems;
@@ -16,7 +17,10 @@ import net.minecraft.item.Items;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -321,5 +325,95 @@ public class CreeperHelper {
     //        return entityClass;
     //    }
     //}
+
+    // On HARD difficulty u can be moved into LAVA and be teleported into mid-air.
+    public static double[] getHardDifficultyTeleportPos(
+            ServerWorld serverWorld,
+            Random random,
+            Vec3d initialPosition,
+            double chargedValue
+    ) {
+        double x = initialPosition.getX() + (random.nextDouble() - 0.5) * 64.0 * chargedValue;
+        double y = initialPosition.getY() + (random.nextInt(64) - 32) * chargedValue;
+        double z = initialPosition.getZ() + (random.nextDouble() - 0.5) * 64.0 * chargedValue;
+
+        // Don't fall into void.
+        if (y < serverWorld.getBottomY()) {
+            y = serverWorld.getBottomY();
+        }
+
+        while (true) { // Be sure it's not in block. MID-AIR is a valid position!
+            BlockPos position = BlockPos.ofFloored(x, y, z);
+
+            BlockState blockState = serverWorld.getBlockState(position);
+
+            if (!blockState.isSolidBlock(serverWorld, position)) {
+                break;
+            }
+
+            ++y;
+        }
+
+        return new double[]{x, y, z};
+    }
+
+    public static double[] getNonHardDifficultyTeleportPos(
+            ServerWorld serverWorld,
+            Random random,
+            Vec3d initialPosition,
+            double chargedValue
+    ) {
+
+        double x = initialPosition.getX() + (random.nextDouble() - 0.5) * 64.0 * chargedValue;
+        double y = initialPosition.getY() + (random.nextInt(64) - 32) * chargedValue;
+        double z = initialPosition.getZ() + (random.nextDouble() - 0.5) * 64.0 * chargedValue;
+
+        // Don't fall into void.
+        if (y < serverWorld.getBottomY()) {
+            y = serverWorld.getBottomY();
+        }
+
+        while (true) { // Be sure it's not in block. MID-AIR is a valid position!
+            BlockPos position = BlockPos.ofFloored(x, y, z);
+
+            BlockState blockState = serverWorld.getBlockState(position);
+            boolean isInLava = blockState.getFluidState().isIn(FluidTags.LAVA);
+
+            if (!blockState.isSolidBlock(serverWorld, position) && !isInLava) {
+                break;
+            }
+
+            ++y;
+        }
+
+        while (true) { // Do not allow midair teleports.
+            BlockPos blockPos = BlockPos.ofFloored(x, y - 1, z);
+
+            if (serverWorld.getBlockState(blockPos).getBlock() != Blocks.AIR) {
+                break;
+            }
+
+            --y;
+
+            if (y < serverWorld.getBottomY()) {
+                CFTP.LOGGER.info("Could not find a valid teleport position.");
+
+                serverWorld.playSound(
+                        null,
+                        initialPosition.getX(), initialPosition.getY(), initialPosition.getZ(),
+                        SoundEvents.ENTITY_PLAYER_TELEPORT,
+                        SoundCategory.PLAYERS
+                );
+
+                return new double[] {
+                        initialPosition.getX(),
+                        initialPosition.getY(),
+                        initialPosition.getZ()
+                };
+            }
+        }
+
+        return new double[] {x, y, z};
+    }
 
 }

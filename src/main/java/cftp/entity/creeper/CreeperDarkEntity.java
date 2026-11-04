@@ -6,12 +6,14 @@ import cftp.utility.CreeperHelper;
 import cftp.utility.Shapes;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -139,6 +141,17 @@ public class CreeperDarkEntity extends CreeperElementalEntity {
 
                                 float resistance = state.getBlock().getBlastResistance();
                                 int emittedLight = state.getLuminance();
+
+                                //if (state.getBlock() == Blocks.LAVA || state.getBlock() == Blocks.LAVA_CAULDRON) {
+                                //    serverWorld.setBlockState(blockPos, Blocks.OBSIDIAN.getDefaultState());
+                                //}
+
+
+                                if (state.getFluidState().getFluid() == Fluids.LAVA) {
+                                    serverWorld.setBlockState(blockPos, Blocks.OBSIDIAN.getDefaultState());
+                                } else if (state.getFluidState().getFluid() == Fluids.FLOWING_LAVA) {
+                                    serverWorld.setBlockState(blockPos, Blocks.STONE.getDefaultState());
+                                }
 
                                 if (resistance < 100 && emittedLight > 0) {
                                     state.onExploded(serverWorld, blockPos, dummyExplosion, (itemStack, pos) -> {

@@ -158,12 +158,12 @@ public class CreeperGhostEntity extends CreeperElementalEntity {
                     } break;
                     case NORMAL: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_EASY);
-                        diameter *= 1.5f * chargedPower;
+                        diameter *= 1.33f * chargedPower;
                     } break;
                     case HARD:
                     default: {
                         ghostCreeperChance = (int) (255 * GHOST_CREEPER_EXPLODE_CHANCE_HARD);
-                        diameter *= 2.0f * chargedPower;
+                        diameter *= 1.75f * chargedPower;
                     }
                 }
 

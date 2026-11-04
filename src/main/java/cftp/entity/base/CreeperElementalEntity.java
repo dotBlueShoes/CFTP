@@ -58,16 +58,18 @@ public class CreeperElementalEntity extends HostileEntity {
     public static final float GHOST_CREEPER_KILL_CHANCE_NORMAL = 0.25f;
     public static final float GHOST_CREEPER_KILL_CHANCE_HARD   = 0.50f;
 
-    public static final float GHOST_CREEPER_EXPLODE_CHANCE_EASY   = 0.000f;
+    public static final float GHOST_CREEPER_EXPLODE_CHANCE_EASY   = 0.001f;
     public static final float GHOST_CREEPER_EXPLODE_CHANCE_NORMAL = 0.125f;
     public static final float GHOST_CREEPER_EXPLODE_CHANCE_HARD   = 0.250f;
+
+    public static final int FUSE_TIME_MAX = 25;
 
     protected int lastFuseTime;
     protected int currentFuseTime;
     protected int headsDropped;
 
     protected float power = 3;
-    protected int fuseTime = 25;
+    protected int fuseTime = FUSE_TIME_MAX;
 
     public static final int ITEM_EXPLOSION_DAMAGE = 10;
 

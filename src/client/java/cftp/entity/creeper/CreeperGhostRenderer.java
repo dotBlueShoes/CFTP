@@ -1,8 +1,10 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntityModel;
 import cftp.entity.base.CreeperElementalEntityRenderState;
+import cftp.entity.creeper.feature.ElementalCreeperGlowingFeatureRenderer;
 import cftp.registries.CFTPModelLayersClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -20,6 +22,14 @@ public class CreeperGhostRenderer extends MobEntityRenderer<CreeperGhostEntity, 
     public CreeperGhostRenderer(EntityRendererFactory.Context context) {
         super(context, new CreeperElementalEntityModel(context.getPart(CFTPModelLayersClient.GHOST_CREEPER)), 0.0F);
         //todo this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
+
+        if (CFTPData.creeperGhost.hasGlowingTexture) {
+        //    this.addFeature(new ElementalCreeperGlowingFeatureRenderer(
+        //            this,
+        //            context.getEntityModels(),
+        //            Identifier.of(CFTP.MOD_ID, "textures/entity/creeper/ilum/dark.png")
+        //    ));
+        }
     }
 
     @Override

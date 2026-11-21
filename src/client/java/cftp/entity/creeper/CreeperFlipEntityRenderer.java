@@ -1,7 +1,9 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntityRenderer;
+import cftp.entity.creeper.feature.ElementalCreeperGlowingFeatureRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.util.Identifier;
@@ -12,6 +14,14 @@ public class CreeperFlipEntityRenderer extends CreeperElementalEntityRenderer<Cr
 
     public CreeperFlipEntityRenderer(EntityRendererFactory.Context context) {
         super(context);
+
+        if (CFTPData.creeperFlip.hasGlowingTexture) {
+            this.addFeature(new ElementalCreeperGlowingFeatureRenderer(
+                    this,
+                    context.getEntityModels(),
+                    Identifier.of(CFTP.MOD_ID, "textures/entity/creeper/ilum/halloween.png")
+            ));
+        }
     }
 
     @Override

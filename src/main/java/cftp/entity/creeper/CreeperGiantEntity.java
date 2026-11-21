@@ -1,7 +1,9 @@
 package cftp.entity.creeper;
 
+import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
+import cftp.registries.CFTPParticles;
 import cftp.utility.CreeperHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -15,6 +17,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
+import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.explosion.Explosion;
 
 public class CreeperGiantEntity extends CreeperElementalEntity {
@@ -82,11 +85,6 @@ public class CreeperGiantEntity extends CreeperElementalEntity {
                     }
                 }
 
-                //serverWorld.createExplosion(
-                //        this, this.getX(), this.getY(), this.getZ(),
-                //        diameter, World.ExplosionSourceType.MOB
-                //);
-
                 // Non destructive explosion
                 serverWorld.createExplosion(
                         this,
@@ -113,6 +111,46 @@ public class CreeperGiantEntity extends CreeperElementalEntity {
             //this.dead = true;
             //this.onRemoval(serverWorld, Entity.RemovalReason.KILLED);
             //this.discard();
+        }
+    }
+
+    @Override
+    protected void creeperTick() {
+        if (this.isAlive()) {
+            this.lastFuseTime = this.currentFuseTime;
+
+            if (this.isIgnited()) {
+                this.setFuseSpeed(1);
+            }
+
+            int i = this.getFuseSpeed();
+            if (i > 0 && this.currentFuseTime == 0) {
+                this.playSound(SoundEvents.ENTITY_CREEPER_PRIMED, 1.0F, 0.5F);
+                this.emitGameEvent(GameEvent.PRIME_FUSE);
+
+                // todo is this actually what i want maybe as he moves too? + after explosion definitely.
+                if (this.getWorld() instanceof ServerWorld serverWorld) {
+                    float diameter = 5.0f;
+
+                    serverWorld.spawnParticles(
+                            CFTPParticles.BURYING_PARTICLE,
+                            this.getX() + 0.5, this.getY() + 1.5, this.getZ() + 0.5,
+                            48,
+                            diameter, 0.25f, diameter,
+                            -0.25f // no meaning todo.
+                    );
+                }
+            }
+
+            this.currentFuseTime += i;
+            if (this.currentFuseTime < 0) {
+                this.currentFuseTime = 0;
+            }
+
+            if (this.currentFuseTime >= this.fuseTime) {
+                this.currentFuseTime = this.fuseTime;
+                this.explode();
+            }
         }
     }
 

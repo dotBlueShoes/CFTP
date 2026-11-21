@@ -29,19 +29,22 @@ public class CFTPData {
         public int health;
         public float movementSpeed;
         public int followRange;
+        public boolean hasGlowingTexture;
 
         public CreeperData(
                 SpawnCondition hardcodedSpawnCondition,
                 float power,
                 int health,
                 float movementSpeed,
-                int followRange
+                int followRange,
+                boolean hasGlowingTexture
         ) {
             this.hardcodedSpawnCondition = hardcodedSpawnCondition;
             this.health = health;
             this.movementSpeed = movementSpeed;
             this.followRange = followRange;
             this.power = power;
+            this.hasGlowingTexture = hasGlowingTexture;
         }
     }
 
@@ -81,9 +84,10 @@ public class CFTPData {
                 int health,
                 float movementSpeed,
                 int followRange,
+                boolean hasGlowingTexture,
                 boolean isSpawnInLightButEasier
         ) {
-            super(hardcodedSpawnCondition, power, health, movementSpeed, followRange);
+            super(hardcodedSpawnCondition, power, health, movementSpeed, followRange, hasGlowingTexture);
             this.isSpawnInLightButEasier = isSpawnInLightButEasier;
         }
     }
@@ -99,10 +103,11 @@ public class CFTPData {
                 int health,
                 float movementSpeed,
                 int followRange,
+                boolean hasGlowingTexture,
                 boolean isUponDeathEnabled,
                 boolean isShearAndGildResistant
         ) {
-            super(hardcodedSpawnCondition, power, health, movementSpeed, followRange);
+            super(hardcodedSpawnCondition, power, health, movementSpeed, followRange, hasGlowingTexture);
             this.isUponDeathEnabled = isUponDeathEnabled;
             this.isShearAndGildResistant = isShearAndGildResistant;
         }
@@ -111,6 +116,7 @@ public class CFTPData {
     public static int configVersion;
 
     public static boolean isVanillaCreeperRemoved;
+    public static boolean isGlowingCreeperEnabled;
     public static boolean isCreeperShearingEnabled;
     public static boolean isCreeperRefusingEnabled;
     public static boolean isCreeperGildingEnabled;
@@ -202,6 +208,7 @@ public class CFTPData {
         configVersion = CFTP.currentConfigVersion;
 
         isVanillaCreeperRemoved = true;   // vanilla creeper will not spawn anymore.
+        isGlowingCreeperEnabled = true;
         isCreeperShearingEnabled = true;  // removing the fuse.
         isCreeperRefusingEnabled = false; // giving a fuse back.
         isCreeperGildingEnabled = true;   // giving an apple.
@@ -217,153 +224,181 @@ public class CFTPData {
 
         creeperAmalgam = new CreeperData(
                 new SpawnCondition(30, biomesAmalgam),
-                5f, 13, 0.25f, 20
+                5f, 13, 0.25f, 20,
+                true
         );
 
         creeperAmethyst = new CreeperData(
                 new SpawnCondition(35, biomesAmethyst),
-                7f, 23, 0.25f, 20
+                7f, 23, 0.25f, 20,
+                false
         );
 
         creeperBallistic = new CreeperData(
                 new SpawnCondition(25, biomesBallistic),
-                2.5f, 17, 0.25f, 20
+                2.5f, 17, 0.25f, 20,
+                false
         );
 
         creeperBrewer = new CreeperData(
                 new SpawnCondition(0, biomesBrewer),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 20,
+                false
         );
 
         creeperBridger = new CreeperData(
                 new SpawnCondition(0, biomesBridger),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 20,
+                false
         );
 
         creeperCookie = new CreeperData(
                 new SpawnCondition(35, biomesCookie),
-                2f, 9, 0.25f, 20
+                2f, 9, 0.25f, 20,
+                false
         );
 
         creeperDark = new CreeperDarkData(
                 new SpawnCondition(40, biomesDark),
                 12f, 12, 0.25f, 20,
-                false
+                true, false
         );
 
         creeperDirt = new CreeperData(
                 new SpawnCondition(35, biomesDirt),
-                8f, 19, 0.25f, 20
+                8f, 19, 0.25f, 20,
+                true
         );
 
         creeperEarth = new CreeperData(
                 new SpawnCondition(40, biomesEarth),
-                5f, 21, 0.25f, 20
+                5f, 21, 0.25f, 20,
+                false
         );
 
         creeperEnder = new CreeperData(
                 new SpawnCondition(40, biomesEnder),
-                4f, 20, 0.25f, 20
+                4f, 20, 0.25f, 20,
+                true
         );
 
         creeperFire = new CreeperData(
                 new SpawnCondition(40, biomesFire),
-                9f, 18, 0.25f, 20
+                9f, 18, 0.25f, 20,
+                false
         );
 
         creeperFlip = new CreeperData(
                 new SpawnCondition(30, biomesFlip),
-                6f, 18, 0.25f, 20
+                6f, 18, 0.25f, 20,
+                false
         );
 
         creeperFriendly = new CreeperData(
                 new SpawnCondition(30, biomesFriendly),
-                3f, 14, 0.25f, 20
+                3f, 14, 0.25f, 20,
+                false
         );
 
         creeperGhost = new CreeperGhostData(
                 new SpawnCondition(35, biomesGhost),
                 2f, 14, 0.25f, 15,
-                true, true
+                false, true, true
         );
 
         creeperGiant = new CreeperData(
                 new SpawnCondition(10, biomesGiant),
-                8f, 40, 0.19f, 12
+                8f, 40, 0.19f, 12,
+                false
         );
 
         creeperGolden = new CreeperData(
                 new SpawnCondition(10, biomesGolden),
-                3f, 24, 0.25f, 20
+                3f, 24, 0.25f, 20,
+                true
         );
 
         creeperHarvest = new CreeperData(
                 new SpawnCondition(0, biomesHarvest),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 20,
+                false
         );
 
         creeperHerobrine = new CreeperData(
                 new SpawnCondition(0, biomesHerobrine),
-                5f, 40, 0.25f, 26
+                5f, 40, 0.25f, 26,
+                true
         );
 
         creeperLava = new CreeperData(
                 new SpawnCondition(25, biomesLava),
-                5f, 24, 0.25f, 20
+                5f, 24, 0.25f, 20,
+                false
         );
 
         creeperLighting = new CreeperData(
                 new SpawnCondition(40, biomesLighting),
-                1.5f, 16, 0.45f, 16
+                1.5f, 16, 0.45f, 16,
+                true
         );
 
         creeperNether = new CreeperData(
                 new SpawnCondition(40, biomesNether),
-                5f, 26, 0.25f, 26
+                5f, 26, 0.25f, 26,
+                false
         );
 
         creeperOceanid = new CreeperData(
                 new SpawnCondition(0, biomesOceanid),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 20,
+                false
         );
         creeperPiggy = new CreeperData(
                 new SpawnCondition(10, biomesPiggy),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 20,
+                false
         );
 
         creeperSand = new CreeperData(
                 new SpawnCondition(40, biomesSand),
-                8f, 12, 0.25f, 16
+                8f, 12, 0.25f, 16,
+                false
         );
 
         creeperSculk = new CreeperData(
                 new SpawnCondition(35, biomesSculk),
-                8f, 20, 0.25f, 20
+                8f, 20, 0.25f, 20,
+                true
         );
 
         creeperSnow = new CreeperData(
                 new SpawnCondition(40, biomesSnow),
-                5f, 20, 0.25f, 20
+                5f, 20, 0.25f, 20,
+                false
         );
 
         creeperSpectre = new CreeperData(
                 new SpawnCondition(0, biomesSpectre),
-                5f, 14, 0.25f, 12
+                5f, 14, 0.25f, 12,
+                true
         );
 
         creeperSwamp = new CreeperData(
                 new SpawnCondition(45, biomesSwamp),
-                5f, 20, 0.25f, 16
+                5f, 20, 0.25f, 16,
+                false
         );
 
         creeperWater = new CreeperData(
                 new SpawnCondition(35, biomesWater),
-                5f, 20, 0.25f, 16
+                5f, 20, 0.25f, 16,
+                false
         );
 
         creeperWind = new CreeperData(
                 new SpawnCondition(35, biomesWind),
-                3.27f, 20, 0.25f, 16
+                3.27f, 20, 0.25f, 16,
+                false
         );
 
         john = new JohnData(

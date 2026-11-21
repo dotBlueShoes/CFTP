@@ -1,11 +1,8 @@
 package cftp.entity.creeper;
 
-import cftp.CFTP;
 import cftp.config.CFTPData;
 import cftp.entity.base.CreeperElementalEntity;
 import cftp.packets.LoopingSoundPayload;
-import cftp.registries.CFTPParticles;
-import cftp.registries.CFTPSoundEvents;
 import cftp.registries.CFTPStatusEffects;
 import cftp.statuseffects.BuryingStatusEffect;
 import cftp.utility.CreeperHelper;
@@ -17,8 +14,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;

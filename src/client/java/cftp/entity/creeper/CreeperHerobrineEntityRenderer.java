@@ -1,6 +1,8 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
+import cftp.entity.creeper.feature.ElementalCreeperGlowingFeatureRenderer;
 import cftp.entity.creeper.renderstate.CreeperHerobrineEntityRenderState;
 import cftp.entity.herobrine.HerobrineEntityModel;
 import cftp.registries.CFTPModelLayersClient;
@@ -10,13 +12,21 @@ import net.minecraft.util.Identifier;
 
 public class CreeperHerobrineEntityRenderer extends MobEntityRenderer<CreeperHerobrineEntity, CreeperHerobrineEntityRenderState, HerobrineEntityModel> {
 
-    private static final String TEXTURE_PATH = "textures/entity/herobrine.png";
+    private static final String TEXTURE_PATH = "textures/entity/herobrine/herobrine.png";
 
     public CreeperHerobrineEntityRenderer(EntityRendererFactory.Context context) {
         // slim ? EntityModelLayers.PLAYER_SLIM : EntityModelLayers.PLAYER), slim
         super(context, new HerobrineEntityModel(context.getPart(CFTPModelLayersClient.HEROBRINE_CREEPER), false), 0.5F);
         //super(context, new HerobrineEntityModel(context.getPart(EntityModelLayers.PLAYER), false), 0.5F);
         //ZombieEntityRenderer extends ZombieBaseEntityRenderer<ZombieEntity, ZombieEntityRenderState, ZombieEntityModel<ZombieEntityRenderState>>
+
+        if (CFTPData.creeperHerobrine.hasGlowingTexture) {
+            //this.addFeature(new ElementalCreeperGlowingFeatureRenderer(
+            //        this,
+            //        context.getEntityModels(),
+            //        Identifier.of(CFTP.MOD_ID, "textures/entity/creeper/ilum/herobrine.png")
+            //));
+        }
     }
 
     //public CreeperGhostRenderer(EntityRendererFactory.Context context) {

@@ -1,6 +1,8 @@
 package cftp.entity.creeper;
 
 import cftp.CFTP;
+import cftp.config.CFTPData;
+import cftp.entity.creeper.feature.ElementalCreeperGlowingFeatureRenderer;
 import cftp.entity.creeper.model.CreeperSpectreEntityModel;
 import cftp.registries.CFTPModelLayersClient;
 import net.minecraft.client.render.RenderLayer;
@@ -17,6 +19,14 @@ public class CreeperSpectreEntityRenderer extends MobEntityRenderer<CreeperSpect
     public CreeperSpectreEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new CreeperSpectreEntityModel(context.getPart(CFTPModelLayersClient.SPECTRE_CREEPER)), 0.0F);
         //todo this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
+
+        if (CFTPData.creeperSpectre.hasGlowingTexture) {
+            //this.addFeature(new ElementalCreeperGlowingFeatureRenderer(
+            //        this,
+            //        context.getEntityModels(),
+            //        Identifier.of(CFTP.MOD_ID, "textures/entity/creeper/ilum/spectre.png")
+            //));
+        }
     }
 
     @Override

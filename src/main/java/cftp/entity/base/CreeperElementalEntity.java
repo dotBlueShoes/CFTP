@@ -168,8 +168,7 @@ public class CreeperElementalEntity extends HostileEntity {
         }
     }
 
-    @Override
-    public void tick() {
+    protected void creeperTick() {
         if (this.isAlive()) {
             this.lastFuseTime = this.currentFuseTime;
 
@@ -196,7 +195,11 @@ public class CreeperElementalEntity extends HostileEntity {
                 this.explode();
             }
         }
+    }
 
+    @Override
+    public void tick() {
+        this.creeperTick();
         super.tick();
     }
 

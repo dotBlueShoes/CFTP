@@ -1,6 +1,6 @@
 package cftp.entity.base;
 
-import net.minecraft.client.render.RenderLayer;
+import cftp.entity.creeper.feature.ElementalCreeperGlowingFeatureRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.CreeperChargeFeatureRenderer;
@@ -10,7 +10,6 @@ import net.minecraft.client.render.entity.state.CreeperEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class CreeperElementalEntityRenderer<T extends CreeperElementalEntity> extends MobEntityRenderer<T, CreeperEntityRenderState, CreeperEntityModel> {
 
@@ -23,6 +22,11 @@ public abstract class CreeperElementalEntityRenderer<T extends CreeperElementalE
         super(context, new CreeperEntityModel(context.getPart(EntityModelLayers.CREEPER)), 0.5f);
         this.addFeature(new CreeperChargeFeatureRenderer(this, context.getEntityModels()));
     }
+
+    //@Override
+    //public RenderLayer getGlowingTexture() {
+    //    return null; //RenderLayer.getEyes(TEXTURE)
+    //}
 
     //@Nullable
     //protected abstract RenderLayer getRenderLayer(CreeperElementalEntityRenderState state, boolean showBody, boolean translucent, boolean showOutline);
